@@ -1,29 +1,10 @@
+import { vec2 } from "./Vec2";
 var objStore = {};
 
 var inputState = KeyboardEvent;
 
 window.onkeydown = e => inputState[e.key] = true;
 window.onkeyup = e => inputState[e.key] = false;
-
-class vec2 {
-	constructor(x, y) {
-		this.x = x ?? 0;
-		this.y = y ?? 0;
-	}
-	add(vec) {
-		return new vec2(this.x + vec.x, this.y + vec.y);
-	}
-	length() {
-		return Math.sqrt(this.x * this.x + this.y * this.y);
-	}
-	normalize() {
-		let length = this.length();
-		if (length == 0) {
-			return new vec2(0, 0);
-		}
-		return new vec2(this.x / length, this.y / length);
-	}
-}
 
 class gameObj {
 	color = "#000000";
@@ -44,10 +25,11 @@ function tick() {
 		(inputState.ArrowRight ?? 0) - (inputState.ArrowLeft ?? 0),
 		(inputState.ArrowDown ?? 0) - (inputState.ArrowUp ?? 0)
 	);
+	let speed = inputState.Shift ? 4 : 2;
 	//Normalize
 	move = move.normalize();
-	objStore['box'].pos.x += (move.x ?? 0) * 2;
-	objStore['box'].pos.y += (move.y ?? 0) * 2;
+	objStore['box'].pos.x += (move.x ?? 0) * speed;
+	objStore['box'].pos.y += (move.y ?? 0) * speed;
 	objStore['box'].pos.x %= window.innerWidth;
 	objStore['box'].pos.y %= window.innerHeight;
 }
