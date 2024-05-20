@@ -20,9 +20,9 @@ export class Frame {
 	image: Img;
 	subImg: bbox = new bbox(new vec2(0, 0), new vec2(0, 0));
 	duration: number;
-	constructor(image: Img, subImg: bbox, duration: number) {
+	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
 		this.image = image ?? this.image;
-		this.subImg = subImg ?? this.subImg;
+		this.subImg = new bbox(new vec2(subImgX, subImgY), new vec2(subImgX + subImgWidth, subImgY + subImgHeight));
 		this.duration = duration ?? this.duration;
 	}
 }

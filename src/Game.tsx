@@ -15,31 +15,32 @@ let ySize = 110.875;
 let frameTime = 4;
 let anims: { [id: string]: Animation } = {
 	'idle': new Animation([
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 0, 0), new vec2(xSize * 1, ySize)), frameTime * 32),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, 0), new vec2(xSize * 2, ySize)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 2, 0), new vec2(xSize * 3, ySize)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, 0), new vec2(xSize * 2, ySize)), frameTime),
+		new Frame(spritesheet_link, xSize * 0, 0, xSize, ySize, frameTime * 32),
+		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 2, 0, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
 	]),
 	'walk': new Animation([
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 0, ySize * 7), new vec2(xSize * 1, ySize * 8)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1 + 2, ySize * 7), new vec2(xSize * 2, ySize * 8)), frameTime * 1.75),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 3 + 6, ySize * 7), new vec2(xSize * 4 - 7, ySize * 8)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 4 + 6, ySize * 7), new vec2(xSize * 5, ySize * 8)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 5, ySize * 7), new vec2(xSize * 6, ySize * 8)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 6, ySize * 7), new vec2(xSize * 7, ySize * 8)), frameTime * 1.75),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 8 + 7, ySize * 7), new vec2(xSize * 9, ySize * 8)), frameTime),
-		new Frame(spritesheet_link, new bbox(new vec2(xSize * 9 + 4, ySize * 7), new vec2(xSize * 10, ySize * 8)), frameTime),
+
+		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 7, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 7, xSize - 8, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 7, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 7, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 7, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 7, xSize - 7, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 7, xSize, ySize, frameTime),
+		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 7, xSize, ySize, frameTime),
 	])
 };
 anims['run'] = new Animation([
 	anims['walk'].frames[0],
 	anims['walk'].frames[1],
-	new Frame(spritesheet_link, new bbox(new vec2(xSize * 2, ySize * 7), new vec2(xSize * 3, ySize * 8)), frameTime * 1.75),
+	new Frame(spritesheet_link, xSize * 2, ySize * 7, xSize, ySize, frameTime * 1.75),
 	anims['walk'].frames[2],
 	anims['walk'].frames[3],
 	anims['walk'].frames[4],
 	anims['walk'].frames[5],
-	new Frame(spritesheet_link, new bbox(new vec2(xSize * 7, ySize * 7), new vec2(xSize * 8, ySize * 8)), frameTime * 1.75),
+	new Frame(spritesheet_link, xSize * 7, ySize * 7, xSize, ySize, frameTime * 1.75),
 	anims['walk'].frames[6],
 	anims['walk'].frames[7],
 ]);
@@ -100,11 +101,11 @@ function draw() {
 		// 	Math.round(obj.size.y),
 		// );
 		ctx.font = "24pt Roboto"
-		// ctx.fillText(
-		// 	obj.animations[obj.animState].currentFrame.toString(),
-		// 	obj.pos.x,
-		// 	obj.pos.y
-		// )
+		ctx.fillText(
+			obj.animations[obj.animState].currentFrame.toString(),
+			obj.pos.x,
+			obj.pos.y
+		)
 	});
 }
 
