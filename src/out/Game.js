@@ -20,27 +20,27 @@ var anims = {
     ]),
     'walk': new Sprites_1.Animation([
         new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 0, ySize * 7), new Vec2_1.vec2(xSize * 1, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, ySize * 7), new Vec2_1.vec2(xSize * 2, ySize * 8)), frameTime * 1.75),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 3, ySize * 7), new Vec2_1.vec2(xSize * 4, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 4, ySize * 7), new Vec2_1.vec2(xSize * 5, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1 + 2, ySize * 7), new Vec2_1.vec2(xSize * 2, ySize * 8)), frameTime * 1.75),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 3 + 6, ySize * 7), new Vec2_1.vec2(xSize * 4 - 7, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 4 + 6, ySize * 7), new Vec2_1.vec2(xSize * 5, ySize * 8)), frameTime),
         new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 5, ySize * 7), new Vec2_1.vec2(xSize * 6, ySize * 8)), frameTime),
         new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 6, ySize * 7), new Vec2_1.vec2(xSize * 7, ySize * 8)), frameTime * 1.75),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 8, ySize * 7), new Vec2_1.vec2(xSize * 9, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 9, ySize * 7), new Vec2_1.vec2(xSize * 10, ySize * 8)), frameTime),
-    ]),
-    'run': new Sprites_1.Animation([
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 0, ySize * 7), new Vec2_1.vec2(xSize * 1, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, ySize * 7), new Vec2_1.vec2(xSize * 2, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 2, ySize * 7), new Vec2_1.vec2(xSize * 3, ySize * 8)), frameTime * 1.75),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 3, ySize * 7), new Vec2_1.vec2(xSize * 4, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 4, ySize * 7), new Vec2_1.vec2(xSize * 5, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 5, ySize * 7), new Vec2_1.vec2(xSize * 6, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 6, ySize * 7), new Vec2_1.vec2(xSize * 7, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 7, ySize * 7), new Vec2_1.vec2(xSize * 8, ySize * 8)), frameTime * 1.75),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 8, ySize * 7), new Vec2_1.vec2(xSize * 9, ySize * 8)), frameTime),
-        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 9, ySize * 7), new Vec2_1.vec2(xSize * 10, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 8 + 7, ySize * 7), new Vec2_1.vec2(xSize * 9, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 9 + 4, ySize * 7), new Vec2_1.vec2(xSize * 10, ySize * 8)), frameTime),
     ])
 };
+anims['run'] = new Sprites_1.Animation([
+    anims['walk'].frames[0],
+    anims['walk'].frames[1],
+    new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 2, ySize * 7), new Vec2_1.vec2(xSize * 3, ySize * 8)), frameTime * 1.75),
+    anims['walk'].frames[2],
+    anims['walk'].frames[3],
+    anims['walk'].frames[4],
+    anims['walk'].frames[5],
+    new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 7, ySize * 7), new Vec2_1.vec2(xSize * 8, ySize * 8)), frameTime * 1.75),
+    anims['walk'].frames[6],
+    anims['walk'].frames[7],
+]);
 var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], new Vec2_1.vec2(xSize, ySize), new Vec2_1.vec2(10, 10), anims);
 Obj_1.Obj.addObj(player);
 function tick() {
@@ -70,9 +70,7 @@ function draw() {
         var obj = Obj_1.Obj.store[v];
         var frame = obj.getAnimFrame();
         ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), obj.pos.x, obj.pos.y, frame.subImg.getWidth(), frame.subImg.getHeight());
-        ctx.fillStyle = "black";
-        ctx.strokeRect(Math.round(obj.pos.x), Math.round(obj.pos.y), Math.round(obj.size.x), Math.round(obj.size.y));
-        ctx.fillText(obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y);
+        ctx.font = "24pt Roboto";
     });
 }
 function getCenter() {
