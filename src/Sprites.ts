@@ -1,5 +1,4 @@
 import { vec2, bbox } from "./Vec2";
-// import * as spr_link from "img/spritesheet_link.png"
 
 export class Img {
 	id: string = '';
@@ -30,7 +29,22 @@ export class Frame {
 
 export class Animation {
 	frames: Frame[] = [];
+	id: string;
+	tick: number = 0;
+	currentFrame: number = 0;
+	constructor(frames: Frame[]) {
+		this.frames = frames ?? this.frames;
+	}
+	tickFrame() {
+		this.tick++;
+		if (this.tick > this.frames[this.currentFrame].duration) {
+			// Move to next frame.
+			this.currentFrame++;
+			this.currentFrame %= this.frames.length;
+			this.tick = 0;
+		}
+	}
+	getCurrentFrame() {
+		return this.frames[this.currentFrame];
+	}
 }
-
-let link: Img = new Img('spritesheet_link', "/spritesheet_link.png");
-Img.addImg(link);

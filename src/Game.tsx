@@ -1,14 +1,49 @@
-import { vec2 } from "./Vec2";
-import * as Sprites from "./Sprites";
+import { bbox, vec2 } from "./Vec2";
 import { Obj } from "./Obj";
-import { Img } from "./Sprites";
+import { Img, Animation, Frame } from "./Sprites";
 
 var inputState: { [id: string]: boolean } = {};
 
 window.onkeydown = e => inputState[e.key] = true;
 window.onkeyup = e => inputState[e.key] = false;
 
-const player = new Obj('player', Img.store['spritesheet_link'], new vec2(50, 50), new vec2(10, 10));
+
+let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
+Img.addImg(spritesheet_link);
+let xSize = 102.4;
+let ySize = 110.875;
+let frameTime = 4;
+let anims = {
+	'idle': new Animation([
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 0, 0), new vec2(xSize * 1, ySize)), frameTime * 32),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, 0), new vec2(xSize * 2, ySize)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 2, 0), new vec2(xSize * 3, ySize)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, 0), new vec2(xSize * 2, ySize)), frameTime),
+	]),
+	'walk': new Animation([
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 0, ySize * 7), new vec2(xSize * 1, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, ySize * 7), new vec2(xSize * 2, ySize * 8)), frameTime * 1.75),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 3, ySize * 7), new vec2(xSize * 4, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 4, ySize * 7), new vec2(xSize * 5, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 5, ySize * 7), new vec2(xSize * 6, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 6, ySize * 7), new vec2(xSize * 7, ySize * 8)), frameTime * 1.75),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 8, ySize * 7), new vec2(xSize * 9, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 9, ySize * 7), new vec2(xSize * 10, ySize * 8)), frameTime),
+	]),
+	'run': new Animation([
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 0, ySize * 7), new vec2(xSize * 1, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 1, ySize * 7), new vec2(xSize * 2, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 2, ySize * 7), new vec2(xSize * 3, ySize * 8)), frameTime * 1.75),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 3, ySize * 7), new vec2(xSize * 4, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 4, ySize * 7), new vec2(xSize * 5, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 5, ySize * 7), new vec2(xSize * 6, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 6, ySize * 7), new vec2(xSize * 7, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 7, ySize * 7), new vec2(xSize * 8, ySize * 8)), frameTime * 1.75),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 8, ySize * 7), new vec2(xSize * 9, ySize * 8)), frameTime),
+		new Frame(spritesheet_link, new bbox(new vec2(xSize * 9, ySize * 7), new vec2(xSize * 10, ySize * 8)), frameTime),
+	]),
+}
+const player = new Obj('player', Img.store['spritesheet_link'], new vec2(xSize, ySize), new vec2(10, 10), anims);
 Obj.addObj(player);
 
 function tick() {
@@ -20,6 +55,10 @@ function tick() {
 	//Normalize
 	move = move.normalize();
 	let plyr = Obj.store['player']
+	plyr.animState = move.length() > 0 ? (
+		inputState.Shift ? 'run' : 'walk'
+	) : 'idle';
+	plyr.tickAnimFrame();
 	plyr.pos.x += (move.x ?? 0) * speed;
 	plyr.pos.y += (move.y ?? 0) * speed;
 	plyr.pos = new vec2(
@@ -43,8 +82,18 @@ function draw() {
 		// debugger;
 
 		// console.log(obj.image.element);
-		ctx.drawImage(obj.image.element, obj.pos.x, obj.pos.y);
-		document.getElementById("root")?.append(obj.image.element);
+		let frame = obj.getAnimFrame();
+		ctx.drawImage(
+			frame.image.element, //image
+			frame.subImg.topLeft.x, //subx
+			frame.subImg.topLeft.y, //suby
+			frame.subImg.getWidth(), //subw
+			frame.subImg.getHeight(), //subh
+			obj.pos.x, //posx
+			obj.pos.y, //posy
+			frame.subImg.getWidth(), //width
+			frame.subImg.getHeight(), //height
+		);
 		ctx.fillStyle = "black";
 		ctx.strokeRect(
 			Math.round(obj.pos.x),
@@ -52,6 +101,11 @@ function draw() {
 			Math.round(obj.size.x),
 			Math.round(obj.size.y),
 		);
+		ctx.fillText(
+			obj.animations[obj.animState].currentFrame.toString(),
+			obj.pos.x,
+			obj.pos.y
+		)
 	});
 }
 
@@ -62,6 +116,6 @@ function getCenter() {
 	};
 }
 
-let refresh = 120;
+let refresh = 60;
 let drawThread = setInterval(draw, 1000 / refresh);
 let gameThread = setInterval(tick, 1000 / refresh);

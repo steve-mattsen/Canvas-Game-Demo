@@ -6,7 +6,42 @@ var Sprites_1 = require("./Sprites");
 var inputState = {};
 window.onkeydown = function (e) { return inputState[e.key] = true; };
 window.onkeyup = function (e) { return inputState[e.key] = false; };
-var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], new Vec2_1.vec2(50, 50), new Vec2_1.vec2(10, 10));
+var spritesheet_link = new Sprites_1.Img('spritesheet_link', "/spritesheet_link.png");
+Sprites_1.Img.addImg(spritesheet_link);
+var xSize = 102.4;
+var ySize = 110.875;
+var frameTime = 4;
+var anims = {
+    'idle': new Sprites_1.Animation([
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 0, 0), new Vec2_1.vec2(xSize * 1, ySize)), frameTime * 32),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, 0), new Vec2_1.vec2(xSize * 2, ySize)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 2, 0), new Vec2_1.vec2(xSize * 3, ySize)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, 0), new Vec2_1.vec2(xSize * 2, ySize)), frameTime),
+    ]),
+    'walk': new Sprites_1.Animation([
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 0, ySize * 7), new Vec2_1.vec2(xSize * 1, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, ySize * 7), new Vec2_1.vec2(xSize * 2, ySize * 8)), frameTime * 1.75),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 3, ySize * 7), new Vec2_1.vec2(xSize * 4, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 4, ySize * 7), new Vec2_1.vec2(xSize * 5, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 5, ySize * 7), new Vec2_1.vec2(xSize * 6, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 6, ySize * 7), new Vec2_1.vec2(xSize * 7, ySize * 8)), frameTime * 1.75),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 8, ySize * 7), new Vec2_1.vec2(xSize * 9, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 9, ySize * 7), new Vec2_1.vec2(xSize * 10, ySize * 8)), frameTime),
+    ]),
+    'run': new Sprites_1.Animation([
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 0, ySize * 7), new Vec2_1.vec2(xSize * 1, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 1, ySize * 7), new Vec2_1.vec2(xSize * 2, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 2, ySize * 7), new Vec2_1.vec2(xSize * 3, ySize * 8)), frameTime * 1.75),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 3, ySize * 7), new Vec2_1.vec2(xSize * 4, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 4, ySize * 7), new Vec2_1.vec2(xSize * 5, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 5, ySize * 7), new Vec2_1.vec2(xSize * 6, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 6, ySize * 7), new Vec2_1.vec2(xSize * 7, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 7, ySize * 7), new Vec2_1.vec2(xSize * 8, ySize * 8)), frameTime * 1.75),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 8, ySize * 7), new Vec2_1.vec2(xSize * 9, ySize * 8)), frameTime),
+        new Sprites_1.Frame(spritesheet_link, new Vec2_1.bbox(new Vec2_1.vec2(xSize * 9, ySize * 7), new Vec2_1.vec2(xSize * 10, ySize * 8)), frameTime),
+    ])
+};
+var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], new Vec2_1.vec2(xSize, ySize), new Vec2_1.vec2(10, 10), anims);
 Obj_1.Obj.addObj(player);
 function tick() {
     var _a, _b;
@@ -14,6 +49,8 @@ function tick() {
     var speed = inputState.Shift ? 8 : 2;
     move = move.normalize();
     var plyr = Obj_1.Obj.store['player'];
+    plyr.animState = move.length() > 0 ? (inputState.Shift ? 'run' : 'walk') : 'idle';
+    plyr.tickAnimFrame();
     plyr.pos.x += ((_a = move.x) !== null && _a !== void 0 ? _a : 0) * speed;
     plyr.pos.y += ((_b = move.y) !== null && _b !== void 0 ? _b : 0) * speed;
     plyr.pos = new Vec2_1.vec2(plyr.pos.x < 0 ? (window.innerWidth + plyr.pos.x) : plyr.pos.x %= window.innerWidth, plyr.pos.y < 0 ? (window.innerHeight + plyr.pos.y) : plyr.pos.y %= window.innerHeight);
@@ -30,12 +67,12 @@ function draw() {
         return;
     }
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
-        var _a;
         var obj = Obj_1.Obj.store[v];
-        ctx.drawImage(obj.image.element, obj.pos.x, obj.pos.y);
-        (_a = document.getElementById("root")) === null || _a === void 0 ? void 0 : _a.append(obj.image.element);
+        var frame = obj.getAnimFrame();
+        ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), obj.pos.x, obj.pos.y, frame.subImg.getWidth(), frame.subImg.getHeight());
         ctx.fillStyle = "black";
         ctx.strokeRect(Math.round(obj.pos.x), Math.round(obj.pos.y), Math.round(obj.size.x), Math.round(obj.size.y));
+        ctx.fillText(obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y);
     });
 }
 function getCenter() {
@@ -44,7 +81,7 @@ function getCenter() {
         y: window.innerHeight / 2
     };
 }
-var refresh = 120;
+var refresh = 60;
 var drawThread = setInterval(draw, 1000 / refresh);
 var gameThread = setInterval(tick, 1000 / refresh);
 //# sourceMappingURL=Game.js.map

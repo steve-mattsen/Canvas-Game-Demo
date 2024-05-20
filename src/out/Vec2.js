@@ -37,6 +37,12 @@ var bbox = (function () {
     bbox.prototype.getCenter = function () {
         return new vec2((this.topLeft.x + this.bottomRight.x) / 2, (this.topLeft.y + this.bottomRight.y) / 2);
     };
+    bbox.prototype.getWidth = function () {
+        return this.bottomRight.x - this.topLeft.x;
+    };
+    bbox.prototype.getHeight = function () {
+        return this.bottomRight.y - this.topLeft.y;
+    };
     return bbox;
 }());
 exports.bbox = bbox;

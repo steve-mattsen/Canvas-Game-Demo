@@ -31,12 +31,24 @@ var Frame = (function () {
 }());
 exports.Frame = Frame;
 var Animation = (function () {
-    function Animation() {
+    function Animation(frames) {
         this.frames = [];
+        this.tick = 0;
+        this.currentFrame = 0;
+        this.frames = frames !== null && frames !== void 0 ? frames : this.frames;
     }
+    Animation.prototype.tickFrame = function () {
+        this.tick++;
+        if (this.tick > this.frames[this.currentFrame].duration) {
+            this.currentFrame++;
+            this.currentFrame %= this.frames.length;
+            this.tick = 0;
+        }
+    };
+    Animation.prototype.getCurrentFrame = function () {
+        return this.frames[this.currentFrame];
+    };
     return Animation;
 }());
 exports.Animation = Animation;
-var link = new Img('spritesheet_link', "/spritesheet_link.png");
-Img.addImg(link);
 //# sourceMappingURL=Sprites.js.map

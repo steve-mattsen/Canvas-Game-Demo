@@ -39,4 +39,10 @@ export class bbox {
 			(this.topLeft.y + this.bottomRight.y) / 2,
 		)
 	}
+	getWidth() {
+		return this.bottomRight.x - this.topLeft.x;
+	}
+	getHeight() {
+		return this.bottomRight.y - this.topLeft.y;
+	}
 }
