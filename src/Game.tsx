@@ -110,7 +110,7 @@ function draw() {
 	}
 
 	ctx.fillStyle = "black";
-	if (boxMode) {
+	if (boxMode !== 1) {
 		ctx.fillRect(
 			Math.floor(plyr.pos.x),
 			Math.floor(plyr.pos.y),
@@ -124,7 +124,7 @@ function draw() {
 
 		let frame = obj.getAnimFrame();
 
-		if (!(obj.id === 'player' && boxMode === 1)) {
+		if (!(obj.id === 'player' && boxMode === 0)) {
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
