@@ -6,10 +6,13 @@ import "./World";
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
 var boxMode = false;
+var spriteSheetMode = false;
+var showPlayer = true;
+var slowMo = false;
 
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
-	if (['tab', 'f1', 'f2'].indexOf(key) > -1) {
+	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
 	if (!inputState[key]) {
@@ -19,6 +22,17 @@ window.onkeydown = e => {
 		debugMode = !debugMode;
 	} else if (inputState.f2 == 1) {
 		boxMode = !boxMode;
+	} else if (inputState.f3 == 1) {
+		spriteSheetMode = !spriteSheetMode;
+	} else if (inputState.f4 == 1) {
+		showPlayer = !showPlayer;
+	} else if (inputState.f5 == 1) {
+		slowMo = !slowMo;
+		clearTimeout(drawThread)
+		clearTimeout(gameThread)
+		let refresh = slowMo ? 15 : 59.67;
+		drawThread = setInterval(draw, 1000 / refresh);
+		gameThread = setInterval(tick, 1000 / refresh);
 	}
 }
 window.onkeyup = e => {
@@ -78,24 +92,27 @@ function draw() {
 		let obj = Obj.store[v];
 
 		let frame = obj.getAnimFrame();
-		ctx.drawImage(
-			frame.image.element, //image
-			frame.subImg.topLeft.x, //subx
-			frame.subImg.topLeft.y, //suby
-			frame.subImg.getWidth(), //subw
-			frame.subImg.getHeight(), //subh
-			Math.floor(obj.pos.x), //posx
-			Math.floor(obj.pos.y), //posy
-			frame.subImg.getWidth(), //width
-			frame.subImg.getHeight(), //height
-		);
+
 		ctx.fillStyle = "black";
 		if (boxMode) {
-			ctx.strokeRect(
+			ctx.fillRect(
 				Math.floor(obj.pos.x),
 				Math.floor(obj.pos.y),
 				Math.floor(obj.size.x),
 				Math.floor(obj.size.y),
+			);
+		}
+		if (showPlayer) {
+			ctx.drawImage(
+				frame.image.element, //image
+				frame.subImg.topLeft.x, //subx
+				frame.subImg.topLeft.y, //suby
+				frame.subImg.getWidth(), //subw
+				frame.subImg.getHeight(), //subh
+				Math.floor(obj.pos.x), //posx
+				Math.floor(obj.pos.y), //posy
+				frame.subImg.getWidth(), //width
+				frame.subImg.getHeight(), //height
 			);
 		}
 		if (!debugMode) {
@@ -131,9 +148,19 @@ function draw() {
 			)
 		});
 	});
+	if (spriteSheetMode) {
+		let plyr = Obj.store['player'];
+		let frame = plyr.getAnimFrame();
+		ctx.fillRect(
+			frame.subImg.topLeft.x,
+			frame.subImg.topLeft.y,
+			frame.subImg.getWidth(),
+			frame.subImg.getHeight(),
+		);
+		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
+	}
 }
 
-let refresh = 59.67;
-// refresh = 15;
+let refresh = slowMo ? 15 : 59.67;
 let drawThread = setInterval(draw, 1000 / refresh);
 let gameThread = setInterval(tick, 1000 / refresh);
