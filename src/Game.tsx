@@ -58,18 +58,19 @@ function tick() {
 	let plyr = Obj.store['player'];
 
 	let previousAnim = plyr.animState;
-	plyr.animState = 'idle';
 	if (move.length() > 0) {
-		plyr.animState = inputState.shift ? 'run' : 'walk'
+		plyr.animState = plyr.animState.replace('idle', inputState.shift ? 'run' : 'walk');
+	} else {
+		plyr.animState = plyr.animState.replace(/(walk|run)/, 'idle');
 	}
 	if (move.x > 0) {
-		plyr.animState += "_right";
+		plyr.animState = plyr.animState.replace(/_.*/, "_right");
 	} else if (move.x < 0) {
-		plyr.animState += "_left";
+		plyr.animState = plyr.animState.replace(/_.*/, "_left");
 	} else if (move.y > 0) {
-		plyr.animState += "_down";
+		plyr.animState = plyr.animState.replace(/_.*/, "_down");
 	} else if (move.y < 0) {
-		plyr.animState += "_up";
+		plyr.animState = plyr.animState.replace(/_.*/, "_up");
 	}
 	if (previousAnim != plyr.animState) {
 		plyr.animations[plyr.animState].currentFrame = 0;
@@ -103,8 +104,8 @@ function draw() {
 			ctx.fillRect(
 				Math.floor(obj.pos.x),
 				Math.floor(obj.pos.y),
-				Math.floor(obj.size.x),
-				Math.floor(obj.size.y),
+				Math.ceil(obj.size.x),
+				Math.ceil(obj.size.y),
 			);
 		}
 		if (showPlayer) {
@@ -132,7 +133,7 @@ function draw() {
 		ctx.fillText(
 			obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
 			obj.pos.x,
-			obj.pos.y + obj.size.y + 24,
+			obj.pos.y + obj.size.y + 18,
 		)
 		ctx.fillText(`
 			window height: ${window.innerHeight}\n

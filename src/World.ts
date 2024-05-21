@@ -11,8 +11,17 @@ let ss = new SpriteSheet(spritesheet_link,
 )
 let anims: { [id: string]: Animation } = {};
 
-anims.idle = ss.getAnim([0], [0,1,2,1]);
-anims.idle.frames[0].duration = 96;
+let idleFrames = [0,1,2,1];
+anims.idle_down = ss.getAnim([0], idleFrames);
+anims.idle_left = ss.getAnim([1], idleFrames);
+anims.idle_up = ss.getAnim([2], [0]);
+anims.idle_right = ss.getAnim([3], idleFrames);
+
+let blinkInterval = 320;
+anims.idle_down.frames[0].duration = blinkInterval;
+anims.idle_left.frames[0].duration = blinkInterval;
+anims.idle_right.frames[0].duration = blinkInterval;
+
 
 let walkFrames = [0,1,3,4,5,6,8,9];
 let walkFrameDuration = 8;
@@ -51,4 +60,5 @@ const player = new Obj(
 	), 
 	anims
 );
+player.animState = 'idle_down';
 Obj.addObj(player);
