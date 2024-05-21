@@ -6,37 +6,35 @@ var Sprites_1 = require("./Sprites");
 require("./World");
 var inputState = {};
 var debugMode = false;
-var boxMode = false;
+var boxMode = 0;
 var spriteSheetMode = false;
-var showPlayer = true;
-var slowMo = false;
+var slowMode = false;
 window.onkeydown = function (e) {
     var key = e.key.toLowerCase();
-    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5'].indexOf(key) > -1) {
+    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f10'].indexOf(key) > -1) {
         e.preventDefault();
     }
     if (!inputState[key]) {
         inputState[key] = 1;
     }
     if (inputState.f1 == 1) {
-        debugMode = !debugMode;
+        boxMode = (++boxMode % 3);
     }
     else if (inputState.f2 == 1) {
-        boxMode = !boxMode;
-    }
-    else if (inputState.f3 == 1) {
         spriteSheetMode = !spriteSheetMode;
     }
-    else if (inputState.f4 == 1) {
-        showPlayer = !showPlayer;
+    else if (inputState.f3 == 1) {
     }
-    else if (inputState.f5 == 1) {
-        slowMo = !slowMo;
+    else if (inputState.f4 == 1) {
+        slowMode = !slowMode;
         clearTimeout(drawThread);
         clearTimeout(gameThread);
-        var refresh_1 = slowMo ? 15 : 59.67;
+        var refresh_1 = slowMode ? 15 : 59.67;
         drawThread = setInterval(draw, 1000 / refresh_1);
         gameThread = setInterval(tick, 1000 / refresh_1);
+    }
+    else if (inputState.f10 == 1) {
+        debugMode = !debugMode;
     }
 };
 window.onkeyup = function (e) {
@@ -94,21 +92,28 @@ function draw() {
     if (ctx === null) {
         return;
     }
+    var plyr = Obj_1.Obj.store['player'];
+    if (spriteSheetMode) {
+        var frame = plyr.getAnimFrame();
+        ctx.fillStyle = "red";
+        ctx.fillRect(frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight());
+        ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
+    }
+    ctx.fillStyle = "black";
+    if (boxMode) {
+        ctx.fillRect(Math.floor(plyr.pos.x), Math.floor(plyr.pos.y), Math.ceil(plyr.size.x), Math.ceil(plyr.size.y));
+    }
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
         var frame = obj.getAnimFrame();
-        ctx.fillStyle = "black";
-        if (boxMode) {
-            ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), Math.ceil(obj.size.x), Math.ceil(obj.size.y));
-        }
-        if (showPlayer) {
+        if (!(obj.id == 'player' && boxMode == 1)) {
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!debugMode) {
             return;
         }
         ctx.font = "18px Roboto";
-        ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y);
+        ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
         ctx.fillText("\n\t\t\twindow height: ".concat(window.innerHeight, "\n\n\t\t\twindow width: ").concat(window.innerWidth), 0, 18);
         var count = 0;
@@ -121,14 +126,8 @@ function draw() {
             ctx.fillText("".concat(v, " : ").concat(inputState[v]), window.innerWidth, count++ * 18);
         });
     });
-    if (spriteSheetMode) {
-        var plyr = Obj_1.Obj.store['player'];
-        var frame = plyr.getAnimFrame();
-        ctx.fillRect(frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight());
-        ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
-    }
 }
-var refresh = slowMo ? 15 : 59.67;
+var refresh = slowMode ? 15 : 59.67;
 var drawThread = setInterval(draw, 1000 / refresh);
 var gameThread = setInterval(tick, 1000 / refresh);
 //# sourceMappingURL=Game.js.map

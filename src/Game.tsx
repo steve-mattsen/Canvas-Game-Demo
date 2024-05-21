@@ -5,34 +5,32 @@ import "./World";
 
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
-var boxMode = false;
+var boxMode = 0;
 var spriteSheetMode = false;
-var showPlayer = true;
-var slowMo = false;
+var slowMode = false;
 
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
-	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5'].indexOf(key) > -1) {
+	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f10'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
 	if (!inputState[key]) {
 		inputState[key] = 1;
 	}
 	if (inputState.f1 == 1) {
-		debugMode = !debugMode;
+		boxMode = (++boxMode % 3);
 	} else if (inputState.f2 == 1) {
-		boxMode = !boxMode;
-	} else if (inputState.f3 == 1) {
 		spriteSheetMode = !spriteSheetMode;
+	} else if (inputState.f3 == 1) {
 	} else if (inputState.f4 == 1) {
-		showPlayer = !showPlayer;
-	} else if (inputState.f5 == 1) {
-		slowMo = !slowMo;
+		slowMode = !slowMode;
 		clearTimeout(drawThread)
 		clearTimeout(gameThread)
-		let refresh = slowMo ? 15 : 59.67;
+		let refresh = slowMode ? 15 : 59.67;
 		drawThread = setInterval(draw, 1000 / refresh);
 		gameThread = setInterval(tick, 1000 / refresh);
+	} else if (inputState.f10 == 1) {
+		debugMode = !debugMode;
 	}
 }
 window.onkeyup = e => {
@@ -94,21 +92,37 @@ function draw() {
 	if (ctx === null) {
 		return;
 	}
+
+	let plyr = Obj.store['player'];
+
+	if (spriteSheetMode) {
+		let frame = plyr.getAnimFrame();
+		ctx.fillStyle = "red";
+		ctx.fillRect(
+			frame.subImg.topLeft.x,
+			frame.subImg.topLeft.y,
+			frame.subImg.getWidth(),
+			frame.subImg.getHeight(),
+		);
+		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
+	}
+
+	ctx.fillStyle = "black";
+	if (boxMode) {
+		ctx.fillRect(
+			Math.floor(plyr.pos.x),
+			Math.floor(plyr.pos.y),
+			Math.ceil(plyr.size.x),
+			Math.ceil(plyr.size.y),
+		);
+	}
+
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
 
 		let frame = obj.getAnimFrame();
 
-		ctx.fillStyle = "black";
-		if (boxMode) {
-			ctx.fillRect(
-				Math.floor(obj.pos.x),
-				Math.floor(obj.pos.y),
-				Math.ceil(obj.size.x),
-				Math.ceil(obj.size.y),
-			);
-		}
-		if (showPlayer) {
+		if (!(obj.id == 'player' && boxMode == 1)) {
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
@@ -128,7 +142,7 @@ function draw() {
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
 			obj.pos.x,
-			obj.pos.y,
+			obj.pos.y - 2,
 		);
 		ctx.fillText(
 			obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
@@ -154,19 +168,8 @@ function draw() {
 			)
 		});
 	});
-	if (spriteSheetMode) {
-		let plyr = Obj.store['player'];
-		let frame = plyr.getAnimFrame();
-		ctx.fillRect(
-			frame.subImg.topLeft.x,
-			frame.subImg.topLeft.y,
-			frame.subImg.getWidth(),
-			frame.subImg.getHeight(),
-		);
-		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
-	}
 }
 
-let refresh = slowMo ? 15 : 59.67;
+let refresh = slowMode ? 15 : 59.67;
 let drawThread = setInterval(draw, 1000 / refresh);
 let gameThread = setInterval(tick, 1000 / refresh);

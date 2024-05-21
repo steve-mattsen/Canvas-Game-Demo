@@ -17,7 +17,7 @@ anims.idle_left = ss.getAnim([1], idleFrames);
 anims.idle_up = ss.getAnim([2], [0]);
 anims.idle_right = ss.getAnim([3], idleFrames);
 
-let blinkInterval = 320;
+let blinkInterval = 60;
 anims.idle_down.frames[0].duration = blinkInterval;
 anims.idle_left.frames[0].duration = blinkInterval;
 anims.idle_right.frames[0].duration = blinkInterval;
