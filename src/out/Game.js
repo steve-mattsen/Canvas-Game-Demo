@@ -124,6 +124,41 @@ function draw() {
             ctx.fillText("".concat(v, " : ").concat(inputState[v]), window.innerWidth, count++ * 18);
         });
     });
+    var modes = [
+        {
+            key: 'f1',
+            "var": boxMode,
+            title: 'player'
+        }, {
+            key: 'f2',
+            "var": spriteSheetMode,
+            title: 'spritesheet'
+        }, {
+            key: 'f3',
+            "var": slowMode,
+            title: 'slow'
+        }, {
+            key: 'f10',
+            "var": debugMode,
+            title: 'debug'
+        }
+    ];
+    modes.reverse();
+    modes.forEach(function (v, i) {
+        var buttonWidth = 100;
+        var buttonHeight = 24;
+        var margin = 5;
+        var buttonX = window.innerWidth - (buttonWidth * (i + 1)) - (margin * (i + 1));
+        var buttonY = window.innerHeight - buttonHeight - margin;
+        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "darkgray" : "gray") : "white";
+        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.font = "".concat(buttonHeight / 1.5, "px Roboto");
+        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + buttonWidth / 2, buttonY + buttonHeight / 1.5, buttonWidth);
+    });
 }
 var refresh = slowMode ? 15 : 59.67;
 var drawThread = setInterval(draw, 1000 / refresh);

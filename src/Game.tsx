@@ -167,6 +167,58 @@ function draw() {
 			)
 		});
 	});
+
+	// Draw optional keys and states
+	let modes = [
+		{
+			key: 'f1',
+			var: boxMode,
+			title: 'player',
+		}, {
+			key: 'f2',
+			var: spriteSheetMode,
+			title: 'spritesheet',
+		}, {
+			key: 'f3',
+			var: slowMode,
+			title: 'slow'
+		}, {
+			key: 'f10',
+			var: debugMode,
+			title: 'debug'
+		}
+	]
+	modes.reverse();
+	modes.forEach((v, i) => {
+		let buttonWidth = 100;
+		let buttonHeight = 24;
+		let margin = 5;
+		let buttonX = window.innerWidth - (buttonWidth * (i + 1)) - (margin * (i + 1));
+		let buttonY = window.innerHeight - buttonHeight - margin;
+		ctx.fillStyle = v.var ? (v.var === 2 ? "darkgray" : "gray") : "white";
+		ctx.fillRect(
+			buttonX,
+			buttonY,
+			buttonWidth,
+			buttonHeight,
+		)
+		ctx.strokeStyle = "black";
+		ctx.strokeRect(
+			buttonX,
+			buttonY,
+			buttonWidth,
+			buttonHeight,
+		)
+		ctx.fillStyle = "black";
+		ctx.textAlign = "center";
+		ctx.font = `${buttonHeight / 1.5}px Roboto`;
+		ctx.fillText(
+			`${v.key}: ${v.title}`,
+			buttonX + buttonWidth / 2,
+			buttonY + buttonHeight / 1.5,
+			buttonWidth,
+		)
+	});
 }
 
 let refresh = slowMode ? 15 : 59.67;
