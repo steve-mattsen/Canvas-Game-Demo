@@ -56,6 +56,8 @@ function tick() {
 	//Normalize
 	move = move.normalize();
 	let plyr = Obj.store['player'];
+
+	let previousAnim = plyr.animState;
 	plyr.animState = 'idle';
 	if (move.length() > 0) {
 		plyr.animState = inputState.shift ? 'run' : 'walk'
@@ -68,6 +70,9 @@ function tick() {
 		plyr.animState += "_down";
 	} else if (move.y < 0) {
 		plyr.animState += "_up";
+	}
+	if (previousAnim != plyr.animState) {
+		plyr.animations[plyr.animState].currentFrame = 0;
 	}
 	plyr.tickAnimFrame();
 	plyr.pos.x += (move.x ?? 0) * speed;
