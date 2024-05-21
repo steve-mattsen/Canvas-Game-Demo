@@ -56,10 +56,10 @@ function tick() {
     var plyr = Obj_1.Obj.store['player'];
     var previousAnim = plyr.animState;
     if (move.length() > 0) {
-        plyr.animState = plyr.animState.replace('idle', inputState.shift ? 'run' : 'walk');
+        plyr.animState = plyr.animState.replace(/(.*)_/, inputState.shift ? 'run_' : 'walk_');
     }
     else {
-        plyr.animState = plyr.animState.replace(/(walk|run)/, 'idle');
+        plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
     }
     if (move.x > 0) {
         plyr.animState = plyr.animState.replace(/_.*/, "_right");
