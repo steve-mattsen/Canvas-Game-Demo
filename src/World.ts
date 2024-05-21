@@ -1,76 +1,46 @@
 
-import {Img, Animation, Frame} from "./Sprites"
+import {Img, Animation, Frame, SpriteSheet} from "./Sprites"
 import {Obj} from "./Obj"
-import {vec2} from "./Vec2"
+import {bbox, vec2} from "./Vec2"
 let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
+spritesheet_link.size = new vec2(1024, 887);
 Img.addImg(spritesheet_link);
+let ss = new SpriteSheet(spritesheet_link, 
+	[0, 110.875, 221.75, 332.625, 443.5, 554.375, 665.25, 776.125 ],
+	[0, 102.4, 204.8, 307.2, 409.6, 512, 614.4, 716.8, 819.2, 921.6	],
+)
+let anims: { [id: string]: Animation } = {};
+
+anims.idle = ss.getAnim([0], [0,1,2,1]);
+anims.idle.frames[0].duration = 96;
+
+let walkFrames = [0,1,3,4,5,6,8,9];
+let walkFrameDuration = 8;
+anims.walk_right = ss.getAnim([7], walkFrames, walkFrameDuration);
+anims.walk_left = ss.getAnim([5], walkFrames, walkFrameDuration);
+anims.walk_down = ss.getAnim([4], walkFrames, walkFrameDuration);
+anims.walk_up = ss.getAnim([6], walkFrames, walkFrameDuration);
+
+let runFrames = [0,1,2,3,4,5,6,7,8,9];
+let runFrameDuration = 2
+anims.run_right = ss.getAnim([7], runFrames, runFrameDuration);
+anims.run_left = ss.getAnim([5], runFrames, runFrameDuration);
+anims.run_down = ss.getAnim([4], runFrames, runFrameDuration);
+anims.run_up = ss.getAnim([6], runFrames, runFrameDuration);
+
+let lungeDuration = 7;
+anims.run_right.frames[2].duration = lungeDuration;
+anims.run_right.frames[7].duration = lungeDuration;
+anims.run_left.frames[2].duration = lungeDuration;
+anims.run_left.frames[7].duration = lungeDuration;
+anims.run_down.frames[2].duration = lungeDuration;
+anims.run_down.frames[7].duration = lungeDuration;
+anims.run_up.frames[2].duration = lungeDuration;
+anims.run_up.frames[7].duration = lungeDuration;
+
+
 let xSize = 102.4;
 let ySize = 111.25;
-let frameTime = 4;
-let anims: { [id: string]: Animation } = {};
-anims.idle = new Animation([
-		new Frame(spritesheet_link, xSize * 0, 0, xSize, ySize, frameTime * 24),
-		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 2, 0, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
-	]);
-anims.walk_right = new Animation([
-		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 7, xSize - 8, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 7, xSize - 7, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 7, xSize, ySize, frameTime),
-	]);
-anims.walk_left = new Animation([
-		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 5, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 5, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 5, xSize - 7, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 5, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 5, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 5, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 5, xSize - 8, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 5, xSize, ySize, frameTime),
-	]);
-anims.walk_down = new Animation([
-		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 4, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 4, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 4, xSize - 7, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 4, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 4, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 4, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 4, xSize - 8, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 4, xSize, ySize, frameTime),
-	]);
-anims.walk_up = new Animation([
-		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 6, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 6, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 6, xSize - 7, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 6, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 6, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 6, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 6, xSize - 8, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 6, xSize, ySize, frameTime),
-	]);
-
-anims.run_right = anims.walk_right.copy();
-anims.run_right.frames.splice(2, 0, new Frame(spritesheet_link, xSize * 2, ySize * 7, xSize, ySize, frameTime * 1.75));
-anims.run_right.frames.splice(7, 0, new Frame(spritesheet_link, xSize * 7, ySize * 7, xSize, ySize, frameTime * 1.75));
-
-anims.run_left = anims.walk_left.copy();
-anims.run_left.frames.splice(2, 0, new Frame(spritesheet_link, xSize * 2, ySize * 5, xSize, ySize, frameTime * 1.75));
-anims.run_left.frames.splice(7, 0, new Frame(spritesheet_link, xSize * 7, ySize * 5, xSize, ySize, frameTime * 1.75));
-
-anims.run_down = anims.walk_down.copy();
-anims.run_down.frames.splice(2, 0, new Frame(spritesheet_link, xSize * 2, ySize * 4, xSize, ySize, frameTime * 1.75));
-anims.run_down.frames.splice(7, 0, new Frame(spritesheet_link, xSize * 7, ySize * 4, xSize, ySize, frameTime * 1.75));
-
-anims.run_up = anims.walk_up.copy();
-anims.run_up.frames.splice(2, 0, new Frame(spritesheet_link, xSize * 2, ySize * 6, xSize, ySize, frameTime * 1.75));
-anims.run_up.frames.splice(7, 0, new Frame(spritesheet_link, xSize * 7, ySize * 6, xSize, ySize, frameTime * 1.75));
-
 const player = new Obj(
 	'player', 
 	Img.store['spritesheet_link'], 

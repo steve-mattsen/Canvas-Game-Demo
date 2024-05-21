@@ -5,12 +5,11 @@ import "./World";
 
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
+var boxMode = false;
 
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
-	if (key == 'tab') {
-		e.preventDefault();
-	} else if (key == 'f1') {
+	if (['tab', 'f1', 'f2'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
 	if (!inputState[key]) {
@@ -18,6 +17,8 @@ window.onkeydown = e => {
 	}
 	if (inputState.f1 == 1) {
 		debugMode = !debugMode;
+	} else if (inputState.f2 == 1) {
+		boxMode = !boxMode;
 	}
 }
 window.onkeyup = e => {
@@ -88,21 +89,23 @@ function draw() {
 			frame.subImg.getWidth(), //width
 			frame.subImg.getHeight(), //height
 		);
+		ctx.fillStyle = "black";
+		if (boxMode) {
+			ctx.strokeRect(
+				Math.floor(obj.pos.x),
+				Math.floor(obj.pos.y),
+				Math.floor(obj.size.x),
+				Math.floor(obj.size.y),
+			);
+		}
 		if (!debugMode) {
 			return;
 		}
-		ctx.fillStyle = "black";
-		ctx.strokeRect(
-			Math.floor(obj.pos.x),
-			Math.floor(obj.pos.y),
-			Math.floor(obj.size.x),
-			Math.floor(obj.size.y),
-		);
-		ctx.font = "24px Roboto"
+		ctx.font = "18px Roboto"
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
-			obj.pos.x - 4,
-			obj.pos.y - 4,
+			obj.pos.x,
+			obj.pos.y,
 		);
 		ctx.fillText(
 			obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
@@ -112,7 +115,7 @@ function draw() {
 		ctx.fillText(`
 			window height: ${window.innerHeight}\n
 			window width: ${window.innerWidth}`,
-			0,24
+			0,18
 		);
 		let count = 0;
 		ctx.textAlign = "right";
@@ -124,12 +127,13 @@ function draw() {
 			ctx.fillText(
 				`${v} : ${inputState[v]}`,
 				window.innerWidth,
-				count++ * 24,
+				count++ * 18,
 			)
 		});
 	});
 }
 
 let refresh = 59.67;
+// refresh = 15;
 let drawThread = setInterval(draw, 1000 / refresh);
 let gameThread = setInterval(tick, 1000 / refresh);

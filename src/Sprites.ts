@@ -4,6 +4,7 @@ export class Img {
 	id: string = '';
 	uri: string = '';
 	element: HTMLImageElement;
+	size: vec2;
 	constructor(id: string = '', uri: string = '') {
 		this.id = id ?? this.id;
 		this.uri = uri ?? this.uri;
@@ -19,7 +20,7 @@ export class Img {
 export class Frame {
 	image: Img;
 	subImg: bbox = new bbox(new vec2(0, 0), new vec2(0, 0));
-	duration: number;
+	duration: number = 4;
 	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
 		this.image = image ?? this.image;
 		this.subImg = new bbox(
@@ -57,5 +58,36 @@ export class Animation {
 	}
 	copy() {
 		return new Animation([...this.frames]);
+	}
+}
+
+export class SpriteSheet {
+	image: Img;
+	rowDims: number[] = [];
+	colDims: number[] = [];
+	constructor(image: Img, rowDims: number[], colDims: number[]) {
+		this.image = image;
+		this.rowDims = rowDims;
+		this.colDims = colDims;
+	}
+	getAnim(rows:number[], cols: number[], duration: number = 4) {
+		let frames: Frame[] = [];
+		rows.forEach(r => {
+			cols.forEach(c => {
+				let thisRowDim = this.rowDims[r];
+				let thisColDim = this.colDims[c];
+				let nextRowDim = this.rowDims[r + 1] ?? this.image.size.y;
+				let nextColumnDim = this.colDims[c + 1] ?? this.image.size.x;
+				frames.push(new Frame(
+					this.image,
+					thisColDim,
+					Math.round(thisRowDim),
+					nextColumnDim - thisColDim,
+					Math.round(nextRowDim - thisRowDim), 
+					duration ?? 4)
+				);
+			})
+		})
+		return new Animation(frames);
 	}
 }
