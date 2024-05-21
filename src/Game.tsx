@@ -16,7 +16,7 @@ function tick() {
 	let speed = inputState.Shift ? 8 : 2;
 	//Normalize
 	move = move.normalize();
-	let plyr = Obj.store['player']
+	let plyr = Obj.store['player'];
 	plyr.animState = move.length() > 0 ? (
 		inputState.Shift ? 'run' : 'walk'
 	) : 'idle';
@@ -49,8 +49,8 @@ function draw() {
 			frame.subImg.topLeft.y, //suby
 			frame.subImg.getWidth(), //subw
 			frame.subImg.getHeight(), //subh
-			obj.pos.x, //posx
-			obj.pos.y, //posy
+			Math.floor(obj.pos.x), //posx
+			Math.floor(obj.pos.y), //posy
 			frame.subImg.getWidth(), //width
 			frame.subImg.getHeight(), //height
 		);

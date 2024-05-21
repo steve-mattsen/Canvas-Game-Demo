@@ -22,7 +22,15 @@ export class Frame {
 	duration: number;
 	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
 		this.image = image ?? this.image;
-		this.subImg = new bbox(new vec2(subImgX, subImgY), new vec2(subImgX + subImgWidth, subImgY + subImgHeight));
+		this.subImg = new bbox(
+			new vec2(
+				subImgX,
+				subImgY
+			), new vec2(
+				subImgX + subImgWidth,
+				subImgY + subImgHeight
+			)
+		);
 		this.duration = duration ?? this.duration;
 	}
 }

@@ -40,9 +40,9 @@ anims['run'] = new Animation([
 const player = new Obj(
 	'player', 
 	Img.store['spritesheet_link'], 
-	new vec2(xSize, ySize), 
+	new vec2(xSize - 4, ySize), 
 	new vec2(
-		(window.innerWidth - xSize) / 2,
+		(window.innerWidth - xSize -4) / 2,
 		(window.innerHeight - ySize) / 2
 	), 
 	anims
