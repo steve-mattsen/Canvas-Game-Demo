@@ -24,8 +24,6 @@ window.onkeydown = function (e) {
         spriteSheetMode = !spriteSheetMode;
     }
     else if (inputState.f3 == 1) {
-    }
-    else if (inputState.f4 == 1) {
         slowMode = !slowMode;
         clearTimeout(drawThread);
         clearTimeout(gameThread);
