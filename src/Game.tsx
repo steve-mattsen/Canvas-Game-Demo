@@ -1,6 +1,6 @@
-import { bbox, vec2 } from "./Vec2";
+import { vec2 } from "./Vec2";
 import { Obj } from "./Obj";
-import { Img, Animation, Frame } from "./Sprites";
+import { Img } from "./Sprites";
 import "./World";
 
 var inputState: { [id: string]: number } = {};
@@ -17,18 +17,18 @@ window.onkeydown = e => {
 	if (!inputState[key]) {
 		inputState[key] = 1;
 	}
-	if (inputState.f1 == 1) {
+	if (inputState.f1 === 1) {
 		boxMode = (++boxMode % 3);
-	} else if (inputState.f2 == 1) {
+	} else if (inputState.f2 === 1) {
 		spriteSheetMode = !spriteSheetMode;
-	} else if (inputState.f3 == 1) {
+	} else if (inputState.f3 === 1) {
 		slowMode = !slowMode;
 		clearTimeout(drawThread)
 		clearTimeout(gameThread)
 		let refresh = slowMode ? 15 : 59.67;
 		drawThread = setInterval(draw, 1000 / refresh);
 		gameThread = setInterval(tick, 1000 / refresh);
-	} else if (inputState.f10 == 1) {
+	} else if (inputState.f10 === 1) {
 		debugMode = !debugMode;
 	}
 }
@@ -69,7 +69,7 @@ function tick() {
 	} else if (move.y < 0) {
 		plyr.animState = plyr.animState.replace(/_.*/, "_up");
 	}
-	if (previousAnim != plyr.animState) {
+	if (previousAnim !== plyr.animState) {
 		plyr.animations[plyr.animState].currentFrame = 0;
 	}
 	plyr.tickAnimFrame();
@@ -84,7 +84,7 @@ function draw() {
 	const canvas: HTMLCanvasElement = document.getElementById("game_window") as HTMLCanvasElement;
 	canvas.setAttribute('width', window.innerWidth + '');
 	canvas.setAttribute('height', window.innerHeight + '');
-	if (canvas.getContext == undefined) {
+	if (canvas.getContext === undefined) {
 		return;
 	}
 	let ctx = canvas.getContext('2d');
@@ -121,7 +121,7 @@ function draw() {
 
 		let frame = obj.getAnimFrame();
 
-		if (!(obj.id == 'player' && boxMode == 1)) {
+		if (!(obj.id === 'player' && boxMode === 1)) {
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
