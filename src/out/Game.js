@@ -124,6 +124,9 @@ function draw() {
             ctx.fillText("".concat(v, " : ").concat(inputState[v]), window.innerWidth, count++ * 18);
         });
     });
+    drawButtons(ctx);
+}
+function drawButtons(ctx) {
     var modes = [
         {
             key: 'f1',
@@ -148,16 +151,16 @@ function draw() {
         var buttonWidth = 100;
         var buttonHeight = 24;
         var margin = 5;
-        var buttonX = window.innerWidth - (buttonWidth * (i + 1)) - (margin * (i + 1));
-        var buttonY = window.innerHeight - buttonHeight - margin;
-        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "darkgray" : "gray") : "white";
+        var buttonX = window.innerWidth - buttonWidth - margin;
+        var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
+        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "gray" : "black") : "white";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.strokeStyle = "black";
         ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
+        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "black" : "white") : "black";
+        ctx.textAlign = "left";
         ctx.font = "".concat(buttonHeight / 1.5, "px Roboto");
-        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + buttonWidth / 2, buttonY + buttonHeight / 1.5, buttonWidth);
+        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + margin, buttonY + buttonHeight / 1.5, buttonWidth);
     });
 }
 var refresh = slowMode ? 15 : 59.67;

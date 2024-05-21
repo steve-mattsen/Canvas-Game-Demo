@@ -81,7 +81,7 @@ function tick() {
 	)
 }
 function draw() {
-	const canvas: HTMLCanvasElement = document.getElementById("game_window") as HTMLCanvasElement;
+	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	canvas.setAttribute('width', window.innerWidth + '');
 	canvas.setAttribute('height', window.innerHeight + '');
 	if (canvas.getContext === undefined) {
@@ -168,6 +168,10 @@ function draw() {
 		});
 	});
 
+	drawButtons(ctx);
+}
+
+function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
 	let modes = [
 		{
@@ -193,9 +197,9 @@ function draw() {
 		let buttonWidth = 100;
 		let buttonHeight = 24;
 		let margin = 5;
-		let buttonX = window.innerWidth - (buttonWidth * (i + 1)) - (margin * (i + 1));
-		let buttonY = window.innerHeight - buttonHeight - margin;
-		ctx.fillStyle = v.var ? (v.var === 2 ? "darkgray" : "gray") : "white";
+		let buttonX = window.innerWidth - buttonWidth - margin;
+		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
+		ctx.fillStyle = v.var ? (v.var === 2 ? "gray" : "black") : "white";
 		ctx.fillRect(
 			buttonX,
 			buttonY,
@@ -209,16 +213,17 @@ function draw() {
 			buttonWidth,
 			buttonHeight,
 		)
-		ctx.fillStyle = "black";
-		ctx.textAlign = "center";
+		ctx.fillStyle = v.var ? (v.var === 2 ? "black" : "white") : "black";
+		ctx.textAlign = "left";
 		ctx.font = `${buttonHeight / 1.5}px Roboto`;
 		ctx.fillText(
 			`${v.key}: ${v.title}`,
-			buttonX + buttonWidth / 2,
+			buttonX + margin,
 			buttonY + buttonHeight / 1.5,
 			buttonWidth,
 		)
 	});
+
 }
 
 let refresh = slowMode ? 15 : 59.67;
