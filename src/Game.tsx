@@ -31,7 +31,7 @@ window.onkeydown = e => {
 		gameThread = setInterval(tick, 1000 / refresh);
 	} else if (inputState.f4) {
 		showButtons = !showButtons;
-	} else if (inputState.f10 === 1) {
+	} else if (inputState.f9 === 1) {
 		debugMode = !debugMode;
 	}
 }
@@ -140,7 +140,8 @@ function draw() {
 		if (!debugMode) {
 			return;
 		}
-		ctx.font = "18px Roboto"
+		ctx.save();
+		ctx.font = "18px Courier"
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
 			obj.pos.x,
@@ -151,9 +152,7 @@ function draw() {
 			obj.pos.x,
 			obj.pos.y + obj.size.y + 18,
 		)
-		ctx.fillText(`
-			window height: ${window.innerHeight}\n
-			window width: ${window.innerWidth}`,
+		ctx.fillText(`window ${window.innerHeight}x${window.innerWidth}`,
 			0, 18
 		);
 		let count = 0;
@@ -169,6 +168,7 @@ function draw() {
 				count++ * 18,
 			)
 		});
+		ctx.restore();
 	});
 
 	if (showButtons) {
@@ -196,7 +196,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			var: showButtons,
 			title: "Buttons",
 		}, {
-			key: 'F10',
+			key: 'F9',
 			var: debugMode,
 			title: 'Debug'
 		}
@@ -234,7 +234,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			`${v.key} ${v.title}`,
 			buttonX + margin,
 			buttonY + Math.ceil(buttonHeight / 2) + margin,
-			buttonWidth,
+			buttonWidth - margin * 2,
 		)
 	});
 

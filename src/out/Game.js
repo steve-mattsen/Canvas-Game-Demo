@@ -35,7 +35,7 @@ window.onkeydown = function (e) {
     else if (inputState.f4) {
         showButtons = !showButtons;
     }
-    else if (inputState.f10 === 1) {
+    else if (inputState.f9 === 1) {
         debugMode = !debugMode;
     }
 };
@@ -114,10 +114,11 @@ function draw() {
         if (!debugMode) {
             return;
         }
-        ctx.font = "18px Roboto";
+        ctx.save();
+        ctx.font = "18px Courier";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
-        ctx.fillText("\n\t\t\twindow height: ".concat(window.innerHeight, "\n\n\t\t\twindow width: ").concat(window.innerWidth), 0, 18);
+        ctx.fillText("window ".concat(window.innerHeight, "x").concat(window.innerWidth), 0, 18);
         var count = 0;
         ctx.textAlign = "right";
         ctx.textBaseline = "top";
@@ -127,6 +128,7 @@ function draw() {
             }
             ctx.fillText("".concat(v, " : ").concat(inputState[v]), window.innerWidth, count++ * 18);
         });
+        ctx.restore();
     });
     if (showButtons) {
         drawButtons(ctx);
@@ -151,7 +153,7 @@ function drawButtons(ctx) {
             "var": showButtons,
             title: "Buttons"
         }, {
-            key: 'F10',
+            key: 'F9',
             "var": debugMode,
             title: 'Debug'
         }
@@ -175,7 +177,7 @@ function drawButtons(ctx) {
         ctx.fillStyle = colors[v["var"] ? (v["var"] === 2 ? 0 : 1) : 0];
         ctx.textAlign = "left";
         ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
-        ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth);
+        ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
     });
 }
 var refresh = slowMode ? 15 : 59.67;
