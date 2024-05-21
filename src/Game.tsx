@@ -1,56 +1,17 @@
 import { bbox, vec2 } from "./Vec2";
 import { Obj } from "./Obj";
 import { Img, Animation, Frame } from "./Sprites";
+import "./World"
 
 var inputState: { [id: string]: boolean } = {};
 
 window.onkeydown = e => inputState[e.key] = true;
 window.onkeyup = e => inputState[e.key] = false;
 
-
-let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
-Img.addImg(spritesheet_link);
-let xSize = 102.4;
-let ySize = 110.875;
-let frameTime = 4;
-let anims: { [id: string]: Animation } = {
-	'idle': new Animation([
-		new Frame(spritesheet_link, xSize * 0, 0, xSize, ySize, frameTime * 32),
-		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 2, 0, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1, 0, xSize, ySize, frameTime),
-	]),
-	'walk': new Animation([
-
-		new Frame(spritesheet_link, xSize * 9 + 4, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 8 + 7, ySize * 7, xSize - 8, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 6 + 0, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 5 + 0, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 4 + 6, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 3 + 6, ySize * 7, xSize - 7, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 1 + 2, ySize * 7, xSize, ySize, frameTime),
-		new Frame(spritesheet_link, xSize * 0 + 0, ySize * 7, xSize, ySize, frameTime),
-	])
-};
-anims['run'] = new Animation([
-	anims['walk'].frames[0],
-	anims['walk'].frames[1],
-	new Frame(spritesheet_link, xSize * 2, ySize * 7, xSize, ySize, frameTime * 1.75),
-	anims['walk'].frames[2],
-	anims['walk'].frames[3],
-	anims['walk'].frames[4],
-	anims['walk'].frames[5],
-	new Frame(spritesheet_link, xSize * 7, ySize * 7, xSize, ySize, frameTime * 1.75),
-	anims['walk'].frames[6],
-	anims['walk'].frames[7],
-]);
-const player = new Obj('player', Img.store['spritesheet_link'], new vec2(xSize, ySize), new vec2(10, 10), anims);
-Obj.addObj(player);
-
 function tick() {
 	let move = new vec2(
-		(inputState.ArrowRight ? 1 : 0) - (inputState.ArrowLeft ? 1 : 0),
-		(inputState.ArrowDown ? 1 : 0) - (inputState.ArrowUp ? 1 : 0)
+		(inputState.ArrowRight || inputState.d ? 1 : 0) - (inputState.ArrowLeft || inputState.a ? 1 : 0),
+		(inputState.ArrowDown || inputState.s ? 1 : 0) - (inputState.ArrowUp || inputState.w ? 1 : 0)
 	);
 	let speed = inputState.Shift ? 8 : 2;
 	//Normalize
@@ -63,8 +24,8 @@ function tick() {
 	plyr.pos.x += (move.x ?? 0) * speed;
 	plyr.pos.y += (move.y ?? 0) * speed;
 	plyr.pos = new vec2(
-		plyr.pos.x < 0 ? (window.innerWidth + plyr.pos.x) : plyr.pos.x %= window.innerWidth,
-		plyr.pos.y < 0 ? (window.innerHeight + plyr.pos.y) : plyr.pos.y %= window.innerHeight,
+		Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)),
+		Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y))
 	)
 }
 function draw() {
@@ -93,27 +54,30 @@ function draw() {
 			frame.subImg.getWidth(), //width
 			frame.subImg.getHeight(), //height
 		);
-		// ctx.fillStyle = "black";
-		// ctx.strokeRect(
-		// 	Math.round(obj.pos.x),
-		// 	Math.round(obj.pos.y),
-		// 	Math.round(obj.size.x),
-		// 	Math.round(obj.size.y),
-		// );
-		ctx.font = "24pt Roboto"
+		ctx.fillStyle = "black";
+		ctx.strokeRect(
+			Math.round(obj.pos.x),
+			Math.round(obj.pos.y),
+			Math.round(obj.size.x),
+			Math.round(obj.size.y),
+		);
+		ctx.font = "24px Roboto"
 		ctx.fillText(
-			obj.animations[obj.animState].currentFrame.toString(),
+			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
+			obj.pos.x - 4,
+			obj.pos.y - 4,
+		);
+		ctx.fillText(
+			obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
 			obj.pos.x,
-			obj.pos.y
+			obj.pos.y + obj.size.y + 24,
 		)
+		ctx.fillText(`
+			window height: ${window.innerHeight}\n
+			window width: ${window.innerWidth}`,
+			0,24
+		);
 	});
-}
-
-function getCenter() {
-	return {
-		x: window.innerWidth / 2,
-		y: window.innerHeight / 2,
-	};
 }
 
 let refresh = 60;
