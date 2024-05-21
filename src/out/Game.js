@@ -9,6 +9,7 @@ var debugMode = false;
 var boxMode = 0;
 var spriteSheetMode = false;
 var slowMode = false;
+var showButtons = true;
 window.onkeydown = function (e) {
     var key = e.key.toLowerCase();
     if (['tab', 'f1', 'f2', 'f3', 'f4', 'f10'].indexOf(key) > -1) {
@@ -30,6 +31,9 @@ window.onkeydown = function (e) {
         var refresh_1 = slowMode ? 15 : 59.67;
         drawThread = setInterval(draw, 1000 / refresh_1);
         gameThread = setInterval(tick, 1000 / refresh_1);
+    }
+    else if (inputState.f4) {
+        showButtons = !showButtons;
     }
     else if (inputState.f10 === 1) {
         debugMode = !debugMode;
@@ -124,7 +128,9 @@ function draw() {
             ctx.fillText("".concat(v, " : ").concat(inputState[v]), window.innerWidth, count++ * 18);
         });
     });
-    drawButtons(ctx);
+    if (showButtons) {
+        drawButtons(ctx);
+    }
 }
 function drawButtons(ctx) {
     var modes = [
@@ -141,6 +147,10 @@ function drawButtons(ctx) {
             "var": slowMode,
             title: 'Slow'
         }, {
+            key: 'F4',
+            "var": showButtons,
+            title: "Buttons"
+        }, {
             key: 'F10',
             "var": debugMode,
             title: 'Debug'
@@ -153,19 +163,19 @@ function drawButtons(ctx) {
         var margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-        var backgrounds = [
-            "#00000088",
-            "#ffffff88",
-            "#88888888",
+        var colors = [
+            "#000000",
+            "#ffffff",
+            "#888888",
         ];
-        ctx.fillStyle = backgrounds[v["var"] ? (v["var"] === 2 ? 1 : 0) : 2];
+        ctx.fillStyle = colors[v["var"] ? (v["var"] === 2 ? 2 : 0) : 1] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.strokeStyle = "black";
         ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
-        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "black" : "white") : "black";
+        ctx.fillStyle = colors[v["var"] ? (v["var"] === 2 ? 0 : 1) : 0];
         ctx.textAlign = "left";
-        ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Roboto");
-        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth);
+        ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
+        ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth);
     });
 }
 var refresh = slowMode ? 15 : 59.67;

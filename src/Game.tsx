@@ -8,6 +8,7 @@ var debugMode = false;
 var boxMode = 0;
 var spriteSheetMode = false;
 var slowMode = false;
+var showButtons = true;
 
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
@@ -28,6 +29,8 @@ window.onkeydown = e => {
 		let refresh = slowMode ? 15 : 59.67;
 		drawThread = setInterval(draw, 1000 / refresh);
 		gameThread = setInterval(tick, 1000 / refresh);
+	} else if (inputState.f4) {
+		showButtons = !showButtons;
 	} else if (inputState.f10 === 1) {
 		debugMode = !debugMode;
 	}
@@ -168,7 +171,9 @@ function draw() {
 		});
 	});
 
-	drawButtons(ctx);
+	if (showButtons) {
+		drawButtons(ctx);
+	}
 }
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
@@ -187,6 +192,10 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			var: slowMode,
 			title: 'Slow'
 		}, {
+			key: 'F4',
+			var: showButtons,
+			title: "Buttons",
+		}, {
 			key: 'F10',
 			var: debugMode,
 			title: 'Debug'
@@ -199,12 +208,12 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		let margin = Math.ceil(buttonHeight * .2);
 		let buttonX = window.innerWidth - buttonWidth - margin;
 		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-		let backgrounds = [
-			"#00000088",
-			"#ffffff88",
-			"#88888888",
+		let colors = [
+			"#000000",
+			"#ffffff",
+			"#888888",
 		]
-		ctx.fillStyle = backgrounds[v.var ? (v.var === 2 ? 1 : 0) : 2];
+		ctx.fillStyle = colors[v.var ? (v.var === 2 ? 2 : 0) : 1] + "88";
 		ctx.fillRect(
 			buttonX,
 			buttonY,
@@ -218,11 +227,11 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			buttonWidth,
 			buttonHeight,
 		)
-		ctx.fillStyle = v.var ? (v.var === 2 ? "black" : "white") : "black";
+		ctx.fillStyle = colors[v.var ? (v.var === 2 ? 0 : 1) : 0];
 		ctx.textAlign = "left";
-		ctx.font = `${Math.ceil(buttonHeight * .75)}px Roboto`;
+		ctx.font = `${Math.ceil(buttonHeight * .75)}px Courier`;
 		ctx.fillText(
-			`${v.key}: ${v.title}`,
+			`${v.key} ${v.title}`,
 			buttonX + margin,
 			buttonY + Math.ceil(buttonHeight / 2) + margin,
 			buttonWidth,
