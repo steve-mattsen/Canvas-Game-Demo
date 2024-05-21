@@ -55,4 +55,7 @@ export class Animation {
 	getCurrentFrame() {
 		return this.frames[this.currentFrame];
 	}
+	copy() {
+		return new Animation([...this.frames]);
+	}
 }

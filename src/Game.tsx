@@ -3,22 +3,36 @@ import { Obj } from "./Obj";
 import { Img, Animation, Frame } from "./Sprites";
 import "./World";
 
-var inputState: { [id: string]: boolean } = {};
+var inputState: { [id: string]: number } = {};
+var debugMode = false;
 
 window.onkeydown = e => {
-	if (e.key == 'Tab') {
+	let key = e.key.toLowerCase();
+	if (key == 'tab') {
+		e.preventDefault();
+	} else if (key == 'f1') {
 		e.preventDefault();
 	}
-	inputState[e.key.toLowerCase()] = true;
+	if (!inputState[key]) {
+		inputState[key] = 1;
+	}
+	if (inputState.f1 == 1) {
+		debugMode = !debugMode;
+	}
 }
 window.onkeyup = e => {
-	inputState[e.key.toLowerCase()] = false;
+	inputState[e.key.toLowerCase()] = 0;
 }
 window.onblur = e => {
 	inputState = {};
 }
 
 function tick() {
+	Object.keys(inputState).forEach(v => {
+		if (inputState[v] > 0) {
+			inputState[v] = inputState[v] + 1;
+		}
+	});
 	let move = new vec2(
 		(inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0),
 		(inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0)
@@ -74,6 +88,9 @@ function draw() {
 			frame.subImg.getWidth(), //width
 			frame.subImg.getHeight(), //height
 		);
+		if (!debugMode) {
+			return;
+		}
 		ctx.fillStyle = "black";
 		ctx.strokeRect(
 			Math.floor(obj.pos.x),
@@ -98,14 +115,14 @@ function draw() {
 			0,24
 		);
 		let count = 0;
-		ctx.textAlign = "right"
-		ctx.textBaseline = "top"
+		ctx.textAlign = "right";
+		ctx.textBaseline = "top";
 		Object.keys(inputState).forEach(v => {
 			if (!inputState[v]) {
 				return;
 			}
 			ctx.fillText(
-				v,
+				`${v} : ${inputState[v]}`,
 				window.innerWidth,
 				count++ * 24,
 			)
