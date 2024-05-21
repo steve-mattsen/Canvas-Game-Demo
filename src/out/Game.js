@@ -129,38 +129,43 @@ function draw() {
 function drawButtons(ctx) {
     var modes = [
         {
-            key: 'f1',
+            key: 'F1',
             "var": boxMode,
-            title: 'player'
+            title: 'Player'
         }, {
-            key: 'f2',
+            key: 'F2',
             "var": spriteSheetMode,
-            title: 'spritesheet'
+            title: 'Spritesheet'
         }, {
-            key: 'f3',
+            key: 'F3',
             "var": slowMode,
-            title: 'slow'
+            title: 'Slow'
         }, {
-            key: 'f10',
+            key: 'F10',
             "var": debugMode,
-            title: 'debug'
+            title: 'Debug'
         }
     ];
     modes.reverse();
     modes.forEach(function (v, i) {
-        var buttonWidth = 100;
-        var buttonHeight = 24;
-        var margin = 5;
+        var buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2));
+        var buttonHeight = Math.ceil(buttonWidth * .15);
+        var margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-        ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "gray" : "black") : "white";
+        var backgrounds = [
+            "#00000088",
+            "#ffffff88",
+            "#88888888",
+        ];
+        ctx.fillStyle = backgrounds[v["var"] ? (v["var"] === 2 ? 1 : 0) : 2];
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.strokeStyle = "black";
         ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.fillStyle = v["var"] ? (v["var"] === 2 ? "black" : "white") : "black";
         ctx.textAlign = "left";
-        ctx.font = "".concat(buttonHeight / 1.5, "px Roboto");
-        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + margin, buttonY + buttonHeight / 1.5, buttonWidth);
+        ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Roboto");
+        ctx.fillText("".concat(v.key, ": ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth);
     });
 }
 var refresh = slowMode ? 15 : 59.67;

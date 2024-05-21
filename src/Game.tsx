@@ -175,31 +175,36 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
 	let modes = [
 		{
-			key: 'f1',
+			key: 'F1',
 			var: boxMode,
-			title: 'player',
+			title: 'Player',
 		}, {
-			key: 'f2',
+			key: 'F2',
 			var: spriteSheetMode,
-			title: 'spritesheet',
+			title: 'Spritesheet',
 		}, {
-			key: 'f3',
+			key: 'F3',
 			var: slowMode,
-			title: 'slow'
+			title: 'Slow'
 		}, {
-			key: 'f10',
+			key: 'F10',
 			var: debugMode,
-			title: 'debug'
+			title: 'Debug'
 		}
 	]
 	modes.reverse();
 	modes.forEach((v, i) => {
-		let buttonWidth = 100;
-		let buttonHeight = 24;
-		let margin = 5;
+		let buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2));
+		let buttonHeight = Math.ceil(buttonWidth * .15);
+		let margin = Math.ceil(buttonHeight * .2);
 		let buttonX = window.innerWidth - buttonWidth - margin;
 		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-		ctx.fillStyle = v.var ? (v.var === 2 ? "gray" : "black") : "white";
+		let backgrounds = [
+			"#00000088",
+			"#ffffff88",
+			"#88888888",
+		]
+		ctx.fillStyle = backgrounds[v.var ? (v.var === 2 ? 1 : 0) : 2];
 		ctx.fillRect(
 			buttonX,
 			buttonY,
@@ -215,11 +220,11 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		)
 		ctx.fillStyle = v.var ? (v.var === 2 ? "black" : "white") : "black";
 		ctx.textAlign = "left";
-		ctx.font = `${buttonHeight / 1.5}px Roboto`;
+		ctx.font = `${Math.ceil(buttonHeight * .75)}px Roboto`;
 		ctx.fillText(
 			`${v.key}: ${v.title}`,
 			buttonX + margin,
-			buttonY + buttonHeight / 1.5,
+			buttonY + Math.ceil(buttonHeight / 2) + margin,
 			buttonWidth,
 		)
 	});
