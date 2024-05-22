@@ -71,7 +71,7 @@ export class SpriteSheet {
 		this.rowDims = rowDims;
 		this.colDims = colDims;
 	}
-	getAnim(rows:number[], cols: number[], duration: number = 4) {
+	getAnim(rows: number[], cols: number[], duration: number = 4) {
 		let frames: Frame[] = [];
 		rows.forEach(r => {
 			cols.forEach(c => {
@@ -84,7 +84,7 @@ export class SpriteSheet {
 					thisColDim,
 					Math.round(thisRowDim),
 					nextColumnDim - thisColDim,
-					Math.round(nextRowDim - thisRowDim), 
+					Math.round(nextRowDim - thisRowDim),
 					duration ?? 4)
 				);
 			})

@@ -32,7 +32,7 @@ window.onkeydown = e => {
 		gameThread = setInterval(tick, 1000 / refresh);
 	} else if (inputState.f4) {
 		showBackground = !showBackground;
-	}else if (inputState.f5) {
+	} else if (inputState.f5) {
 		showButtons = !showButtons;
 	} else if (inputState.f9 === 1) {
 		debugMode = !debugMode;
@@ -59,12 +59,12 @@ function tick() {
 	let speed: number;
 	if (gp?.axes[0] || gp?.axes[1]) {
 		move = new vec2(
-			Number(gp?.axes[0]), 
+			Number(gp?.axes[0]),
 			Number(gp?.axes[1])
 		);
 		speed = move.length() * runSpeed;
 	} else {
-		let moveX = (inputState.arrowright || inputState.d ? 1:0) - (inputState.arrowleft || inputState.a ?1:0);
+		let moveX = (inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0);
 		let moveY = (inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0);
 		move = new vec2(
 			moveX,
@@ -302,10 +302,10 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 	if (!img?.size?.x || !img?.size?.y) {
 		return;
 	}
-	for(let yi = 0; yi * img.size.y < window.innerHeight; yi++) {
-		for(let xi = 0; xi * img.size.x < window.innerWidth; xi++) {
+	for (let yi = 0; yi * img.size.y < window.innerHeight; yi++) {
+		for (let xi = 0; xi * img.size.x < window.innerWidth; xi++) {
 			ctx.drawImage(
-				img.element, 
+				img.element,
 				xi * img.size.x,
 				yi * img.size.y,
 			)
