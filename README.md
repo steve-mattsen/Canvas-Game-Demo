@@ -1,8 +1,12 @@
 # React / Canvas Game Demo
 
-This is a project to show my kids how video games work.
+This is a project to show my kids how video games work. While cycling through view modes, explain the following:
 
-Start with a box moving around the screen, then show Link, then show Link with the box.
+1. The demo starts with two points moving around the screen. Let them try to move the points outside the screen.
+1. Show that we can draw a box using these two points.
+1. Instead of just a box, we can draw a picture in the box.
+1. Now take away the box and we have just the character.
+1. Now if we choose different pictures at different times, we can show action.
 
 Then show the spritesheets and how it's choosing which image to show.
 
