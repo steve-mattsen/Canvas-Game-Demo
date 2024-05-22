@@ -1,4 +1,4 @@
-import { vec2 } from "./Vec2";
+import { vec2, bbox } from "./Vec2";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";
@@ -31,6 +31,23 @@ window.onkeydown = e => {
 		Vars.debugMode = !Vars.debugMode;
 	}
 }
+window.ontouchstart = (e) => {
+	console.log(e.touches[0].clientX + ', ' + e.touches[0].clientY);
+}
+window.onmousedown = (e) => {
+	Vars.mouseMove = new vec2(e.clientX, e.clientY);
+	console.log('mouse down ' + e.clientX + ', ' + e.clientY);
+}
+window.onmousemove = (e) => {
+	if (Vars.mouseMove === null) {
+		return;
+	}
+	Vars.mouseMove = new vec2(e.clientX, e.clientY);
+}
+window.onmouseup = (e) => {
+	Vars.mouseMove = null;
+	console.log('mouse up');
+}
 window.onkeyup = e => {
 	Vars.inputState[e.key.toLowerCase()] = 0;
 }
@@ -39,6 +56,8 @@ window.onblur = e => {
 }
 
 function tick() {
+	let plyr = Obj.store['player'];
+
 	let gp = navigator.getGamepads()[0];
 	Object.keys(Vars.inputState).forEach(v => {
 		if (Vars.inputState[v] > 0) {
@@ -49,13 +68,22 @@ function tick() {
 	let walkSpeed = 4;
 	let runSpeed = 8;
 	let move: vec2;
-	let speed: number;
+	let speed = 0;
 	if (gp?.axes[0] || gp?.axes[1]) {
 		move = new vec2(
 			Number(gp?.axes[0]),
 			Number(gp?.axes[1])
 		);
 		speed = move.length() * runSpeed;
+	} else if (Vars.mouseMove !== null) {
+		let line = new bbox(plyr.pos, Vars.mouseMove);
+		if (line.length() > runSpeed) {
+			speed = runSpeed;
+		} else {
+			speed = line.length();
+		}
+		move = line.normalize();
+		console.log(line.length());
 	} else {
 		let moveX = (Vars.inputState.arrowright || Vars.inputState.d ? 1 : 0)
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);
@@ -70,7 +98,6 @@ function tick() {
 
 	move = move.normalize();
 
-	let plyr = Obj.store['player'];
 	let previousAnim = plyr.animState;
 	if (move.length() === 0) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');

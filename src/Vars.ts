@@ -1,3 +1,4 @@
+import { vec2 } from "./Vec2";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
 	static debugMode = false;
@@ -6,4 +7,5 @@ export default class Vars {
 	static slowMode = false;
 	static showButtons = true;
 	static showBackground = false;
+	static mouseMove: vec2 | null = null;
 }

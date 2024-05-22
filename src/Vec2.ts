@@ -50,4 +50,23 @@ export class bbox {
 	getHeight() {
 		return this.bottomRight.y - this.topLeft.y;
 	}
+	normalize(): vec2 {
+		let length = this.length();
+		if (length === 0) {
+			return new vec2(0, 0);
+		}
+		return new vec2(
+			(this.bottomRight.x - this.topLeft.x) / length,
+			(this.bottomRight.y - this.topLeft.y) / length
+		);
+	}
+	length() {
+		let sumProduct = ((this.bottomRight.x - this.topLeft.x) ** 2)
+			+ ((this.bottomRight.y - this.topLeft.y) ** 2);
+		if (sumProduct === 0) {
+			return 0;
+		}
+		return Math.sqrt(sumProduct);
+	}
+
 }

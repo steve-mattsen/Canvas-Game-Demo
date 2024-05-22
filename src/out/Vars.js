@@ -10,6 +10,7 @@ var Vars = (function () {
     Vars.slowMode = false;
     Vars.showButtons = true;
     Vars.showBackground = false;
+    Vars.mouseMove = null;
     return Vars;
 }());
 exports["default"] = Vars;

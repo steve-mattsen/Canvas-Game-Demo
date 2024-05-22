@@ -37,6 +37,23 @@ window.onkeydown = function (e) {
         Vars_1["default"].debugMode = !Vars_1["default"].debugMode;
     }
 };
+window.ontouchstart = function (e) {
+    console.log(e.touches[0].clientX + ', ' + e.touches[0].clientY);
+};
+window.onmousedown = function (e) {
+    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.clientX, e.clientY);
+    console.log('mouse down ' + e.clientX + ', ' + e.clientY);
+};
+window.onmousemove = function (e) {
+    if (Vars_1["default"].mouseMove === null) {
+        return;
+    }
+    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.clientX, e.clientY);
+};
+window.onmouseup = function (e) {
+    Vars_1["default"].mouseMove = null;
+    console.log('mouse up');
+};
 window.onkeyup = function (e) {
     Vars_1["default"].inputState[e.key.toLowerCase()] = 0;
 };
@@ -44,6 +61,7 @@ window.onblur = function (e) {
     Vars_1["default"].inputState = {};
 };
 function tick() {
+    var plyr = Obj_1.Obj.store['player'];
     var gp = navigator.getGamepads()[0];
     Object.keys(Vars_1["default"].inputState).forEach(function (v) {
         if (Vars_1["default"].inputState[v] > 0) {
@@ -53,10 +71,21 @@ function tick() {
     var walkSpeed = 4;
     var runSpeed = 8;
     var move;
-    var speed;
+    var speed = 0;
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
         move = new Vec2_1.vec2(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
         speed = move.length() * runSpeed;
+    }
+    else if (Vars_1["default"].mouseMove !== null) {
+        var line = new Vec2_1.bbox(plyr.pos, Vars_1["default"].mouseMove);
+        if (line.length() > runSpeed) {
+            speed = runSpeed;
+        }
+        else {
+            speed = line.length();
+        }
+        move = line.normalize();
+        console.log(line.length());
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)
@@ -67,7 +96,6 @@ function tick() {
         speed = Vars_1["default"].inputState.shift ? runSpeed : walkSpeed;
     }
     move = move.normalize();
-    var plyr = Obj_1.Obj.store['player'];
     var previousAnim = plyr.animState;
     if (move.length() === 0) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');

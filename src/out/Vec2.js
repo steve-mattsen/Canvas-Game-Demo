@@ -47,6 +47,21 @@ var bbox = (function () {
     bbox.prototype.getHeight = function () {
         return this.bottomRight.y - this.topLeft.y;
     };
+    bbox.prototype.normalize = function () {
+        var length = this.length();
+        if (length === 0) {
+            return new vec2(0, 0);
+        }
+        return new vec2((this.bottomRight.x - this.topLeft.x) / length, (this.bottomRight.y - this.topLeft.y) / length);
+    };
+    bbox.prototype.length = function () {
+        var sumProduct = (Math.pow((this.bottomRight.x - this.topLeft.x), 2))
+            + (Math.pow((this.bottomRight.y - this.topLeft.y), 2));
+        if (sumProduct === 0) {
+            return 0;
+        }
+        return Math.sqrt(sumProduct);
+    };
     return bbox;
 }());
 exports.bbox = bbox;
