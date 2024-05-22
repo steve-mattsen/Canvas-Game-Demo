@@ -147,10 +147,10 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		let frame = obj.getAnimFrame();
 
-		if (boxMode === 0) {
+		if (boxMode < 3) {
 			// Draw points
 			ctx.fillStyle = 'black';
-			let pointSize = 4;
+			let pointSize = 6;
 			ctx.fillRect(
 				Math.floor(obj.pos.x),
 				Math.floor(obj.pos.y),
@@ -168,7 +168,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (boxMode === 1 || boxMode === 2) {
 			// Draw box
 			ctx.fillStyle = "black";
-			ctx.fillRect(
+			ctx.strokeRect(
 				Math.floor(obj.pos.x),
 				Math.floor(obj.pos.y),
 				Math.ceil(obj.size.x),
