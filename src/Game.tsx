@@ -20,7 +20,7 @@ window.onkeydown = e => {
 		inputState[key] = 1;
 	}
 	if (inputState.f1 === 1) {
-		boxMode = (++boxMode % 3);
+		boxMode = (++boxMode % 4);
 	} else if (inputState.f2 === 1) {
 		spriteSheetMode = !spriteSheetMode;
 	} else if (inputState.f3 === 1) {
@@ -145,8 +145,6 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
 
-		let frame = obj.getAnimFrame();
-
 		if (boxMode < 3) {
 			// Draw points
 			ctx.fillStyle = 'black';
@@ -179,6 +177,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		}
 
 		if (boxMode === 2 || boxMode === 3) {
+			let frame = obj.getAnimFrame();
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx

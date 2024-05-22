@@ -20,7 +20,7 @@ window.onkeydown = function (e) {
         inputState[key] = 1;
     }
     if (inputState.f1 === 1) {
-        boxMode = (++boxMode % 3);
+        boxMode = (++boxMode % 4);
     }
     else if (inputState.f2 === 1) {
         spriteSheetMode = !spriteSheetMode;
@@ -131,7 +131,6 @@ function draw() {
 function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
-        var frame = obj.getAnimFrame();
         if (boxMode < 3) {
             ctx.fillStyle = 'black';
             var pointSize = 6;
@@ -145,6 +144,7 @@ function drawObjects(ctx) {
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
         if (boxMode === 2 || boxMode === 3) {
+            var frame = obj.getAnimFrame();
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!debugMode) {
