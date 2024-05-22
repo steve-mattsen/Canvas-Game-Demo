@@ -21,6 +21,7 @@ var Img = (function () {
         this.uri = uri !== null && uri !== void 0 ? uri : this.uri;
         this.element = new Image();
         this.element.src = this.uri;
+        this.size = new Vec2_1.vec2(this.element.width, this.element.height);
     }
     Img.addImg = function (image) {
         Img.store[image.id] = image;

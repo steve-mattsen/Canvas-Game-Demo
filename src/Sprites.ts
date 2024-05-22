@@ -10,6 +10,7 @@ export class Img {
 		this.uri = uri ?? this.uri;
 		this.element = new Image();
 		this.element.src = this.uri;
+		this.size = new vec2(this.element.width, this.element.height);
 	}
 	public static store: { [id: string]: Img } = {};
 	public static addImg(image: Img) {

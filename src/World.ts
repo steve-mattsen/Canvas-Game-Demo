@@ -3,7 +3,6 @@ import {Img, Animation, Frame, SpriteSheet} from "./Sprites"
 import {Obj} from "./Obj"
 import {bbox, vec2} from "./Vec2"
 let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
-spritesheet_link.size = new vec2(1024, 887);
 Img.addImg(spritesheet_link);
 let ss = new SpriteSheet(spritesheet_link, 
 	[0, 110.875, 221.75, 332.625, 443.5, 554.375, 665.25, 776.125 ],
