@@ -3,7 +3,7 @@ exports.__esModule = true;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
-function draw(boxMode, spriteSheetMode, showBackground) {
+function draw() {
     var canvas = document.getElementById("game_window");
     canvas.setAttribute('width', window.innerWidth + '');
     canvas.setAttribute('height', window.innerHeight + '');
@@ -14,11 +14,11 @@ function draw(boxMode, spriteSheetMode, showBackground) {
     if (ctx === null) {
         return;
     }
-    if (showBackground) {
+    if (Vars_1["default"].showBackground) {
         drawBackground(ctx);
     }
     var plyr = Obj_1.Obj.store['player'];
-    if (spriteSheetMode) {
+    if (Vars_1["default"].spriteSheetMode) {
         var frame = plyr.getAnimFrame();
         ctx.fillStyle = "red";
         ctx.fillRect(frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight());

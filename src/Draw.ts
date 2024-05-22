@@ -2,7 +2,7 @@ import { Img } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 
-export default function draw(boxMode: number, spriteSheetMode: boolean, showBackground: boolean,) {
+export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	canvas.setAttribute('width', window.innerWidth + '');
 	canvas.setAttribute('height', window.innerHeight + '');
@@ -14,13 +14,13 @@ export default function draw(boxMode: number, spriteSheetMode: boolean, showBack
 		return;
 	}
 
-	if (showBackground) {
+	if (Vars.showBackground) {
 		drawBackground(ctx);
 	}
 
 	let plyr = Obj.store['player'];
 
-	if (spriteSheetMode) {
+	if (Vars.spriteSheetMode) {
 		let frame = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
 		ctx.fillRect(
