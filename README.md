@@ -20,7 +20,8 @@ It should automatically open up a browser window to http://localhost:3000. If no
 * `F1` to switch display mode of the player between: just the sprite, just the bounding box, the sprite and the bounding box
 * `F2` to show/hide the spritesheet and the currently selected sprite
 * `F3` to switch between 60fps / 15fps
-* `F4` to hide / show the option buttons in the bottom right corner
+* `F4` to show / hide a grass background
+* `F5` to hide / show the option buttons in the bottom right corner
 * `F9` to show / hide useful debug information
 
 ## Development
