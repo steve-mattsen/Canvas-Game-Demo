@@ -56,13 +56,13 @@ function tick() {
             inputState[v] = inputState[v] + 1;
         }
     });
-    var walkSpeed = 3;
+    var walkSpeed = 4;
     var runSpeed = 8;
     var move;
     var speed;
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
         move = new Vec2_1.vec2(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
-        speed = move.length() > .98 ? runSpeed : walkSpeed;
+        speed = move.length() * runSpeed;
     }
     else {
         var moveX = (inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0);
@@ -76,7 +76,7 @@ function tick() {
     if (move.length() === 0) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
     }
-    else if (speed === runSpeed) {
+    else if (speed > walkSpeed) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
     }
     else {
