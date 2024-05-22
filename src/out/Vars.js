@@ -1,0 +1,16 @@
+"use strict";
+exports.__esModule = true;
+var Vars = (function () {
+    function Vars() {
+    }
+    Vars.inputState = {};
+    Vars.debugMode = false;
+    Vars.boxMode = 0;
+    Vars.spriteSheetMode = false;
+    Vars.slowMode = false;
+    Vars.showButtons = true;
+    Vars.showBackground = false;
+    return Vars;
+}());
+exports["default"] = Vars;
+//# sourceMappingURL=Vars.js.map
