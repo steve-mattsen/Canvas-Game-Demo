@@ -33,21 +33,21 @@ exports["default"] = draw;
 function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
-        if (Vars_1["default"].boxMode < 3) {
+        if (Vars_1["default"].displayMode < 3) {
             ctx.fillStyle = 'black';
             var pointSize = 6;
             ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), pointSize, pointSize);
             ctx.fillRect(Math.floor(obj.pos.x + obj.size.x - pointSize), Math.floor(obj.pos.y + obj.size.y - pointSize), pointSize, pointSize);
         }
-        if (Vars_1["default"].boxMode === 1 || Vars_1["default"].boxMode === 2) {
+        if (Vars_1["default"].displayMode === 1 || Vars_1["default"].displayMode === 2) {
             ctx.strokeStyle = "black";
             ctx.lineWidth = 2;
             var offset = ctx.lineWidth / 2;
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
-        if (Vars_1["default"].boxMode > 1) {
+        if (Vars_1["default"].displayMode > 1) {
             var frame = obj.getAnimFrame();
-            if (Vars_1["default"].boxMode < 4) {
+            if (Vars_1["default"].displayMode < 4) {
                 frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
             }
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
@@ -76,8 +76,8 @@ function drawButtons(ctx) {
     var modes = [
         {
             key: 'F1',
-            "var": Vars_1["default"].boxMode,
-            title: 'Player'
+            "var": Vars_1["default"].displayMode,
+            title: 'Display'
         }, {
             key: 'F2',
             "var": Vars_1["default"].spriteSheetMode,

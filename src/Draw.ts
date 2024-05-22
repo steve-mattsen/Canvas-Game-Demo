@@ -43,7 +43,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
 
-		if (Vars.boxMode < 3) {
+		if (Vars.displayMode < 3) {
 			// Draw points
 			ctx.fillStyle = 'black';
 			let pointSize = 6;
@@ -61,7 +61,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			)
 		}
 
-		if (Vars.boxMode === 1 || Vars.boxMode === 2) {
+		if (Vars.displayMode === 1 || Vars.displayMode === 2) {
 			// Draw box
 			ctx.strokeStyle = "black";
 			ctx.lineWidth = 2;
@@ -74,9 +74,9 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		if (Vars.boxMode > 1) {
+		if (Vars.displayMode > 1) {
 			let frame = obj.getAnimFrame();
-			if (Vars.boxMode < 4) {
+			if (Vars.displayMode < 4) {
 				// Just get one frame.
 				frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
 			}
@@ -132,8 +132,8 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 	let modes = [
 		{
 			key: 'F1',
-			var: Vars.boxMode,
-			title: 'Player',
+			var: Vars.displayMode,
+			title: 'Display',
 		}, {
 			key: 'F2',
 			var: Vars.spriteSheetMode,

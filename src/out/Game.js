@@ -14,7 +14,7 @@ window.onkeydown = function (e) {
         Vars_1["default"].inputState[key] = 1;
     }
     if (Vars_1["default"].inputState.f1 === 1) {
-        Vars_1["default"].boxMode = (++Vars_1["default"].boxMode % 5);
+        Vars_1["default"].displayMode = (++Vars_1["default"].displayMode % 5);
     }
     else if (Vars_1["default"].inputState.f2 === 1) {
         Vars_1["default"].spriteSheetMode = !Vars_1["default"].spriteSheetMode;

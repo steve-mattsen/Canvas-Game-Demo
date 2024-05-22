@@ -13,7 +13,7 @@ window.onkeydown = e => {
 		Vars.inputState[key] = 1;
 	}
 	if (Vars.inputState.f1 === 1) {
-		Vars.boxMode = (++Vars.boxMode % 5);
+		Vars.displayMode = (++Vars.displayMode % 5);
 	} else if (Vars.inputState.f2 === 1) {
 		Vars.spriteSheetMode = !Vars.spriteSheetMode;
 	} else if (Vars.inputState.f3 === 1) {
