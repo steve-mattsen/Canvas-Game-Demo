@@ -12,7 +12,11 @@ var vec2 = (function () {
         return new vec2(this.x + vec.x, this.y + vec.y);
     };
     vec2.prototype.length = function () {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        var sumProduct = this.x * this.x + this.y * this.y;
+        if (sumProduct === 0) {
+            return 0;
+        }
+        return Math.sqrt(sumProduct);
     };
     vec2.prototype.normalize = function () {
         var length = this.length();

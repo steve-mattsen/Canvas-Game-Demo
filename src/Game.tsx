@@ -43,29 +43,47 @@ window.onblur = e => {
 }
 
 function tick() {
+	let gp = navigator.getGamepads()[0];
 	Object.keys(inputState).forEach(v => {
 		if (inputState[v] > 0) {
 			inputState[v] = inputState[v] + 1;
 		}
 	});
-	let move = new vec2(
-		(inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0),
-		(inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0)
-	);
-	let speed = inputState.shift ? 8 : 3;
-	//Normalize
-	move = move.normalize();
-	let plyr = Obj.store['player'];
 
-	let previousAnim = plyr.animState;
-	if (move.length() > 0) {
-		plyr.animState = plyr.animState.replace(/(.*)_/, inputState.shift ? 'run_' : 'walk_');
+	let walkSpeed = 3;
+	let runSpeed = 8;
+	let move: vec2;
+	let speed: number;
+	if (gp?.axes[0] || gp?.axes[1]) {
+		move = new vec2(
+			Number(gp?.axes[0]), 
+			Number(gp?.axes[1])
+		);
+		speed = move.length() > .98 ? runSpeed : walkSpeed;
 	} else {
-		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
+		let moveX = (inputState.arrowright || inputState.d ? 1:0) - (inputState.arrowleft || inputState.a ?1:0);
+		let moveY = (inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0);
+		move = new vec2(
+			moveX,
+			moveY
+		);
+		speed = inputState.shift ? runSpeed : walkSpeed;
 	}
-	if (move.x > 0) {
+
+	move = move.normalize();
+
+	let plyr = Obj.store['player'];
+	let previousAnim = plyr.animState;
+	if (move.length() === 0) {
+		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
+	} else if (speed === runSpeed) {
+		plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
+	} else {
+		plyr.animState = plyr.animState.replace(/(.*)_/, 'walk_');
+	}
+	if (move.x >= 0.5) {
 		plyr.animState = plyr.animState.replace(/_.*/, "_right");
-	} else if (move.x < 0) {
+	} else if (move.x <= -0.5) {
 		plyr.animState = plyr.animState.replace(/_.*/, "_left");
 	} else if (move.y > 0) {
 		plyr.animState = plyr.animState.replace(/_.*/, "_down");
@@ -76,8 +94,8 @@ function tick() {
 		plyr.animations[plyr.animState].currentFrame = 0;
 	}
 	plyr.tickAnimFrame();
-	plyr.pos.x += (move.x ?? 0) * speed;
-	plyr.pos.y += (move.y ?? 0) * speed;
+	plyr.pos.x += move.x * speed;
+	plyr.pos.y += move.y * speed;
 	plyr.pos = new vec2(
 		Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)),
 		Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y))

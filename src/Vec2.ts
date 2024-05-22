@@ -9,7 +9,12 @@ export class vec2 {
 		return new vec2(this.x + vec.x, this.y + vec.y);
 	}
 	length() {
-		return Math.sqrt(this.x * this.x + this.y * this.y);
+		let sumProduct = this.x * this.x + this.y * this.y;
+		// console.log(sumProduct);
+		if (sumProduct === 0) {
+			return 0;
+		}
+		return Math.sqrt(sumProduct);
 	}
 	normalize() {
 		let length = this.length();

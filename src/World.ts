@@ -25,14 +25,14 @@ anims.idle_right.frames[0].duration = blinkInterval;
 
 let walkFrames = [0,1,3,4,5,6,8,9];
 let walkFrameDuration = 8;
-anims.walk_right = ss.getAnim([7], walkFrames, walkFrameDuration);
+anims.walk_right = ss.getAnim([7], [...walkFrames].reverse(), walkFrameDuration);
 anims.walk_left = ss.getAnim([5], walkFrames, walkFrameDuration);
 anims.walk_down = ss.getAnim([4], walkFrames, walkFrameDuration);
 anims.walk_up = ss.getAnim([6], walkFrames, walkFrameDuration);
 
 let runFrames = [0,1,2,3,4,5,6,7,8,9];
 let runFrameDuration = 2
-anims.run_right = ss.getAnim([7], runFrames, runFrameDuration);
+anims.run_right = ss.getAnim([7], [...runFrames].reverse(), runFrameDuration);
 anims.run_left = ss.getAnim([5], runFrames, runFrameDuration);
 anims.run_down = ss.getAnim([4], runFrames, runFrameDuration);
 anims.run_up = ss.getAnim([6], runFrames, runFrameDuration);

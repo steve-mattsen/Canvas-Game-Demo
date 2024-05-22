@@ -46,27 +46,42 @@ window.onblur = function (e) {
     inputState = {};
 };
 function tick() {
-    var _a, _b;
+    var gp = navigator.getGamepads()[0];
     Object.keys(inputState).forEach(function (v) {
         if (inputState[v] > 0) {
             inputState[v] = inputState[v] + 1;
         }
     });
-    var move = new Vec2_1.vec2((inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0), (inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0));
-    var speed = inputState.shift ? 8 : 3;
+    var walkSpeed = 3;
+    var runSpeed = 8;
+    var move;
+    var speed;
+    if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
+        move = new Vec2_1.vec2(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
+        speed = move.length() > .98 ? runSpeed : walkSpeed;
+    }
+    else {
+        var moveX = (inputState.arrowright || inputState.d ? 1 : 0) - (inputState.arrowleft || inputState.a ? 1 : 0);
+        var moveY = (inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0);
+        move = new Vec2_1.vec2(moveX, moveY);
+        speed = inputState.shift ? runSpeed : walkSpeed;
+    }
     move = move.normalize();
     var plyr = Obj_1.Obj.store['player'];
     var previousAnim = plyr.animState;
-    if (move.length() > 0) {
-        plyr.animState = plyr.animState.replace(/(.*)_/, inputState.shift ? 'run_' : 'walk_');
-    }
-    else {
+    if (move.length() === 0) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
     }
-    if (move.x > 0) {
+    else if (speed === runSpeed) {
+        plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
+    }
+    else {
+        plyr.animState = plyr.animState.replace(/(.*)_/, 'walk_');
+    }
+    if (move.x >= 0.5) {
         plyr.animState = plyr.animState.replace(/_.*/, "_right");
     }
-    else if (move.x < 0) {
+    else if (move.x <= -0.5) {
         plyr.animState = plyr.animState.replace(/_.*/, "_left");
     }
     else if (move.y > 0) {
@@ -79,8 +94,8 @@ function tick() {
         plyr.animations[plyr.animState].currentFrame = 0;
     }
     plyr.tickAnimFrame();
-    plyr.pos.x += ((_a = move.x) !== null && _a !== void 0 ? _a : 0) * speed;
-    plyr.pos.y += ((_b = move.y) !== null && _b !== void 0 ? _b : 0) * speed;
+    plyr.pos.x += move.x * speed;
+    plyr.pos.y += move.y * speed;
     plyr.pos = new Vec2_1.vec2(Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)), Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y)));
 }
 function draw() {
