@@ -132,11 +132,17 @@ function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
         var frame = obj.getAnimFrame();
-        if (boxMode !== 2) {
+        if (boxMode === 0) {
+            ctx.fillStyle = 'black';
+            var pointSize = 4;
+            ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), pointSize, pointSize);
+            ctx.fillRect(Math.floor(obj.pos.x + obj.size.x - pointSize), Math.floor(obj.pos.y + obj.size.y - pointSize), pointSize, pointSize);
+        }
+        if (boxMode === 1 || boxMode === 2) {
             ctx.fillStyle = "black";
             ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), Math.ceil(obj.size.x), Math.ceil(obj.size.y));
         }
-        if (boxMode > 0) {
+        if (boxMode === 2 || boxMode === 3) {
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!debugMode) {

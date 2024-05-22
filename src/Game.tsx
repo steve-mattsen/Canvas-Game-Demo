@@ -5,7 +5,7 @@ import "./World";
 
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
-var boxMode = 0; // 0 = box, 1 = box with sprite, 2 = just the sprite
+var boxMode = 0; // 0 = points, 1 = box, 2 = box with sprite, 3 = just the sprite
 var spriteSheetMode = false;
 var slowMode = false;
 var showButtons = true;
@@ -147,7 +147,25 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		let frame = obj.getAnimFrame();
 
-		if (boxMode !== 2) {
+		if (boxMode === 0) {
+			// Draw points
+			ctx.fillStyle = 'black';
+			let pointSize = 4;
+			ctx.fillRect(
+				Math.floor(obj.pos.x),
+				Math.floor(obj.pos.y),
+				pointSize,
+				pointSize,
+			)
+			ctx.fillRect(
+				Math.floor(obj.pos.x + obj.size.x - pointSize),
+				Math.floor(obj.pos.y + obj.size.y - pointSize),
+				pointSize,
+				pointSize,
+			)
+		}
+
+		if (boxMode === 1 || boxMode === 2) {
 			// Draw box
 			ctx.fillStyle = "black";
 			ctx.fillRect(
@@ -158,7 +176,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		if (boxMode > 0) {
+		if (boxMode === 2 || boxMode === 3) {
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
