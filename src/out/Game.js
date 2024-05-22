@@ -10,9 +10,10 @@ var boxMode = 0;
 var spriteSheetMode = false;
 var slowMode = false;
 var showButtons = true;
+var showBackground = false;
 window.onkeydown = function (e) {
     var key = e.key.toLowerCase();
-    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f10'].indexOf(key) > -1) {
+    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f10'].indexOf(key) > -1) {
         e.preventDefault();
     }
     if (!inputState[key]) {
@@ -33,6 +34,9 @@ window.onkeydown = function (e) {
         gameThread = setInterval(tick, 1000 / refresh_1);
     }
     else if (inputState.f4) {
+        showBackground = !showBackground;
+    }
+    else if (inputState.f5) {
         showButtons = !showButtons;
     }
     else if (inputState.f9 === 1) {
@@ -109,6 +113,9 @@ function draw() {
     if (ctx === null) {
         return;
     }
+    if (showBackground) {
+        drawBackground(ctx);
+    }
     var plyr = Obj_1.Obj.store['player'];
     if (spriteSheetMode) {
         var frame = plyr.getAnimFrame();
@@ -165,6 +172,10 @@ function drawButtons(ctx) {
             title: 'Slow'
         }, {
             key: 'F4',
+            "var": showBackground,
+            title: "Background"
+        }, {
+            key: 'F5',
             "var": showButtons,
             title: "Buttons"
         }, {
@@ -194,6 +205,18 @@ function drawButtons(ctx) {
         ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
         ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
     });
+}
+function drawBackground(ctx) {
+    var _a, _b;
+    var img = Sprites_1.Img.store['grass'];
+    if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
+        return;
+    }
+    for (var yi = 0; yi * img.size.y < window.innerHeight; yi++) {
+        for (var xi = 0; xi * img.size.x < window.innerWidth; xi++) {
+            ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
+        }
+    }
 }
 var refresh = slowMode ? 15 : 59.67;
 var drawThread = setInterval(draw, 1000 / refresh);

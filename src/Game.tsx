@@ -9,10 +9,11 @@ var boxMode = 0;
 var spriteSheetMode = false;
 var slowMode = false;
 var showButtons = true;
+var showBackground = false;
 
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
-	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f10'].indexOf(key) > -1) {
+	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f10'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
 	if (!inputState[key]) {
@@ -30,6 +31,8 @@ window.onkeydown = e => {
 		drawThread = setInterval(draw, 1000 / refresh);
 		gameThread = setInterval(tick, 1000 / refresh);
 	} else if (inputState.f4) {
+		showBackground = !showBackground;
+	}else if (inputState.f5) {
 		showButtons = !showButtons;
 	} else if (inputState.f9 === 1) {
 		debugMode = !debugMode;
@@ -111,6 +114,10 @@ function draw() {
 	let ctx = canvas.getContext('2d');
 	if (ctx === null) {
 		return;
+	}
+
+	if (showBackground) {
+		drawBackground(ctx);
 	}
 
 	let plyr = Obj.store['player'];
@@ -211,6 +218,10 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			title: 'Slow'
 		}, {
 			key: 'F4',
+			var: showBackground,
+			title: "Background",
+		}, {
+			key: 'F5',
 			var: showButtons,
 			title: "Buttons",
 		}, {
@@ -256,6 +267,22 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		)
 	});
 
+}
+
+function drawBackground(ctx: CanvasRenderingContext2D) {
+	let img = Img.store['grass'];
+	if (!img?.size?.x || !img?.size?.y) {
+		return;
+	}
+	for(let yi = 0; yi * img.size.y < window.innerHeight; yi++) {
+		for(let xi = 0; xi * img.size.x < window.innerWidth; xi++) {
+			ctx.drawImage(
+				img.element, 
+				xi * img.size.x,
+				yi * img.size.y,
+			)
+		}
+	}
 }
 
 let refresh = slowMode ? 15 : 59.67;

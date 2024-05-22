@@ -2,6 +2,7 @@
 import {Img, Animation, Frame, SpriteSheet} from "./Sprites"
 import {Obj} from "./Obj"
 import {bbox, vec2} from "./Vec2"
+Img.addImg(new Img('grass', '/grass.png'));
 let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
 Img.addImg(spritesheet_link);
 let ss = new SpriteSheet(spritesheet_link, 
