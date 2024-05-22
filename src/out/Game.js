@@ -123,14 +123,20 @@ function draw() {
         ctx.fillRect(frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight());
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
-    ctx.fillStyle = "black";
-    if (boxMode !== 1) {
-        ctx.fillRect(Math.floor(plyr.pos.x), Math.floor(plyr.pos.y), Math.ceil(plyr.size.x), Math.ceil(plyr.size.y));
+    drawObjects(ctx);
+    if (showButtons) {
+        drawButtons(ctx);
     }
+}
+function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
         var frame = obj.getAnimFrame();
-        if (!(obj.id === 'player' && boxMode === 0)) {
+        if (boxMode !== 2) {
+            ctx.fillStyle = "black";
+            ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), Math.ceil(obj.size.x), Math.ceil(obj.size.y));
+        }
+        if (boxMode > 0) {
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!debugMode) {
@@ -152,9 +158,6 @@ function draw() {
         });
         ctx.restore();
     });
-    if (showButtons) {
-        drawButtons(ctx);
-    }
 }
 function drawButtons(ctx) {
     var modes = [

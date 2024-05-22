@@ -5,7 +5,7 @@ import "./World";
 
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
-var boxMode = 0;
+var boxMode = 0; // 0 = box, 1 = box with sprite, 2 = just the sprite
 var spriteSheetMode = false;
 var slowMode = false;
 var showButtons = true;
@@ -134,22 +134,31 @@ function draw() {
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
 
-	ctx.fillStyle = "black";
-	if (boxMode !== 1) {
-		ctx.fillRect(
-			Math.floor(plyr.pos.x),
-			Math.floor(plyr.pos.y),
-			Math.ceil(plyr.size.x),
-			Math.ceil(plyr.size.y),
-		);
-	}
+	drawObjects(ctx);
 
+	if (showButtons) {
+		drawButtons(ctx);
+	}
+}
+
+function drawObjects(ctx: CanvasRenderingContext2D) {
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
 
 		let frame = obj.getAnimFrame();
 
-		if (!(obj.id === 'player' && boxMode === 0)) {
+		if (boxMode !== 2) {
+			// Draw box
+			ctx.fillStyle = "black";
+			ctx.fillRect(
+				Math.floor(obj.pos.x),
+				Math.floor(obj.pos.y),
+				Math.ceil(obj.size.x),
+				Math.ceil(obj.size.y),
+			);
+		}
+
+		if (boxMode > 0) {
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
@@ -195,10 +204,6 @@ function draw() {
 		});
 		ctx.restore();
 	});
-
-	if (showButtons) {
-		drawButtons(ctx);
-	}
 }
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
