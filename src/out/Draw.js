@@ -35,9 +35,23 @@ function drawObjects(ctx) {
         var obj = Obj_1.Obj.store[v];
         if (Vars_1["default"].displayMode < 3) {
             ctx.fillStyle = 'black';
-            var pointSize = 6;
-            ctx.fillRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), pointSize, pointSize);
-            ctx.fillRect(Math.floor(obj.pos.x + obj.size.x - pointSize), Math.floor(obj.pos.y + obj.size.y - pointSize), pointSize, pointSize);
+            var pointSize = 16;
+            var topLeft = new Path2D();
+            var x = Math.floor(obj.pos.x);
+            var y = Math.floor(obj.pos.y);
+            topLeft.moveTo(x, y);
+            topLeft.lineTo(x + pointSize, y);
+            topLeft.lineTo(x, y + pointSize);
+            topLeft.lineTo(x, y);
+            var botRight = new Path2D();
+            x = Math.floor(obj.pos.x + obj.size.x);
+            y = Math.floor(obj.pos.y + obj.size.y);
+            botRight.moveTo(x, y);
+            botRight.lineTo(x - pointSize, y);
+            botRight.lineTo(x, y - pointSize);
+            botRight.lineTo(x, y);
+            ctx.fill(topLeft);
+            ctx.fill(botRight);
         }
         if (Vars_1["default"].displayMode === 1 || Vars_1["default"].displayMode === 2) {
             ctx.strokeStyle = "black";

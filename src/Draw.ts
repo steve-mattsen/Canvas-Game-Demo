@@ -46,19 +46,28 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (Vars.displayMode < 3) {
 			// Draw points
 			ctx.fillStyle = 'black';
-			let pointSize = 6;
-			ctx.fillRect(
-				Math.floor(obj.pos.x),
-				Math.floor(obj.pos.y),
-				pointSize,
-				pointSize,
-			)
-			ctx.fillRect(
-				Math.floor(obj.pos.x + obj.size.x - pointSize),
-				Math.floor(obj.pos.y + obj.size.y - pointSize),
-				pointSize,
-				pointSize,
-			)
+			let pointSize = 16;
+
+			let topLeft = new Path2D();
+
+			let x = Math.floor(obj.pos.x)
+			let y = Math.floor(obj.pos.y)
+			topLeft.moveTo(x, y);
+			topLeft.lineTo(x + pointSize, y);
+			topLeft.lineTo(x, y + pointSize);
+			topLeft.lineTo(x, y);
+
+			let botRight = new Path2D();
+
+			x = Math.floor(obj.pos.x + obj.size.x);
+			y = Math.floor(obj.pos.y + obj.size.y);
+			botRight.moveTo(x, y);
+			botRight.lineTo(x - pointSize, y);
+			botRight.lineTo(x, y - pointSize);
+			botRight.lineTo(x, y);
+
+			ctx.fill(topLeft);
+			ctx.fill(botRight);
 		}
 
 		if (Vars.displayMode === 1 || Vars.displayMode === 2) {
