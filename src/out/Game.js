@@ -139,8 +139,10 @@ function drawObjects(ctx) {
             ctx.fillRect(Math.floor(obj.pos.x + obj.size.x - pointSize), Math.floor(obj.pos.y + obj.size.y - pointSize), pointSize, pointSize);
         }
         if (boxMode === 1 || boxMode === 2) {
-            ctx.fillStyle = "black";
-            ctx.strokeRect(Math.floor(obj.pos.x), Math.floor(obj.pos.y), Math.ceil(obj.size.x), Math.ceil(obj.size.y));
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 2;
+            var offset = ctx.lineWidth / 2;
+            ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
         if (boxMode === 2 || boxMode === 3) {
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());

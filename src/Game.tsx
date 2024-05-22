@@ -167,12 +167,14 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		if (boxMode === 1 || boxMode === 2) {
 			// Draw box
-			ctx.fillStyle = "black";
+			ctx.strokeStyle = "black";
+			ctx.lineWidth = 2;
+			let offset = ctx.lineWidth / 2;
 			ctx.strokeRect(
-				Math.floor(obj.pos.x),
-				Math.floor(obj.pos.y),
-				Math.ceil(obj.size.x),
-				Math.ceil(obj.size.y),
+				Math.floor(obj.pos.x + offset),
+				Math.floor(obj.pos.y) + offset,
+				Math.floor(obj.size.x - offset),
+				Math.floor(obj.size.y - offset),
 			);
 		}
 
