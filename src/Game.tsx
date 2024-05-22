@@ -53,7 +53,7 @@ function tick() {
 		}
 	});
 
-	let walkSpeed = 3;
+	let walkSpeed = 4;
 	let runSpeed = 8;
 	let move: vec2;
 	let speed: number;
@@ -62,7 +62,7 @@ function tick() {
 			Number(gp?.axes[0]), 
 			Number(gp?.axes[1])
 		);
-		speed = move.length() > .98 ? runSpeed : walkSpeed;
+		speed = move.length() * runSpeed;
 	} else {
 		let moveX = (inputState.arrowright || inputState.d ? 1:0) - (inputState.arrowleft || inputState.a ?1:0);
 		let moveY = (inputState.arrowdown || inputState.s ? 1 : 0) - (inputState.arrowup || inputState.w ? 1 : 0);
@@ -79,7 +79,7 @@ function tick() {
 	let previousAnim = plyr.animState;
 	if (move.length() === 0) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
-	} else if (speed === runSpeed) {
+	} else if (speed > walkSpeed) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
 	} else {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'walk_');
