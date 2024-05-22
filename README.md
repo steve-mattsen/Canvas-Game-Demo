@@ -8,6 +8,8 @@ Then show the spritesheets and how it's choosing which image to show.
 
 Slow it down to see the process better.
 
+Show the background to explain how world buiilding works.
+
 ## Playing
 
 Use `npm start` to start the server.git 
