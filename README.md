@@ -10,12 +10,12 @@ Slow it down to see the process better.
 
 ## Playing
 
-Use `npm start` to start the server.
+Use `npm start` to start the server.git 
 
 It should automatically open up a browser window to http://localhost:3000. If not, open that 
 
 ### Controls
-* `WASD / ↑←↓→` to move Link
+* `WASD / ⬅⬆⬇➡` to move Link
 * Hold `shift` to run
 * `F1` to switch display mode of the player between: just the sprite, just the bounding box, the sprite and the bounding box
 * `F2` to show/hide the spritesheet and the currently selected sprite
