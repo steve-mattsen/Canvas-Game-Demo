@@ -36,7 +36,6 @@ window.ontouchstart = (e) => {
 }
 window.onmousedown = (e) => {
 	Vars.mouseMove = new vec2(e.clientX, e.clientY);
-	console.log('mouse down ' + e.clientX + ', ' + e.clientY);
 }
 window.onmousemove = (e) => {
 	if (Vars.mouseMove === null) {
@@ -46,7 +45,16 @@ window.onmousemove = (e) => {
 }
 window.onmouseup = (e) => {
 	Vars.mouseMove = null;
-	console.log('mouse up');
+}
+
+window.ontouchstart = (e) => {
+	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+}
+window.ontouchmove = (e) => {
+	if (Vars.mouseMove === null) {
+		return;
+	}
+	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
 }
 window.onkeyup = e => {
 	Vars.inputState[e.key.toLowerCase()] = 0;

@@ -42,7 +42,6 @@ window.ontouchstart = function (e) {
 };
 window.onmousedown = function (e) {
     Vars_1["default"].mouseMove = new Vec2_1.vec2(e.clientX, e.clientY);
-    console.log('mouse down ' + e.clientX + ', ' + e.clientY);
 };
 window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
@@ -52,7 +51,15 @@ window.onmousemove = function (e) {
 };
 window.onmouseup = function (e) {
     Vars_1["default"].mouseMove = null;
-    console.log('mouse up');
+};
+window.ontouchstart = function (e) {
+    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
+};
+window.ontouchmove = function (e) {
+    if (Vars_1["default"].mouseMove === null) {
+        return;
+    }
+    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
 };
 window.onkeyup = function (e) {
     Vars_1["default"].inputState[e.key.toLowerCase()] = 0;
