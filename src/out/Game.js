@@ -20,7 +20,7 @@ window.onkeydown = function (e) {
         inputState[key] = 1;
     }
     if (inputState.f1 === 1) {
-        boxMode = (++boxMode % 4);
+        boxMode = (++boxMode % 5);
     }
     else if (inputState.f2 === 1) {
         spriteSheetMode = !spriteSheetMode;
@@ -143,8 +143,11 @@ function drawObjects(ctx) {
             var offset = ctx.lineWidth / 2;
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
-        if (boxMode === 2 || boxMode === 3) {
+        if (boxMode > 1) {
             var frame = obj.getAnimFrame();
+            if (boxMode < 4) {
+                frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
+            }
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!debugMode) {

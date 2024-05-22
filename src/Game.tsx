@@ -5,7 +5,7 @@ import "./World";
 
 var inputState: { [id: string]: number } = {};
 var debugMode = false;
-var boxMode = 0; // 0 = points, 1 = box, 2 = box with sprite, 3 = just the sprite
+var boxMode = 0; // 0 = points, 1 = box, 2 = box with sprite, 3 = just the sprite with no animations, 4 = the sprite with animations
 var spriteSheetMode = false;
 var slowMode = false;
 var showButtons = true;
@@ -20,7 +20,7 @@ window.onkeydown = e => {
 		inputState[key] = 1;
 	}
 	if (inputState.f1 === 1) {
-		boxMode = (++boxMode % 4);
+		boxMode = (++boxMode % 5);
 	} else if (inputState.f2 === 1) {
 		spriteSheetMode = !spriteSheetMode;
 	} else if (inputState.f3 === 1) {
@@ -176,8 +176,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		if (boxMode === 2 || boxMode === 3) {
+		if (boxMode > 1) {
 			let frame = obj.getAnimFrame();
+			if (boxMode < 4) {
+				// Just get one frame.
+				frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
+			}
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx
