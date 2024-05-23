@@ -92,6 +92,9 @@ function clickOrTouchStart(point) {
     Vars_1["default"].inputState['mouseDown'] = 1;
     for (var _i = 0, _a = Object.entries(Button_1["default"].store); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], button = _b[1];
+        if (!Vars_1["default"].showButtons && button.varKey != "showButtons") {
+            continue;
+        }
         if (button.dimensions.contains(point)) {
             button.click();
             return;

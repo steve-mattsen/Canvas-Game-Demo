@@ -28,9 +28,7 @@ function draw() {
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
-    if (Vars_1["default"].showButtons) {
-        drawButtons(ctx);
-    }
+    drawButtons(ctx);
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
@@ -92,6 +90,9 @@ function drawButtons(ctx) {
     var i = 0;
     for (var _i = 0, _a = Object.entries(Button_1["default"].store).reverse(); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], button = _b[1];
+        if (!Vars_1["default"].showButtons && button.varKey !== 'showButtons') {
+            continue;
+        }
         var aspectRatio = window.innerWidth / window.innerHeight;
         var buttonWidth = void 0;
         var buttonHeight = void 0;

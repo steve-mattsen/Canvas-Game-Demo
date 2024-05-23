@@ -88,6 +88,9 @@ function clickOrTouchStart(point: vec2) {
 	}
 	Vars.inputState['mouseDown'] = 1;
 	for (const [key, button] of Object.entries(Button.store)) {
+		if (!Vars.showButtons && button.varKey != "showButtons") {
+			continue;
+		}
 		if (button.dimensions.contains(point)) {
 			button.click();
 			return;

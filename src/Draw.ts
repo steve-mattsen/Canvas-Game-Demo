@@ -38,9 +38,7 @@ export default function draw() {
 
 	drawObjects(ctx);
 
-	if (Vars.showButtons) {
-		drawButtons(ctx);
-	}
+	drawButtons(ctx);
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {
@@ -143,6 +141,9 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
 	let i = 0;
 	for (const [key, button] of Object.entries(Button.store).reverse()) {
+		if (!Vars.showButtons && button.varKey !== 'showButtons') {
+			continue;
+		}
 		let aspectRatio = window.innerWidth / window.innerHeight;
 		let buttonWidth;
 		let buttonHeight;
