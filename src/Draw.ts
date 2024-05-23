@@ -184,7 +184,6 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 				70, 
 				Math.ceil(window.innerWidth * .5)
 			);
-			buttonHeight = Math
 		} else {
 			buttonWidth = Math.ceil(window.innerWidth);
 		}

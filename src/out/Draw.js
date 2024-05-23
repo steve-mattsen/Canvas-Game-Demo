@@ -126,7 +126,6 @@ function drawButtons(ctx) {
         }
         else if (aspectRatio > 0.5) {
             buttonWidth = Math.max(70, Math.ceil(window.innerWidth * .5));
-            buttonHeight = Math;
         }
         else {
             buttonWidth = Math.ceil(window.innerWidth);
