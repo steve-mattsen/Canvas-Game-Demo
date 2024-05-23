@@ -20,6 +20,11 @@ window.onkeydown = e => {
 	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
+	if (e.shiftKey == true) {
+		Vars.inputState.shift++;
+	} else {
+		Vars.inputState.shift = 0;
+	}
 	if (!Vars.inputState[key]) {
 		Vars.inputState[key] = 1;
 	}
@@ -45,7 +50,7 @@ window.onmousedown = (e) => {
 	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
-	Vars.debugMode && console.log(e.type, e);
+	// Vars.debugMode && console.log(e.type, e);
 	if (Vars.mouseMove === null) {
 		return;
 	}
