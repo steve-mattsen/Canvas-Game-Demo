@@ -17,10 +17,12 @@ var Vars = (function () {
         "#444444",
         "#222222",
         "#000000",
+        "#000000",
     ];
     Vars.fgColors = [
         "#000000",
-        "#000000",
+        "#ffffff",
+        "#ffffff",
         "#ffffff",
         "#ffffff",
         "#ffffff",

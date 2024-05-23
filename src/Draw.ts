@@ -45,7 +45,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
 
-		if (Vars.displayMode < 3) {
+		if (Vars.displayMode < 4) {
 			// Draw points
 			ctx.fillStyle = 'black';
 			let pointSize = 16;
@@ -72,7 +72,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.fill(botRight);
 		}
 
-		if (Vars.displayMode === 1 || Vars.displayMode === 2) {
+		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
 			// Draw box
 			ctx.strokeStyle = "black";
 			let offset = ctx.lineWidth / 2;
@@ -86,7 +86,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		if (Vars.displayMode > 1) {
 			let frame = obj.getAnimFrame();
-			if (Vars.displayMode < 4) {
+			if (Vars.displayMode < 3) {
 				// Just get one frame.
 				frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
 			}

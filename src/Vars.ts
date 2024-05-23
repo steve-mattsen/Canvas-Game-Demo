@@ -14,10 +14,12 @@ export default class Vars {
 		"#444444",
 		"#222222",
 		"#000000",
+		"#000000",
 	]
 	static fgColors = [
 		"#000000",
-		"#000000",
+		"#ffffff",
+		"#ffffff",
 		"#ffffff",
 		"#ffffff",
 		"#ffffff",
