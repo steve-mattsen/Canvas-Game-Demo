@@ -17,7 +17,7 @@ export default function draw() {
 	}
 
 	ctx.lineWidth = 2;
-	
+
 	if (Vars.showBackground) {
 		drawBackground(ctx);
 	}
@@ -142,13 +142,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
 	let i = 0;
-	for (const [key, button] of Object.entries(Button.store)) {
-		i++;
+	for (const [key, button] of Object.entries(Button.store).reverse()) {
 		let aspectRatio = window.innerWidth / window.innerHeight;
 		let buttonWidth;
 		let buttonHeight;
 		let margin;
-		let buttonAspect = 1/8;
+		let buttonAspect = 1 / 8;
 		if (aspectRatio > 1) {
 			//It's wide. Use width as primary dimension.
 			buttonWidth = Math.max(
@@ -158,7 +157,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			);
 		} else if (aspectRatio > 0.5) {
 			buttonWidth = Math.max(
-				70, 
+				70,
 				Math.ceil(window.innerWidth * .5)
 			);
 		} else {
@@ -194,6 +193,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			buttonY + Math.ceil(buttonHeight / 2) + margin,
 			buttonWidth - margin * 2,
 		)
+		i++;
 	}
 }
 

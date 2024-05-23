@@ -90,9 +90,8 @@ function drawObjects(ctx) {
 }
 function drawButtons(ctx) {
     var i = 0;
-    for (var _i = 0, _a = Object.entries(Button_1["default"].store); _i < _a.length; _i++) {
+    for (var _i = 0, _a = Object.entries(Button_1["default"].store).reverse(); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], button = _b[1];
-        i++;
         var aspectRatio = window.innerWidth / window.innerHeight;
         var buttonWidth = void 0;
         var buttonHeight = void 0;
@@ -121,6 +120,7 @@ function drawButtons(ctx) {
         ctx.textAlign = "left";
         ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
         ctx.fillText("".concat(key, " ").concat(button.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
+        i++;
     }
 }
 function drawBackground(ctx) {
