@@ -13,6 +13,7 @@ var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
 var Button_1 = require("./Button");
+var Vec2_1 = require("./Vec2");
 function draw() {
     var canvas = document.getElementById("game_window");
     canvas.setAttribute('width', window.innerWidth + '');
@@ -98,7 +99,6 @@ function drawObjects(ctx) {
 }
 function drawButtons(ctx) {
     var buttons = __spreadArray([], Button_1["default"].store, true);
-    buttons.reverse();
     buttons.forEach(function (v, i) {
         var aspectRatio = window.innerWidth / window.innerHeight;
         var buttonWidth;
@@ -118,6 +118,7 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
+        Button_1["default"].store[i].dimensions = new Vec2_1.bbox(new Vec2_1.vec2(buttonX, buttonY), new Vec2_1.vec2(buttonX + buttonWidth, buttonY + buttonHeight));
         var colorKey = Number(Reflect.get(Vars_1["default"], v.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);

@@ -62,6 +62,15 @@ var bbox = (function () {
         }
         return Math.sqrt(sumProduct);
     };
+    bbox.prototype.contains = function (point) {
+        if (point.x < this.topLeft.x
+            || point.x > this.bottomRight.x
+            || point.y < this.topLeft.y
+            || point.y > this.bottomRight.y) {
+            return false;
+        }
+        return true;
+    };
     return bbox;
 }());
 exports.bbox = bbox;

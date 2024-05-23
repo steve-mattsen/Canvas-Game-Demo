@@ -68,5 +68,18 @@ export class bbox {
 		}
 		return Math.sqrt(sumProduct);
 	}
+	contains(point: vec2) {
+		if (point.x < this.topLeft.x 
+			|| point.x > this.bottomRight.x 
+			|| point.y < this.topLeft.y 
+			|| point.y > this.bottomRight.y
+		) {
+			return false;
+		}
+		return true;
+	}
 
+	// (1,4), (3,6)
+	// (1,3)
+	// 
 }

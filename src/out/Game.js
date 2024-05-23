@@ -4,6 +4,7 @@ var Vec2_1 = require("./Vec2");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
 var Draw_1 = require("./Draw");
+var Button_1 = require("./Button");
 require("./World");
 window.onkeydown = function (e) {
     var key = e.key.toLowerCase();
@@ -38,7 +39,8 @@ window.onkeydown = function (e) {
     }
 };
 window.onmousedown = function (e) {
-    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.clientX, e.clientY);
+    var point = new Vec2_1.vec2(e.clientX, e.clientY);
+    clickOrTouchStart(point);
 };
 window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
@@ -50,7 +52,8 @@ window.onmouseup = function (e) {
     Vars_1["default"].mouseMove = null;
 };
 window.ontouchstart = function (e) {
-    Vars_1["default"].mouseMove = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
+    var point = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
+    clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
@@ -64,6 +67,17 @@ window.onkeyup = function (e) {
 window.onblur = function (e) {
     Vars_1["default"].inputState = {};
 };
+function clickOrTouchStart(point) {
+    for (var _i = 0, _a = Button_1["default"].store; _i < _a.length; _i++) {
+        var button = _a[_i];
+        if (button.dimensions.contains(point)) {
+            var value = Reflect.get(Vars_1["default"], button.varKey);
+            Reflect.set(Vars_1["default"], button.varKey, !value);
+            return;
+        }
+    }
+    Vars_1["default"].mouseMove = point;
+}
 function tick() {
     var plyr = Obj_1.Obj.store['player'];
     var gp = navigator.getGamepads()[0];

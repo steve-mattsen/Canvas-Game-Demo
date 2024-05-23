@@ -2,6 +2,7 @@ import { vec2, bbox } from "./Vec2";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";
+import Button from "./Button";
 import "./World";
 
 window.onkeydown = e => {
@@ -32,7 +33,8 @@ window.onkeydown = e => {
 	}
 }
 window.onmousedown = (e) => {
-	Vars.mouseMove = new vec2(e.clientX, e.clientY);
+	let point = new vec2(e.clientX, e.clientY);
+	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
 	if (Vars.mouseMove === null) {
@@ -45,7 +47,8 @@ window.onmouseup = (e) => {
 }
 
 window.ontouchstart = (e) => {
-	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+	let point = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+	clickOrTouchStart(point);
 }
 window.ontouchmove = (e) => {
 	if (Vars.mouseMove === null) {
@@ -58,6 +61,17 @@ window.onkeyup = e => {
 }
 window.onblur = e => {
 	Vars.inputState = {};
+}
+
+function clickOrTouchStart(point: vec2) {
+	for (const button of Button.store) {
+		if (button.dimensions.contains(point)) {
+			let value = Reflect.get(Vars, button.varKey);
+			Reflect.set(Vars, button.varKey, !value);
+			return;
+		}
+	}
+	Vars.mouseMove = point;
 }
 
 function tick() {
