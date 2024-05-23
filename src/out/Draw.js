@@ -1,4 +1,13 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 exports.__esModule = true;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
@@ -87,35 +96,9 @@ function drawObjects(ctx) {
     });
 }
 function drawButtons(ctx) {
-    var modes = [
-        {
-            key: 'F1',
-            "var": Vars_1["default"].displayMode,
-            title: 'Display'
-        }, {
-            key: 'F2',
-            "var": Vars_1["default"].spriteSheetMode,
-            title: 'Spritesheet'
-        }, {
-            key: 'F3',
-            "var": Vars_1["default"].slowMode,
-            title: 'Slow'
-        }, {
-            key: 'F4',
-            "var": Vars_1["default"].showBackground,
-            title: "Background"
-        }, {
-            key: 'F5',
-            "var": Vars_1["default"].showButtons,
-            title: "Buttons"
-        }, {
-            key: 'F9',
-            "var": Vars_1["default"].debugMode,
-            title: 'Debug'
-        }
-    ];
-    modes.reverse();
-    modes.forEach(function (v, i) {
+    var buttons = __spreadArray([], Vars_1["default"].buttons, true);
+    buttons.reverse();
+    buttons.forEach(function (v, i) {
         var aspectRatio = window.innerWidth / window.innerHeight;
         var buttonWidth;
         var buttonHeight;
@@ -134,16 +117,12 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-        var colors = [
-            "#000000",
-            "#ffffff",
-            "#888888",
-        ];
-        ctx.fillStyle = colors[v["var"] ? (v["var"] === 2 ? 2 : 0) : 1] + "88";
+        var colorKey = Number(Reflect.get(Vars_1["default"], v.varKey));
+        ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.strokeStyle = "black";
         ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
-        ctx.fillStyle = colors[v["var"] ? (v["var"] === 2 ? 0 : 1) : 0];
+        ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
         ctx.textAlign = "left";
         ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
         ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);

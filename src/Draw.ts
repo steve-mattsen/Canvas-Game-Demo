@@ -138,35 +138,9 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
-	let modes = [
-		{
-			key: 'F1',
-			var: Vars.displayMode,
-			title: 'Display',
-		}, {
-			key: 'F2',
-			var: Vars.spriteSheetMode,
-			title: 'Spritesheet',
-		}, {
-			key: 'F3',
-			var: Vars.slowMode,
-			title: 'Slow'
-		}, {
-			key: 'F4',
-			var: Vars.showBackground,
-			title: "Background",
-		}, {
-			key: 'F5',
-			var: Vars.showButtons,
-			title: "Buttons",
-		}, {
-			key: 'F9',
-			var: Vars.debugMode,
-			title: 'Debug'
-		}
-	]
-	modes.reverse();
-	modes.forEach((v, i) => {
+	let buttons = [...Vars.buttons];
+	buttons.reverse();
+	buttons.forEach((v, i) => {
 		let aspectRatio = window.innerWidth / window.innerHeight;
 		let buttonWidth;
 		let buttonHeight;
@@ -191,12 +165,8 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		margin = Math.ceil(buttonHeight * .2);
 		let buttonX = window.innerWidth - buttonWidth - margin;
 		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-		let colors = [
-			"#000000",
-			"#ffffff",
-			"#888888",
-		]
-		ctx.fillStyle = colors[v.var ? (v.var === 2 ? 2 : 0) : 1] + "88";
+		let colorKey = Number(Reflect.get(Vars, v.varKey));
+		ctx.fillStyle = Vars.bgColors[colorKey] + "88";
 		ctx.fillRect(
 			buttonX,
 			buttonY,
@@ -210,7 +180,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			buttonWidth,
 			buttonHeight,
 		)
-		ctx.fillStyle = colors[v.var ? (v.var === 2 ? 0 : 1) : 0];
+		ctx.fillStyle = Vars.fgColors[colorKey];
 		ctx.textAlign = "left";
 		ctx.font = `${Math.ceil(buttonHeight * .75)}px Courier`;
 		ctx.fillText(
