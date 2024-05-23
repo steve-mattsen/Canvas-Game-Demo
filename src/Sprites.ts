@@ -5,16 +5,28 @@ export class Img {
 	uri: string = '';
 	element: HTMLImageElement;
 	size: vec2;
+	loaded = false;
 	constructor(id: string = '', uri: string = '') {
 		this.id = id ?? this.id;
 		this.uri = uri ?? this.uri;
 		this.element = new Image();
 		this.element.src = this.uri;
-		this.size = new vec2(this.element.width, this.element.height);
+		this.element.onload = () => {
+			this.size = new vec2(this.element.width, this.element.height);
+		};
+
 	}
 	public static store: { [id: string]: Img } = {};
 	public static addImg(image: Img) {
 		Img.store[image.id] = image;
+	}
+	public static checkImagesArePreloaded() {
+		for (const [key, image] of Object.entries(Img.store)) {
+			if (!image.element.complete) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
 

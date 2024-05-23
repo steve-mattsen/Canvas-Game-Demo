@@ -15,16 +15,29 @@ var Img = (function () {
     function Img(id, uri) {
         if (id === void 0) { id = ''; }
         if (uri === void 0) { uri = ''; }
+        var _this = this;
         this.id = '';
         this.uri = '';
+        this.loaded = false;
         this.id = id !== null && id !== void 0 ? id : this.id;
         this.uri = uri !== null && uri !== void 0 ? uri : this.uri;
         this.element = new Image();
         this.element.src = this.uri;
-        this.size = new Vec2_1.vec2(this.element.width, this.element.height);
+        this.element.onload = function () {
+            _this.size = new Vec2_1.vec2(_this.element.width, _this.element.height);
+        };
     }
     Img.addImg = function (image) {
         Img.store[image.id] = image;
+    };
+    Img.checkImagesArePreloaded = function () {
+        for (var _i = 0, _a = Object.entries(Img.store); _i < _a.length; _i++) {
+            var _b = _a[_i], key = _b[0], image = _b[1];
+            if (!image.element.complete) {
+                return false;
+            }
+        }
+        return true;
     };
     Img.store = {};
     return Img;

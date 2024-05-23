@@ -2,10 +2,8 @@
 import { Img, Animation, SpriteSheet } from "./Sprites"
 import { Obj } from "./Obj"
 import { vec2 } from "./Vec2"
-Img.addImg(new Img('grass', '/grass.png'));
-let spritesheet_link = new Img('spritesheet_link', "/spritesheet_link.png");
-Img.addImg(spritesheet_link);
-let ss = new SpriteSheet(spritesheet_link,
+
+let ss = new SpriteSheet(Img.store['spritesheet_link'],
 	[0, 110.875, 221.75, 332.625, 443.5, 554.375, 665.25, 776.125],
 	[0, 102.4, 204.8, 307.2, 409.6, 512, 614.4, 716.8, 819.2, 921.6],
 )
