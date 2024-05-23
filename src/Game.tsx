@@ -5,9 +5,18 @@ import draw from "./Draw";
 import Button from "./Button";
 import "./World";
 
+Button.store['F3'].click = () => {
+	Vars.slowMode = !Vars.slowMode;
+	clearTimeout(drawThread)
+	clearTimeout(gameThread)
+	let refresh = Vars.slowMode ? 15 : 59.67;
+	drawThread = setInterval(draw, 1000 / refresh);
+	gameThread = setInterval(tick, 1000 / refresh);
+}
+
 window.onkeydown = e => {
 	let key = e.key.toLowerCase();
-	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f10'].indexOf(key) > -1) {
+	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
 		e.preventDefault();
 	}
 	if (!Vars.inputState[key]) {
@@ -18,12 +27,7 @@ window.onkeydown = e => {
 	} else if (Vars.inputState.f2 === 1) {
 		Vars.spriteSheetMode = !Vars.spriteSheetMode;
 	} else if (Vars.inputState.f3 === 1) {
-		Vars.slowMode = !Vars.slowMode;
-		clearTimeout(drawThread)
-		clearTimeout(gameThread)
-		let refresh = Vars.slowMode ? 15 : 59.67;
-		drawThread = setInterval(draw, 1000 / refresh);
-		gameThread = setInterval(tick, 1000 / refresh);
+		Button.store['F3'].click();
 	} else if (Vars.inputState.f4) {
 		Vars.showBackground = !Vars.showBackground;
 	} else if (Vars.inputState.f5) {

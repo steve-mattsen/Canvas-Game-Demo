@@ -6,9 +6,17 @@ var Vars_1 = require("./Vars");
 var Draw_1 = require("./Draw");
 var Button_1 = require("./Button");
 require("./World");
+Button_1["default"].store['F3'].click = function () {
+    Vars_1["default"].slowMode = !Vars_1["default"].slowMode;
+    clearTimeout(drawThread);
+    clearTimeout(gameThread);
+    var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
+    drawThread = setInterval(Draw_1["default"], 1000 / refresh);
+    gameThread = setInterval(tick, 1000 / refresh);
+};
 window.onkeydown = function (e) {
     var key = e.key.toLowerCase();
-    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f10'].indexOf(key) > -1) {
+    if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
         e.preventDefault();
     }
     if (!Vars_1["default"].inputState[key]) {
@@ -21,12 +29,7 @@ window.onkeydown = function (e) {
         Vars_1["default"].spriteSheetMode = !Vars_1["default"].spriteSheetMode;
     }
     else if (Vars_1["default"].inputState.f3 === 1) {
-        Vars_1["default"].slowMode = !Vars_1["default"].slowMode;
-        clearTimeout(drawThread);
-        clearTimeout(gameThread);
-        var refresh_1 = Vars_1["default"].slowMode ? 15 : 59.67;
-        drawThread = setInterval(Draw_1["default"], 1000 / refresh_1);
-        gameThread = setInterval(tick, 1000 / refresh_1);
+        Button_1["default"].store['F3'].click();
     }
     else if (Vars_1["default"].inputState.f4) {
         Vars_1["default"].showBackground = !Vars_1["default"].showBackground;
