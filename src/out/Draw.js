@@ -64,7 +64,7 @@ function drawObjects(ctx) {
             if (Vars_1["default"].displayMode < 3) {
                 frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
             }
-            ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
+            ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!Vars_1["default"].debugMode) {
             return;

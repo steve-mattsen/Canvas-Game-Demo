@@ -97,7 +97,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				frame.subImg.getWidth(), //subw
 				frame.subImg.getHeight(), //subh
 				Math.floor(obj.pos.x), //posx
-				Math.floor(obj.pos.y), //posy
+				Math.floor(obj.pos.y - obj.z), //posy
 				frame.subImg.getWidth(), //width
 				frame.subImg.getHeight(), //height
 			);

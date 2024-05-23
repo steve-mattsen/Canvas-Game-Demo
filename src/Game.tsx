@@ -148,6 +148,15 @@ function tick() {
 
 	move = move.normalize();
 
+	if (Vars.inputState[" "] == 2 && plyr.z == 0) {
+		plyr.zVelocity = 10;
+	}
+	plyr.z += plyr.zVelocity-- * 0.5;
+	if (plyr.z < 0) {
+		plyr.z = 0;
+		plyr.zVelocity = 0;
+	}
+
 	let previousAnim = plyr.animState;
 	if (move.length() === 0) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');

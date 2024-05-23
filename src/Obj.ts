@@ -7,7 +7,9 @@ export class Obj {
 	pos = new vec2(10, 10);
 	velocity = new vec2(0, 0);
 	animations: { [id: string]: Animation } = {};
-	animState: string = 'idle';
+	animState: string = 'idle_down';
+	z = 0;
+	zVelocity = 0;
 	constructor(id: string, image: Img, size: vec2, pos: vec2, animations: { [id: string]: Animation } = {}) {
 		this.id = id ?? this.id;
 		this.image = image ?? this.image;

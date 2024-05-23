@@ -10,7 +10,9 @@ var Obj = (function () {
         this.pos = new Vec2_1.vec2(10, 10);
         this.velocity = new Vec2_1.vec2(0, 0);
         this.animations = {};
-        this.animState = 'idle';
+        this.animState = 'idle_down';
+        this.z = 0;
+        this.zVelocity = 0;
         this.id = id !== null && id !== void 0 ? id : this.id;
         this.image = image !== null && image !== void 0 ? image : this.image;
         this.size = size !== null && size !== void 0 ? size : this.size;

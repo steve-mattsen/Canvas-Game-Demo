@@ -144,6 +144,14 @@ function tick() {
         speed = Vars_1["default"].inputState.shift ? runSpeed : walkSpeed;
     }
     move = move.normalize();
+    if (Vars_1["default"].inputState[" "] == 2 && plyr.z == 0) {
+        plyr.zVelocity = 10;
+    }
+    plyr.z += plyr.zVelocity-- * 0.5;
+    if (plyr.z < 0) {
+        plyr.z = 0;
+        plyr.zVelocity = 0;
+    }
     var previousAnim = plyr.animState;
     if (move.length() === 0) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
