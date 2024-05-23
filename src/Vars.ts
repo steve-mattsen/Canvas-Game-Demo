@@ -43,11 +43,15 @@ export default class Vars {
 	];
 	static bgColors = [
 		"#ffffff",
+		"#666666",
+		"#444444",
+		"#222222",
 		"#000000",
-		"#888888",
 	]
 	static fgColors = [
 		"#000000",
+		"#000000",
+		"#ffffff",
 		"#ffffff",
 		"#ffffff",
 	]

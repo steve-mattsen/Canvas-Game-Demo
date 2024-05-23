@@ -47,11 +47,15 @@ var Vars = (function () {
     ];
     Vars.bgColors = [
         "#ffffff",
+        "#666666",
+        "#444444",
+        "#222222",
         "#000000",
-        "#888888",
     ];
     Vars.fgColors = [
         "#000000",
+        "#000000",
+        "#ffffff",
         "#ffffff",
         "#ffffff",
     ];

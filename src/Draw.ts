@@ -14,6 +14,8 @@ export default function draw() {
 		return;
 	}
 
+	ctx.lineWidth = 2;
+	
 	if (Vars.showBackground) {
 		drawBackground(ctx);
 	}
@@ -73,7 +75,6 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (Vars.displayMode === 1 || Vars.displayMode === 2) {
 			// Draw box
 			ctx.strokeStyle = "black";
-			ctx.lineWidth = 2;
 			let offset = ctx.lineWidth / 2;
 			ctx.strokeRect(
 				Math.floor(obj.pos.x + offset),

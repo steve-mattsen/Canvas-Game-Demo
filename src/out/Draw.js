@@ -23,6 +23,7 @@ function draw() {
     if (ctx === null) {
         return;
     }
+    ctx.lineWidth = 2;
     if (Vars_1["default"].showBackground) {
         drawBackground(ctx);
     }
@@ -64,7 +65,6 @@ function drawObjects(ctx) {
         }
         if (Vars_1["default"].displayMode === 1 || Vars_1["default"].displayMode === 2) {
             ctx.strokeStyle = "black";
-            ctx.lineWidth = 2;
             var offset = ctx.lineWidth / 2;
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
