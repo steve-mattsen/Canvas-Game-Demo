@@ -12,6 +12,7 @@ exports.__esModule = true;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
+var Button_1 = require("./Button");
 function draw() {
     var canvas = document.getElementById("game_window");
     canvas.setAttribute('width', window.innerWidth + '');
@@ -96,7 +97,7 @@ function drawObjects(ctx) {
     });
 }
 function drawButtons(ctx) {
-    var buttons = __spreadArray([], Vars_1["default"].buttons, true);
+    var buttons = __spreadArray([], Button_1["default"].store, true);
     buttons.reverse();
     buttons.forEach(function (v, i) {
         var aspectRatio = window.innerWidth / window.innerHeight;

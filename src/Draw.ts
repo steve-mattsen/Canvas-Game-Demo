@@ -1,6 +1,7 @@
 import { Img } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
+import Button from "./Button";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -139,7 +140,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
-	let buttons = [...Vars.buttons];
+	let buttons = [...Button.store];
 	buttons.reverse();
 	buttons.forEach((v, i) => {
 		let aspectRatio = window.innerWidth / window.innerHeight;
