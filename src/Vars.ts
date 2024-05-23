@@ -8,6 +8,7 @@ export default class Vars {
 	static showButtons = true;
 	static showBackground = false;
 	static mouseMove: vec2 | null = null;
+	static fullscreenMode = false;
 	static bgColors = [
 		"#ffffff",
 		"#666666",

@@ -11,6 +11,7 @@ var Vars = (function () {
     Vars.showButtons = true;
     Vars.showBackground = false;
     Vars.mouseMove = null;
+    Vars.fullscreenMode = false;
     Vars.bgColors = [
         "#ffffff",
         "#666666",

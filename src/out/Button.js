@@ -28,5 +28,17 @@ new Button('F2', 'spriteSheetMode', 'Spritesheet');
 new Button('F3', 'slowMode', 'Slow');
 new Button('F4', 'showBackground', "Background");
 new Button('F5', 'showButtons', "Buttons");
+new Button('F6', 'fullscreenMode', 'Fullscreen', function () {
+    if (!Vars_1["default"].fullscreenMode) {
+        document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
+        Vars_1["default"].fullscreenMode = true;
+    }
+    else {
+        if (document.fullscreenElement !== null) {
+            document.exitFullscreen();
+        }
+        Vars_1["default"].fullscreenMode = false;
+    }
+});
 new Button('F9', 'debugMode', 'Debug');
 //# sourceMappingURL=Button.js.map

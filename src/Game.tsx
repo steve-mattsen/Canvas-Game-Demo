@@ -33,6 +33,8 @@ window.onkeydown = e => {
 		Vars.showBackground = !Vars.showBackground;
 	} else if (Vars.inputState.f5) {
 		Vars.showButtons = !Vars.showButtons;
+	} else if (Vars.inputState.f6) {
+		Button.store['F6'].click();
 	} else if (Vars.inputState.f9 === 1) {
 		Vars.debugMode = !Vars.debugMode;
 	}

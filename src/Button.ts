@@ -34,4 +34,15 @@ new Button('F2', 'spriteSheetMode', 'Spritesheet');
 new Button('F3', 'slowMode', 'Slow');
 new Button('F4', 'showBackground', "Background");
 new Button('F5', 'showButtons', "Buttons");
+new Button('F6', 'fullscreenMode', 'Fullscreen', () => {
+	if (!Vars.fullscreenMode) {
+		document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
+		Vars.fullscreenMode = true;
+	} else {
+		if (document.fullscreenElement !== null) {
+			document.exitFullscreen();
+		}
+		Vars.fullscreenMode = false;
+	}
+});
 new Button('F9', 'debugMode', 'Debug');

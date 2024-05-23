@@ -106,7 +106,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			return;
 		}
 		ctx.save();
-		ctx.font = "18px Courier"
+		ctx.font = "18px Courier";
+		ctx.fillStyle = "black";
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
 			obj.pos.x,
@@ -138,6 +139,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 }
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
+	ctx.save();
 	// Draw optional keys and states
 	let i = 0;
 	for (const [key, button] of Object.entries(Button.store).reverse()) {
@@ -196,6 +198,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		)
 		i++;
 	}
+	ctx.restore();
 }
 
 function drawBackground(ctx: CanvasRenderingContext2D) {
@@ -203,6 +206,7 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 	if (!img?.size?.x || !img?.size?.y) {
 		return;
 	}
+	ctx.save();
 	for (let yi = 0; yi * img.size.y < window.innerHeight; yi++) {
 		for (let xi = 0; xi * img.size.x < window.innerWidth; xi++) {
 			ctx.drawImage(
@@ -212,4 +216,5 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 			)
 		}
 	}
+	ctx.restore();
 }
