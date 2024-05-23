@@ -116,9 +116,23 @@ function drawButtons(ctx) {
     ];
     modes.reverse();
     modes.forEach(function (v, i) {
-        var buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2));
-        var buttonHeight = Math.ceil(buttonWidth * .15);
-        var margin = Math.ceil(buttonHeight * .2);
+        var aspectRatio = window.innerWidth / window.innerHeight;
+        var buttonWidth;
+        var buttonHeight;
+        var margin;
+        var buttonAspect = 1 / 8;
+        if (aspectRatio > 1) {
+            buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2), Math.ceil(window.innerHeight * 0.05 / buttonAspect));
+        }
+        else if (aspectRatio > 0.5) {
+            buttonWidth = Math.max(70, Math.ceil(window.innerWidth * .5));
+            buttonHeight = Math;
+        }
+        else {
+            buttonWidth = Math.ceil(window.innerWidth);
+        }
+        buttonHeight = Math.ceil(buttonWidth * buttonAspect);
+        margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
         var colors = [

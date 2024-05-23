@@ -167,9 +167,29 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 	]
 	modes.reverse();
 	modes.forEach((v, i) => {
-		let buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2));
-		let buttonHeight = Math.ceil(buttonWidth * .15);
-		let margin = Math.ceil(buttonHeight * .2);
+		let aspectRatio = window.innerWidth / window.innerHeight;
+		let buttonWidth;
+		let buttonHeight;
+		let margin;
+		let buttonAspect = 1/8;
+		if (aspectRatio > 1) {
+			//It's wide. Use width as primary dimension.
+			buttonWidth = Math.max(
+				70,
+				Math.ceil(window.innerWidth * 0.2),
+				Math.ceil(window.innerHeight * 0.05 / buttonAspect),
+			);
+		} else if (aspectRatio > 0.5) {
+			buttonWidth = Math.max(
+				70, 
+				Math.ceil(window.innerWidth * .5)
+			);
+			buttonHeight = Math
+		} else {
+			buttonWidth = Math.ceil(window.innerWidth);
+		}
+		buttonHeight = Math.ceil(buttonWidth * buttonAspect);
+		margin = Math.ceil(buttonHeight * .2);
 		let buttonX = window.innerWidth - buttonWidth - margin;
 		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
 		let colors = [
