@@ -144,7 +144,7 @@ function tick() {
     }
     move = move.normalize();
     if (Vars_1["default"].inputState[" "] == 2 && plyr.z == 0) {
-        plyr.zVelocity = 10;
+        plyr.zVelocity = 15;
     }
     plyr.z += plyr.zVelocity-- * 0.5;
     if (plyr.z < 0) {
