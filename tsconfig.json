@@ -5,6 +5,7 @@
 		"removeComments": true,
 		"preserveConstEnums": true,
 		"sourceMap": true,
-		"outDir": "src/out"
+		"outDir": "src/out",
+		"jsx": "preserve",
 	}
 }

@@ -34,7 +34,7 @@ exports["default"] = draw;
 function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
-        if (Vars_1["default"].displayMode < 3) {
+        if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
             var pointSize = 16;
             var topLeft = new Path2D();
@@ -54,14 +54,14 @@ function drawObjects(ctx) {
             ctx.fill(topLeft);
             ctx.fill(botRight);
         }
-        if (Vars_1["default"].displayMode === 1 || Vars_1["default"].displayMode === 2) {
+        if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
             var offset = ctx.lineWidth / 2;
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
         if (Vars_1["default"].displayMode > 1) {
             var frame = obj.getAnimFrame();
-            if (Vars_1["default"].displayMode < 4) {
+            if (Vars_1["default"].displayMode < 3) {
                 frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
             }
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y), frame.subImg.getWidth(), frame.subImg.getHeight());
@@ -71,6 +71,7 @@ function drawObjects(ctx) {
         }
         ctx.save();
         ctx.font = "18px Courier";
+        ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
         ctx.fillText("window ".concat(window.innerHeight, "x").concat(window.innerWidth), 0, 18);
@@ -87,6 +88,7 @@ function drawObjects(ctx) {
     });
 }
 function drawButtons(ctx) {
+    ctx.save();
     var i = 0;
     for (var _i = 0, _a = Object.entries(Button_1["default"].store).reverse(); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], button = _b[1];
@@ -123,6 +125,7 @@ function drawButtons(ctx) {
         ctx.fillText("".concat(key, " ").concat(button.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
         i++;
     }
+    ctx.restore();
 }
 function drawBackground(ctx) {
     var _a, _b;
@@ -130,10 +133,12 @@ function drawBackground(ctx) {
     if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
         return;
     }
+    ctx.save();
     for (var yi = 0; yi * img.size.y < window.innerHeight; yi++) {
         for (var xi = 0; xi * img.size.x < window.innerWidth; xi++) {
             ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
         }
     }
+    ctx.restore();
 }
 //# sourceMappingURL=Draw.js.map
