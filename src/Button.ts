@@ -24,7 +24,7 @@ export default class Button {
 
 		Button.store[this.key] = this;
 	}
-	static store: {[id:string] : Button } = {};
+	static store: { [id: string]: Button } = {};
 }
 
 new Button('F1', 'displayMode', 'Display', () => {

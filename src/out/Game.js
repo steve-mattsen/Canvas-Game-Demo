@@ -15,6 +15,7 @@ Button_1["default"].store['F3'].click = function () {
     gameThread = setInterval(tick, 1000 / refresh);
 };
 window.onkeydown = function (e) {
+    Vars_1["default"].debugMode && console.log(e);
     var key = e.key.toLowerCase();
     if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
         e.preventDefault();
@@ -42,35 +43,53 @@ window.onkeydown = function (e) {
     }
 };
 window.onmousedown = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     var point = new Vec2_1.vec2(e.clientX, e.clientY);
     clickOrTouchStart(point);
 };
 window.onmousemove = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
     Vars_1["default"].mouseMove = new Vec2_1.vec2(e.clientX, e.clientY);
 };
 window.onmouseup = function (e) {
-    Vars_1["default"].mouseMove = null;
+    Vars_1["default"].debugMode && console.log(e.type, e);
+    clickOrTouchEnd();
+    e.preventDefault();
 };
 window.ontouchstart = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     var point = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
     clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
     Vars_1["default"].mouseMove = new Vec2_1.vec2(e.touches[0].clientX, e.touches[0].clientY);
 };
+window.ontouchend = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
+    clickOrTouchEnd();
+    e.preventDefault();
+};
 window.onkeyup = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     Vars_1["default"].inputState[e.key.toLowerCase()] = 0;
+    e.preventDefault();
 };
 window.onblur = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     Vars_1["default"].inputState = {};
 };
 function clickOrTouchStart(point) {
+    if (Vars_1["default"].inputState['mouseDown'] > 0) {
+        return;
+    }
+    Vars_1["default"].inputState['mouseDown'] = 1;
     for (var _i = 0, _a = Object.entries(Button_1["default"].store); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], button = _b[1];
         if (button.dimensions.contains(point)) {
@@ -79,6 +98,10 @@ function clickOrTouchStart(point) {
         }
     }
     Vars_1["default"].mouseMove = point;
+}
+function clickOrTouchEnd() {
+    Vars_1["default"].inputState['mouseDown'] = 0;
+    Vars_1["default"].mouseMove = null;
 }
 function tick() {
     var plyr = Obj_1.Obj.store['player'];

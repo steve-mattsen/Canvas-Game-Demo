@@ -15,6 +15,7 @@ Button.store['F3'].click = () => {
 }
 
 window.onkeydown = e => {
+	Vars.debugMode && console.log(e);
 	let key = e.key.toLowerCase();
 	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
 		e.preventDefault();
@@ -37,37 +38,55 @@ window.onkeydown = e => {
 	}
 }
 window.onmousedown = (e) => {
+	Vars.debugMode && console.log(e.type, e);
 	let point = new vec2(e.clientX, e.clientY);
 	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
+	Vars.debugMode && console.log(e.type, e);
 	if (Vars.mouseMove === null) {
 		return;
 	}
 	Vars.mouseMove = new vec2(e.clientX, e.clientY);
 }
 window.onmouseup = (e) => {
-	Vars.mouseMove = null;
+	Vars.debugMode && console.log(e.type, e);
+	clickOrTouchEnd();
+	e.preventDefault();
 }
 
 window.ontouchstart = (e) => {
+	Vars.debugMode && console.log(e.type, e);
 	let point = new vec2(e.touches[0].clientX, e.touches[0].clientY);
 	clickOrTouchStart(point);
 }
 window.ontouchmove = (e) => {
+	Vars.debugMode && console.log(e.type, e);
 	if (Vars.mouseMove === null) {
 		return;
 	}
 	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
 }
+window.ontouchend = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	clickOrTouchEnd();
+	e.preventDefault();
+}
 window.onkeyup = e => {
+	Vars.debugMode && console.log(e.type, e);
 	Vars.inputState[e.key.toLowerCase()] = 0;
+	e.preventDefault();
 }
 window.onblur = e => {
+	Vars.debugMode && console.log(e.type, e);
 	Vars.inputState = {};
 }
 
 function clickOrTouchStart(point: vec2) {
+	if (Vars.inputState['mouseDown'] > 0) {
+		return;
+	}
+	Vars.inputState['mouseDown'] = 1;
 	for (const [key, button] of Object.entries(Button.store)) {
 		if (button.dimensions.contains(point)) {
 			button.click();
@@ -75,6 +94,11 @@ function clickOrTouchStart(point: vec2) {
 		}
 	}
 	Vars.mouseMove = point;
+}
+
+function clickOrTouchEnd() {
+	Vars.inputState['mouseDown'] = 0;
+	Vars.mouseMove = null;
 }
 
 function tick() {
