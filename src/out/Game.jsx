@@ -20,12 +20,6 @@ window.onkeydown = function (e) {
     if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
         e.preventDefault();
     }
-    if (e.shiftKey == true) {
-        Vars_1["default"].inputState.shift++;
-    }
-    else {
-        Vars_1["default"].inputState.shift = 0;
-    }
     if (!Vars_1["default"].inputState[key]) {
         Vars_1["default"].inputState[key] = 1;
     }
@@ -146,7 +140,7 @@ function tick() {
         var moveY = (Vars_1["default"].inputState.arrowdown || Vars_1["default"].inputState.s ? 1 : 0)
             - (Vars_1["default"].inputState.arrowup || Vars_1["default"].inputState.w ? 1 : 0);
         move = new Vec2_1.vec2(moveX, moveY);
-        speed = Vars_1["default"].inputState.shift ? runSpeed : walkSpeed;
+        speed = runSpeed;
     }
     move = move.normalize();
     if (Vars_1["default"].inputState[" "] == 2 && plyr.z == 0) {
