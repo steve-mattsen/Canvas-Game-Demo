@@ -2,7 +2,7 @@ import { vec2, bbox } from "./Vec2";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
 	static debugMode = false;
-	static displayMode = 0;
+	static displayMode = 5;
 	static spriteSheetMode = false;
 	static slowMode = false;
 	static showButtons = true;

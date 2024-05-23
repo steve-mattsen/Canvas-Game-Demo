@@ -5,6 +5,7 @@ import { Img } from "./Sprites";
 let images = [
   '/grass.png',
   '/spritesheet_link.png',
+  '/shadow.png',
 ];
 
 for (const uri of images) {
