@@ -71,8 +71,7 @@ function clickOrTouchStart(point) {
     for (var _i = 0, _a = Button_1["default"].store; _i < _a.length; _i++) {
         var button = _a[_i];
         if (button.dimensions.contains(point)) {
-            var value = Reflect.get(Vars_1["default"], button.varKey);
-            Reflect.set(Vars_1["default"], button.varKey, !value);
+            button.click();
             return;
         }
     }
