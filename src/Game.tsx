@@ -64,7 +64,7 @@ window.onblur = e => {
 }
 
 function clickOrTouchStart(point: vec2) {
-	for (const button of Button.store) {
+	for (const [key, button] of Object.entries(Button.store)) {
 		if (button.dimensions.contains(point)) {
 			button.click();
 			return;

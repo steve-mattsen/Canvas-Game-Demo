@@ -1,13 +1,4 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 exports.__esModule = true;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
@@ -98,12 +89,14 @@ function drawObjects(ctx) {
     });
 }
 function drawButtons(ctx) {
-    var buttons = __spreadArray([], Button_1["default"].store, true);
-    buttons.forEach(function (v, i) {
+    var i = 0;
+    for (var _i = 0, _a = Object.entries(Button_1["default"].store); _i < _a.length; _i++) {
+        var _b = _a[_i], key = _b[0], button = _b[1];
+        i++;
         var aspectRatio = window.innerWidth / window.innerHeight;
-        var buttonWidth;
-        var buttonHeight;
-        var margin;
+        var buttonWidth = void 0;
+        var buttonHeight = void 0;
+        var margin = void 0;
         var buttonAspect = 1 / 8;
         if (aspectRatio > 1) {
             buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2), Math.ceil(window.innerHeight * 0.05 / buttonAspect));
@@ -118,8 +111,8 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-        Button_1["default"].store[i].dimensions = new Vec2_1.bbox(new Vec2_1.vec2(buttonX, buttonY), new Vec2_1.vec2(buttonX + buttonWidth, buttonY + buttonHeight));
-        var colorKey = Number(Reflect.get(Vars_1["default"], v.varKey));
+        Button_1["default"].store[key].dimensions = new Vec2_1.bbox(new Vec2_1.vec2(buttonX, buttonY), new Vec2_1.vec2(buttonX + buttonWidth, buttonY + buttonHeight));
+        var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
         ctx.strokeStyle = "black";
@@ -127,8 +120,8 @@ function drawButtons(ctx) {
         ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
         ctx.textAlign = "left";
         ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
-        ctx.fillText("".concat(v.key, " ").concat(v.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
-    });
+        ctx.fillText("".concat(key, " ").concat(button.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
+    }
 }
 function drawBackground(ctx) {
     var _a, _b;

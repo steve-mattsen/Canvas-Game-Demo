@@ -15,18 +15,18 @@ var Button = (function () {
         this.varKey = varKey !== null && varKey !== void 0 ? varKey : this.varKey;
         this.click = click !== null && click !== void 0 ? click : this.click;
         this.dimensions = dimensions !== null && dimensions !== void 0 ? dimensions : this.dimensions;
+        Button.store[this.key] = this;
     }
-    Button.store = [
-        new Button('F1', 'displayMode', 'Display', function () {
-            Vars_1["default"].displayMode = (++Vars_1["default"].displayMode % 5);
-        }),
-        new Button('F2', 'spriteSheetMode', 'Spritesheet'),
-        new Button('F3', 'slowMode', 'Slow'),
-        new Button('F4', 'showBackground', "Background"),
-        new Button('F5', 'showButtons', "Buttons"),
-        new Button('F9', 'debugMode', 'Debug')
-    ];
+    Button.store = {};
     return Button;
 }());
 exports["default"] = Button;
+new Button('F1', 'displayMode', 'Display', function () {
+    Vars_1["default"].displayMode = (++Vars_1["default"].displayMode % 5);
+});
+new Button('F2', 'spriteSheetMode', 'Spritesheet');
+new Button('F3', 'slowMode', 'Slow');
+new Button('F4', 'showBackground', "Background");
+new Button('F5', 'showButtons', "Buttons");
+new Button('F9', 'debugMode', 'Debug');
 //# sourceMappingURL=Button.js.map

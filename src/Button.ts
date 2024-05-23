@@ -21,15 +21,17 @@ export default class Button {
 		this.varKey = varKey ?? this.varKey;
 		this.click = click ?? this.click;
 		this.dimensions = dimensions ?? this.dimensions;
+
+		Button.store[this.key] = this;
 	}
-	static store: Button[] = [
-		new Button('F1', 'displayMode', 'Display', () => {
-			Vars.displayMode = (++Vars.displayMode % 5);
-		}),
-		new Button('F2', 'spriteSheetMode', 'Spritesheet'),
-		new Button('F3', 'slowMode', 'Slow'),
-		new Button('F4', 'showBackground', "Background"),
-		new Button('F5', 'showButtons', "Buttons"),
-		new Button('F9', 'debugMode', 'Debug')
-	];
+	static store: {[id:string] : Button } = {};
 }
+
+new Button('F1', 'displayMode', 'Display', () => {
+	Vars.displayMode = (++Vars.displayMode % 5);
+});
+new Button('F2', 'spriteSheetMode', 'Spritesheet');
+new Button('F3', 'slowMode', 'Slow');
+new Button('F4', 'showBackground', "Background");
+new Button('F5', 'showButtons', "Buttons");
+new Button('F9', 'debugMode', 'Debug');

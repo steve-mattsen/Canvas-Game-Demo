@@ -141,8 +141,9 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
 	// Draw optional keys and states
-	let buttons = [...Button.store];
-	buttons.forEach((v, i) => {
+	let i = 0;
+	for (const [key, button] of Object.entries(Button.store)) {
+		i++;
 		let aspectRatio = window.innerWidth / window.innerHeight;
 		let buttonWidth;
 		let buttonHeight;
@@ -168,8 +169,8 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		let buttonX = window.innerWidth - buttonWidth - margin;
 		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
 
-		Button.store[i].dimensions = new bbox(new vec2(buttonX, buttonY), new vec2(buttonX + buttonWidth, buttonY + buttonHeight));
-		let colorKey = Number(Reflect.get(Vars, v.varKey));
+		Button.store[key].dimensions = new bbox(new vec2(buttonX, buttonY), new vec2(buttonX + buttonWidth, buttonY + buttonHeight));
+		let colorKey = Number(Reflect.get(Vars, button.varKey));
 		ctx.fillStyle = Vars.bgColors[colorKey] + "88";
 		ctx.fillRect(
 			buttonX,
@@ -188,13 +189,12 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		ctx.textAlign = "left";
 		ctx.font = `${Math.ceil(buttonHeight * .75)}px Courier`;
 		ctx.fillText(
-			`${v.key} ${v.title}`,
+			`${key} ${button.title}`,
 			buttonX + margin,
 			buttonY + Math.ceil(buttonHeight / 2) + margin,
 			buttonWidth - margin * 2,
 		)
-	});
-
+	}
 }
 
 function drawBackground(ctx: CanvasRenderingContext2D) {
