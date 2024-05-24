@@ -74,7 +74,10 @@ window.onkeydown = e => {
 }
 window.onmousedown = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	let point = vec(e.clientX, e.clientY);
+	let point = vec(
+		e.clientX / Vars.canvasScale,
+		e.clientY / Vars.canvasScale
+	);
 	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
@@ -82,7 +85,10 @@ window.onmousemove = (e) => {
 	if (Vars.mouseMove === null) {
 		return;
 	}
-	Vars.mouseMove = vec(e.clientX, e.clientY);
+	Vars.mouseMove = vec(
+		e.clientX / Vars.canvasScale,
+		e.clientY / Vars.canvasScale,
+	);
 }
 window.onmouseup = (e) => {
 	Vars.debugMode && console.log(e.type, e);
@@ -92,7 +98,10 @@ window.onmouseup = (e) => {
 
 window.ontouchstart = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	let point = vec(e.touches[0].clientX, e.touches[0].clientY);
+	let point = vec(
+		e.touches[0].clientX / Vars.canvasScale,
+		e.touches[0].clientY / Vars.canvasScale,
+	);
 	clickOrTouchStart(point);
 }
 window.ontouchmove = (e) => {
@@ -100,7 +109,10 @@ window.ontouchmove = (e) => {
 	if (Vars.mouseMove === null) {
 		return;
 	}
-	Vars.mouseMove = vec(e.touches[0].clientX, e.touches[0].clientY);
+	Vars.mouseMove = vec(
+		e.touches[0].clientX / Vars.canvasScale,
+		e.touches[0].clientY / Vars.canvasScale,
+	);
 }
 window.ontouchend = (e) => {
 	Vars.debugMode && console.log(e.type, e);

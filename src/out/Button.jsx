@@ -74,14 +74,14 @@ window.onkeydown = function (e) {
 };
 window.onmousedown = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Geo_1.vec)(e.clientX, e.clientY);
+    var point = (0, Geo_1.vec)(e.clientX / Vars_1["default"].canvasScale, e.clientY / Vars_1["default"].canvasScale);
     clickOrTouchStart(point);
 };
 window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX, e.clientY);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].canvasScale, e.clientY / Vars_1["default"].canvasScale);
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -90,7 +90,7 @@ window.onmouseup = function (e) {
 };
 window.ontouchstart = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
+    var point = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
     clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
@@ -98,7 +98,7 @@ window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
 };
 window.ontouchend = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
