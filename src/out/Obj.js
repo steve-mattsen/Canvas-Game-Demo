@@ -6,8 +6,6 @@ var Sprites_1 = require("./Sprites");
 var Obj = (function () {
     function Obj(id, size, pos, spr, animations) {
         this.id = "blah";
-        this.size = (0, Geo_1.vec)(128, 50);
-        this.pos = (0, Geo_1.vec)(10, 10);
         this.velocity = (0, Geo_1.vec)(0, 0);
         this.animState = 'idle_down';
         this.z = 0;

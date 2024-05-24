@@ -3,8 +3,8 @@ import { Img, Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
 	id = "blah";
 	sprite: Sprite;
-	size = vec(128, 50);
-	pos = vec(10, 10);
+	size: vec2;
+	pos: vec2;
 	velocity = vec(0, 0);
 	animations: { [id: string]: Animation } | null;
 	animState: string = 'idle_down';
