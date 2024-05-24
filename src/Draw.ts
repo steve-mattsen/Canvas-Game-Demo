@@ -6,6 +6,8 @@ import { bbox, vec, vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
+	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
+	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
 	if (canvas.getContext === undefined) {
