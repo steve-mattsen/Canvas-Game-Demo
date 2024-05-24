@@ -77,7 +77,7 @@ var SpriteSheet = (function () {
         this.colSize = Math.floor(this.image.size.x / cols);
         this.rowSize = Math.floor(this.image.size.y / rows);
         this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(this.colSize, this.rowSize));
-        this.duration = 4;
+        this.duration = duration;
     }
     SpriteSheet.prototype.getAnim = function (rows, cols) {
         var _this = this;

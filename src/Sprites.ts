@@ -71,7 +71,7 @@ export class SpriteSheet {
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
 		this.box = new bbox(vec(0, 0), vec(this.colSize, this.rowSize));
-		this.duration = 4;
+		this.duration = duration;
 	}
 	getAnim(rows: number[], cols: number[]) {
 		let frames: Sprite[] = [];
