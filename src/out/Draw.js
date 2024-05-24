@@ -26,7 +26,7 @@ function draw() {
     if (Vars_1["default"].spriteSheetMode) {
         var frame = plyr.getAnimFrame();
         ctx.fillStyle = "red";
-        ctx.fillRect(frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight());
+        ctx.fillRect(frame.sprite.box.topLeft.x, frame.sprite.box.topLeft.y, frame.sprite.box.getWidth(), frame.sprite.box.getHeight());
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
@@ -70,7 +70,7 @@ function drawObjects(ctx) {
             }
             else {
                 var frame = obj.getAnimFrame();
-                ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.subImg.getWidth(), frame.subImg.getHeight());
+                ctx.drawImage(frame.sprite.image.element, frame.sprite.box.topLeft.x, frame.sprite.box.topLeft.y, frame.sprite.box.getWidth(), frame.sprite.box.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.sprite.box.getWidth(), frame.sprite.box.getHeight());
             }
         }
         if (!Vars_1["default"].debugMode) {

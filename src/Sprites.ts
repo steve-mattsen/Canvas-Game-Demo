@@ -31,19 +31,20 @@ export class Img {
 }
 
 export class Frame {
-	image: Img;
-	subImg: bbox = new bbox(vec(0, 0), vec(0, 0));
+	sprite: Sprite;
 	duration: number = 4;
 	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
-		this.image = image ?? this.image;
-		this.subImg = new bbox(
-			vec(
-				subImgX,
-				subImgY
-			), vec(
-				subImgX + subImgWidth,
-				subImgY + subImgHeight
-			)
+		this.sprite = new Sprite(image,
+			new bbox(
+				vec(
+					subImgX,
+					subImgY
+				), vec(
+					subImgX + subImgWidth,
+					subImgY + subImgHeight
+				)
+			),
+			1
 		);
 		this.duration = duration ?? this.duration;
 	}

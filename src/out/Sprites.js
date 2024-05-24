@@ -45,10 +45,8 @@ var Img = (function () {
 exports.Img = Img;
 var Frame = (function () {
     function Frame(image, subImgX, subImgY, subImgWidth, subImgHeight, duration) {
-        this.subImg = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(0, 0));
         this.duration = 4;
-        this.image = image !== null && image !== void 0 ? image : this.image;
-        this.subImg = new Geo_1.bbox((0, Geo_1.vec)(subImgX, subImgY), (0, Geo_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight));
+        this.sprite = new Sprite(image, new Geo_1.bbox((0, Geo_1.vec)(subImgX, subImgY), (0, Geo_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight)), 1);
         this.duration = duration !== null && duration !== void 0 ? duration : this.duration;
     }
     return Frame;

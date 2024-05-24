@@ -30,10 +30,10 @@ export default function draw() {
 		let frame = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
 		ctx.fillRect(
-			frame.subImg.topLeft.x,
-			frame.subImg.topLeft.y,
-			frame.subImg.getWidth(),
-			frame.subImg.getHeight(),
+			frame.sprite.box.topLeft.x,
+			frame.sprite.box.topLeft.y,
+			frame.sprite.box.getWidth(),
+			frame.sprite.box.getHeight(),
 		);
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
@@ -100,15 +100,15 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			} else {
 				let frame = obj.getAnimFrame();
 				ctx.drawImage(
-					frame.image.element, //image
-					frame.subImg.topLeft.x, //subx
-					frame.subImg.topLeft.y, //suby
-					frame.subImg.getWidth(), //subw
-					frame.subImg.getHeight(), //subh
+					frame.sprite.image.element, //image
+					frame.sprite.box.topLeft.x, //subx
+					frame.sprite.box.topLeft.y, //suby
+					frame.sprite.box.getWidth(), //subw
+					frame.sprite.box.getHeight(), //subh
 					Math.floor(obj.pos.x), //posx
 					Math.floor(obj.pos.y - obj.z), //posy
-					frame.subImg.getWidth(), //width
-					frame.subImg.getHeight(), //height
+					frame.sprite.box.getWidth(), //width
+					frame.sprite.box.getHeight(), //height
 				);
 			}
 		}
