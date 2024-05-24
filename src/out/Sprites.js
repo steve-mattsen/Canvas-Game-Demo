@@ -79,12 +79,13 @@ var Animation = (function () {
 }());
 exports.Animation = Animation;
 var SpriteSheet = (function () {
-    function SpriteSheet(image, rowDims, colDims) {
-        this.rowDims = [];
-        this.colDims = [];
+    function SpriteSheet(image, rows, cols) {
         this.image = image;
-        this.rowDims = rowDims;
-        this.colDims = colDims;
+        this.rows = rows;
+        this.cols = cols;
+        this.colSize = Math.floor(this.image.size.x / cols);
+        this.rowSize = Math.floor(this.image.size.y / rows);
+        this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(this.colSize, this.rowSize));
     }
     SpriteSheet.prototype.getAnim = function (rows, cols, duration) {
         var _this = this;
@@ -92,12 +93,7 @@ var SpriteSheet = (function () {
         var frames = [];
         rows.forEach(function (r) {
             cols.forEach(function (c) {
-                var _a, _b;
-                var thisRowDim = _this.rowDims[r];
-                var thisColDim = _this.colDims[c];
-                var nextRowDim = (_a = _this.rowDims[r + 1]) !== null && _a !== void 0 ? _a : _this.image.size.y;
-                var nextColumnDim = (_b = _this.colDims[c + 1]) !== null && _b !== void 0 ? _b : _this.image.size.x;
-                frames.push(new Frame(_this.image, thisColDim, Math.round(thisRowDim), nextColumnDim - thisColDim, Math.round(nextRowDim - thisRowDim), duration !== null && duration !== void 0 ? duration : 4));
+                frames.push(new Frame(_this.image, c * _this.colSize, r * _this.rowSize, _this.colSize, _this.rowSize, duration));
             });
         });
         return new Animation(frames);

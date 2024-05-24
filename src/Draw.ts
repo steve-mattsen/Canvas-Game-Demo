@@ -94,12 +94,9 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				// Just get one frame.
 				frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
 			}
-			let shadow = Img.store['shadow'];
-			ctx.drawImage(
-				shadow.element,
-				Math.floor(obj.pos.x),
-				Math.floor(obj.pos.y + (obj.size.y * .7)),
-			)
+			let shadow = sprite('shadow');
+			shadow.scale = .25;
+			shadow.draw(ctx, vec(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
 			ctx.drawImage(
 				frame.image.element, //image
 				frame.subImg.topLeft.x, //subx

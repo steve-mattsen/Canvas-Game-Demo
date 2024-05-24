@@ -67,8 +67,9 @@ function drawObjects(ctx) {
             if (Vars_1["default"].displayMode < 3) {
                 frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
             }
-            var shadow = Sprites_1.Img.store['shadow'];
-            ctx.drawImage(shadow.element, Math.floor(obj.pos.x), Math.floor(obj.pos.y + (obj.size.y * .7)));
+            var shadow = (0, Sprites_1.sprite)('shadow');
+            shadow.scale = .25;
+            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
             ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.subImg.getWidth(), frame.subImg.getHeight());
         }
         if (!Vars_1["default"].debugMode) {

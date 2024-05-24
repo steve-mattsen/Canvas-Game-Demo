@@ -76,29 +76,43 @@ export class Animation {
 
 export class SpriteSheet {
 	image: Img;
-	rowDims: number[] = [];
-	colDims: number[] = [];
-	constructor(image: Img, rowDims: number[], colDims: number[]) {
+	rows: number;
+	cols: number;
+	rowSize: number;
+	colSize: number;
+	box: bbox;
+	constructor(image: Img, rows: number, cols: number) {
 		this.image = image;
-		this.rowDims = rowDims;
-		this.colDims = colDims;
+		this.rows = rows;
+		this.cols = cols;
+		this.colSize = Math.floor(this.image.size.x / cols);
+		this.rowSize = Math.floor(this.image.size.y / rows);
+		this.box = new bbox(vec(0, 0), vec(this.colSize, this.rowSize));
 	}
 	getAnim(rows: number[], cols: number[], duration: number = 4) {
 		let frames: Frame[] = [];
 		rows.forEach(r => {
 			cols.forEach(c => {
-				let thisRowDim = this.rowDims[r];
-				let thisColDim = this.colDims[c];
-				let nextRowDim = this.rowDims[r + 1] ?? this.image.size.y;
-				let nextColumnDim = this.colDims[c + 1] ?? this.image.size.x;
 				frames.push(new Frame(
 					this.image,
-					thisColDim,
-					Math.round(thisRowDim),
-					nextColumnDim - thisColDim,
-					Math.round(nextRowDim - thisRowDim),
-					duration ?? 4)
-				);
+					c * this.colSize,
+					r * this.rowSize,
+					this.colSize,
+					this.rowSize,
+					duration,
+				))
+				// let thisRowDim = this.rowDims[r];
+				// let thisColDim = this.colDims[c];
+				// let nextRowDim = this.rowDims[r + 1] ?? this.image.size.y;
+				// let nextColumnDim = this.colDims[c + 1] ?? this.image.size.x;
+				// frames.push(new Frame(
+				// 	this.image,
+				// 	thisColDim,
+				// 	Math.round(thisRowDim),
+				// 	nextColumnDim - thisColDim,
+				// 	Math.round(nextRowDim - thisRowDim),
+				// 	duration ?? 4)
+				// );
 			})
 		})
 		return new Animation(frames);
