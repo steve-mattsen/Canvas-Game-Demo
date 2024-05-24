@@ -6,8 +6,8 @@ import { bbox, vec, vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
-	canvas.setAttribute('width', window.innerWidth + '');
-	canvas.setAttribute('height', window.innerHeight + '');
+	canvas.setAttribute('width', Vars.canvasWidth + '');
+	canvas.setAttribute('height', Vars.canvasHeight + '');
 	if (canvas.getContext === undefined) {
 		return;
 	}
@@ -41,7 +41,7 @@ export default function draw() {
 	drawButtons(ctx);
 
 	let tree = sprite('tree');
-	tree.scale = 2;
+	tree.scale = 1;
 	tree.draw(ctx, vec(50, 50));
 }
 
@@ -128,7 +128,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			obj.pos.x,
 			obj.pos.y + obj.size.y + 18,
 		)
-		ctx.fillText(`window ${window.innerHeight}x${window.innerWidth}`,
+		ctx.fillText(`window ${Vars.canvasHeight}x${Vars.canvasWidth}`,
 			0, 18
 		);
 		let count = 0;
@@ -140,7 +140,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			}
 			ctx.fillText(
 				`${v} : ${Vars.inputState[v]}`,
-				window.innerWidth,
+				Vars.canvasWidth,
 				count++ * 18,
 			)
 		});
@@ -156,7 +156,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		if (!Vars.showButtons && button.varKey !== 'showButtons') {
 			continue;
 		}
-		let aspectRatio = window.innerWidth / window.innerHeight;
+		let aspectRatio = Vars.canvasWidth / Vars.canvasHeight;
 		let buttonWidth;
 		let buttonHeight;
 		let margin;
@@ -165,21 +165,21 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 			//It's wide. Use width as primary dimension.
 			buttonWidth = Math.max(
 				70,
-				Math.ceil(window.innerWidth * 0.2),
-				Math.ceil(window.innerHeight * 0.05 / buttonAspect),
+				Math.ceil(Vars.canvasWidth * 0.2),
+				Math.ceil(Vars.canvasHeight * 0.05 / buttonAspect),
 			);
 		} else if (aspectRatio > 0.5) {
 			buttonWidth = Math.max(
 				70,
-				Math.ceil(window.innerWidth * .5)
+				Math.ceil(Vars.canvasWidth * .5)
 			);
 		} else {
-			buttonWidth = Math.ceil(window.innerWidth);
+			buttonWidth = Math.ceil(Vars.canvasWidth);
 		}
 		buttonHeight = Math.ceil(buttonWidth * buttonAspect);
 		margin = Math.ceil(buttonHeight * .2);
-		let buttonX = window.innerWidth - buttonWidth - margin;
-		let buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
+		let buttonX = Vars.canvasWidth - buttonWidth - margin;
+		let buttonY = Vars.canvasHeight - (buttonHeight + margin) * (i + 1);
 
 		Button.store[key].dimensions = new bbox(vec(buttonX, buttonY), vec(buttonX + buttonWidth, buttonY + buttonHeight));
 		let colorKey = Number(Reflect.get(Vars, button.varKey));
@@ -217,8 +217,8 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 		return;
 	}
 	ctx.save();
-	for (let yi = 0; yi * img.size.y < window.innerHeight; yi++) {
-		for (let xi = 0; xi * img.size.x < window.innerWidth; xi++) {
+	for (let yi = 0; yi * img.size.y < Vars.canvasHeight; yi++) {
+		for (let xi = 0; xi * img.size.x < Vars.canvasWidth; xi++) {
 			ctx.drawImage(
 				img.element,
 				xi * img.size.x,

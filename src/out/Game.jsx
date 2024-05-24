@@ -85,7 +85,7 @@ function tick() {
     plyr.tickAnimFrame();
     plyr.pos.x += move.x * speed;
     plyr.pos.y += move.y * speed;
-    plyr.pos = (0, Geo_1.vec)(Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)), Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y)));
+    plyr.pos = (0, Geo_1.vec)(Math.max(0, Math.min(plyr.pos.x, Vars_1["default"].canvasWidth - plyr.size.x)), Math.max(0, Math.min(plyr.pos.y, Vars_1["default"].canvasHeight - plyr.size.y)));
 }
 var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
 var drawThread = setInterval(Draw_1["default"], 1000 / refresh);

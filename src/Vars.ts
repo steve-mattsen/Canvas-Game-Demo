@@ -9,6 +9,9 @@ export default class Vars {
 	static showBackground = false;
 	static mouseMove: vec2 | null = null;
 	static fullscreenMode = false;
+	static canvasScale = 4;
+	static canvasWidth = window.innerWidth / this.canvasScale;
+	static canvasHeight = window.innerHeight / this.canvasScale;
 	static bgColors = [
 		"#ffffff",
 		"#666666",

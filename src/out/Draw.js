@@ -7,8 +7,8 @@ var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 function draw() {
     var canvas = document.getElementById("game_window");
-    canvas.setAttribute('width', window.innerWidth + '');
-    canvas.setAttribute('height', window.innerHeight + '');
+    canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
+    canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
     if (canvas.getContext === undefined) {
         return;
     }
@@ -30,7 +30,7 @@ function draw() {
     drawObjects(ctx);
     drawButtons(ctx);
     var tree = (0, Sprites_1.sprite)('tree');
-    tree.scale = 2;
+    tree.scale = 1;
     tree.draw(ctx, (0, Geo_1.vec)(50, 50));
 }
 exports["default"] = draw;
@@ -79,7 +79,7 @@ function drawObjects(ctx) {
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
-        ctx.fillText("window ".concat(window.innerHeight, "x").concat(window.innerWidth), 0, 18);
+        ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
         var count = 0;
         ctx.textAlign = "right";
         ctx.textBaseline = "top";
@@ -87,7 +87,7 @@ function drawObjects(ctx) {
             if (!Vars_1["default"].inputState[v]) {
                 return;
             }
-            ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), window.innerWidth, count++ * 18);
+            ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), Vars_1["default"].canvasWidth, count++ * 18);
         });
         ctx.restore();
     });
@@ -100,24 +100,24 @@ function drawButtons(ctx) {
         if (!Vars_1["default"].showButtons && button.varKey !== 'showButtons') {
             continue;
         }
-        var aspectRatio = window.innerWidth / window.innerHeight;
+        var aspectRatio = Vars_1["default"].canvasWidth / Vars_1["default"].canvasHeight;
         var buttonWidth = void 0;
         var buttonHeight = void 0;
         var margin = void 0;
         var buttonAspect = 1 / 8;
         if (aspectRatio > 1) {
-            buttonWidth = Math.max(70, Math.ceil(window.innerWidth * 0.2), Math.ceil(window.innerHeight * 0.05 / buttonAspect));
+            buttonWidth = Math.max(70, Math.ceil(Vars_1["default"].canvasWidth * 0.2), Math.ceil(Vars_1["default"].canvasHeight * 0.05 / buttonAspect));
         }
         else if (aspectRatio > 0.5) {
-            buttonWidth = Math.max(70, Math.ceil(window.innerWidth * .5));
+            buttonWidth = Math.max(70, Math.ceil(Vars_1["default"].canvasWidth * .5));
         }
         else {
-            buttonWidth = Math.ceil(window.innerWidth);
+            buttonWidth = Math.ceil(Vars_1["default"].canvasWidth);
         }
         buttonHeight = Math.ceil(buttonWidth * buttonAspect);
         margin = Math.ceil(buttonHeight * .2);
-        var buttonX = window.innerWidth - buttonWidth - margin;
-        var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
+        var buttonX = Vars_1["default"].canvasWidth - buttonWidth - margin;
+        var buttonY = Vars_1["default"].canvasHeight - (buttonHeight + margin) * (i + 1);
         Button_1["default"].store[key].dimensions = new Geo_1.bbox((0, Geo_1.vec)(buttonX, buttonY), (0, Geo_1.vec)(buttonX + buttonWidth, buttonY + buttonHeight));
         var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
@@ -139,8 +139,8 @@ function drawBackground(ctx) {
         return;
     }
     ctx.save();
-    for (var yi = 0; yi * img.size.y < window.innerHeight; yi++) {
-        for (var xi = 0; xi * img.size.x < window.innerWidth; xi++) {
+    for (var yi = 0; yi * img.size.y < Vars_1["default"].canvasHeight; yi++) {
+        for (var xi = 0; xi * img.size.x < Vars_1["default"].canvasWidth; xi++) {
             ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
         }
     }

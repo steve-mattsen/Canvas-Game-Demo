@@ -3,6 +3,8 @@ exports.__esModule = true;
 var Vars = (function () {
     function Vars() {
     }
+    var _a;
+    _a = Vars;
     Vars.inputState = {};
     Vars.debugMode = false;
     Vars.displayMode = 5;
@@ -12,6 +14,9 @@ var Vars = (function () {
     Vars.showBackground = false;
     Vars.mouseMove = null;
     Vars.fullscreenMode = false;
+    Vars.canvasScale = 4;
+    Vars.canvasWidth = window.innerWidth / _a.canvasScale;
+    Vars.canvasHeight = window.innerHeight / _a.canvasScale;
     Vars.bgColors = [
         "#ffffff",
         "#666666",

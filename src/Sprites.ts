@@ -122,9 +122,9 @@ export class Sprite {
 			this.image.element,
 			this.box.topLeft.x, this.box.topLeft.y,
 			this.box.bottomRight.x, this.box.bottomRight.y,
-			pos.x, pos.y,
-			this.box.getWidth() * this.scale,
-			this.box.getHeight() * this.scale,
+			Math.floor(pos.x), Math.floor(pos.y),
+			Math.floor(this.box.getWidth() * this.scale),
+			Math.floor(this.box.getHeight() * this.scale),
 		)
 	};
 }

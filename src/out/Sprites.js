@@ -117,7 +117,7 @@ var Sprite = (function () {
     }
     ;
     Sprite.prototype.draw = function (ctx, pos) {
-        ctx.drawImage(this.image.element, this.box.topLeft.x, this.box.topLeft.y, this.box.bottomRight.x, this.box.bottomRight.y, pos.x, pos.y, this.box.getWidth() * this.scale, this.box.getHeight() * this.scale);
+        ctx.drawImage(this.image.element, this.box.topLeft.x, this.box.topLeft.y, this.box.bottomRight.x, this.box.bottomRight.y, Math.floor(pos.x), Math.floor(pos.y), Math.floor(this.box.getWidth() * this.scale), Math.floor(this.box.getHeight() * this.scale));
     };
     ;
     return Sprite;

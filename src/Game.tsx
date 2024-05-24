@@ -89,8 +89,8 @@ function tick() {
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
 	plyr.pos = vec(
-		Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)),
-		Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y))
+		Math.max(0, Math.min(plyr.pos.x, Vars.canvasWidth - plyr.size.x)),
+		Math.max(0, Math.min(plyr.pos.y, Vars.canvasHeight - plyr.size.y))
 	)
 }
 
