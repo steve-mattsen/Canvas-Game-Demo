@@ -1,5 +1,5 @@
 
-import { Img, Animation, SpriteSheet, Sprite } from "./Sprites"
+import { Img, Animation, SpriteSheet, Sprite, sprite } from "./Sprites"
 import { Obj } from "./Obj"
 import { vec, vec2, bbox } from "./Geo"
 import Vars from "./Vars";
@@ -56,3 +56,11 @@ const player = new Obj(
 );
 player.animState = 'idle_down';
 Obj.addObj(player);
+
+const tree = new Obj(
+	'tree',
+	vec(50, 50),
+	vec(50, 50),
+	'tree'
+)
+Obj.addObj(tree);

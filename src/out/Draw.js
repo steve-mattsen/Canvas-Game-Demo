@@ -29,9 +29,6 @@ function draw() {
     }
     drawObjects(ctx);
     drawButtons(ctx);
-    var tree = (0, Sprites_1.sprite)('tree');
-    tree.scale = 1;
-    tree.draw(ctx, (0, Geo_1.vec)(50, 50));
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
@@ -63,14 +60,16 @@ function drawObjects(ctx) {
             ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
         }
         if (Vars_1["default"].displayMode > 1) {
-            var frame = obj.getAnimFrame();
-            if (Vars_1["default"].displayMode < 3) {
-                frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
-            }
             var shadow = (0, Sprites_1.sprite)('shadow');
             shadow.scale = .25;
             shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
-            ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.subImg.getWidth(), frame.subImg.getHeight());
+            if (Vars_1["default"].displayMode < 3 || Object.keys(obj.animations).length == 0) {
+                obj.sprite.draw(ctx, obj.pos);
+            }
+            else {
+                var frame = obj.getAnimFrame();
+                ctx.drawImage(frame.image.element, frame.subImg.topLeft.x, frame.subImg.topLeft.y, frame.subImg.getWidth(), frame.subImg.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.subImg.getWidth(), frame.subImg.getHeight());
+            }
         }
         if (!Vars_1["default"].debugMode) {
             return;

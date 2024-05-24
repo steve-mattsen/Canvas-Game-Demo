@@ -1,4 +1,4 @@
-import { Img, Sprite, sprite } from "./Sprites";
+import { Img, Sprite, sprite, Frame } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
@@ -39,10 +39,6 @@ export default function draw() {
 	drawObjects(ctx);
 
 	drawButtons(ctx);
-
-	let tree = sprite('tree');
-	tree.scale = 1;
-	tree.draw(ctx, vec(50, 50));
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {
@@ -89,25 +85,27 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		}
 
 		if (Vars.displayMode > 1) {
-			let frame = obj.getAnimFrame();
-			if (Vars.displayMode < 3) {
-				// Just get one frame.
-				frame = obj.animations[Object.keys(obj.animations)[0]].frames[0];
-			}
 			let shadow = sprite('shadow');
 			shadow.scale = .25;
 			shadow.draw(ctx, vec(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
-			ctx.drawImage(
-				frame.image.element, //image
-				frame.subImg.topLeft.x, //subx
-				frame.subImg.topLeft.y, //suby
-				frame.subImg.getWidth(), //subw
-				frame.subImg.getHeight(), //subh
-				Math.floor(obj.pos.x), //posx
-				Math.floor(obj.pos.y - obj.z), //posy
-				frame.subImg.getWidth(), //width
-				frame.subImg.getHeight(), //height
-			);
+
+			if (Vars.displayMode < 3 || Object.keys(obj.animations).length == 0) {
+				// Just draw the sprite.
+				obj.sprite.draw(ctx, obj.pos);
+			} else {
+				let frame = obj.getAnimFrame();
+				ctx.drawImage(
+					frame.image.element, //image
+					frame.subImg.topLeft.x, //subx
+					frame.subImg.topLeft.y, //suby
+					frame.subImg.getWidth(), //subw
+					frame.subImg.getHeight(), //subh
+					Math.floor(obj.pos.x), //posx
+					Math.floor(obj.pos.y - obj.z), //posy
+					frame.subImg.getWidth(), //width
+					frame.subImg.getHeight(), //height
+				);
+			}
 		}
 		if (!Vars.debugMode) {
 			return;

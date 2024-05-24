@@ -48,4 +48,6 @@ anims.run_up.frames[7].duration = lungeDuration;
 var player = new Obj_1.Obj('player', ss.box.bottomRight, (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / 2, (Vars_1["default"].canvasHeight - ss.colSize) / 2), new Sprites_1.Sprite(Sprites_1.Img.store.spritesheet_link, new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(ss.rowSize, ss.colSize))), anims);
 player.animState = 'idle_down';
 Obj_1.Obj.addObj(player);
+var tree = new Obj_1.Obj('tree', (0, Geo_1.vec)(50, 50), (0, Geo_1.vec)(50, 50), 'tree');
+Obj_1.Obj.addObj(tree);
 //# sourceMappingURL=World.js.map
