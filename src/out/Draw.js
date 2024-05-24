@@ -18,7 +18,7 @@ function draw() {
     if (ctx === null) {
         return;
     }
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     if (Vars_1["default"].showBackground) {
         drawBackground(ctx);
     }
@@ -38,7 +38,7 @@ function drawObjects(ctx) {
         var obj = Obj_1.Obj.store[v];
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
-            var pointSize = 16;
+            var pointSize = 8;
             var topLeft = new Path2D();
             var x = Math.floor(obj.pos.x);
             var y = Math.floor(obj.pos.y);
@@ -58,8 +58,8 @@ function drawObjects(ctx) {
         }
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
-            var offset = ctx.lineWidth / 2;
-            ctx.strokeRect(Math.floor(obj.pos.x + offset), Math.floor(obj.pos.y) + offset, Math.floor(obj.size.x - offset), Math.floor(obj.size.y - offset));
+            var offset = ctx.lineWidth * 0.5;
+            ctx.strokeRect(Math.floor(obj.pos.x) + offset, Math.floor(obj.pos.y) + offset, obj.size.x - offset * 2, obj.size.y - offset * 2);
         }
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprite)('shadow');

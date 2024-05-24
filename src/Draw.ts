@@ -18,7 +18,7 @@ export default function draw() {
 		return;
 	}
 
-	ctx.lineWidth = 2;
+	ctx.lineWidth = 1;
 
 	if (Vars.showBackground) {
 		drawBackground(ctx);
@@ -50,7 +50,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (Vars.displayMode < 4) {
 			// Draw points
 			ctx.fillStyle = 'black';
-			let pointSize = 16;
+			let pointSize = 8;
 
 			let topLeft = new Path2D();
 
@@ -77,12 +77,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
 			// Draw box
 			ctx.strokeStyle = "black";
-			let offset = ctx.lineWidth / 2;
+			let offset = ctx.lineWidth * 0.5;
 			ctx.strokeRect(
-				Math.floor(obj.pos.x + offset),
+				Math.floor(obj.pos.x) + offset,
 				Math.floor(obj.pos.y) + offset,
-				Math.floor(obj.size.x - offset),
-				Math.floor(obj.size.y - offset),
+				obj.size.x - offset * 2,
+				obj.size.y - offset * 2,
 			);
 		}
 
