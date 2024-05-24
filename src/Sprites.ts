@@ -64,7 +64,7 @@ export class SpriteSheet {
 	colSize: number;
 	box: bbox;
 	duration: number
-	constructor(image: Img, rows: number, cols: number, duration = 4) {
+	constructor(image: Img, rows: number, cols: number, duration = 1) {
 		this.image = image;
 		this.rows = rows;
 		this.cols = cols;

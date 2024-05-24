@@ -70,7 +70,7 @@ var Animation = (function () {
 exports.Animation = Animation;
 var SpriteSheet = (function () {
     function SpriteSheet(image, rows, cols, duration) {
-        if (duration === void 0) { duration = 4; }
+        if (duration === void 0) { duration = 1; }
         this.image = image;
         this.rows = rows;
         this.cols = cols;
