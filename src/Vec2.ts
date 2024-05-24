@@ -2,8 +2,8 @@ export class vec2 {
 	x = 0;
 	y = 0;
 	constructor(x: number, y: number) {
-		this.x = x ?? 0;
-		this.y = y ?? 0;
+		this.x = x;
+		this.y = y;
 	}
 	add(vec: vec2) {
 		return new vec2(this.x + vec.x, this.y + vec.y);
@@ -28,6 +28,17 @@ export class vec2 {
 			this.x * scalar,
 			this.y * scalar,
 		);
+	}
+}
+
+export class vec3 {
+	x = 0;
+	y = 0;
+	z = 0;
+	constructor(x: number, y: number, z: number) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 }
 
@@ -78,4 +89,11 @@ export class bbox {
 		}
 		return true;
 	}
+}
+
+export function vec(x: number, y:number, z:number | null) {
+	if (z == null) {
+		return new vec2(x,y);
+	}
+	return new vec3(x,y,z);
 }

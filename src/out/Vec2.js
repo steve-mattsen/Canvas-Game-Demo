@@ -1,12 +1,12 @@
 "use strict";
 exports.__esModule = true;
-exports.bbox = exports.vec2 = void 0;
+exports.vec = exports.bbox = exports.vec3 = exports.vec2 = void 0;
 var vec2 = (function () {
     function vec2(x, y) {
         this.x = 0;
         this.y = 0;
-        this.x = x !== null && x !== void 0 ? x : 0;
-        this.y = y !== null && y !== void 0 ? y : 0;
+        this.x = x;
+        this.y = y;
     }
     vec2.prototype.add = function (vec) {
         return new vec2(this.x + vec.x, this.y + vec.y);
@@ -31,6 +31,18 @@ var vec2 = (function () {
     return vec2;
 }());
 exports.vec2 = vec2;
+var vec3 = (function () {
+    function vec3(x, y, z) {
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    return vec3;
+}());
+exports.vec3 = vec3;
 var bbox = (function () {
     function bbox(topLeft, bottomRight) {
         this.topLeft = new vec2(0, 0);
@@ -74,4 +86,11 @@ var bbox = (function () {
     return bbox;
 }());
 exports.bbox = bbox;
+function vec(x, y, z) {
+    if (z == null) {
+        return new vec2(x, y);
+    }
+    return new vec3(x, y, z);
+}
+exports.vec = vec;
 //# sourceMappingURL=Vec2.js.map
