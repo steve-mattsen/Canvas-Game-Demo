@@ -24,8 +24,8 @@ function tick() {
 		}
 	});
 
-	let walkSpeed = 4;
-	let runSpeed = 8;
+	let walkSpeed = 1;
+	let runSpeed = 3;
 	let move: vec2;
 	let speed = 0;
 	if (gp?.axes[0] || gp?.axes[1]) {

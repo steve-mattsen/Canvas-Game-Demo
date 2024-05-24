@@ -22,8 +22,8 @@ function tick() {
             Vars_1["default"].inputState[v] = Vars_1["default"].inputState[v] + 1;
         }
     });
-    var walkSpeed = 4;
-    var runSpeed = 8;
+    var walkSpeed = 1;
+    var runSpeed = 3;
     var move;
     var speed = 0;
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
