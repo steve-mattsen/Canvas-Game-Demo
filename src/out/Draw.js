@@ -26,7 +26,7 @@ function draw() {
     if (Vars_1["default"].spriteSheetMode) {
         var sprite = plyr.getAnimFrame();
         ctx.fillStyle = "red";
-        ctx.fillRect(sprite.box.topLeft.x, sprite.box.topLeft.y, sprite.box.getWidth(), sprite.box.getHeight());
+        ctx.fillRect(sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
@@ -63,14 +63,14 @@ function drawObjects(ctx) {
         }
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprt)('shadow');
-            shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
+            shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
             shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.size.x * .025, obj.pos.y + (obj.size.y * 0.7)));
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 obj.sprite.draw(ctx, obj.pos);
             }
             else {
                 var sprite = obj.getAnimFrame();
-                ctx.drawImage(sprite.image.element, sprite.box.topLeft.x, sprite.box.topLeft.y, sprite.box.getWidth(), sprite.box.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), sprite.box.getWidth(), sprite.box.getHeight());
+                ctx.drawImage(sprite.image.element, sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
             }
         }
         if (!Vars_1["default"].debugMode) {
@@ -122,7 +122,7 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = Vars_1["default"].canvasWidth - buttonWidth - margin;
         var buttonY = Vars_1["default"].canvasHeight - (buttonHeight + margin) * (i + 1);
-        Button_1["default"].store[key].dimensions = new Geo_1.bbox((0, Geo_1.vec)(buttonX, buttonY), (0, Geo_1.vec)(buttonX + buttonWidth, buttonY + buttonHeight));
+        Button_1["default"].store[key].dimensions = new Geo_1.box((0, Geo_1.vec)(buttonX, buttonY), (0, Geo_1.vec)(buttonX + buttonWidth, buttonY + buttonHeight));
         var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);

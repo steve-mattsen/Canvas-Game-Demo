@@ -2,7 +2,7 @@ import { Img, Sprite, sprt } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
-import { bbox, vec, vec2 } from "./Geo";
+import { box, vec, vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -30,10 +30,10 @@ export default function draw() {
 		let sprite = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
 		ctx.fillRect(
-			sprite.box.topLeft.x,
-			sprite.box.topLeft.y,
-			sprite.box.getWidth(),
-			sprite.box.getHeight(),
+			sprite.drawBox.topLeft.x,
+			sprite.drawBox.topLeft.y,
+			sprite.drawBox.getWidth(),
+			sprite.drawBox.getHeight(),
 		);
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
@@ -88,7 +88,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		if (Vars.displayMode > 1) {
 			let shadow = sprt('shadow');
-			shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
+			shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
 			shadow.draw(ctx, vec(
 				obj.pos.x - obj.size.x * .025,
 				obj.pos.y + (obj.size.y * 0.7)
@@ -101,14 +101,14 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				let sprite = obj.getAnimFrame();
 				ctx.drawImage(
 					sprite.image.element, //image
-					sprite.box.topLeft.x, //subx
-					sprite.box.topLeft.y, //suby
-					sprite.box.getWidth(), //subw
-					sprite.box.getHeight(), //subh
+					sprite.drawBox.topLeft.x, //subx
+					sprite.drawBox.topLeft.y, //suby
+					sprite.drawBox.getWidth(), //subw
+					sprite.drawBox.getHeight(), //subh
 					Math.floor(obj.pos.x), //posx
 					Math.floor(obj.pos.y - obj.z), //posy
-					sprite.box.getWidth(), //width
-					sprite.box.getHeight(), //height
+					sprite.drawBox.getWidth(), //width
+					sprite.drawBox.getHeight(), //height
 				);
 			}
 		}
@@ -183,7 +183,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		let buttonX = Vars.canvasWidth - buttonWidth - margin;
 		let buttonY = Vars.canvasHeight - (buttonHeight + margin) * (i + 1);
 
-		Button.store[key].dimensions = new bbox(vec(buttonX, buttonY), vec(buttonX + buttonWidth, buttonY + buttonHeight));
+		Button.store[key].dimensions = new box(vec(buttonX, buttonY), vec(buttonX + buttonWidth, buttonY + buttonHeight));
 		let colorKey = Number(Reflect.get(Vars, button.varKey));
 		ctx.fillStyle = Vars.bgColors[colorKey] + "88";
 		ctx.fillRect(

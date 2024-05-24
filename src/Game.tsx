@@ -1,4 +1,4 @@
-import { vec, vec2, bbox } from "./Geo";
+import { vec, vec2, box } from "./Geo";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";
@@ -35,7 +35,7 @@ function tick() {
 		);
 		speed = move.length() * runSpeed;
 	} else if (Vars.mouseMove !== null) {
-		let line = new bbox(plyr.pos, Vars.mouseMove);
+		let line = new box(plyr.pos, Vars.mouseMove);
 		if (line.length() > runSpeed) {
 			speed = runSpeed;
 		} else {

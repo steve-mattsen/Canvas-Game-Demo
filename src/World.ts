@@ -1,7 +1,7 @@
 
 import { Img, Animation, SpriteSheet, Sprite, sprt } from "./Sprites"
 import { Obj } from "./Obj"
-import { vec, vec2, bbox } from "./Geo"
+import { vec, vec2, box } from "./Geo"
 import Vars from "./Vars";
 
 let ss = new SpriteSheet(Img.store['spritesheet_link'], 8, 10);
@@ -37,12 +37,12 @@ anims.run_up.sprites[7].duration = lungeDuration;
 
 const player = new Obj(
 	'player',
-	ss.box.bottomRight,
+	ss.drawBox.bottomRight,
 	vec(
 		(Vars.canvasWidth - ss.rowSize - 1) / 2,
 		(Vars.canvasHeight - ss.colSize) / 2
 	),
-	new Sprite(Img.store.spritesheet_link, new bbox(vec(0, 0), vec(ss.colSize, ss.rowSize))),
+	new Sprite(Img.store.spritesheet_link, new box(vec(0, 0), vec(ss.colSize, ss.rowSize))),
 	anims
 );
 player.animState = 'idle_down';

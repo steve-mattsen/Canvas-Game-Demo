@@ -53,7 +53,7 @@ export enum boxLocation {
 	bottom_right,
 }
 
-export class bbox {
+export class box {
 	topLeft: vec2 = new vec2(0, 0);
 	bottomRight: vec2 = new vec2(0, 0);
 	origin: vec2;

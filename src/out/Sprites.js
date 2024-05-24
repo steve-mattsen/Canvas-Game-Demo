@@ -76,7 +76,7 @@ var SpriteSheet = (function () {
         this.cols = cols;
         this.colSize = Math.floor(this.image.size.x / cols);
         this.rowSize = Math.floor(this.image.size.y / rows);
-        this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(this.colSize, this.rowSize));
+        this.drawBox = new Geo_1.box((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(this.colSize, this.rowSize));
         this.duration = duration;
     }
     SpriteSheet.prototype.getAnim = function (rows, cols) {
@@ -84,7 +84,7 @@ var SpriteSheet = (function () {
         var frames = [];
         rows.forEach(function (r) {
             cols.forEach(function (c) {
-                frames.push(new Sprite(_this.image, new Geo_1.bbox((0, Geo_1.vec)(c * _this.colSize, r * _this.rowSize), (0, Geo_1.vec)((c + 1) * _this.colSize, (r + 1) * _this.rowSize)), 1, _this.duration));
+                frames.push(new Sprite(_this.image, new Geo_1.box((0, Geo_1.vec)(c * _this.colSize, r * _this.rowSize), (0, Geo_1.vec)((c + 1) * _this.colSize, (r + 1) * _this.rowSize)), 1, _this.duration));
             });
         });
         return new Animation(frames);
@@ -93,20 +93,20 @@ var SpriteSheet = (function () {
 }());
 exports.SpriteSheet = SpriteSheet;
 var Sprite = (function () {
-    function Sprite(image, box, scale, duration) {
+    function Sprite(image, drawBox, scale, duration) {
         if (scale === void 0) { scale = 1; }
         if (duration === void 0) { duration = 4; }
         this.image = image;
         this.scale = scale;
-        this.box = box;
-        if (box === undefined) {
-            this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(image.size.x, image.size.y));
+        this.drawBox = drawBox;
+        if (drawBox === undefined) {
+            this.drawBox = new Geo_1.box((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(image.size.x, image.size.y));
         }
         this.duration = duration;
     }
     ;
     Sprite.prototype.draw = function (ctx, pos) {
-        ctx.drawImage(this.image.element, this.box.topLeft.x, this.box.topLeft.y, this.box.bottomRight.x, this.box.bottomRight.y, Math.floor(pos.x), Math.floor(pos.y), Math.floor(this.box.getWidth() * this.scale), Math.floor(this.box.getHeight() * this.scale));
+        ctx.drawImage(this.image.element, this.drawBox.topLeft.x, this.drawBox.topLeft.y, this.drawBox.bottomRight.x, this.drawBox.bottomRight.y, Math.floor(pos.x), Math.floor(pos.y), Math.floor(this.drawBox.getWidth() * this.scale), Math.floor(this.drawBox.getHeight() * this.scale));
     };
     ;
     return Sprite;

@@ -20,7 +20,7 @@ var Obj = (function () {
         }
         this.size = size;
         if (size == null) {
-            this.size = this.sprite.box.bottomRight;
+            this.size = this.sprite.drawBox.bottomRight;
         }
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
         this.animations = animations;

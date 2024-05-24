@@ -1,4 +1,4 @@
-import { vec, vec2, bbox } from "./Geo";
+import { vec, vec2, box } from "./Geo";
 
 export class Img {
 	id: string = '';
@@ -62,7 +62,7 @@ export class SpriteSheet {
 	cols: number;
 	rowSize: number;
 	colSize: number;
-	box: bbox;
+	drawBox: box;
 	duration: number
 	constructor(image: Img, rows: number, cols: number, duration = 1) {
 		this.image = image;
@@ -70,7 +70,7 @@ export class SpriteSheet {
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
-		this.box = new bbox(vec(0, 0), vec(this.colSize, this.rowSize));
+		this.drawBox = new box(vec(0, 0), vec(this.colSize, this.rowSize));
 		this.duration = duration;
 	}
 	getAnim(rows: number[], cols: number[]) {
@@ -79,7 +79,7 @@ export class SpriteSheet {
 			cols.forEach(c => {
 				frames.push(new Sprite(
 					this.image,
-					new bbox(
+					new box(
 						vec(
 							c * this.colSize,
 							r * this.rowSize,
@@ -100,26 +100,26 @@ export class SpriteSheet {
 
 export class Sprite {
 	image: Img;
-	box: bbox;
+	drawBox: box;
 	scale: number;
 	duration: number;
-	constructor(image: Img, box?: bbox, scale = 1, duration = 4) {
+	constructor(image: Img, drawBox?: box, scale = 1, duration = 4) {
 		this.image = image;
 		this.scale = scale;
-		this.box = box;
-		if (box === undefined) {
-			this.box = new bbox(vec(0, 0), vec(image.size.x, image.size.y));
+		this.drawBox = drawBox;
+		if (drawBox === undefined) {
+			this.drawBox = new box(vec(0, 0), vec(image.size.x, image.size.y));
 		}
 		this.duration = duration
 	};
 	draw(ctx: CanvasRenderingContext2D, pos: vec2) {
 		ctx.drawImage(
 			this.image.element,
-			this.box.topLeft.x, this.box.topLeft.y,
-			this.box.bottomRight.x, this.box.bottomRight.y,
+			this.drawBox.topLeft.x, this.drawBox.topLeft.y,
+			this.drawBox.bottomRight.x, this.drawBox.bottomRight.y,
 			Math.floor(pos.x), Math.floor(pos.y),
-			Math.floor(this.box.getWidth() * this.scale),
-			Math.floor(this.box.getHeight() * this.scale),
+			Math.floor(this.drawBox.getWidth() * this.scale),
+			Math.floor(this.drawBox.getHeight() * this.scale),
 		)
 	};
 }

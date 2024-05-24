@@ -31,7 +31,7 @@ function tick() {
         speed = move.length() * runSpeed;
     }
     else if (Vars_1["default"].mouseMove !== null) {
-        var line = new Geo_1.bbox(plyr.pos, Vars_1["default"].mouseMove);
+        var line = new Geo_1.box(plyr.pos, Vars_1["default"].mouseMove);
         if (line.length() > runSpeed) {
             speed = runSpeed;
         }
