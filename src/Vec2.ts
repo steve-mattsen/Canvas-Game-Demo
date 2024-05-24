@@ -91,7 +91,7 @@ export class bbox {
 	}
 }
 
-export function vec(x: number, y:number, z:number | null) {
+export function vec(x: number, y:number, z:number = null) {
 	if (z == null) {
 		return new vec2(x,y);
 	}

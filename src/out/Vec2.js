@@ -87,6 +87,7 @@ var bbox = (function () {
 }());
 exports.bbox = bbox;
 function vec(x, y, z) {
+    if (z === void 0) { z = null; }
     if (z == null) {
         return new vec2(x, y);
     }
