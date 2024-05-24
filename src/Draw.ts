@@ -116,7 +116,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			return;
 		}
 		ctx.save();
-		ctx.font = "18px Courier";
+		ctx.font = "bold 7px Courier";
 		ctx.fillStyle = "black";
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),

@@ -77,7 +77,7 @@ function drawObjects(ctx) {
             return;
         }
         ctx.save();
-        ctx.font = "18px Courier";
+        ctx.font = "bold 7px Courier";
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         if (obj.animations !== null) {
