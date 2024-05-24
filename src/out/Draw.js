@@ -47,8 +47,8 @@ function drawObjects(ctx) {
             topLeft.lineTo(x, y + pointSize);
             topLeft.lineTo(x, y);
             var botRight = new Path2D();
-            x = Math.floor(obj.pos.x + obj.size.x);
-            y = Math.floor(obj.pos.y + obj.size.y);
+            x = Math.floor(obj.pos.x + obj.hitBox.bottomRight.x);
+            y = Math.floor(obj.pos.y + obj.hitBox.bottomRight.y);
             botRight.moveTo(x, y);
             botRight.lineTo(x - pointSize, y);
             botRight.lineTo(x, y - pointSize);
@@ -59,12 +59,12 @@ function drawObjects(ctx) {
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
             var offset = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(obj.pos.x) + offset, Math.floor(obj.pos.y) + offset, obj.size.x - offset * 2, obj.size.y - offset * 2);
+            ctx.strokeRect(Math.floor(obj.pos.x) + offset, Math.floor(obj.pos.y) + offset, obj.hitBox.bottomRight.x - offset * 2, obj.hitBox.bottomRight.y - offset * 2);
         }
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
-            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.size.x * .025, obj.pos.y + (obj.size.y * 0.7)));
+            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.hitBox.bottomRight.x * .025, obj.pos.y + (obj.hitBox.bottomRight.y * 0.7)));
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 obj.sprite.draw(ctx, obj.pos);
             }
@@ -81,7 +81,7 @@ function drawObjects(ctx) {
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.bottomRight.y + 18);
         }
         ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
         var count = 0;

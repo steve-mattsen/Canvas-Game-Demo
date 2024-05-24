@@ -63,8 +63,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let botRight = new Path2D();
 
-			x = Math.floor(obj.pos.x + obj.size.x);
-			y = Math.floor(obj.pos.y + obj.size.y);
+			x = Math.floor(obj.pos.x + obj.hitBox.bottomRight.x);
+			y = Math.floor(obj.pos.y + obj.hitBox.bottomRight.y);
 			botRight.moveTo(x, y);
 			botRight.lineTo(x - pointSize, y);
 			botRight.lineTo(x, y - pointSize);
@@ -81,8 +81,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.strokeRect(
 				Math.floor(obj.pos.x) + offset,
 				Math.floor(obj.pos.y) + offset,
-				obj.size.x - offset * 2,
-				obj.size.y - offset * 2,
+				obj.hitBox.bottomRight.x - offset * 2,
+				obj.hitBox.bottomRight.y - offset * 2,
 			);
 		}
 
@@ -90,8 +90,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			let shadow = sprt('shadow');
 			shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
 			shadow.draw(ctx, vec(
-				obj.pos.x - obj.size.x * .025,
-				obj.pos.y + (obj.size.y * 0.7)
+				obj.pos.x - obj.hitBox.bottomRight.x * .025,
+				obj.pos.y + (obj.hitBox.bottomRight.y * 0.7)
 			));
 
 			if (Vars.displayMode < 3 || obj.animations == null) {
@@ -127,7 +127,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.fillText(
 				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
 				obj.pos.x,
-				obj.pos.y + obj.size.y + 18,
+				obj.pos.y + obj.hitBox.bottomRight.y + 18,
 			)
 		}
 		ctx.fillText(`window ${Vars.canvasHeight}x${Vars.canvasWidth}`,

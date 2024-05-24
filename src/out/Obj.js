@@ -4,7 +4,7 @@ exports.Obj = void 0;
 var Geo_1 = require("./Geo");
 var Sprites_1 = require("./Sprites");
 var Obj = (function () {
-    function Obj(id, size, pos, spr, animations) {
+    function Obj(id, pos, spr, hitBox, animations) {
         this.id = "blah";
         this.velocity = (0, Geo_1.vec)(0, 0);
         this.animState = 'idle_down';
@@ -18,9 +18,9 @@ var Obj = (function () {
         else {
             this.sprite = spr;
         }
-        this.size = size;
-        if (size == null) {
-            this.size = this.sprite.drawBox.bottomRight;
+        this.hitBox = hitBox;
+        if (hitBox === null || hitBox == undefined) {
+            this.hitBox = this.sprite.drawBox;
         }
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
         this.animations = animations;

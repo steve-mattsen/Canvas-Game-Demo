@@ -1,16 +1,16 @@
-import { vec, Vec2 } from "./Geo";
+import { vec, Vec2, Box } from "./Geo";
 import { Img, Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
 	id = "blah";
 	sprite: Sprite;
-	size: Vec2;
+	hitBox: Box;
 	pos: Vec2;
 	velocity = vec(0, 0);
 	animations: { [id: string]: Animation } | null;
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
-	constructor(id: string, size: Vec2 | null, pos: Vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
+	constructor(id: string, pos: Vec2, spr?: Sprite | string, hitBox?: Box | null, animations?: { [id: string]: Animation }) {
 		this.id = id ?? this.id;
 		if (typeof spr === 'string') {
 			let imgId = spr as string;
@@ -18,9 +18,9 @@ export class Obj {
 		} else {
 			this.sprite = spr;
 		}
-		this.size = size;
-		if (size == null) {
-			this.size = this.sprite.drawBox.bottomRight;
+		this.hitBox = hitBox;
+		if (hitBox === null || hitBox == undefined) {
+			this.hitBox = this.sprite.drawBox;
 		}
 		this.pos = pos ?? this.pos;
 		this.animations = animations;

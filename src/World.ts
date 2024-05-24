@@ -37,12 +37,12 @@ anims.run_up.sprites[7].duration = lungeDuration;
 
 const player = new Obj(
 	'player',
-	ss.drawBox.bottomRight,
 	vec(
 		(Vars.canvasWidth - ss.rowSize - 1) / 2,
 		(Vars.canvasHeight - ss.colSize) / 2
 	),
 	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize)),
+	ss.drawBox,
 	anims
 );
 player.animState = 'idle_down';
@@ -50,7 +50,6 @@ Obj.addObj(player);
 
 const tree = new Obj(
 	'tree',
-	null,
 	vec(50, 50),
 	'tree'
 )
