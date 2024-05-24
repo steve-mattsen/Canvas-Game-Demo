@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.vec = exports.bbox = exports.vec3 = exports.vec2 = void 0;
+exports.vec = exports.bbox = exports.boxLocation = exports.vec3 = exports.vec2 = void 0;
 var vec2 = (function () {
     function vec2(x, y) {
         this.x = 0;
@@ -59,12 +59,65 @@ var vec3 = (function (_super) {
     return vec3;
 }(vec2));
 exports.vec3 = vec3;
+var boxLocation;
+(function (boxLocation) {
+    boxLocation[boxLocation["top_left"] = 0] = "top_left";
+    boxLocation[boxLocation["top_center"] = 1] = "top_center";
+    boxLocation[boxLocation["top_right"] = 2] = "top_right";
+    boxLocation[boxLocation["middle_left"] = 3] = "middle_left";
+    boxLocation[boxLocation["middle_center"] = 4] = "middle_center";
+    boxLocation[boxLocation["middle_right"] = 5] = "middle_right";
+    boxLocation[boxLocation["bottom_left"] = 6] = "bottom_left";
+    boxLocation[boxLocation["bottom_center"] = 7] = "bottom_center";
+    boxLocation[boxLocation["bottom_right"] = 8] = "bottom_right";
+})(boxLocation = exports.boxLocation || (exports.boxLocation = {}));
 var bbox = (function () {
-    function bbox(topLeft, bottomRight) {
+    function bbox(topLeft, bottomRight, origin) {
         this.topLeft = new vec2(0, 0);
         this.bottomRight = new vec2(0, 0);
         this.topLeft = topLeft !== null && topLeft !== void 0 ? topLeft : this.topLeft;
         this.bottomRight = bottomRight !== null && bottomRight !== void 0 ? bottomRight : this.bottomRight;
+        if (origin === undefined) {
+            origin = boxLocation.bottom_center;
+        }
+        if (origin instanceof vec2) {
+            this.origin = origin;
+        }
+        var originPoint = vec(0, 0);
+        switch (origin) {
+            case boxLocation.top_left:
+            case boxLocation.top_center:
+            case boxLocation.top_right:
+                originPoint.y = 0;
+                break;
+            case boxLocation.middle_left:
+            case boxLocation.middle_center:
+            case boxLocation.middle_right:
+                originPoint.y = this.getHeight() / 2;
+                break;
+            case boxLocation.bottom_left:
+            case boxLocation.bottom_left:
+            case boxLocation.bottom_left:
+                originPoint.y = this.getHeight();
+                break;
+        }
+        switch (origin) {
+            case boxLocation.top_left:
+            case boxLocation.middle_left:
+            case boxLocation.bottom_left:
+                originPoint.x = 0;
+                break;
+            case boxLocation.top_center:
+            case boxLocation.middle_center:
+            case boxLocation.bottom_center:
+                originPoint.x = this.getWidth() / 2;
+                break;
+            case boxLocation.top_right:
+            case boxLocation.middle_right:
+            case boxLocation.bottom_right:
+                originPoint.x = this.getWidth();
+                break;
+        }
     }
     bbox.prototype.getCenter = function () {
         return new vec2((this.topLeft.x + this.bottomRight.x) / 2, (this.topLeft.y + this.bottomRight.y) / 2);

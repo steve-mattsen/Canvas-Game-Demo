@@ -41,12 +41,68 @@ export class vec3 extends vec2 {
 	}
 }
 
+export enum boxLocation {
+	top_left,
+	top_center,
+	top_right,
+	middle_left,
+	middle_center,
+	middle_right,
+	bottom_left,
+	bottom_center,
+	bottom_right,
+}
+
 export class bbox {
 	topLeft: vec2 = new vec2(0, 0);
 	bottomRight: vec2 = new vec2(0, 0);
-	constructor(topLeft: vec2, bottomRight: vec2) {
+	origin: vec2;
+	constructor(topLeft: vec2, bottomRight: vec2, origin?: vec2 | boxLocation) {
 		this.topLeft = topLeft ?? this.topLeft;
 		this.bottomRight = bottomRight ?? this.bottomRight;
+
+		if (origin === undefined) {
+			origin = boxLocation.bottom_center;
+		}
+		if (origin instanceof vec2) {
+			this.origin = origin;
+		}
+
+		let originPoint = vec(0, 0);
+		switch (origin) {
+			case boxLocation.top_left:
+			case boxLocation.top_center:
+			case boxLocation.top_right:
+				originPoint.y = 0;
+				break;
+			case boxLocation.middle_left:
+			case boxLocation.middle_center:
+			case boxLocation.middle_right:
+				originPoint.y = this.getHeight() / 2;
+				break;
+			case boxLocation.bottom_left:
+			case boxLocation.bottom_left:
+			case boxLocation.bottom_left:
+				originPoint.y = this.getHeight();
+				break;
+		}
+		switch (origin) {
+			case boxLocation.top_left:
+			case boxLocation.middle_left:
+			case boxLocation.bottom_left:
+				originPoint.x = 0;
+				break;
+			case boxLocation.top_center:
+			case boxLocation.middle_center:
+			case boxLocation.bottom_center:
+				originPoint.x = this.getWidth() / 2;
+				break;
+			case boxLocation.top_right:
+			case boxLocation.middle_right:
+			case boxLocation.bottom_right:
+				originPoint.x = this.getWidth();
+				break;
+		}
 	}
 	getCenter() {
 		return new vec2(
