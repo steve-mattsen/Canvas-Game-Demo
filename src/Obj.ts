@@ -1,5 +1,5 @@
 import { vec, vec2 } from "./Geo";
-import { Img, Sprite, Animation, sprite } from "./Sprites";
+import { Img, Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
 	id = "blah";
 	sprite: Sprite;
@@ -14,7 +14,7 @@ export class Obj {
 		this.id = id ?? this.id;
 		if (typeof spr === 'string') {
 			let imgId = spr as string;
-			this.sprite = sprite(imgId);
+			this.sprite = sprt(imgId);
 		} else {
 			this.sprite = spr;
 		}
@@ -32,7 +32,7 @@ export class Obj {
 		return this.animations[this.animState].getCurrentFrame();
 	}
 	tickAnimFrame() {
-		this.animations[this.animState].tickFrame();
+		this.animations[this.animState].tickSprite();
 	}
 	static store: { [id: string]: Obj } = {};
 	static addObj(obj: Obj) {

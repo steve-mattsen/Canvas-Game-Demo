@@ -15,7 +15,7 @@ var Obj = (function () {
         this.id = id !== null && id !== void 0 ? id : this.id;
         if (typeof spr === 'string') {
             var imgId = spr;
-            this.sprite = (0, Sprites_1.sprite)(imgId);
+            this.sprite = (0, Sprites_1.sprt)(imgId);
         }
         else {
             this.sprite = spr;
@@ -34,7 +34,7 @@ var Obj = (function () {
         return this.animations[this.animState].getCurrentFrame();
     };
     Obj.prototype.tickAnimFrame = function () {
-        this.animations[this.animState].tickFrame();
+        this.animations[this.animState].tickSprite();
     };
     Obj.addObj = function (obj) {
         Obj.store[obj.id] = obj;

@@ -30,48 +30,29 @@ export class Img {
 	}
 }
 
-export class Frame {
-	sprite: Sprite;
-	duration: number = 4;
-	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
-		this.sprite = new Sprite(image,
-			new bbox(
-				vec(
-					subImgX,
-					subImgY
-				), vec(
-					subImgX + subImgWidth,
-					subImgY + subImgHeight
-				)
-			),
-			1
-		);
-		this.duration = duration ?? this.duration;
-	}
-}
-
 export class Animation {
-	frames: Frame[] = [];
+	sprites: Sprite[] = [];
 	id: string;
 	tick: number = 0;
-	currentFrame: number = 0;
-	constructor(frames: Frame[]) {
-		this.frames = frames ?? this.frames;
+	currentSprite: number = 0;
+	constructor(sprites: Sprite[]) {
+		this.sprites = sprites;
 	}
-	tickFrame() {
+	tickSprite() {
+		let duration = this.sprites[this.currentSprite].duration;
 		this.tick++;
-		if (this.tick > this.frames[this.currentFrame].duration) {
+		if (this.tick > duration) {
 			// Move to next frame.
-			this.currentFrame++;
-			this.currentFrame %= this.frames.length;
+			this.currentSprite++;
+			this.currentSprite %= this.sprites.length;
 			this.tick = 0;
 		}
 	}
 	getCurrentFrame() {
-		return this.frames[this.currentFrame];
+		return this.sprites[this.currentSprite];
 	}
 	copy() {
-		return new Animation([...this.frames]);
+		return new Animation([...this.sprites]);
 	}
 }
 
@@ -82,25 +63,34 @@ export class SpriteSheet {
 	rowSize: number;
 	colSize: number;
 	box: bbox;
-	constructor(image: Img, rows: number, cols: number) {
+	duration: number
+	constructor(image: Img, rows: number, cols: number, duration = 4) {
 		this.image = image;
 		this.rows = rows;
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
 		this.box = new bbox(vec(0, 0), vec(this.colSize, this.rowSize));
+		this.duration = 4;
 	}
-	getAnim(rows: number[], cols: number[], duration: number = 4) {
-		let frames: Frame[] = [];
+	getAnim(rows: number[], cols: number[]) {
+		let frames: Sprite[] = [];
 		rows.forEach(r => {
 			cols.forEach(c => {
-				frames.push(new Frame(
+				frames.push(new Sprite(
 					this.image,
-					c * this.colSize,
-					r * this.rowSize,
-					this.colSize,
-					this.rowSize,
-					duration,
+					new bbox(
+						vec(
+							c * this.colSize,
+							r * this.rowSize,
+						),
+						vec(
+							(c + 1) * this.colSize,
+							(r + 1) * this.rowSize,
+						)
+					),
+					1,
+					this.duration
 				))
 			})
 		})
@@ -112,13 +102,15 @@ export class Sprite {
 	image: Img;
 	box: bbox;
 	scale: number;
-	constructor(image: Img, box?: bbox, scale = 1) {
+	duration: number;
+	constructor(image: Img, box?: bbox, scale = 1, duration = 4) {
 		this.image = image;
 		this.scale = scale;
 		this.box = box;
 		if (box === undefined) {
 			this.box = new bbox(vec(0, 0), vec(image.size.x, image.size.y));
 		}
+		this.duration = duration
 	};
 	draw(ctx: CanvasRenderingContext2D, pos: vec2) {
 		ctx.drawImage(
@@ -132,6 +124,6 @@ export class Sprite {
 	};
 }
 
-export function sprite(imgId: string): Sprite {
+export function sprt(imgId: string): Sprite {
 	return new Sprite(Img.store[imgId]);
 }

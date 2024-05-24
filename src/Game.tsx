@@ -84,7 +84,7 @@ function tick() {
 		plyr.animState = plyr.animState.replace(/_.*/, "_up");
 	}
 	if (previousAnim !== plyr.animState) {
-		plyr.animations[plyr.animState].currentFrame = 0;
+		plyr.animations[plyr.animState].currentSprite = 0;
 	}
 	plyr.tickAnimFrame();
 	plyr.pos.x += move.x * speed;

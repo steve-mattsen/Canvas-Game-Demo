@@ -1,4 +1,4 @@
-import { Img, Sprite, sprite, Frame } from "./Sprites";
+import { Img, Sprite, sprt } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
@@ -27,13 +27,13 @@ export default function draw() {
 	let plyr = Obj.store['player'];
 
 	if (Vars.spriteSheetMode) {
-		let frame = plyr.getAnimFrame();
+		let sprite = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
 		ctx.fillRect(
-			frame.sprite.box.topLeft.x,
-			frame.sprite.box.topLeft.y,
-			frame.sprite.box.getWidth(),
-			frame.sprite.box.getHeight(),
+			sprite.box.topLeft.x,
+			sprite.box.topLeft.y,
+			sprite.box.getWidth(),
+			sprite.box.getHeight(),
 		);
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
@@ -87,7 +87,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		}
 
 		if (Vars.displayMode > 1) {
-			let shadow = sprite('shadow');
+			let shadow = sprt('shadow');
 			shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
 			shadow.draw(ctx, vec(
 				obj.pos.x - obj.size.x * .025,
@@ -98,17 +98,17 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				// Just draw the sprite.
 				obj.sprite.draw(ctx, obj.pos);
 			} else {
-				let frame = obj.getAnimFrame();
+				let sprite = obj.getAnimFrame();
 				ctx.drawImage(
-					frame.sprite.image.element, //image
-					frame.sprite.box.topLeft.x, //subx
-					frame.sprite.box.topLeft.y, //suby
-					frame.sprite.box.getWidth(), //subw
-					frame.sprite.box.getHeight(), //subh
+					sprite.image.element, //image
+					sprite.box.topLeft.x, //subx
+					sprite.box.topLeft.y, //suby
+					sprite.box.getWidth(), //subw
+					sprite.box.getHeight(), //subh
 					Math.floor(obj.pos.x), //posx
 					Math.floor(obj.pos.y - obj.z), //posy
-					frame.sprite.box.getWidth(), //width
-					frame.sprite.box.getHeight(), //height
+					sprite.box.getWidth(), //width
+					sprite.box.getHeight(), //height
 				);
 			}
 		}
@@ -125,7 +125,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		);
 		if (obj.animations !== null) {
 			ctx.fillText(
-				obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
+				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
 				obj.pos.x,
 				obj.pos.y + obj.size.y + 18,
 			)

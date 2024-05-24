@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.sprite = exports.Sprite = exports.SpriteSheet = exports.Animation = exports.Frame = exports.Img = void 0;
+exports.sprt = exports.Sprite = exports.SpriteSheet = exports.Animation = exports.Img = void 0;
 var Geo_1 = require("./Geo");
 var Img = (function () {
     function Img(id, uri) {
@@ -43,55 +43,48 @@ var Img = (function () {
     return Img;
 }());
 exports.Img = Img;
-var Frame = (function () {
-    function Frame(image, subImgX, subImgY, subImgWidth, subImgHeight, duration) {
-        this.duration = 4;
-        this.sprite = new Sprite(image, new Geo_1.bbox((0, Geo_1.vec)(subImgX, subImgY), (0, Geo_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight)), 1);
-        this.duration = duration !== null && duration !== void 0 ? duration : this.duration;
-    }
-    return Frame;
-}());
-exports.Frame = Frame;
 var Animation = (function () {
-    function Animation(frames) {
-        this.frames = [];
+    function Animation(sprites) {
+        this.sprites = [];
         this.tick = 0;
-        this.currentFrame = 0;
-        this.frames = frames !== null && frames !== void 0 ? frames : this.frames;
+        this.currentSprite = 0;
+        this.sprites = sprites;
     }
-    Animation.prototype.tickFrame = function () {
+    Animation.prototype.tickSprite = function () {
+        var duration = this.sprites[this.currentSprite].duration;
         this.tick++;
-        if (this.tick > this.frames[this.currentFrame].duration) {
-            this.currentFrame++;
-            this.currentFrame %= this.frames.length;
+        if (this.tick > duration) {
+            this.currentSprite++;
+            this.currentSprite %= this.sprites.length;
             this.tick = 0;
         }
     };
     Animation.prototype.getCurrentFrame = function () {
-        return this.frames[this.currentFrame];
+        return this.sprites[this.currentSprite];
     };
     Animation.prototype.copy = function () {
-        return new Animation(__spreadArray([], this.frames, true));
+        return new Animation(__spreadArray([], this.sprites, true));
     };
     return Animation;
 }());
 exports.Animation = Animation;
 var SpriteSheet = (function () {
-    function SpriteSheet(image, rows, cols) {
+    function SpriteSheet(image, rows, cols, duration) {
+        if (duration === void 0) { duration = 4; }
         this.image = image;
         this.rows = rows;
         this.cols = cols;
         this.colSize = Math.floor(this.image.size.x / cols);
         this.rowSize = Math.floor(this.image.size.y / rows);
         this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(this.colSize, this.rowSize));
+        this.duration = 4;
     }
-    SpriteSheet.prototype.getAnim = function (rows, cols, duration) {
+    SpriteSheet.prototype.getAnim = function (rows, cols) {
         var _this = this;
-        if (duration === void 0) { duration = 4; }
         var frames = [];
         rows.forEach(function (r) {
             cols.forEach(function (c) {
-                frames.push(new Frame(_this.image, c * _this.colSize, r * _this.rowSize, _this.colSize, _this.rowSize, duration));
+                frames.push(new Sprite(_this.image, new Geo_1.bbox((0, Geo_1.vec)(c * _this.colSize, r * _this.rowSize), (0, Geo_1.vec)((c + 1) * _this.colSize, (r + 1) * _this.rowSize)), 1, _this.duration));
             });
         });
         return new Animation(frames);
@@ -100,14 +93,16 @@ var SpriteSheet = (function () {
 }());
 exports.SpriteSheet = SpriteSheet;
 var Sprite = (function () {
-    function Sprite(image, box, scale) {
+    function Sprite(image, box, scale, duration) {
         if (scale === void 0) { scale = 1; }
+        if (duration === void 0) { duration = 4; }
         this.image = image;
         this.scale = scale;
         this.box = box;
         if (box === undefined) {
             this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(image.size.x, image.size.y));
         }
+        this.duration = duration;
     }
     ;
     Sprite.prototype.draw = function (ctx, pos) {
@@ -117,8 +112,8 @@ var Sprite = (function () {
     return Sprite;
 }());
 exports.Sprite = Sprite;
-function sprite(imgId) {
+function sprt(imgId) {
     return new Sprite(Img.store[imgId]);
 }
-exports.sprite = sprite;
+exports.sprt = sprt;
 //# sourceMappingURL=Sprites.js.map

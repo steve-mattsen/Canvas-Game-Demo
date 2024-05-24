@@ -24,9 +24,9 @@ function draw() {
     }
     var plyr = Obj_1.Obj.store['player'];
     if (Vars_1["default"].spriteSheetMode) {
-        var frame = plyr.getAnimFrame();
+        var sprite = plyr.getAnimFrame();
         ctx.fillStyle = "red";
-        ctx.fillRect(frame.sprite.box.topLeft.x, frame.sprite.box.topLeft.y, frame.sprite.box.getWidth(), frame.sprite.box.getHeight());
+        ctx.fillRect(sprite.box.topLeft.x, sprite.box.topLeft.y, sprite.box.getWidth(), sprite.box.getHeight());
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
@@ -62,15 +62,15 @@ function drawObjects(ctx) {
             ctx.strokeRect(Math.floor(obj.pos.x) + offset, Math.floor(obj.pos.y) + offset, obj.size.x - offset * 2, obj.size.y - offset * 2);
         }
         if (Vars_1["default"].displayMode > 1) {
-            var shadow = (0, Sprites_1.sprite)('shadow');
+            var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
             shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.size.x * .025, obj.pos.y + (obj.size.y * 0.7)));
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 obj.sprite.draw(ctx, obj.pos);
             }
             else {
-                var frame = obj.getAnimFrame();
-                ctx.drawImage(frame.sprite.image.element, frame.sprite.box.topLeft.x, frame.sprite.box.topLeft.y, frame.sprite.box.getWidth(), frame.sprite.box.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), frame.sprite.box.getWidth(), frame.sprite.box.getHeight());
+                var sprite = obj.getAnimFrame();
+                ctx.drawImage(sprite.image.element, sprite.box.topLeft.x, sprite.box.topLeft.y, sprite.box.getWidth(), sprite.box.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), sprite.box.getWidth(), sprite.box.getHeight());
             }
         }
         if (!Vars_1["default"].debugMode) {
@@ -81,7 +81,7 @@ function drawObjects(ctx) {
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
         }
         ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
         var count = 0;
