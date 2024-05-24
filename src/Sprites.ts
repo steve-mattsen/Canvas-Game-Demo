@@ -1,10 +1,10 @@
-import { vec, vec2, Box } from "./Geo";
+import { vec, Vec2, Box } from "./Geo";
 
 export class Img {
 	id: string = '';
 	uri: string = '';
 	element: HTMLImageElement;
-	size: vec2;
+	size: Vec2;
 	loaded = false;
 	constructor(id: string = '', uri: string = '') {
 		this.id = id ?? this.id;
@@ -108,7 +108,7 @@ export class Sprite {
 		}
 		this.duration = duration
 	};
-	draw(ctx: CanvasRenderingContext2D, pos: vec2) {
+	draw(ctx: CanvasRenderingContext2D, pos: Vec2) {
 		ctx.drawImage(
 			this.image.element,
 			this.drawBox.topLeft.x, this.drawBox.topLeft.y,

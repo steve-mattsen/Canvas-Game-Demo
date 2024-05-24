@@ -1,16 +1,16 @@
-import { vec, vec2 } from "./Geo";
+import { vec, Vec2 } from "./Geo";
 import { Img, Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
 	id = "blah";
 	sprite: Sprite;
-	size: vec2;
-	pos: vec2;
+	size: Vec2;
+	pos: Vec2;
 	velocity = vec(0, 0);
 	animations: { [id: string]: Animation } | null;
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
-	constructor(id: string, size: vec2 | null, pos: vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
+	constructor(id: string, size: Vec2 | null, pos: Vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
 		this.id = id ?? this.id;
 		if (typeof spr === 'string') {
 			let imgId = spr as string;

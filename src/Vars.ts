@@ -1,4 +1,4 @@
-import { vec2, Box } from "./Geo";
+import { Vec2, Box } from "./Geo";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
 	static debugMode = false;
@@ -7,7 +7,7 @@ export default class Vars {
 	static slowMode = false;
 	static showButtons = true;
 	static showBackground = false;
-	static mouseMove: vec2 | null = null;
+	static mouseMove: Vec2 | null = null;
 	static fullscreenMode = false;
 	static canvasScale = 4;
 	static canvasWidth = window.innerWidth / this.canvasScale;

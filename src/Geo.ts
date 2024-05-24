@@ -1,12 +1,12 @@
-export class vec2 {
+export class Vec2 {
 	x = 0;
 	y = 0;
 	constructor(x: number, y: number) {
 		this.x = x;
 		this.y = y;
 	}
-	add(vec: vec2) {
-		return new vec2(this.x + vec.x, this.y + vec.y);
+	add(vec: Vec2) {
+		return new Vec2(this.x + vec.x, this.y + vec.y);
 	}
 	length() {
 		let sumProduct = this.x * this.x + this.y * this.y;
@@ -19,19 +19,19 @@ export class vec2 {
 	normalize() {
 		let length = this.length();
 		if (length === 0) {
-			return new vec2(0, 0);
+			return new Vec2(0, 0);
 		}
-		return new vec2(this.x / length, this.y / length);
+		return new Vec2(this.x / length, this.y / length);
 	}
 	scale(scalar: number) {
-		return new vec2(
+		return new Vec2(
 			this.x * scalar,
 			this.y * scalar,
 		);
 	}
 }
 
-export class vec3 extends vec2 {
+export class vec3 extends Vec2 {
 	x = 0;
 	y = 0;
 	z = 0;
@@ -54,17 +54,17 @@ export enum boxLocation {
 }
 
 export class Box {
-	topLeft: vec2 = new vec2(0, 0);
-	bottomRight: vec2 = new vec2(0, 0);
-	origin: vec2;
-	constructor(x: number, y: number, width: number, height: number, origin?: vec2 | boxLocation) {
+	topLeft: Vec2 = new Vec2(0, 0);
+	bottomRight: Vec2 = new Vec2(0, 0);
+	origin: Vec2;
+	constructor(x: number, y: number, width: number, height: number, origin?: Vec2 | boxLocation) {
 		this.topLeft = vec(x, y);
 		this.bottomRight = vec(x + width, y + height);
 
 		if (origin === undefined) {
 			origin = boxLocation.bottom_center;
 		}
-		if (origin instanceof vec2) {
+		if (origin instanceof Vec2) {
 			this.origin = origin;
 		}
 
@@ -105,7 +105,7 @@ export class Box {
 		}
 	}
 	getCenter() {
-		return new vec2(
+		return new Vec2(
 			(this.topLeft.x + this.bottomRight.x) / 2,
 			(this.topLeft.y + this.bottomRight.y) / 2,
 		)
@@ -116,12 +116,12 @@ export class Box {
 	getHeight() {
 		return this.bottomRight.y - this.topLeft.y;
 	}
-	normalize(): vec2 {
+	normalize(): Vec2 {
 		let length = this.length();
 		if (length === 0) {
-			return new vec2(0, 0);
+			return new Vec2(0, 0);
 		}
-		return new vec2(
+		return new Vec2(
 			(this.bottomRight.x - this.topLeft.x) / length,
 			(this.bottomRight.y - this.topLeft.y) / length
 		);
@@ -134,7 +134,7 @@ export class Box {
 		}
 		return Math.sqrt(sumProduct);
 	}
-	contains(point: vec2) {
+	contains(point: Vec2) {
 		if (point.x < this.topLeft.x
 			|| point.x > this.bottomRight.x
 			|| point.y < this.topLeft.y
@@ -148,7 +148,7 @@ export class Box {
 
 export function vec(x: number, y: number, z: number = null) {
 	if (z == null) {
-		return new vec2(x, y);
+		return new Vec2(x, y);
 	}
 	return new vec3(x, y, z);
 }

@@ -1,7 +1,7 @@
 
 import { Img, Animation, SpriteSheet, Sprite, sprt } from "./Sprites"
 import { Obj } from "./Obj"
-import { vec, vec2, Box } from "./Geo"
+import { vec, Vec2, Box } from "./Geo"
 import Vars from "./Vars";
 
 let ss = new SpriteSheet(Img.store['spritesheet_link'], 8, 10);

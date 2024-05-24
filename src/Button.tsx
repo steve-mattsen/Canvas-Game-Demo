@@ -1,4 +1,4 @@
-import { vec, vec2, Box } from "./Geo";
+import { vec, Vec2, Box } from "./Geo";
 import Vars from "./Vars";
 export default class Button {
 	key: string;
@@ -133,7 +133,7 @@ window.onblur = e => {
 	Vars.inputState = {};
 }
 
-function clickOrTouchStart(point: vec2) {
+function clickOrTouchStart(point: Vec2) {
 	if (Vars.inputState['mouseDown'] > 0) {
 		return;
 	}
