@@ -1,4 +1,4 @@
-import { vec, vec2, bbox } from "./Vec2";
+import { vec, vec2, bbox } from "./Geo";
 import Vars from "./Vars";
 export default class Button {
 	key: string;

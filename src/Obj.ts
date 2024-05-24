@@ -1,4 +1,4 @@
-import { vec, vec2 } from "./Vec2";
+import { vec, vec2 } from "./Geo";
 import { Img, Animation } from "./Sprites";
 export class Obj {
 	id = "blah";

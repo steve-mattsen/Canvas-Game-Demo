@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var Vec2_1 = require("./Vec2");
+var Geo_1 = require("./Geo");
 var Vars_1 = require("./Vars");
 var Button = (function () {
     function Button(key, varKey, title, click, dimensions) {
@@ -8,7 +8,7 @@ var Button = (function () {
             var value = Reflect.get(Vars_1["default"], _this.varKey);
             Reflect.set(Vars_1["default"], _this.varKey, !value);
         }; }
-        if (dimensions === void 0) { dimensions = new Vec2_1.bbox((0, Vec2_1.vec)(0, 0), (0, Vec2_1.vec)(0, 0)); }
+        if (dimensions === void 0) { dimensions = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(0, 0)); }
         var _this = this;
         this.key = key !== null && key !== void 0 ? key : this.key;
         this.title = title !== null && title !== void 0 ? title : this.title;
@@ -74,14 +74,14 @@ window.onkeydown = function (e) {
 };
 window.onmousedown = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Vec2_1.vec)(e.clientX, e.clientY);
+    var point = (0, Geo_1.vec)(e.clientX, e.clientY);
     clickOrTouchStart(point);
 };
 window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Vec2_1.vec)(e.clientX, e.clientY);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX, e.clientY);
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -90,7 +90,7 @@ window.onmouseup = function (e) {
 };
 window.ontouchstart = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Vec2_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
+    var point = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
     clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
@@ -98,7 +98,7 @@ window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Vec2_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
 };
 window.ontouchend = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);

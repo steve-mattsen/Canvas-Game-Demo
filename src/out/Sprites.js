@@ -10,7 +10,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 exports.__esModule = true;
 exports.SpriteSheet = exports.Animation = exports.Frame = exports.Img = void 0;
-var Vec2_1 = require("./Vec2");
+var Geo_1 = require("./Geo");
 var Img = (function () {
     function Img(id, uri) {
         if (id === void 0) { id = ''; }
@@ -24,7 +24,7 @@ var Img = (function () {
         this.element = new Image();
         this.element.src = this.uri;
         this.element.onload = function () {
-            _this.size = (0, Vec2_1.vec)(_this.element.width, _this.element.height);
+            _this.size = (0, Geo_1.vec)(_this.element.width, _this.element.height);
         };
     }
     Img.addImg = function (image) {
@@ -45,10 +45,10 @@ var Img = (function () {
 exports.Img = Img;
 var Frame = (function () {
     function Frame(image, subImgX, subImgY, subImgWidth, subImgHeight, duration) {
-        this.subImg = new Vec2_1.bbox((0, Vec2_1.vec)(0, 0), (0, Vec2_1.vec)(0, 0));
+        this.subImg = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(0, 0));
         this.duration = 4;
         this.image = image !== null && image !== void 0 ? image : this.image;
-        this.subImg = new Vec2_1.bbox((0, Vec2_1.vec)(subImgX, subImgY), (0, Vec2_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight));
+        this.subImg = new Geo_1.bbox((0, Geo_1.vec)(subImgX, subImgY), (0, Geo_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight));
         this.duration = duration !== null && duration !== void 0 ? duration : this.duration;
     }
     return Frame;

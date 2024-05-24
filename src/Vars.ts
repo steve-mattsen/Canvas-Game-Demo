@@ -1,4 +1,4 @@
-import { vec2, bbox } from "./Vec2";
+import { vec2, bbox } from "./Geo";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
 	static debugMode = false;

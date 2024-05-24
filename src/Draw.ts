@@ -2,7 +2,7 @@ import { Img } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
-import { bbox, vec, vec2 } from "./Vec2";
+import { bbox, vec, vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;

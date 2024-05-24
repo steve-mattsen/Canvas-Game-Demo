@@ -1,4 +1,4 @@
-import { vec, vec2, bbox } from "./Vec2";
+import { vec, vec2, bbox } from "./Geo";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";

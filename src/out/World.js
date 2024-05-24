@@ -11,7 +11,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 exports.__esModule = true;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
-var Vec2_1 = require("./Vec2");
+var Geo_1 = require("./Geo");
 var ss = new Sprites_1.SpriteSheet(Sprites_1.Img.store['spritesheet_link'], [0, 110.875, 221.75, 332.625, 443.5, 554.375, 665.25, 776.125], [0, 102.4, 204.8, 307.2, 409.6, 512, 614.4, 716.8, 819.2, 921.6]);
 var anims = {};
 var idleFrames = [0, 1, 2, 1];
@@ -46,7 +46,7 @@ anims.run_up.frames[2].duration = lungeDuration;
 anims.run_up.frames[7].duration = lungeDuration;
 var xSize = 102.4;
 var ySize = 111.25;
-var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], (0, Vec2_1.vec)(xSize - 1, ySize), (0, Vec2_1.vec)((window.innerWidth - xSize - 1) / 2, (window.innerHeight - ySize) / 2), anims);
+var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], (0, Geo_1.vec)(xSize - 1, ySize), (0, Geo_1.vec)((window.innerWidth - xSize - 1) / 2, (window.innerHeight - ySize) / 2), anims);
 player.animState = 'idle_down';
 Obj_1.Obj.addObj(player);
 //# sourceMappingURL=World.js.map

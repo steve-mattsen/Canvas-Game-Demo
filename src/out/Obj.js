@@ -1,14 +1,14 @@
 "use strict";
 exports.__esModule = true;
 exports.Obj = void 0;
-var Vec2_1 = require("./Vec2");
+var Geo_1 = require("./Geo");
 var Obj = (function () {
     function Obj(id, image, size, pos, animations) {
         if (animations === void 0) { animations = {}; }
         this.id = "blah";
-        this.size = (0, Vec2_1.vec)(128, 50);
-        this.pos = (0, Vec2_1.vec)(10, 10);
-        this.velocity = (0, Vec2_1.vec)(0, 0);
+        this.size = (0, Geo_1.vec)(128, 50);
+        this.pos = (0, Geo_1.vec)(10, 10);
+        this.velocity = (0, Geo_1.vec)(0, 0);
         this.animations = {};
         this.animState = 'idle_down';
         this.z = 0;
