@@ -8,7 +8,7 @@ var Button = (function () {
             var value = Reflect.get(Vars_1["default"], _this.varKey);
             Reflect.set(Vars_1["default"], _this.varKey, !value);
         }; }
-        if (dimensions === void 0) { dimensions = new Geo_1.box(0, 0, 0, 0); }
+        if (dimensions === void 0) { dimensions = new Geo_1.Box(0, 0, 0, 0); }
         var _this = this;
         this.key = key !== null && key !== void 0 ? key : this.key;
         this.title = title !== null && title !== void 0 ? title : this.title;

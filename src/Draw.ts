@@ -2,7 +2,7 @@ import { Img, Sprite, sprt } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
-import { box, vec, vec2 } from "./Geo";
+import { Box, vec, vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -183,7 +183,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		let buttonX = Vars.canvasWidth - buttonWidth - margin;
 		let buttonY = Vars.canvasHeight - (buttonHeight + margin) * (i + 1);
 
-		Button.store[key].dimensions = new box(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight);
+		Button.store[key].dimensions = new Box(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight);
 		let colorKey = Number(Reflect.get(Vars, button.varKey));
 		ctx.fillStyle = Vars.bgColors[colorKey] + "88";
 		ctx.fillRect(

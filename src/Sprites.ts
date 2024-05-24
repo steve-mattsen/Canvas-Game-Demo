@@ -1,4 +1,4 @@
-import { vec, vec2, box } from "./Geo";
+import { vec, vec2, Box } from "./Geo";
 
 export class Img {
 	id: string = '';
@@ -62,7 +62,7 @@ export class SpriteSheet {
 	cols: number;
 	rowSize: number;
 	colSize: number;
-	drawBox: box;
+	drawBox: Box;
 	duration: number
 	constructor(image: Img, rows: number, cols: number, duration = 1) {
 		this.image = image;
@@ -70,7 +70,7 @@ export class SpriteSheet {
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
-		this.drawBox = new box(0, 0, this.colSize, this.rowSize);
+		this.drawBox = new Box(0, 0, this.colSize, this.rowSize);
 		this.duration = duration;
 	}
 	getAnim(rows: number[], cols: number[]) {
@@ -79,7 +79,7 @@ export class SpriteSheet {
 			cols.forEach(c => {
 				frames.push(new Sprite(
 					this.image,
-					new box(
+					new Box(
 						c * this.colSize,
 						r * this.rowSize,
 						this.colSize,
@@ -96,15 +96,15 @@ export class SpriteSheet {
 
 export class Sprite {
 	image: Img;
-	drawBox: box;
+	drawBox: Box;
 	scale: number;
 	duration: number;
-	constructor(image: Img, drawBox?: box, scale = 1, duration = 4) {
+	constructor(image: Img, drawBox?: Box, scale = 1, duration = 4) {
 		this.image = image;
 		this.scale = scale;
 		this.drawBox = drawBox;
 		if (drawBox === undefined) {
-			this.drawBox = new box(0, 0, image.size.x, image.size.y);
+			this.drawBox = new Box(0, 0, image.size.x, image.size.y);
 		}
 		this.duration = duration
 	};

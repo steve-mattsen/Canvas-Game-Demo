@@ -1,4 +1,4 @@
-import { vec, vec2, box } from "./Geo";
+import { vec, vec2, Box } from "./Geo";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";
@@ -35,7 +35,7 @@ function tick() {
 		);
 		speed = move.length() * runSpeed;
 	} else if (Vars.mouseMove !== null) {
-		let line = new box(
+		let line = new Box(
 			plyr.pos.x,
 			plyr.pos.y,
 			Vars.mouseMove.x - plyr.pos.x,

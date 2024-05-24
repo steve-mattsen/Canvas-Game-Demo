@@ -1,11 +1,11 @@
-import { vec, vec2, box } from "./Geo";
+import { vec, vec2, Box } from "./Geo";
 import Vars from "./Vars";
 export default class Button {
 	key: string;
 	varKey: string;
 	title: string;
 	click: () => void;
-	dimensions: box;
+	dimensions: Box;
 	constructor(
 		key: string,
 		varKey: string,
@@ -14,7 +14,7 @@ export default class Button {
 			let value = Reflect.get(Vars, this.varKey);
 			Reflect.set(Vars, this.varKey, !value);
 		},
-		dimensions: box = new box(0, 0, 0, 0),
+		dimensions: Box = new Box(0, 0, 0, 0),
 	) {
 		this.key = key ?? this.key;
 		this.title = title ?? this.title;
