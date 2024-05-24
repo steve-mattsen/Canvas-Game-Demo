@@ -65,9 +65,6 @@ function tick() {
     else if (speed > walkSpeed) {
         plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
     }
-    else {
-        plyr.animState = plyr.animState.replace(/(.*)_/, 'walk_');
-    }
     if (move.x >= 0.5) {
         plyr.animState = plyr.animState.replace(/_.*/, "_right");
     }
