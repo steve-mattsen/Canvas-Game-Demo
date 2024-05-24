@@ -14,7 +14,7 @@ export default class Button {
 			let value = Reflect.get(Vars, this.varKey);
 			Reflect.set(Vars, this.varKey, !value);
 		},
-		dimensions: box = new box(vec(0, 0), vec(0, 0)),
+		dimensions: box = new box(0, 0, 0, 0),
 	) {
 		this.key = key ?? this.key;
 		this.title = title ?? this.title;

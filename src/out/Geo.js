@@ -72,11 +72,11 @@ var boxLocation;
     boxLocation[boxLocation["bottom_right"] = 8] = "bottom_right";
 })(boxLocation = exports.boxLocation || (exports.boxLocation = {}));
 var box = (function () {
-    function box(topLeft, bottomRight, origin) {
+    function box(x, y, width, height, origin) {
         this.topLeft = new vec2(0, 0);
         this.bottomRight = new vec2(0, 0);
-        this.topLeft = topLeft !== null && topLeft !== void 0 ? topLeft : this.topLeft;
-        this.bottomRight = bottomRight !== null && bottomRight !== void 0 ? bottomRight : this.bottomRight;
+        this.topLeft = vec(x, y);
+        this.bottomRight = vec(x + width, y + height);
         if (origin === undefined) {
             origin = boxLocation.bottom_center;
         }

@@ -122,7 +122,7 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = Vars_1["default"].canvasWidth - buttonWidth - margin;
         var buttonY = Vars_1["default"].canvasHeight - (buttonHeight + margin) * (i + 1);
-        Button_1["default"].store[key].dimensions = new Geo_1.box((0, Geo_1.vec)(buttonX, buttonY), (0, Geo_1.vec)(buttonX + buttonWidth, buttonY + buttonHeight));
+        Button_1["default"].store[key].dimensions = new Geo_1.box(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight);
         var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);

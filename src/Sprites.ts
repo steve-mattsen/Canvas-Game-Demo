@@ -70,7 +70,7 @@ export class SpriteSheet {
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
-		this.drawBox = new box(vec(0, 0), vec(this.colSize, this.rowSize));
+		this.drawBox = new box(0, 0, this.colSize, this.rowSize);
 		this.duration = duration;
 	}
 	getAnim(rows: number[], cols: number[]) {
@@ -80,14 +80,10 @@ export class SpriteSheet {
 				frames.push(new Sprite(
 					this.image,
 					new box(
-						vec(
-							c * this.colSize,
-							r * this.rowSize,
-						),
-						vec(
-							(c + 1) * this.colSize,
-							(r + 1) * this.rowSize,
-						)
+						c * this.colSize,
+						r * this.rowSize,
+						this.colSize,
+						this.rowSize,
 					),
 					1,
 					this.duration
@@ -108,7 +104,7 @@ export class Sprite {
 		this.scale = scale;
 		this.drawBox = drawBox;
 		if (drawBox === undefined) {
-			this.drawBox = new box(vec(0, 0), vec(image.size.x, image.size.y));
+			this.drawBox = new box(0, 0, image.size.x, image.size.y);
 		}
 		this.duration = duration
 	};

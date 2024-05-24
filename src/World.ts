@@ -42,7 +42,7 @@ const player = new Obj(
 		(Vars.canvasWidth - ss.rowSize - 1) / 2,
 		(Vars.canvasHeight - ss.colSize) / 2
 	),
-	new Sprite(Img.store.spritesheet_link, new box(vec(0, 0), vec(ss.colSize, ss.rowSize))),
+	new Sprite(Img.store.spritesheet_link, new box(0, 0, ss.colSize, ss.rowSize)),
 	anims
 );
 player.animState = 'idle_down';

@@ -57,9 +57,9 @@ export class box {
 	topLeft: vec2 = new vec2(0, 0);
 	bottomRight: vec2 = new vec2(0, 0);
 	origin: vec2;
-	constructor(topLeft: vec2, bottomRight: vec2, origin?: vec2 | boxLocation) {
-		this.topLeft = topLeft ?? this.topLeft;
-		this.bottomRight = bottomRight ?? this.bottomRight;
+	constructor(x: number, y: number, width: number, height: number, origin?: vec2 | boxLocation) {
+		this.topLeft = vec(x, y);
+		this.bottomRight = vec(x + width, y + height);
 
 		if (origin === undefined) {
 			origin = boxLocation.bottom_center;

@@ -35,7 +35,12 @@ function tick() {
 		);
 		speed = move.length() * runSpeed;
 	} else if (Vars.mouseMove !== null) {
-		let line = new box(plyr.pos, Vars.mouseMove);
+		let line = new box(
+			plyr.pos.x,
+			plyr.pos.y,
+			Vars.mouseMove.x - plyr.pos.x,
+			Vars.mouseMove.y - plyr.pos.y
+		);
 		if (line.length() > runSpeed) {
 			speed = runSpeed;
 		} else {
