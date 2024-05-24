@@ -46,3 +46,95 @@ new Button('F6', 'fullscreenMode', 'Fullscreen', () => {
 	}
 });
 new Button('F9', 'debugMode', 'Debug');
+
+window.onkeydown = e => {
+	Vars.debugMode && console.log(e);
+	let key = e.key.toLowerCase();
+	if (['tab', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10'].indexOf(key) > -1) {
+		e.preventDefault();
+	}
+	if (!Vars.inputState[key]) {
+		Vars.inputState[key] = 1;
+	}
+	if (Vars.inputState.f1 === 1) {
+		Vars.displayMode = (++Vars.displayMode % 5);
+	} else if (Vars.inputState.f2 === 1) {
+		Vars.spriteSheetMode = !Vars.spriteSheetMode;
+	} else if (Vars.inputState.f3 === 1) {
+		Button.store['F3'].click();
+	} else if (Vars.inputState.f4) {
+		Vars.showBackground = !Vars.showBackground;
+	} else if (Vars.inputState.f5) {
+		Vars.showButtons = !Vars.showButtons;
+	} else if (Vars.inputState.f6) {
+		Button.store['F6'].click();
+	} else if (Vars.inputState.f9 === 1) {
+		Vars.debugMode = !Vars.debugMode;
+	}
+}
+window.onmousedown = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	let point = new vec2(e.clientX, e.clientY);
+	clickOrTouchStart(point);
+}
+window.onmousemove = (e) => {
+	// Vars.debugMode && console.log(e.type, e);
+	if (Vars.mouseMove === null) {
+		return;
+	}
+	Vars.mouseMove = new vec2(e.clientX, e.clientY);
+}
+window.onmouseup = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	clickOrTouchEnd();
+	e.preventDefault();
+}
+
+window.ontouchstart = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	let point = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+	clickOrTouchStart(point);
+}
+window.ontouchmove = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	if (Vars.mouseMove === null) {
+		return;
+	}
+	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+}
+window.ontouchend = (e) => {
+	Vars.debugMode && console.log(e.type, e);
+	clickOrTouchEnd();
+	e.preventDefault();
+}
+window.onkeyup = e => {
+	Vars.debugMode && console.log(e.type, e);
+	Vars.inputState[e.key.toLowerCase()] = 0;
+	e.preventDefault();
+}
+window.onblur = e => {
+	Vars.debugMode && console.log(e.type, e);
+	Vars.inputState = {};
+}
+
+function clickOrTouchStart(point: vec2) {
+	if (Vars.inputState['mouseDown'] > 0) {
+		return;
+	}
+	Vars.inputState['mouseDown'] = 1;
+	for (const [key, button] of Object.entries(Button.store)) {
+		if (!Vars.showButtons && button.varKey != "showButtons") {
+			continue;
+		}
+		if (button.dimensions.contains(point)) {
+			button.click();
+			return;
+		}
+	}
+	Vars.mouseMove = point;
+}
+
+function clickOrTouchEnd() {
+	Vars.inputState['mouseDown'] = 0;
+	Vars.mouseMove = null;
+}
