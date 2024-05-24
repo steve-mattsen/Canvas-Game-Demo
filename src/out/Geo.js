@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.vec = exports.Box = exports.boxLocation = exports.vec3 = exports.Vec2 = void 0;
+exports.vec = exports.Box = exports.boxLocation = exports.Vec3 = exports.Vec2 = void 0;
 var Vec2 = (function () {
     function Vec2(x, y) {
         this.x = 0;
@@ -46,9 +46,9 @@ var Vec2 = (function () {
     return Vec2;
 }());
 exports.Vec2 = Vec2;
-var vec3 = (function (_super) {
-    __extends(vec3, _super);
-    function vec3(x, y, z) {
+var Vec3 = (function (_super) {
+    __extends(Vec3, _super);
+    function Vec3(x, y, z) {
         var _this = _super.call(this, x, y) || this;
         _this.x = 0;
         _this.y = 0;
@@ -56,9 +56,9 @@ var vec3 = (function (_super) {
         _this.z = z;
         return _this;
     }
-    return vec3;
+    return Vec3;
 }(Vec2));
-exports.vec3 = vec3;
+exports.Vec3 = Vec3;
 var boxLocation;
 (function (boxLocation) {
     boxLocation[boxLocation["top_left"] = 0] = "top_left";
@@ -160,7 +160,7 @@ function vec(x, y, z) {
     if (z == null) {
         return new Vec2(x, y);
     }
-    return new vec3(x, y, z);
+    return new Vec3(x, y, z);
 }
 exports.vec = vec;
 //# sourceMappingURL=Geo.js.map

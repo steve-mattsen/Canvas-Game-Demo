@@ -31,7 +31,7 @@ export class Vec2 {
 	}
 }
 
-export class vec3 extends Vec2 {
+export class Vec3 extends Vec2 {
 	x = 0;
 	y = 0;
 	z = 0;
@@ -150,5 +150,5 @@ export function vec(x: number, y: number, z: number = null) {
 	if (z == null) {
 		return new Vec2(x, y);
 	}
-	return new vec3(x, y, z);
+	return new Vec3(x, y, z);
 }
