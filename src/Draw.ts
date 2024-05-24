@@ -88,16 +88,16 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		}
 
 		if (Vars.displayMode > 1) {
+
 			let shadow = sprt('shadow');
 			shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
 			shadow.draw(ctx, vec(
-				obj.pos.x - obj.hitBox.bottomRight.x * .025,
-				obj.pos.y + (obj.hitBox.bottomRight.y * 0.7)
+				hb.getX() - obj.hitBox.bottomRight.x * .025,
+				hb.getY() + (obj.hitBox.bottomRight.y * 0.7)
 			));
-
 			if (Vars.displayMode < 3 || obj.animations == null) {
 				// Just draw the sprite.
-				obj.sprite.draw(ctx, obj.pos);
+				obj.sprite.draw(ctx, vec(hb.getX(), hb.getY()));
 			} else {
 				let sprite = obj.getAnimFrame();
 				ctx.drawImage(
@@ -106,8 +106,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 					sprite.drawBox.topLeft.y, //suby
 					sprite.drawBox.getWidth(), //subw
 					sprite.drawBox.getHeight(), //subh
-					Math.floor(obj.pos.x), //posx
-					Math.floor(obj.pos.y - obj.z), //posy
+					Math.floor(hb.getX()), //posx
+					Math.floor(hb.getY() - obj.z), //posy
 					sprite.drawBox.getWidth(), //width
 					sprite.drawBox.getHeight(), //height
 				);

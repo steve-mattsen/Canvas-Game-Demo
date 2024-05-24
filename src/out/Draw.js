@@ -65,13 +65,13 @@ function drawObjects(ctx) {
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = obj.sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
-            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.hitBox.bottomRight.x * .025, obj.pos.y + (obj.hitBox.bottomRight.y * 0.7)));
+            shadow.draw(ctx, (0, Geo_1.vec)(hb.getX() - obj.hitBox.bottomRight.x * .025, hb.getY() + (obj.hitBox.bottomRight.y * 0.7)));
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
-                obj.sprite.draw(ctx, obj.pos);
+                obj.sprite.draw(ctx, (0, Geo_1.vec)(hb.getX(), hb.getY()));
             }
             else {
                 var sprite = obj.getAnimFrame();
-                ctx.drawImage(sprite.image.element, sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x), Math.floor(obj.pos.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
+                ctx.drawImage(sprite.image.element, sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(hb.getX()), Math.floor(hb.getY() - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
             }
         }
         if (!Vars_1["default"].debugMode) {
