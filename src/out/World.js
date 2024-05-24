@@ -46,7 +46,7 @@ anims.run_up.frames[2].duration = lungeDuration;
 anims.run_up.frames[7].duration = lungeDuration;
 var xSize = 102.4;
 var ySize = 111.25;
-var player = new Obj_1.Obj('player', Sprites_1.Img.store['spritesheet_link'], (0, Geo_1.vec)(xSize - 1, ySize), (0, Geo_1.vec)((window.innerWidth - xSize - 1) / 2, (window.innerHeight - ySize) / 2), anims);
+var player = new Obj_1.Obj('player', (0, Geo_1.vec)(xSize - 1, ySize), (0, Geo_1.vec)((window.innerWidth - xSize - 1) / 2, (window.innerHeight - ySize) / 2), new Sprites_1.Sprite(Sprites_1.Img.store.spritesheet_link, new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(xSize, ySize))), anims);
 player.animState = 'idle_down';
 Obj_1.Obj.addObj(player);
 //# sourceMappingURL=World.js.map

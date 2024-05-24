@@ -1,8 +1,8 @@
 import { vec, vec2 } from "./Geo";
-import { Img, Animation } from "./Sprites";
+import { Img, Sprite, Animation, sprite } from "./Sprites";
 export class Obj {
 	id = "blah";
-	image: Img;
+	sprite: Sprite;
 	size = vec(128, 50);
 	pos = vec(10, 10);
 	velocity = vec(0, 0);
@@ -10,9 +10,14 @@ export class Obj {
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
-	constructor(id: string, image: Img, size: vec2, pos: vec2, animations: { [id: string]: Animation } = {}) {
+	constructor(id: string, size: vec2, pos: vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
 		this.id = id ?? this.id;
-		this.image = image ?? this.image;
+		if (typeof spr === 'string') {
+			let imgId = spr as string;
+			this.sprite = sprite(imgId);
+		} else {
+			this.sprite = spr;
+		}
 		this.size = size ?? this.size;
 		this.pos = pos ?? this.pos;
 		this.animations = animations ?? this.animations;

@@ -1,7 +1,7 @@
 
-import { Img, Animation, SpriteSheet } from "./Sprites"
+import { Img, Animation, SpriteSheet, Sprite } from "./Sprites"
 import { Obj } from "./Obj"
-import { vec, vec2 } from "./Geo"
+import { vec, vec2, bbox } from "./Geo"
 
 let ss = new SpriteSheet(Img.store['spritesheet_link'],
 	[0, 110.875, 221.75, 332.625, 443.5, 554.375, 665.25, 776.125],
@@ -50,12 +50,12 @@ let xSize = 102.4;
 let ySize = 111.25;
 const player = new Obj(
 	'player',
-	Img.store['spritesheet_link'],
 	vec(xSize - 1, ySize),
 	vec(
 		(window.innerWidth - xSize - 1) / 2,
 		(window.innerHeight - ySize) / 2
 	),
+	new Sprite(Img.store.spritesheet_link, new bbox(vec(0, 0), vec(xSize, ySize))),
 	anims
 );
 player.animState = 'idle_down';
