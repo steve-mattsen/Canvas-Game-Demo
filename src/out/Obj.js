@@ -6,9 +6,9 @@ var Obj = (function () {
     function Obj(id, image, size, pos, animations) {
         if (animations === void 0) { animations = {}; }
         this.id = "blah";
-        this.size = new Vec2_1.vec2(128, 50);
-        this.pos = new Vec2_1.vec2(10, 10);
-        this.velocity = new Vec2_1.vec2(0, 0);
+        this.size = (0, Vec2_1.vec)(128, 50);
+        this.pos = (0, Vec2_1.vec)(10, 10);
+        this.velocity = (0, Vec2_1.vec)(0, 0);
         this.animations = {};
         this.animState = 'idle_down';
         this.z = 0;

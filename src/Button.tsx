@@ -1,4 +1,4 @@
-import { vec2, bbox } from "./Vec2";
+import { vec, vec2, bbox } from "./Vec2";
 import Vars from "./Vars";
 export default class Button {
 	key: string;
@@ -14,7 +14,7 @@ export default class Button {
 			let value = Reflect.get(Vars, this.varKey);
 			Reflect.set(Vars, this.varKey, !value);
 		},
-		dimensions: bbox = new bbox(new vec2(0, 0), new vec2(0, 0)),
+		dimensions: bbox = new bbox(vec(0, 0), vec(0, 0)),
 	) {
 		this.key = key ?? this.key;
 		this.title = title ?? this.title;
@@ -74,7 +74,7 @@ window.onkeydown = e => {
 }
 window.onmousedown = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	let point = new vec2(e.clientX, e.clientY);
+	let point = vec(e.clientX, e.clientY);
 	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
@@ -82,7 +82,7 @@ window.onmousemove = (e) => {
 	if (Vars.mouseMove === null) {
 		return;
 	}
-	Vars.mouseMove = new vec2(e.clientX, e.clientY);
+	Vars.mouseMove = vec(e.clientX, e.clientY);
 }
 window.onmouseup = (e) => {
 	Vars.debugMode && console.log(e.type, e);
@@ -92,7 +92,7 @@ window.onmouseup = (e) => {
 
 window.ontouchstart = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	let point = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+	let point = vec(e.touches[0].clientX, e.touches[0].clientY);
 	clickOrTouchStart(point);
 }
 window.ontouchmove = (e) => {
@@ -100,7 +100,7 @@ window.ontouchmove = (e) => {
 	if (Vars.mouseMove === null) {
 		return;
 	}
-	Vars.mouseMove = new vec2(e.touches[0].clientX, e.touches[0].clientY);
+	Vars.mouseMove = vec(e.touches[0].clientX, e.touches[0].clientY);
 }
 window.ontouchend = (e) => {
 	Vars.debugMode && console.log(e.type, e);

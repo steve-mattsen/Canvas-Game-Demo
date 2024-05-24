@@ -1,4 +1,4 @@
-import { vec2, bbox } from "./Vec2";
+import { vec, vec2, bbox } from "./Vec2";
 
 export class Img {
 	id: string = '';
@@ -12,7 +12,7 @@ export class Img {
 		this.element = new Image();
 		this.element.src = this.uri;
 		this.element.onload = () => {
-			this.size = new vec2(this.element.width, this.element.height);
+			this.size = vec(this.element.width, this.element.height);
 		};
 
 	}
@@ -32,15 +32,15 @@ export class Img {
 
 export class Frame {
 	image: Img;
-	subImg: bbox = new bbox(new vec2(0, 0), new vec2(0, 0));
+	subImg: bbox = new bbox(vec(0, 0), vec(0, 0));
 	duration: number = 4;
 	constructor(image: Img, subImgX: number, subImgY: number, subImgWidth: number, subImgHeight: number, duration: number) {
 		this.image = image ?? this.image;
 		this.subImg = new bbox(
-			new vec2(
+			vec(
 				subImgX,
 				subImgY
-			), new vec2(
+			), vec(
 				subImgX + subImgWidth,
 				subImgY + subImgHeight
 			)

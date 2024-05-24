@@ -27,7 +27,7 @@ function tick() {
     var move;
     var speed = 0;
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
-        move = new Vec2_1.vec2(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
+        move = (0, Vec2_1.vec)(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
         speed = move.length() * runSpeed;
     }
     else if (Vars_1["default"].mouseMove !== null) {
@@ -45,7 +45,7 @@ function tick() {
             - (Vars_1["default"].inputState.arrowleft || Vars_1["default"].inputState.a ? 1 : 0);
         var moveY = (Vars_1["default"].inputState.arrowdown || Vars_1["default"].inputState.s ? 1 : 0)
             - (Vars_1["default"].inputState.arrowup || Vars_1["default"].inputState.w ? 1 : 0);
-        move = new Vec2_1.vec2(moveX, moveY);
+        move = (0, Vec2_1.vec)(moveX, moveY);
         speed = runSpeed;
     }
     move = move.normalize();
@@ -85,7 +85,7 @@ function tick() {
     plyr.tickAnimFrame();
     plyr.pos.x += move.x * speed;
     plyr.pos.y += move.y * speed;
-    plyr.pos = new Vec2_1.vec2(Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)), Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y)));
+    plyr.pos = (0, Vec2_1.vec)(Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)), Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y)));
 }
 var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
 var drawThread = setInterval(Draw_1["default"], 1000 / refresh);

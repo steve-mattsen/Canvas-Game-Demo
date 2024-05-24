@@ -24,7 +24,7 @@ var Img = (function () {
         this.element = new Image();
         this.element.src = this.uri;
         this.element.onload = function () {
-            _this.size = new Vec2_1.vec2(_this.element.width, _this.element.height);
+            _this.size = (0, Vec2_1.vec)(_this.element.width, _this.element.height);
         };
     }
     Img.addImg = function (image) {
@@ -45,10 +45,10 @@ var Img = (function () {
 exports.Img = Img;
 var Frame = (function () {
     function Frame(image, subImgX, subImgY, subImgWidth, subImgHeight, duration) {
-        this.subImg = new Vec2_1.bbox(new Vec2_1.vec2(0, 0), new Vec2_1.vec2(0, 0));
+        this.subImg = new Vec2_1.bbox((0, Vec2_1.vec)(0, 0), (0, Vec2_1.vec)(0, 0));
         this.duration = 4;
         this.image = image !== null && image !== void 0 ? image : this.image;
-        this.subImg = new Vec2_1.bbox(new Vec2_1.vec2(subImgX, subImgY), new Vec2_1.vec2(subImgX + subImgWidth, subImgY + subImgHeight));
+        this.subImg = new Vec2_1.bbox((0, Vec2_1.vec)(subImgX, subImgY), (0, Vec2_1.vec)(subImgX + subImgWidth, subImgY + subImgHeight));
         this.duration = duration !== null && duration !== void 0 ? duration : this.duration;
     }
     return Frame;

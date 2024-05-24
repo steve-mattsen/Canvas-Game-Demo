@@ -1,4 +1,4 @@
-import { vec2, bbox } from "./Vec2";
+import { vec, vec2, bbox } from "./Vec2";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw from "./Draw";
@@ -29,7 +29,7 @@ function tick() {
 	let move: vec2;
 	let speed = 0;
 	if (gp?.axes[0] || gp?.axes[1]) {
-		move = new vec2(
+		move = vec(
 			Number(gp?.axes[0]),
 			Number(gp?.axes[1])
 		);
@@ -47,7 +47,7 @@ function tick() {
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);
 		let moveY = (Vars.inputState.arrowdown || Vars.inputState.s ? 1 : 0)
 			- (Vars.inputState.arrowup || Vars.inputState.w ? 1 : 0);
-		move = new vec2(
+		move = vec(
 			moveX,
 			moveY
 		);
@@ -88,7 +88,7 @@ function tick() {
 	plyr.tickAnimFrame();
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
-	plyr.pos = new vec2(
+	plyr.pos = vec(
 		Math.max(0, Math.min(plyr.pos.x, window.innerWidth - plyr.size.x)),
 		Math.max(0, Math.min(plyr.pos.y, window.innerHeight - plyr.size.y))
 	)

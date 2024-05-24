@@ -1,11 +1,11 @@
-import { vec2 } from "./Vec2";
+import { vec, vec2 } from "./Vec2";
 import { Img, Animation } from "./Sprites";
 export class Obj {
 	id = "blah";
 	image: Img;
-	size = new vec2(128, 50);
-	pos = new vec2(10, 10);
-	velocity = new vec2(0, 0);
+	size = vec(128, 50);
+	pos = vec(10, 10);
+	velocity = vec(0, 0);
 	animations: { [id: string]: Animation } = {};
 	animState: string = 'idle_down';
 	z = 0;

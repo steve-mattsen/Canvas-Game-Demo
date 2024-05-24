@@ -115,7 +115,7 @@ function drawButtons(ctx) {
         margin = Math.ceil(buttonHeight * .2);
         var buttonX = window.innerWidth - buttonWidth - margin;
         var buttonY = window.innerHeight - (buttonHeight + margin) * (i + 1);
-        Button_1["default"].store[key].dimensions = new Vec2_1.bbox(new Vec2_1.vec2(buttonX, buttonY), new Vec2_1.vec2(buttonX + buttonWidth, buttonY + buttonHeight));
+        Button_1["default"].store[key].dimensions = new Vec2_1.bbox((0, Vec2_1.vec)(buttonX, buttonY), (0, Vec2_1.vec)(buttonX + buttonWidth, buttonY + buttonHeight));
         var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
         ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
         ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
