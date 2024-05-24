@@ -21,7 +21,10 @@ var Obj = (function () {
         else {
             this.sprite = spr;
         }
-        this.size = size !== null && size !== void 0 ? size : this.size;
+        this.size = size;
+        if (size == null) {
+            this.size = this.sprite.box.bottomRight;
+        }
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
         this.animations = animations !== null && animations !== void 0 ? animations : this.animations;
     }

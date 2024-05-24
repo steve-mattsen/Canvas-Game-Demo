@@ -59,7 +59,7 @@ Obj.addObj(player);
 
 const tree = new Obj(
 	'tree',
-	vec(50, 50),
+	null,
 	vec(50, 50),
 	'tree'
 )

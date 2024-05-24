@@ -10,7 +10,7 @@ export class Obj {
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
-	constructor(id: string, size: vec2, pos: vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
+	constructor(id: string, size: vec2 | null, pos: vec2, spr: Sprite | string, animations?: { [id: string]: Animation }) {
 		this.id = id ?? this.id;
 		if (typeof spr === 'string') {
 			let imgId = spr as string;
@@ -18,7 +18,10 @@ export class Obj {
 		} else {
 			this.sprite = spr;
 		}
-		this.size = size ?? this.size;
+		this.size = size;
+		if (size == null) {
+			this.size = this.sprite.box.bottomRight;
+		}
 		this.pos = pos ?? this.pos;
 		this.animations = animations ?? this.animations;
 	}

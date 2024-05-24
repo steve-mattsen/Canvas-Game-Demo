@@ -61,8 +61,8 @@ function drawObjects(ctx) {
         }
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprite)('shadow');
-            shadow.scale = .25;
-            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
+            shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
+            shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.size.x * .025, obj.pos.y + (obj.size.y * 0.7)));
             if (Vars_1["default"].displayMode < 3 || Object.keys(obj.animations).length == 0) {
                 obj.sprite.draw(ctx, obj.pos);
             }

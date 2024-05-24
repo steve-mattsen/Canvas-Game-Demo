@@ -86,8 +86,11 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		if (Vars.displayMode > 1) {
 			let shadow = sprite('shadow');
-			shadow.scale = .25;
-			shadow.draw(ctx, vec(obj.pos.x, obj.pos.y + (obj.size.y * 0.7)));
+			shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
+			shadow.draw(ctx, vec(
+				obj.pos.x - obj.size.x * .025,
+				obj.pos.y + (obj.size.y * 0.7)
+			));
 
 			if (Vars.displayMode < 3 || Object.keys(obj.animations).length == 0) {
 				// Just draw the sprite.
