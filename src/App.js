@@ -6,6 +6,7 @@ let images = [
   '/grass.png',
   '/spritesheet_link.png',
   '/shadow.png',
+  '/tree.png',
 ];
 
 for (const uri of images) {
