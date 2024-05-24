@@ -29,6 +29,9 @@ function draw() {
     }
     drawObjects(ctx);
     drawButtons(ctx);
+    var tree = (0, Sprites_1.sprite)('tree');
+    tree.scale = 2;
+    tree.draw(ctx, (0, Geo_1.vec)(50, 50));
 }
 exports["default"] = draw;
 function drawObjects(ctx) {

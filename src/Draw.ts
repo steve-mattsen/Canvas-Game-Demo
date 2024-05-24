@@ -1,4 +1,4 @@
-import { Img } from "./Sprites";
+import { Img, Sprite, sprite } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
@@ -39,6 +39,10 @@ export default function draw() {
 	drawObjects(ctx);
 
 	drawButtons(ctx);
+
+	let tree = sprite('tree');
+	tree.scale = 2;
+	tree.draw(ctx, vec(50, 50));
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {

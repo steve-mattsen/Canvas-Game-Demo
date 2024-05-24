@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.SpriteSheet = exports.Animation = exports.Frame = exports.Img = void 0;
+exports.sprite = exports.Sprite = exports.SpriteSheet = exports.Animation = exports.Frame = exports.Img = void 0;
 var Geo_1 = require("./Geo");
 var Img = (function () {
     function Img(id, uri) {
@@ -105,4 +105,26 @@ var SpriteSheet = (function () {
     return SpriteSheet;
 }());
 exports.SpriteSheet = SpriteSheet;
+var Sprite = (function () {
+    function Sprite(image, box, scale) {
+        if (scale === void 0) { scale = 1; }
+        this.image = image;
+        this.scale = scale;
+        this.box = box;
+        if (box === undefined) {
+            this.box = new Geo_1.bbox((0, Geo_1.vec)(0, 0), (0, Geo_1.vec)(image.size.x, image.size.y));
+        }
+    }
+    ;
+    Sprite.prototype.draw = function (ctx, pos) {
+        ctx.drawImage(this.image.element, this.box.topLeft.x, this.box.topLeft.y, this.box.bottomRight.x, this.box.bottomRight.y, pos.x, pos.y, this.box.getWidth() * this.scale, this.box.getHeight() * this.scale);
+    };
+    ;
+    return Sprite;
+}());
+exports.Sprite = Sprite;
+function sprite(imgId) {
+    return new Sprite(Img.store[imgId]);
+}
+exports.sprite = sprite;
 //# sourceMappingURL=Sprites.js.map

@@ -104,3 +104,31 @@ export class SpriteSheet {
 		return new Animation(frames);
 	}
 }
+
+export class Sprite {
+	image: Img;
+	box: bbox;
+	scale: number;
+	constructor(image: Img, box?: bbox, scale = 1) {
+		this.image = image;
+		this.scale = scale;
+		this.box = box;
+		if (box === undefined) {
+			this.box = new bbox(vec(0, 0), vec(image.size.x, image.size.y));
+		}
+	};
+	draw(ctx: CanvasRenderingContext2D, pos: vec2) {
+		ctx.drawImage(
+			this.image.element,
+			this.box.topLeft.x, this.box.topLeft.y,
+			this.box.bottomRight.x, this.box.bottomRight.y,
+			pos.x, pos.y,
+			this.box.getWidth() * this.scale,
+			this.box.getHeight() * this.scale,
+		)
+	};
+}
+
+export function sprite(imgId: string): Sprite {
+	return new Sprite(Img.store[imgId]);
+}
