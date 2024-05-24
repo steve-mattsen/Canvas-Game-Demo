@@ -1,4 +1,19 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 exports.__esModule = true;
 exports.vec = exports.bbox = exports.vec3 = exports.vec2 = void 0;
 var vec2 = (function () {
@@ -31,17 +46,18 @@ var vec2 = (function () {
     return vec2;
 }());
 exports.vec2 = vec2;
-var vec3 = (function () {
+var vec3 = (function (_super) {
+    __extends(vec3, _super);
     function vec3(x, y, z) {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        var _this = _super.call(this, x, y) || this;
+        _this.x = 0;
+        _this.y = 0;
+        _this.z = 0;
+        _this.z = z;
+        return _this;
     }
     return vec3;
-}());
+}(vec2));
 exports.vec3 = vec3;
 var bbox = (function () {
     function bbox(topLeft, bottomRight) {

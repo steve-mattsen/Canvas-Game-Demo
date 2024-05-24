@@ -31,13 +31,12 @@ export class vec2 {
 	}
 }
 
-export class vec3 {
+export class vec3 extends vec2 {
 	x = 0;
 	y = 0;
 	z = 0;
 	constructor(x: number, y: number, z: number) {
-		this.x = x;
-		this.y = y;
+		super(x,y);
 		this.z = z;
 	}
 }
