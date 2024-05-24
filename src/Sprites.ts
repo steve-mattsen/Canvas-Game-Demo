@@ -107,16 +107,70 @@ export class SpriteSheet {
 	}
 }
 
+export enum boxLocation {
+	top_left,
+	top_center,
+	top_right,
+	middle_left,
+	middle_center,
+	middle_right,
+	bottom_left,
+	bottom_center,
+	bottom_right,
+}
+
 export class Sprite {
 	image: Img;
 	box: bbox;
 	scale: number;
-	constructor(image: Img, box?: bbox, scale = 1) {
+	origin: vec2;
+	constructor(image: Img, box?: bbox, origin?: vec2 | boxLocation, scale = 1) {
 		this.image = image;
 		this.scale = scale;
 		this.box = box;
 		if (box === undefined) {
 			this.box = new bbox(vec(0, 0), vec(image.size.x, image.size.y));
+		}
+		if (origin === undefined) {
+			origin = boxLocation.bottom_center;
+		}
+		if (origin instanceof vec2) {
+			this.origin = origin;
+		}
+		let originPoint = vec(0, 0);
+		switch (origin) {
+			case boxLocation.top_left:
+			case boxLocation.top_center:
+			case boxLocation.top_right:
+				originPoint.y = 0;
+				break;
+			case boxLocation.middle_left:
+			case boxLocation.middle_center:
+			case boxLocation.middle_right:
+				originPoint.y = this.box.getHeight() / 2;
+				break;
+			case boxLocation.bottom_left:
+			case boxLocation.bottom_left:
+			case boxLocation.bottom_left:
+				originPoint.y = this.box.getHeight();
+				break;
+		}
+		switch (origin) {
+			case boxLocation.top_left:
+			case boxLocation.middle_left:
+			case boxLocation.bottom_left:
+				originPoint.x = 0;
+				break;
+			case boxLocation.top_center:
+			case boxLocation.middle_center:
+			case boxLocation.bottom_center:
+				originPoint.x = this.box.getWidth() / 2;
+				break;
+			case boxLocation.top_right:
+			case boxLocation.middle_right:
+			case boxLocation.bottom_right:
+				originPoint.x = this.box.getWidth();
+				break;
 		}
 	};
 	draw(ctx: CanvasRenderingContext2D, pos: vec2) {
