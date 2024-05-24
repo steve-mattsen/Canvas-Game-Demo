@@ -71,6 +71,12 @@ window.onkeydown = function (e) {
     else if (Vars_1["default"].inputState.f9 === 1) {
         Vars_1["default"].debugMode = !Vars_1["default"].debugMode;
     }
+    else if (Vars_1["default"].inputState['+'] > 0) {
+        Vars_1["default"].canvasScale += 0.1;
+    }
+    else if (Vars_1["default"].inputState['-'] > 0) {
+        Vars_1["default"].canvasScale -= 0.1;
+    }
 };
 window.onmousedown = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);

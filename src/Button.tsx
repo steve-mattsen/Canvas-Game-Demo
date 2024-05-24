@@ -70,6 +70,10 @@ window.onkeydown = e => {
 		Button.store['F6'].click();
 	} else if (Vars.inputState.f9 === 1) {
 		Vars.debugMode = !Vars.debugMode;
+	} else if (Vars.inputState['+'] > 0) {
+		Vars.canvasScale += 0.1;
+	} else if (Vars.inputState['-'] > 0) {
+		Vars.canvasScale -= 0.1;
 	}
 }
 window.onmousedown = (e) => {
