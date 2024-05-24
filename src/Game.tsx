@@ -92,10 +92,17 @@ function tick() {
 	plyr.tickAnimFrame();
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
-	plyr.pos = vec(
-		Math.max(0, Math.min(plyr.pos.x, Vars.canvasWidth - plyr.hitBox.bottomRight.x)),
-		Math.max(0, Math.min(plyr.pos.y, Vars.canvasHeight - plyr.hitBox.bottomRight.y))
-	)
+	let hb = plyr.getAbsoluteHitbox();
+	if (hb.getX() < 0) {
+		plyr.pos.x = hb.origin.x;
+	} else if (hb.bottomRight.x > Vars.canvasWidth) {
+		plyr.pos.x = Vars.canvasWidth - hb.getWidth() + hb.origin.x;
+	}
+	if (hb.getY() < 0) {
+		plyr.pos.y = hb.origin.y;
+	} else if (hb.bottomRight.y > Vars.canvasHeight) {
+		plyr.pos.y = Vars.canvasHeight - hb.getHeight() + hb.origin.y;
+	}
 }
 
 let refresh = Vars.slowMode ? 15 : 59.67;

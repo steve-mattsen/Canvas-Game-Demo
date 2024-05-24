@@ -36,30 +36,31 @@ exports["default"] = draw;
 function drawObjects(ctx) {
     Object.keys(Obj_1.Obj.store).forEach(function (v) {
         var obj = Obj_1.Obj.store[v];
+        var hb = obj.getAbsoluteHitbox();
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
             var pointSize = 8;
             var topLeft = new Path2D();
-            var x = Math.floor(obj.pos.x);
-            var y = Math.floor(obj.pos.y);
-            topLeft.moveTo(x, y);
-            topLeft.lineTo(x + pointSize, y);
-            topLeft.lineTo(x, y + pointSize);
-            topLeft.lineTo(x, y);
+            var x_1 = Math.floor(hb.topLeft.x);
+            var y_1 = Math.floor(hb.topLeft.y);
+            topLeft.moveTo(x_1, y_1);
+            topLeft.lineTo(x_1 + pointSize, y_1);
+            topLeft.lineTo(x_1, y_1 + pointSize);
+            topLeft.lineTo(x_1, y_1);
             var botRight = new Path2D();
-            x = Math.floor(obj.pos.x + obj.hitBox.bottomRight.x);
-            y = Math.floor(obj.pos.y + obj.hitBox.bottomRight.y);
-            botRight.moveTo(x, y);
-            botRight.lineTo(x - pointSize, y);
-            botRight.lineTo(x, y - pointSize);
-            botRight.lineTo(x, y);
+            x_1 = Math.floor(hb.bottomRight.x);
+            y_1 = Math.floor(hb.bottomRight.y);
+            botRight.moveTo(x_1, y_1);
+            botRight.lineTo(x_1 - pointSize, y_1);
+            botRight.lineTo(x_1, y_1 - pointSize);
+            botRight.lineTo(x_1, y_1);
             ctx.fill(topLeft);
             ctx.fill(botRight);
         }
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
-            var offset = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(obj.pos.x) + offset, Math.floor(obj.pos.y) + offset, obj.hitBox.bottomRight.x - offset * 2, obj.hitBox.bottomRight.y - offset * 2);
+            var offset_1 = ctx.lineWidth * 0.5;
+            ctx.strokeRect(Math.floor(hb.topLeft.x) + offset_1, Math.floor(hb.topLeft.y) + offset_1, hb.getWidth() - offset_1 * 2, hb.getHeight() - offset_1 * 2);
         }
         if (Vars_1["default"].displayMode > 1) {
             var shadow = (0, Sprites_1.sprt)('shadow');
@@ -76,6 +77,16 @@ function drawObjects(ctx) {
         if (!Vars_1["default"].debugMode) {
             return;
         }
+        var path = new Path2D();
+        var crosshairSize = 2;
+        var offset = 0;
+        var x = Math.floor(obj.pos.x) + offset;
+        var y = Math.floor(obj.pos.y) + offset;
+        path.moveTo(x - crosshairSize, y);
+        path.lineTo(x + crosshairSize, y);
+        path.moveTo(x, y - crosshairSize);
+        path.lineTo(x, y + crosshairSize);
+        ctx.stroke(path);
         ctx.save();
         ctx.font = "bold 7px Courier";
         ctx.fillStyle = "black";

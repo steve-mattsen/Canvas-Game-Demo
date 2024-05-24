@@ -34,6 +34,14 @@ export class Obj {
 	tickAnimFrame() {
 		this.animations[this.animState].tickSprite();
 	}
+	getAbsoluteHitbox() {
+		return new Box(
+			this.pos.x - this.hitBox.origin.x,
+			this.pos.y - this.hitBox.origin.y,
+			this.hitBox.getWidth(),
+			this.hitBox.getHeight(),
+		);
+	}
 	static store: { [id: string]: Obj } = {};
 	static addObj(obj: Obj) {
 		Obj.store[obj.id] = obj;

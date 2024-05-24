@@ -81,8 +81,8 @@ export class Box {
 				originPoint.y = this.getHeight() / 2;
 				break;
 			case boxLocation.bottom_left:
-			case boxLocation.bottom_left:
-			case boxLocation.bottom_left:
+			case boxLocation.bottom_center:
+			case boxLocation.bottom_right:
 				originPoint.y = this.getHeight();
 				break;
 		}
@@ -103,12 +103,19 @@ export class Box {
 				originPoint.x = this.getWidth();
 				break;
 		}
+		this.origin = originPoint;
 	}
 	getCenter() {
 		return new Vec2(
 			(this.topLeft.x + this.bottomRight.x) / 2,
 			(this.topLeft.y + this.bottomRight.y) / 2,
 		)
+	}
+	getX() {
+		return this.topLeft.x;
+	}
+	getY() {
+		return this.topLeft.y;
 	}
 	getWidth() {
 		return this.bottomRight.x - this.topLeft.x;

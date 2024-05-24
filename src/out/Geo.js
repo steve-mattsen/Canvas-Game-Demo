@@ -96,8 +96,8 @@ var Box = (function () {
                 originPoint.y = this.getHeight() / 2;
                 break;
             case boxLocation.bottom_left:
-            case boxLocation.bottom_left:
-            case boxLocation.bottom_left:
+            case boxLocation.bottom_center:
+            case boxLocation.bottom_right:
                 originPoint.y = this.getHeight();
                 break;
         }
@@ -118,9 +118,16 @@ var Box = (function () {
                 originPoint.x = this.getWidth();
                 break;
         }
+        this.origin = originPoint;
     }
     Box.prototype.getCenter = function () {
         return new Vec2((this.topLeft.x + this.bottomRight.x) / 2, (this.topLeft.y + this.bottomRight.y) / 2);
+    };
+    Box.prototype.getX = function () {
+        return this.topLeft.x;
+    };
+    Box.prototype.getY = function () {
+        return this.topLeft.y;
     };
     Box.prototype.getWidth = function () {
         return this.bottomRight.x - this.topLeft.x;

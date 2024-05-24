@@ -46,6 +46,7 @@ export default function draw() {
 function drawObjects(ctx: CanvasRenderingContext2D) {
 	Object.keys(Obj.store).forEach(v => {
 		let obj = Obj.store[v];
+		let hb = obj.getAbsoluteHitbox();
 
 		if (Vars.displayMode < 4) {
 			// Draw points
@@ -54,8 +55,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let topLeft = new Path2D();
 
-			let x = Math.floor(obj.pos.x)
-			let y = Math.floor(obj.pos.y)
+			let x = Math.floor(hb.topLeft.x);
+			let y = Math.floor(hb.topLeft.y);
 			topLeft.moveTo(x, y);
 			topLeft.lineTo(x + pointSize, y);
 			topLeft.lineTo(x, y + pointSize);
@@ -63,8 +64,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let botRight = new Path2D();
 
-			x = Math.floor(obj.pos.x + obj.hitBox.bottomRight.x);
-			y = Math.floor(obj.pos.y + obj.hitBox.bottomRight.y);
+			x = Math.floor(hb.bottomRight.x);
+			y = Math.floor(hb.bottomRight.y);
 			botRight.moveTo(x, y);
 			botRight.lineTo(x - pointSize, y);
 			botRight.lineTo(x, y - pointSize);
@@ -79,10 +80,10 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.strokeStyle = "black";
 			let offset = ctx.lineWidth * 0.5;
 			ctx.strokeRect(
-				Math.floor(obj.pos.x) + offset,
-				Math.floor(obj.pos.y) + offset,
-				obj.hitBox.bottomRight.x - offset * 2,
-				obj.hitBox.bottomRight.y - offset * 2,
+				Math.floor(hb.topLeft.x) + offset,
+				Math.floor(hb.topLeft.y) + offset,
+				hb.getWidth() - offset * 2,
+				hb.getHeight() - offset * 2,
 			);
 		}
 
@@ -115,6 +116,17 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (!Vars.debugMode) {
 			return;
 		}
+		let path = new Path2D();
+		let crosshairSize = 2;
+		let offset = 0;
+		let x = Math.floor(obj.pos.x) + offset;
+		let y = Math.floor(obj.pos.y) + offset;
+		path.moveTo(x - crosshairSize, y);
+		path.lineTo(x + crosshairSize, y);
+		path.moveTo(x, y - crosshairSize);
+		path.lineTo(x, y + crosshairSize);
+		ctx.stroke(path);
+
 		ctx.save();
 		ctx.font = "bold 7px Courier";
 		ctx.fillStyle = "black";
