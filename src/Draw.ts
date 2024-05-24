@@ -94,7 +94,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				obj.pos.y + (obj.size.y * 0.7)
 			));
 
-			if (Vars.displayMode < 3 || Object.keys(obj.animations).length == 0) {
+			if (Vars.displayMode < 3 || obj.animations == null) {
 				// Just draw the sprite.
 				obj.sprite.draw(ctx, obj.pos);
 			} else {
@@ -123,11 +123,13 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			obj.pos.x,
 			obj.pos.y - 2,
 		);
-		ctx.fillText(
-			obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
-			obj.pos.x,
-			obj.pos.y + obj.size.y + 18,
-		)
+		if (obj.animations !== null) {
+			ctx.fillText(
+				obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(),
+				obj.pos.x,
+				obj.pos.y + obj.size.y + 18,
+			)
+		}
 		ctx.fillText(`window ${Vars.canvasHeight}x${Vars.canvasWidth}`,
 			0, 18
 		);

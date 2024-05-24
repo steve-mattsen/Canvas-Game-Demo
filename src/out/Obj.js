@@ -9,7 +9,6 @@ var Obj = (function () {
         this.size = (0, Geo_1.vec)(128, 50);
         this.pos = (0, Geo_1.vec)(10, 10);
         this.velocity = (0, Geo_1.vec)(0, 0);
-        this.animations = {};
         this.animState = 'idle_down';
         this.z = 0;
         this.zVelocity = 0;
@@ -26,7 +25,10 @@ var Obj = (function () {
             this.size = this.sprite.box.bottomRight;
         }
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
-        this.animations = animations !== null && animations !== void 0 ? animations : this.animations;
+        this.animations = animations;
+        if (animations === undefined) {
+            this.animations = null;
+        }
     }
     Obj.prototype.getAnimFrame = function () {
         return this.animations[this.animState].getCurrentFrame();

@@ -7,6 +7,8 @@ var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 function draw() {
     var canvas = document.getElementById("game_window");
+    Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
+    Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
     if (canvas.getContext === undefined) {
@@ -63,7 +65,7 @@ function drawObjects(ctx) {
             var shadow = (0, Sprites_1.sprite)('shadow');
             shadow.scale = obj.sprite.box.getWidth() / shadow.box.getWidth();
             shadow.draw(ctx, (0, Geo_1.vec)(obj.pos.x - obj.size.x * .025, obj.pos.y + (obj.size.y * 0.7)));
-            if (Vars_1["default"].displayMode < 3 || Object.keys(obj.animations).length == 0) {
+            if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 obj.sprite.draw(ctx, obj.pos);
             }
             else {
@@ -78,7 +80,9 @@ function drawObjects(ctx) {
         ctx.font = "18px Courier";
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
-        ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
+        if (obj.animations !== null) {
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentFrame.toString(), obj.pos.x, obj.pos.y + obj.size.y + 18);
+        }
         ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
         var count = 0;
         ctx.textAlign = "right";

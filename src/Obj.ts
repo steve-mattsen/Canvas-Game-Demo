@@ -6,7 +6,7 @@ export class Obj {
 	size = vec(128, 50);
 	pos = vec(10, 10);
 	velocity = vec(0, 0);
-	animations: { [id: string]: Animation } = {};
+	animations: { [id: string]: Animation } | null;
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
@@ -23,7 +23,10 @@ export class Obj {
 			this.size = this.sprite.box.bottomRight;
 		}
 		this.pos = pos ?? this.pos;
-		this.animations = animations ?? this.animations;
+		this.animations = animations;
+		if (animations === undefined) {
+			this.animations = null;
+		}
 	}
 	getAnimFrame() {
 		return this.animations[this.animState].getCurrentFrame();
