@@ -101,18 +101,6 @@ export class SpriteSheet {
 					this.rowSize,
 					duration,
 				))
-				// let thisRowDim = this.rowDims[r];
-				// let thisColDim = this.colDims[c];
-				// let nextRowDim = this.rowDims[r + 1] ?? this.image.size.y;
-				// let nextColumnDim = this.colDims[c + 1] ?? this.image.size.x;
-				// frames.push(new Frame(
-				// 	this.image,
-				// 	thisColDim,
-				// 	Math.round(thisRowDim),
-				// 	nextColumnDim - thisColDim,
-				// 	Math.round(nextRowDim - thisRowDim),
-				// 	duration ?? 4)
-				// );
 			})
 		})
 		return new Animation(frames);
