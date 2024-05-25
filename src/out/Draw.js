@@ -34,8 +34,9 @@ function draw() {
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
-    Object.keys(Obj_1.Obj.store).forEach(function (v) {
-        var obj = Obj_1.Obj.store[v];
+    var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
+    var _loop_1 = function (v) {
+        var obj = v;
         var hb = obj.getAbsoluteHitbox();
         if (Vars_1["default"].displayMode > 1) {
             var sprite = void 0;
@@ -76,7 +77,7 @@ function drawObjects(ctx) {
             ctx.strokeRect(Math.floor(hb.topLeft.x) + offset_1, Math.floor(hb.topLeft.y) + offset_1, hb.getWidth() - offset_1 * 2, hb.getHeight() - offset_1 * 2);
         }
         if (!Vars_1["default"].debugMode) {
-            return;
+            return "continue";
         }
         var path = new Path2D();
         var crosshairSize = 2;
@@ -106,7 +107,12 @@ function drawObjects(ctx) {
             ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), Vars_1["default"].canvasWidth, count++ * 18);
         });
         ctx.restore();
-    });
+    };
+    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+        var v = entries_1[_i];
+        _loop_1(v);
+    }
+    ;
 }
 function drawButtons(ctx) {
     ctx.save();

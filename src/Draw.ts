@@ -44,8 +44,10 @@ export default function draw() {
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {
-	Object.keys(Obj.store).forEach(v => {
-		let obj = Obj.store[v];
+	// Order draws by closeness to camera.
+	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
+	for (const v of entries) {
+		let obj = v;
 		let hb = obj.getAbsoluteHitbox();
 
 		if (Vars.displayMode > 1) {
@@ -120,7 +122,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		}
 
 		if (!Vars.debugMode) {
-			return;
+			continue;
 		}
 		let path = new Path2D();
 		let crosshairSize = 2;
@@ -165,7 +167,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			)
 		});
 		ctx.restore();
-	});
+	};
 }
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
