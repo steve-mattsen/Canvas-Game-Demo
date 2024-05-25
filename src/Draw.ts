@@ -48,6 +48,38 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		let obj = Obj.store[v];
 		let hb = obj.getAbsoluteHitbox();
 
+		if (Vars.displayMode > 1) {
+
+			let sprite;
+			if (Vars.displayMode < 3 || obj.animations == null) {
+				// Just draw the sprite.
+				sprite = obj.sprite;
+			} else {
+				sprite = obj.getAnimFrame();
+			}
+
+			let shadow = sprt('shadow');
+			shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
+			ctx.drawImage(shadow.image.element,
+				Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1),
+				Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1),
+				sprite.drawBox.getWidth(),
+				sprite.drawBox.getHeight() * 0.5,
+			);
+
+			ctx.drawImage(
+				sprite.image.element, //image
+				sprite.drawBox.topLeft.x, //subx
+				sprite.drawBox.topLeft.y, //suby
+				sprite.drawBox.getWidth(), //subw
+				sprite.drawBox.getHeight(), //subh
+				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
+				Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
+				sprite.drawBox.getWidth(), //width
+				sprite.drawBox.getHeight(), //height
+			);
+		}
+
 		if (Vars.displayMode < 4) {
 			// Draw points
 			ctx.fillStyle = 'black';
@@ -87,37 +119,6 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		if (Vars.displayMode > 1) {
-
-			let sprite;
-			if (Vars.displayMode < 3 || obj.animations == null) {
-				// Just draw the sprite.
-				sprite = obj.sprite;
-			} else {
-				sprite = obj.getAnimFrame();
-			}
-
-			let shadow = sprt('shadow');
-			shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
-			ctx.drawImage(shadow.image.element,
-				Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1),
-				Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1),
-				sprite.drawBox.getWidth(),
-				sprite.drawBox.getHeight() * 0.5,
-			);
-
-			ctx.drawImage(
-				sprite.image.element, //image
-				sprite.drawBox.topLeft.x, //subx
-				sprite.drawBox.topLeft.y, //suby
-				sprite.drawBox.getWidth(), //subw
-				sprite.drawBox.getHeight(), //subh
-				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
-				Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
-				sprite.drawBox.getWidth(), //width
-				sprite.drawBox.getHeight(), //height
-			);
-		}
 		if (!Vars.debugMode) {
 			return;
 		}
