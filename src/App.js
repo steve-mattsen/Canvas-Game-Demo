@@ -37,8 +37,8 @@ function App() {
   return (
     <div>
       <canvas id="game_window">da game</canvas>
-      <button id="button_fullscreen"></button>
       <button id="button_settings">⚙</button>
+      <button id="button_fullscreen">⤡</button>
     </div>
   );
 }

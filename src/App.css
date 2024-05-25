@@ -26,8 +26,14 @@ canvas {
   height: 7vw;
   font-size: 5vw;
   line-height: 0vw;
-  padding-bottom: 1vw;
+  padding-bottom: 0.5vw;
   z-index: 10;
+  font-family: "Courier";
+  font-weight: bold;
+}
+
+#button_settings {
+  right: 9vw;
 }
 
 #game_buttons {
