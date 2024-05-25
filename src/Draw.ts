@@ -51,7 +51,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (Vars.displayMode < 4) {
 			// Draw points
 			ctx.fillStyle = 'black';
-			let pointSize = 8;
+			let pointSize = 4;
 
 			let topLeft = new Path2D();
 
@@ -101,7 +101,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
 			ctx.drawImage(shadow.image.element,
 				Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1),
-				Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5)),
+				Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1),
 				sprite.drawBox.getWidth(),
 				sprite.drawBox.getHeight() * 0.5,
 			);

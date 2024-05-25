@@ -93,7 +93,7 @@ var Box = (function () {
             case boxLocation.middle_left:
             case boxLocation.middle_center:
             case boxLocation.middle_right:
-                originPoint.y = this.getHeight() / 2;
+                originPoint.y = Math.floor(this.getHeight() / 2);
                 break;
             case boxLocation.bottom_left:
             case boxLocation.bottom_center:
@@ -110,7 +110,7 @@ var Box = (function () {
             case boxLocation.top_center:
             case boxLocation.middle_center:
             case boxLocation.bottom_center:
-                originPoint.x = this.getWidth() / 2;
+                originPoint.x = Math.floor(this.getWidth() / 2);
                 break;
             case boxLocation.top_right:
             case boxLocation.middle_right:

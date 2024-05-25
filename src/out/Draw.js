@@ -39,7 +39,7 @@ function drawObjects(ctx) {
         var hb = obj.getAbsoluteHitbox();
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
-            var pointSize = 8;
+            var pointSize = 4;
             var topLeft = new Path2D();
             var x_1 = Math.floor(hb.topLeft.x);
             var y_1 = Math.floor(hb.topLeft.y);
@@ -72,7 +72,7 @@ function drawObjects(ctx) {
             }
             var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
-            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5)), sprite.drawBox.getWidth(), sprite.drawBox.getHeight() * 0.5);
+            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1), sprite.drawBox.getWidth(), sprite.drawBox.getHeight() * 0.5);
             ctx.drawImage(sprite.image.element, sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
         }
         if (!Vars_1["default"].debugMode) {

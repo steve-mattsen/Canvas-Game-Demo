@@ -42,7 +42,7 @@ const player = new Obj(
 		(Vars.canvasHeight - ss.colSize) / 2
 	),
 	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize)),
-	new Box(0, 0, 15, 10),
+	new Box(0, 0, 10, 10),
 	anims
 );
 Obj.addObj(player);
