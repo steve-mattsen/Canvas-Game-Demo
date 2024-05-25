@@ -10,7 +10,13 @@ export class Obj {
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
-	constructor(id: string, pos: Vec2, spr?: Sprite | string, hitBox?: Box | null, animations?: { [id: string]: Animation }) {
+	constructor(
+		id: string,
+		pos: Vec2,
+		spr?: Sprite | string,
+		hitBox?: Box | null,
+		animations?: { [id: string]: Animation }
+	) {
 		this.id = id ?? this.id;
 		if (typeof spr === 'string') {
 			let imgId = spr as string;

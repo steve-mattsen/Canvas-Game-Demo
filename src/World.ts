@@ -1,7 +1,7 @@
 
 import { Img, Animation, SpriteSheet, Sprite, sprt } from "./Sprites"
 import { Obj } from "./Obj"
-import { vec, Vec2, Box } from "./Geo"
+import { vec, Vec2, Box, boxLocation } from "./Geo"
 import Vars from "./Vars";
 
 let ss = new SpriteSheet(Img.store['spritesheet_link'], 8, 10);
@@ -42,7 +42,7 @@ const player = new Obj(
 		(Vars.canvasHeight - ss.colSize) / 2
 	),
 	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize)),
-	ss.drawBox,
+	new Box(0, 0, 15, 10),
 	anims
 );
 Obj.addObj(player);

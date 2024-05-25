@@ -108,16 +108,6 @@ export class Sprite {
 		}
 		this.duration = duration
 	};
-	draw(ctx: CanvasRenderingContext2D, pos: Vec2) {
-		ctx.drawImage(
-			this.image.element,
-			this.drawBox.topLeft.x, this.drawBox.topLeft.y,
-			this.drawBox.bottomRight.x, this.drawBox.bottomRight.y,
-			Math.floor(pos.x), Math.floor(pos.y),
-			Math.floor(this.drawBox.getWidth() * this.scale),
-			Math.floor(this.drawBox.getHeight() * this.scale),
-		)
-	};
 }
 
 export function sprt(imgId: string): Sprite {
