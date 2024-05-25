@@ -34,11 +34,23 @@ function App() {
     },
   ];
 
+  let fullscreen_click = e => {
+    if (document.fullscreenElement === null) {
+      document.documentElement.requestFullscreen();
+    } else {
+      // document.exitFullscreen();
+    }
+    // e.preventDefault();
+    // return false;
+  };
+
   return (
-    <div>
+    <div id="game_container">
       <canvas id="game_window">da game</canvas>
-      <button id="button_settings">⚙</button>
-      <button id="button_fullscreen">⤡</button>
+      <div id="top_buttons">
+        <button id="button_settings">⚙</button>
+        <button id="button_fullscreen" onClick={fullscreen_click} onTouchEnd={fullscreen_click}>⤡</button>
+      </div>
     </div>
   );
 }
