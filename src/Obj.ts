@@ -26,6 +26,8 @@ export class Obj {
 		this.animations = animations;
 		if (animations === undefined) {
 			this.animations = null;
+		} else {
+			this.animState = Object.keys(this.animations)[0];
 		}
 	}
 	getAnimFrame() {

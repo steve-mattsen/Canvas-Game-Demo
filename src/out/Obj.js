@@ -27,6 +27,9 @@ var Obj = (function () {
         if (animations === undefined) {
             this.animations = null;
         }
+        else {
+            this.animState = Object.keys(this.animations)[0];
+        }
     }
     Obj.prototype.getAnimFrame = function () {
         return this.animations[this.animState].getCurrentFrame();

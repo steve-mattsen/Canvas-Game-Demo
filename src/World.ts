@@ -45,7 +45,6 @@ const player = new Obj(
 	ss.drawBox,
 	anims
 );
-player.animState = 'idle_down';
 Obj.addObj(player);
 
 const tree = new Obj(
