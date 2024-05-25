@@ -22,9 +22,24 @@ while (Img.checkImagesArePreloaded() === false) {
 require('./Game');
 
 function App() {
+  let buttons = [
+    {
+      id: 'settings',
+      key: 'f5',
+      title: 'Settings',
+    }, {
+      id: 'fullscreen',
+      key: 'f6',
+      title: 'Fullscreen',
+    },
+  ];
 
   return (
-    <canvas id="game_window">da game</canvas>
+    <div>
+      <canvas id="game_window">da game</canvas>
+      <button id="button_fullscreen"></button>
+      <button id="button_settings">⚙</button>
+    </div>
   );
 }
 

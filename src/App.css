@@ -12,5 +12,31 @@ canvas {
   image-rendering: pixelated;
   width: 100vw;
   height: 100vh;
-  /* background: white; */
+  position: relative;
+  z-index: 5
+    /* background: white; */
+}
+
+#button_fullscreen,
+#button_settings {
+  position: fixed;
+  top: 1vw;
+  right: 1vw;
+  width: 7vw;
+  height: 7vw;
+  font-size: 5vw;
+  line-height: 0vw;
+  padding-bottom: 1vw;
+  z-index: 10;
+}
+
+#game_buttons {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 25vw;
+}
+
+#game_buttons button {
+  width: 100%;
 }
