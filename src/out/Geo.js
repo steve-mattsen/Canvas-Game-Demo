@@ -134,6 +134,9 @@ var Box = (function () {
     Box.prototype.p2 = function () {
         return this.getPoint(boxLocation.bottom_right);
     };
+    Box.prototype.fromOrigin = function () {
+        return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, vec(0, 0));
+    };
     Box.prototype.getCenter = function () {
         return new Vec2((this.x + this.width) / 2, (this.y + this.height) / 2);
     };

@@ -126,7 +126,7 @@ export class Box {
 		}
 		return vec(x, y);
 	}
-	getPoint(point: Vec2 | boxLocation) {
+	getPoint(point: TOrigin) {
 		let relative = this.getRelPoint(point);
 		relative.x += this.x - this.origin.x;
 		relative.y -= this.y - this.origin.y;
@@ -137,6 +137,15 @@ export class Box {
 	}
 	p2() {
 		return this.getPoint(boxLocation.bottom_right);
+	}
+	fromOrigin() {
+		return new Box(
+			this.x - this.origin.x,
+			this.y - this.origin.y,
+			this.width,
+			this.height,
+			vec(0, 0),
+		)
 	}
 	getCenter() {
 		return new Vec2(
