@@ -1,4 +1,4 @@
-import { Box, vec, Vec2 } from "./Geo";
+import { Box, boxLocation, vec, Vec2 } from "./Geo";
 import { expect, jest, test, it } from '@jest/globals';
 
 let vec2DataSet = [
@@ -44,13 +44,33 @@ test.each(vec2DataSet)('Vec2.normalize() will have correct length: (%p, %p)', (x
 	}
 });
 
-let boxDataSet = [
-	[0, 0, 1, 1, 0, 0],
+let boxOriginDataSet = [
+	[0, 0, 1, 1, 0, 0, 0, 0],
+	[0, 0, 2, 2, 1, 1, 1, 1],
+	// [0, 0, 2, 2, boxLocation.middle_center, 0, 1, 1],
 ]
-test.each(boxDataSet)('boxes will have correct dimensions: (%p, %p, %p, %p', (x, y, width, height, ox, oy) => {
-	let b = new Box(x, y, width, height, vec(ox, oy));
-	expect(b.x).toBe(x);
-	expect(b.y).toBe(y);
-	expect(b.width).toBe(width);
-	expect(b.height).toBe(height);
-})
+test.each(boxOriginDataSet)(
+	'boxes will have correct dimensions: (%p, %p, %p, %p',
+	(x, y, width, height) => {
+		let b = new Box(x, y, width, height);
+		expect(b.x).toBe(x);
+		expect(b.y).toBe(y);
+		expect(b.width).toBe(width);
+		expect(b.height).toBe(height);
+	});
+test.each(boxOriginDataSet)(
+	'origins will be set correctly: (%p, %p, %p, %p, %p, %p)',
+	(x, y, width, height, ox, oy, ex, ey) => {
+		let b = new Box(x, y, width, height, vec(ox, oy));
+		expect(b.origin.x).toBe(ox);
+		expect(b.origin.y).toBe(oy);
+	});
+// test.each(boxOriginDataSet)(
+// 	'boxes translate origins correctly: (%p, %p, %p, %p, %p, %p)',
+// 	(x, y, width, height, ox, oy, ex, ey) => {
+// 		let b = new Box(x, y, width, height, vec(ox, oy));
+// 		let p1 = b.p1();
+// 		let p2 = b.p2();
+// 		expect(p1.x).toBe(ex);
+// 		expect(p1.y).toBe(ey);
+// 	});
