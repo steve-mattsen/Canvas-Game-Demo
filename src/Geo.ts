@@ -5,8 +5,8 @@ export class Vec2 {
 		this.x = x;
 		this.y = y;
 	}
-	add(vec: Vec2) {
-		return new Vec2(this.x + vec.x, this.y + vec.y);
+	add(v: Vec2) {
+		return new Vec2(this.x + v.x, this.y + v.y);
 	}
 	length() {
 		let sumProduct = this.x * this.x + this.y * this.y;
@@ -76,12 +76,12 @@ export class Box {
 		if (origin instanceof Vec2) {
 			this.origin = origin;
 		} else if (origin === undefined || origin === null) {
-			this.origin = this.getRelPoint('left', 'top');
+			this.origin = this.getPoint('left', 'top');
 		} else {
-			this.origin = this.getRelPoint(origin[0], origin[1]);
+			this.origin = this.getPoint(origin[0], origin[1]);
 		}
 	}
-	getRelPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
+	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
 		let x, y;
 		if (typeof horiz == 'number') {
 			x = horiz;
@@ -113,19 +113,25 @@ export class Box {
 					break;
 			}
 		}
-		return vec(x, y);
-	}
-	getAbsPoint(x: number | horizontalLocation, y: number | verticalLocation) {
-		let relative = this.getRelPoint(x, y);
-		relative.x += this.x - this.origin.x;
-		relative.y += this.y - this.origin.y;
-		return relative;
+		return new Vec2(x, y);
 	}
 	p1() {
-		return this.getAbsPoint('left', 'top');
+		return this.getPoint('left', 'top');
 	}
 	p2() {
-		return this.getAbsPoint('right', 'bottom');
+		return this.getPoint('right', 'bottom');
+	}
+	getCenterMiddle() {
+		return this.getPoint('center', 'middle');
+	}
+	fromPoint(point: Vec2) {
+		return new Box(
+			this.x,
+			this.y,
+			this.width,
+			this.height,
+			this.origin,
+		);
 	}
 	fromOrigin() {
 		return new Box(
@@ -133,11 +139,8 @@ export class Box {
 			this.y - this.origin.y,
 			this.width,
 			this.height,
-			vec(0, 0),
+			new Vec2(0, 0),
 		)
-	}
-	getAbsCenter() {
-		return this.getAbsPoint('center', 'middle');
 	}
 	contains(point: Vec2) {
 		if (point.x < this.x

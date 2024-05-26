@@ -23,8 +23,8 @@ var Vec2 = (function () {
         this.x = x;
         this.y = y;
     }
-    Vec2.prototype.add = function (vec) {
-        return new Vec2(this.x + vec.x, this.y + vec.y);
+    Vec2.prototype.add = function (v) {
+        return new Vec2(this.x + v.x, this.y + v.y);
     };
     Vec2.prototype.length = function () {
         var sumProduct = this.x * this.x + this.y * this.y;
@@ -69,13 +69,13 @@ var Box = (function () {
             this.origin = origin;
         }
         else if (origin === undefined || origin === null) {
-            this.origin = this.getRelPoint('left', 'top');
+            this.origin = this.getPoint('left', 'top');
         }
         else {
-            this.origin = this.getRelPoint(origin[0], origin[1]);
+            this.origin = this.getPoint(origin[0], origin[1]);
         }
     }
-    Box.prototype.getRelPoint = function (horiz, vert) {
+    Box.prototype.getPoint = function (horiz, vert) {
         var x, y;
         if (typeof horiz == 'number') {
             x = horiz;
@@ -109,25 +109,22 @@ var Box = (function () {
                     break;
             }
         }
-        return vec(x, y);
-    };
-    Box.prototype.getAbsPoint = function (x, y) {
-        var relative = this.getRelPoint(x, y);
-        relative.x += this.x - this.origin.x;
-        relative.y += this.y - this.origin.y;
-        return relative;
+        return new Vec2(x, y);
     };
     Box.prototype.p1 = function () {
-        return this.getAbsPoint('left', 'top');
+        return this.getPoint('left', 'top');
     };
     Box.prototype.p2 = function () {
-        return this.getAbsPoint('right', 'bottom');
+        return this.getPoint('right', 'bottom');
+    };
+    Box.prototype.getCenterMiddle = function () {
+        return this.getPoint('center', 'middle');
+    };
+    Box.prototype.fromPoint = function (point) {
+        return new Box(this.x, this.y, this.width, this.height, this.origin);
     };
     Box.prototype.fromOrigin = function () {
-        return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, vec(0, 0));
-    };
-    Box.prototype.getAbsCenter = function () {
-        return this.getAbsPoint('center', 'middle');
+        return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, new Vec2(0, 0));
     };
     Box.prototype.contains = function (point) {
         if (point.x < this.x
