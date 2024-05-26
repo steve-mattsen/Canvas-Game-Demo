@@ -49,7 +49,7 @@ function tick() {
         speed = runSpeed;
     }
     move = move.normalize();
-    if (Vars_1["default"].inputState[" "] == 2 && plyr.z == 0) {
+    if (Vars_1["default"].inputState[" "] === 2 && plyr.z === 0) {
         plyr.zVelocity = 3.5;
     }
     plyr.z += plyr.zVelocity;

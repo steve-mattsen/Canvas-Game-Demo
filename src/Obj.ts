@@ -1,5 +1,5 @@
 import { vec, Vec2, Box } from "./Geo";
-import { Img, Sprite, Animation, sprt } from "./Sprites";
+import { Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
 	id = "blah";
 	sprite: Sprite;
@@ -25,7 +25,7 @@ export class Obj {
 			this.sprite = spr;
 		}
 		this.hitBox = hitBox;
-		if (hitBox === null || hitBox == undefined) {
+		if (hitBox === null || hitBox === undefined) {
 			this.hitBox = this.sprite.drawBox;
 		}
 		this.pos = pos ?? this.pos;

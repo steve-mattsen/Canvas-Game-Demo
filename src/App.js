@@ -22,7 +22,7 @@ class App extends React.Component {
       await new Promise(r => setTimeout(r, 100));
     }
 
-    let game = require('./Game');
+    require('./Game');
   }
 
   render() {

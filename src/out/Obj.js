@@ -19,7 +19,7 @@ var Obj = (function () {
             this.sprite = spr;
         }
         this.hitBox = hitBox;
-        if (hitBox === null || hitBox == undefined) {
+        if (hitBox === null || hitBox === undefined) {
             this.hitBox = this.sprite.drawBox;
         }
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
