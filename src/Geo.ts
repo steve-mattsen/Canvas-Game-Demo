@@ -139,24 +139,6 @@ export class Box {
 	getAbsCenter() {
 		return this.getAbsPoint('center', 'middle');
 	}
-	normalize(): Vec2 {
-		let length = this.length();
-		if (length === 0) {
-			return new Vec2(0, 0);
-		}
-		return new Vec2(
-			(this.width - this.x) / length,
-			(this.height - this.y) / length
-		);
-	}
-	length() {
-		let sumProduct = ((this.width - this.x) ** 2)
-			+ ((this.height - this.y) ** 2);
-		if (sumProduct === 0) {
-			return 0;
-		}
-		return Math.sqrt(sumProduct);
-	}
 	contains(point: Vec2) {
 		if (point.x < this.x
 			|| point.x > this.width

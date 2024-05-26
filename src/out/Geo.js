@@ -129,21 +129,6 @@ var Box = (function () {
     Box.prototype.getAbsCenter = function () {
         return this.getAbsPoint('center', 'middle');
     };
-    Box.prototype.normalize = function () {
-        var length = this.length();
-        if (length === 0) {
-            return new Vec2(0, 0);
-        }
-        return new Vec2((this.width - this.x) / length, (this.height - this.y) / length);
-    };
-    Box.prototype.length = function () {
-        var sumProduct = (Math.pow((this.width - this.x), 2))
-            + (Math.pow((this.height - this.y), 2));
-        if (sumProduct === 0) {
-            return 0;
-        }
-        return Math.sqrt(sumProduct);
-    };
     Box.prototype.contains = function (point) {
         if (point.x < this.x
             || point.x > this.width
