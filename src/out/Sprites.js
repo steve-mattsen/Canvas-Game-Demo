@@ -11,7 +11,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 exports.__esModule = true;
 exports.sprt = exports.Sprite = exports.SpriteSheet = exports.Animation = exports.Img = void 0;
 var Geo_1 = require("./Geo");
-var Vars_1 = require("./Vars");
 var Img = (function () {
     function Img(id, uri) {
         if (id === void 0) { id = ''; }
@@ -103,7 +102,7 @@ var Sprite = (function () {
         if (scale === void 0) { scale = 1; }
         if (duration === void 0) { duration = 4; }
         this.image = image;
-        this.scale = scale * Vars_1["default"].baseScale;
+        this.scale = scale;
         this.drawBox = drawBox;
         if (drawBox === undefined) {
             this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y);

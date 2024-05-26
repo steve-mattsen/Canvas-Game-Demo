@@ -20,6 +20,9 @@ export default function draw() {
 
 	ctx.lineWidth = 1;
 
+	ctx.imageSmoothingEnabled = false;
+	ctx.scale(Vars.cameraScale, Vars.cameraScale)
+
 	if (Vars.showBackground) {
 		drawBackground(ctx);
 	}
@@ -39,6 +42,9 @@ export default function draw() {
 	}
 
 	drawObjects(ctx);
+
+	ctx.scale(1 / Vars.cameraScale, 1 / Vars.cameraScale);
+	ctx.imageSmoothingEnabled = true;
 
 	drawButtons(ctx);
 }

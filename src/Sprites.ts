@@ -106,7 +106,7 @@ export class Sprite {
 	duration: number;
 	constructor(image: Img, drawBox?: Box, scale = 1, duration = 4) {
 		this.image = image;
-		this.scale = scale * Vars.baseScale;
+		this.scale = scale;
 		this.drawBox = drawBox;
 		if (drawBox === undefined) {
 			this.drawBox = new Box(0, 0, image.size.x, image.size.y);

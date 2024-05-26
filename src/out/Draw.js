@@ -19,6 +19,8 @@ function draw() {
         return;
     }
     ctx.lineWidth = 1;
+    ctx.imageSmoothingEnabled = false;
+    ctx.scale(Vars_1["default"].cameraScale, Vars_1["default"].cameraScale);
     if (Vars_1["default"].showBackground) {
         drawBackground(ctx);
     }
@@ -30,6 +32,8 @@ function draw() {
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
+    ctx.scale(1 / Vars_1["default"].cameraScale, 1 / Vars_1["default"].cameraScale);
+    ctx.imageSmoothingEnabled = true;
     drawButtons(ctx);
 }
 exports["default"] = draw;
