@@ -53,6 +53,15 @@ export enum boxLocation {
 	bottom_right,
 }
 
+
+export interface BoxSpec {
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	origin?: Vec2 | boxLocation;
+}
+
 export class Box {
 	x: number;
 	y: number;
