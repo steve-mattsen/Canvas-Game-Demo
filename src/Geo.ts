@@ -53,7 +53,7 @@ export interface BoxSpec {
 	origin?: TOrigin;
 }
 
-export type TOrigin = Vec2 | [verticalLocation, horizontalLocation];
+export type TOrigin = Vec2 | [horizontalLocation, verticalLocation];
 
 export class Box {
 	x: number;
@@ -77,6 +77,8 @@ export class Box {
 			this.origin = origin;
 		} else if (origin === undefined || origin === null) {
 			this.origin = this.getRelPoint('left', 'top');
+		} else {
+			this.origin = this.getRelPoint(origin[0], origin[1]);
 		}
 	}
 	getRelPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
@@ -164,6 +166,45 @@ export class Box {
 			return false;
 		}
 		return true;
+	}
+}
+
+export class Line {
+	x1: number;
+	y1: number;
+	x2: number;
+	y2: number;
+	constructor(x1: number, y1: number, x2: number, y2: number) {
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;
+	}
+	length() {
+		let sumProduct = ((this.x2 - this.x1) ** 2)
+			+ ((this.y2 - this.y1) ** 2);
+		if (sumProduct === 0) {
+			return 0;
+		}
+		return Math.sqrt(sumProduct);
+	}
+	normal() {
+		let length = this.length();
+		if (length === 0) {
+			return new Line(this.x1, this.y1, this.x2, this.y2);
+		}
+		return new Line(
+			0,
+			0,
+			(this.x2 / length) - this.x1,
+			(this.y2 / length) - this.y1,
+		);
+	}
+	p1() {
+		return new Vec2(this.x1, this.y1);
+	}
+	p2() {
+		return new Vec2(this.x2, this.y2);
 	}
 }
 

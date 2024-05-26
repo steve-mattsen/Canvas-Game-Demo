@@ -31,14 +31,14 @@ function tick() {
         speed = move.length() * runSpeed;
     }
     else if (Vars_1["default"].mouseMove !== null) {
-        var line = new Geo_1.Box(plyr.pos.x, plyr.pos.y, Vars_1["default"].mouseMove.x - plyr.pos.x, Vars_1["default"].mouseMove.y - plyr.pos.y);
+        var line = new Geo_1.Line(plyr.pos.x, plyr.pos.y, Vars_1["default"].mouseMove.x - plyr.pos.x, Vars_1["default"].mouseMove.y - plyr.pos.y);
         if (line.length() > runSpeed) {
             speed = runSpeed;
         }
         else {
             speed = line.length();
         }
-        move = line.normalize();
+        move = line.normal().p2();
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)

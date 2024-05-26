@@ -1,4 +1,4 @@
-import { Box, vec, Vec2 } from "./Geo";
+import { Box, Line, vec, Vec2 } from "./Geo";
 import { expect, jest, test, it } from '@jest/globals';
 
 let vec2DataSet = [
@@ -59,7 +59,7 @@ test.each(boxOriginDataSet)(
 		expect(b.height).toBe(height);
 	});
 test.each(boxOriginDataSet)(
-	'origins will be set correctly: (%p, %p, %p, %p, %p, %p)',
+	'box origins will be set correctly: (%p, %p, %p, %p, %p, %p)',
 	(x, y, width, height, ox, oy, ex, ey) => {
 		let b = new Box(x, y, width, height, vec(ox, oy));
 		expect(b.origin.x).toBe(ox);
@@ -74,3 +74,32 @@ test.each(boxOriginDataSet)(
 // 		expect(p1.x).toBe(ex);
 // 		expect(p1.y).toBe(ey);
 // 	});
+
+let lineTestData = [
+	[0, 0, 0, 0, 0],
+	[0, 0, 1, 0, 1],
+	[0, 0, 0, 1, 1],
+	[0, 0, 1, 1, 1.4142135623730951],
+	[0, 0, -1, -1, 1.4142135623730951],
+	[1, 1, 0, 0, 1.4142135623730951],
+	[-1, -1, 1, 1, 2.8284271247461903],
+];
+
+test.each(lineTestData)(
+	'line will have correct dimensions (%p, %p) (%p, %p)',
+	(x1, y1, x2, y2) => {
+		let line = new Line(x1, y1, x2, y2);
+		expect(line.x1).toBe(x1);
+		expect(line.y1).toBe(y1);
+		expect(line.x2).toBe(x2);
+		expect(line.y2).toBe(y2);
+	}
+);
+
+test.each(lineTestData)(
+	'line will calculate length correctly (%p, %p) (%p, %p)',
+	(x1, y1, x2, y2, e) => {
+		let line = new Line(x1, y1, x2, y2);
+		expect(line.length()).toBeCloseTo(e);
+	}
+)

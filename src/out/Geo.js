@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.vec = exports.Box = exports.Vec3 = exports.Vec2 = void 0;
+exports.vec = exports.Line = exports.Box = exports.Vec3 = exports.Vec2 = void 0;
 var Vec2 = (function () {
     function Vec2(x, y) {
         this.x = 0;
@@ -70,6 +70,9 @@ var Box = (function () {
         }
         else if (origin === undefined || origin === null) {
             this.origin = this.getRelPoint('left', 'top');
+        }
+        else {
+            this.origin = this.getRelPoint(origin[0], origin[1]);
         }
     }
     Box.prototype.getRelPoint = function (horiz, vert) {
@@ -153,6 +156,37 @@ var Box = (function () {
     return Box;
 }());
 exports.Box = Box;
+var Line = (function () {
+    function Line(x1, y1, x2, y2) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+    Line.prototype.length = function () {
+        var sumProduct = (Math.pow((this.x2 - this.x1), 2))
+            + (Math.pow((this.y2 - this.y1), 2));
+        if (sumProduct === 0) {
+            return 0;
+        }
+        return Math.sqrt(sumProduct);
+    };
+    Line.prototype.normal = function () {
+        var length = this.length();
+        if (length === 0) {
+            return new Line(this.x1, this.y1, this.x2, this.y2);
+        }
+        return new Line(0, 0, (this.x2 / length) - this.x1, (this.y2 / length) - this.y1);
+    };
+    Line.prototype.p1 = function () {
+        return new Vec2(this.x1, this.y1);
+    };
+    Line.prototype.p2 = function () {
+        return new Vec2(this.x2, this.y2);
+    };
+    return Line;
+}());
+exports.Line = Line;
 function vec(x, y, z) {
     if (z === void 0) { z = null; }
     if (z == null) {

@@ -53,9 +53,29 @@ globals_1.test.each(boxOriginDataSet)('boxes will have correct dimensions: (%p, 
     (0, globals_1.expect)(b.width).toBe(width);
     (0, globals_1.expect)(b.height).toBe(height);
 });
-globals_1.test.each(boxOriginDataSet)('origins will be set correctly: (%p, %p, %p, %p, %p, %p)', function (x, y, width, height, ox, oy, ex, ey) {
+globals_1.test.each(boxOriginDataSet)('box origins will be set correctly: (%p, %p, %p, %p, %p, %p)', function (x, y, width, height, ox, oy, ex, ey) {
     var b = new Geo_1.Box(x, y, width, height, (0, Geo_1.vec)(ox, oy));
     (0, globals_1.expect)(b.origin.x).toBe(ox);
     (0, globals_1.expect)(b.origin.y).toBe(oy);
+});
+var lineTestData = [
+    [0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 1],
+    [0, 0, 0, 1, 1],
+    [0, 0, 1, 1, 1.4142135623730951],
+    [0, 0, -1, -1, 1.4142135623730951],
+    [1, 1, 0, 0, 1.4142135623730951],
+    [-1, -1, 1, 1, 2.8284271247461903],
+];
+globals_1.test.each(lineTestData)('line will have correct dimensions (%p, %p) (%p, %p)', function (x1, y1, x2, y2) {
+    var line = new Geo_1.Line(x1, y1, x2, y2);
+    (0, globals_1.expect)(line.x1).toBe(x1);
+    (0, globals_1.expect)(line.y1).toBe(y1);
+    (0, globals_1.expect)(line.x2).toBe(x2);
+    (0, globals_1.expect)(line.y2).toBe(y2);
+});
+globals_1.test.each(lineTestData)('line will calculate length correctly (%p, %p) (%p, %p)', function (x1, y1, x2, y2, e) {
+    var line = new Geo_1.Line(x1, y1, x2, y2);
+    (0, globals_1.expect)(line.length()).toBeCloseTo(e);
 });
 //# sourceMappingURL=Geo.test.js.map
