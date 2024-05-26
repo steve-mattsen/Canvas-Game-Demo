@@ -33,10 +33,10 @@ export default function draw() {
 		let sprite = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
 		ctx.fillRect(
-			sprite.drawBox.topLeft.x,
-			sprite.drawBox.topLeft.y,
-			sprite.drawBox.getWidth(),
-			sprite.drawBox.getHeight(),
+			sprite.drawBox.x,
+			sprite.drawBox.y,
+			sprite.drawBox.width,
+			sprite.drawBox.height,
 		);
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
@@ -77,8 +77,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			ctx.drawImage(
 				sprite.image.element, //image
-				sprite.drawBox.topLeft.x, //subx
-				sprite.drawBox.topLeft.y, //suby
+				sprite.drawBox.x, //subx
+				sprite.drawBox.y, //suby
 				sprite.drawBox.getWidth(), //subw
 				sprite.drawBox.getHeight(), //subh
 				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
@@ -95,8 +95,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let topLeft = new Path2D();
 
-			let x = Math.floor(hb.topLeft.x);
-			let y = Math.floor(hb.topLeft.y);
+			let x = Math.floor(hb.x);
+			let y = Math.floor(hb.y);
 			topLeft.moveTo(x, y);
 			topLeft.lineTo(x + pointSize, y);
 			topLeft.lineTo(x, y + pointSize);
@@ -120,8 +120,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.strokeStyle = "black";
 			let offset = ctx.lineWidth * 0.5;
 			ctx.strokeRect(
-				Math.floor(hb.topLeft.x) + offset,
-				Math.floor(hb.topLeft.y) + offset,
+				Math.floor(hb.x) + offset,
+				Math.floor(hb.y) + offset,
 				hb.getWidth() - offset * 2,
 				hb.getHeight() - offset * 2,
 			);

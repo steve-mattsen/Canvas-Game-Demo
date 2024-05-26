@@ -73,9 +73,11 @@ var boxLocation;
 })(boxLocation = exports.boxLocation || (exports.boxLocation = {}));
 var Box = (function () {
     function Box(x, y, width, height, origin) {
-        this.topLeft = new Vec2(0, 0);
         this.bottomRight = new Vec2(0, 0);
-        this.topLeft = vec(x, y);
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         this.bottomRight = vec(x + width, y + height);
         if (origin === undefined) {
             origin = boxLocation.bottom_center;
@@ -121,39 +123,39 @@ var Box = (function () {
         this.origin = originPoint;
     }
     Box.prototype.getCenter = function () {
-        return new Vec2((this.topLeft.x + this.bottomRight.x) / 2, (this.topLeft.y + this.bottomRight.y) / 2);
+        return new Vec2((this.x + this.width) / 2, (this.y + this.height) / 2);
     };
     Box.prototype.getX = function () {
-        return this.topLeft.x;
+        return this.x;
     };
     Box.prototype.getY = function () {
-        return this.topLeft.y;
+        return this.y;
     };
     Box.prototype.getWidth = function () {
-        return this.bottomRight.x - this.topLeft.x;
+        return this.bottomRight.x - this.x;
     };
     Box.prototype.getHeight = function () {
-        return this.bottomRight.y - this.topLeft.y;
+        return this.bottomRight.y - this.y;
     };
     Box.prototype.normalize = function () {
         var length = this.length();
         if (length === 0) {
             return new Vec2(0, 0);
         }
-        return new Vec2((this.bottomRight.x - this.topLeft.x) / length, (this.bottomRight.y - this.topLeft.y) / length);
+        return new Vec2((this.bottomRight.x - this.x) / length, (this.bottomRight.y - this.y) / length);
     };
     Box.prototype.length = function () {
-        var sumProduct = (Math.pow((this.bottomRight.x - this.topLeft.x), 2))
-            + (Math.pow((this.bottomRight.y - this.topLeft.y), 2));
+        var sumProduct = (Math.pow((this.bottomRight.x - this.x), 2))
+            + (Math.pow((this.bottomRight.y - this.y), 2));
         if (sumProduct === 0) {
             return 0;
         }
         return Math.sqrt(sumProduct);
     };
     Box.prototype.contains = function (point) {
-        if (point.x < this.topLeft.x
+        if (point.x < this.x
             || point.x > this.bottomRight.x
-            || point.y < this.topLeft.y
+            || point.y < this.y
             || point.y > this.bottomRight.y) {
             return false;
         }

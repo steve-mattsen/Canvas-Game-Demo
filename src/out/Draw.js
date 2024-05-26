@@ -28,7 +28,7 @@ function draw() {
     if (Vars_1["default"].spriteSheetMode) {
         var sprite = plyr.getAnimFrame();
         ctx.fillStyle = "red";
-        ctx.fillRect(sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
+        ctx.fillRect(sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height);
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
     drawObjects(ctx);
@@ -53,14 +53,14 @@ function drawObjects(ctx) {
             var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
             ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1), sprite.drawBox.getWidth(), sprite.drawBox.getHeight() * 0.5);
-            ctx.drawImage(sprite.image.element, sprite.drawBox.topLeft.x, sprite.drawBox.topLeft.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
+            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
         }
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
             var pointSize = 4;
             var topLeft = new Path2D();
-            var x_1 = Math.floor(hb.topLeft.x);
-            var y_1 = Math.floor(hb.topLeft.y);
+            var x_1 = Math.floor(hb.x);
+            var y_1 = Math.floor(hb.y);
             topLeft.moveTo(x_1, y_1);
             topLeft.lineTo(x_1 + pointSize, y_1);
             topLeft.lineTo(x_1, y_1 + pointSize);
@@ -78,7 +78,7 @@ function drawObjects(ctx) {
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
             var offset_1 = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(hb.topLeft.x) + offset_1, Math.floor(hb.topLeft.y) + offset_1, hb.getWidth() - offset_1 * 2, hb.getHeight() - offset_1 * 2);
+            ctx.strokeRect(Math.floor(hb.x) + offset_1, Math.floor(hb.y) + offset_1, hb.getWidth() - offset_1 * 2, hb.getHeight() - offset_1 * 2);
         }
         if (!Vars_1["default"].debugMode) {
             return "continue";

@@ -54,11 +54,17 @@ export enum boxLocation {
 }
 
 export class Box {
-	topLeft: Vec2 = new Vec2(0, 0);
+	x: number;
+	y: number;
+	width: number;
+	height: number;
 	bottomRight: Vec2 = new Vec2(0, 0);
 	origin: Vec2;
 	constructor(x: number, y: number, width: number, height: number, origin?: Vec2 | boxLocation) {
-		this.topLeft = vec(x, y);
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 		this.bottomRight = vec(x + width, y + height);
 
 		if (origin === undefined) {
@@ -107,21 +113,21 @@ export class Box {
 	}
 	getCenter() {
 		return new Vec2(
-			(this.topLeft.x + this.bottomRight.x) / 2,
-			(this.topLeft.y + this.bottomRight.y) / 2,
+			(this.x + this.width) / 2,
+			(this.y + this.height) / 2,
 		)
 	}
 	getX() {
-		return this.topLeft.x;
+		return this.x;
 	}
 	getY() {
-		return this.topLeft.y;
+		return this.y;
 	}
 	getWidth() {
-		return this.bottomRight.x - this.topLeft.x;
+		return this.bottomRight.x - this.x;
 	}
 	getHeight() {
-		return this.bottomRight.y - this.topLeft.y;
+		return this.bottomRight.y - this.y;
 	}
 	normalize(): Vec2 {
 		let length = this.length();
@@ -129,22 +135,22 @@ export class Box {
 			return new Vec2(0, 0);
 		}
 		return new Vec2(
-			(this.bottomRight.x - this.topLeft.x) / length,
-			(this.bottomRight.y - this.topLeft.y) / length
+			(this.bottomRight.x - this.x) / length,
+			(this.bottomRight.y - this.y) / length
 		);
 	}
 	length() {
-		let sumProduct = ((this.bottomRight.x - this.topLeft.x) ** 2)
-			+ ((this.bottomRight.y - this.topLeft.y) ** 2);
+		let sumProduct = ((this.bottomRight.x - this.x) ** 2)
+			+ ((this.bottomRight.y - this.y) ** 2);
 		if (sumProduct === 0) {
 			return 0;
 		}
 		return Math.sqrt(sumProduct);
 	}
 	contains(point: Vec2) {
-		if (point.x < this.topLeft.x
+		if (point.x < this.x
 			|| point.x > this.bottomRight.x
-			|| point.y < this.topLeft.y
+			|| point.y < this.y
 			|| point.y > this.bottomRight.y
 		) {
 			return false;
