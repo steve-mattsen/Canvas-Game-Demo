@@ -38,8 +38,8 @@ anims.run_up.sprites[7].duration = lungeDuration;
 const player = new Obj(
 	'player',
 	vec(
-		(Vars.canvasWidth - ss.rowSize - 1) / 2,
-		(Vars.canvasHeight - ss.colSize) / 2
+		(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
+		(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
 	),
 	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize)),
 	new Box(0, 0, 10, 10),
