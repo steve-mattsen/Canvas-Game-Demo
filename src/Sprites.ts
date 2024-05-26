@@ -64,8 +64,12 @@ export class SpriteSheet {
 	colSize: number;
 	drawBox: Box;
 	duration: number
-	constructor(image: Img, rows: number, cols: number, duration = 1) {
-		this.image = image;
+	constructor(image: Img | string, rows: number, cols: number, duration = 1) {
+		if (typeof image === 'string') {
+			this.image = Img.store[image];
+		} else {
+			this.image = image;
+		}
 		this.rows = rows;
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);

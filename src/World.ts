@@ -4,7 +4,7 @@ import { Obj } from "./Obj"
 import { vec, Vec2, Box, boxLocation } from "./Geo"
 import Vars from "./Vars";
 
-let ss = new SpriteSheet(Img.store['spritesheet_link'], 8, 10);
+let ss = new SpriteSheet('spritesheet_link', 8, 10);
 let anims: { [id: string]: Animation } = {};
 
 let idleFrames = [0, 1, 2, 1];

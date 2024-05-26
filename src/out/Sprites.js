@@ -71,7 +71,12 @@ exports.Animation = Animation;
 var SpriteSheet = (function () {
     function SpriteSheet(image, rows, cols, duration) {
         if (duration === void 0) { duration = 1; }
-        this.image = image;
+        if (typeof image === 'string') {
+            this.image = Img.store[image];
+        }
+        else {
+            this.image = image;
+        }
         this.rows = rows;
         this.cols = cols;
         this.colSize = Math.floor(this.image.size.x / cols);
