@@ -2,30 +2,34 @@ import React from "react";
 import "./App.css";
 import { Img } from "./Sprites";
 
-let images = [
-  '/grass.png',
-  '/spritesheet_link.png',
-  '/shadow.png',
-  '/tree.png',
-];
 
-for (const uri of images) {
-  let key = uri.replace(RegExp(/(.*)\/(.*)\.(.*)/gim), "$2");
-  console.log(key);
-  Img.addImg(new Img(key, uri));
-}
+class App extends React.Component {
 
-while (Img.checkImagesArePreloaded() === false) {
-  await new Promise(r => setTimeout(r, 100));
-}
+  async componentDidMount() {
+    let images = [
+      '/grass.png',
+      '/spritesheet_link.png',
+      '/shadow.png',
+      '/tree.png',
+    ];
 
-require('./Game');
+    for (const uri of images) {
+      let key = uri.replace(RegExp(/(.*)\/(.*)\.(.*)/gim), "$2");
+      Img.addImg(await new Img(key, uri));
+    }
 
-function App() {
+    while (Img.checkImagesArePreloaded() === false) {
+      await new Promise(r => setTimeout(r, 100));
+    }
 
-  return (
-    <canvas id="game_window">da game</canvas>
-  );
+    let game = require('./Game');
+  }
+
+  render() {
+    return (
+      <canvas id="game_window">da game</canvas>
+    );
+  }
 }
 
 export default App;
