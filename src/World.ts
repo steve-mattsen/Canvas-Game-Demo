@@ -53,10 +53,10 @@ const tree = new Obj(
 	vec(100, 100),
 	tree_sprite,
 	new Box(
-		tree_sprite.drawBox.getWidth() * .4,
-		tree_sprite.drawBox.getHeight() * .75,
-		tree_sprite.drawBox.getWidth() * .2,
-		tree_sprite.drawBox.getHeight() * .2
+		tree_sprite.drawBox.width * .4,
+		tree_sprite.drawBox.height * .75,
+		tree_sprite.drawBox.width * .2,
+		tree_sprite.drawBox.height * .2
 	),
 );
 Obj.addObj(tree);

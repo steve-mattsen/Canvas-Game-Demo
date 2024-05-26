@@ -66,8 +66,9 @@ function drawObjects(ctx) {
             topLeft.lineTo(x_1, y_1 + pointSize);
             topLeft.lineTo(x_1, y_1);
             var botRight = new Path2D();
-            x_1 = Math.floor(hb.bottomRight.x);
-            y_1 = Math.floor(hb.bottomRight.y);
+            var p2 = hb.p2();
+            x_1 = Math.floor(p2.x);
+            y_1 = Math.floor(p2.y);
             botRight.moveTo(x_1, y_1);
             botRight.lineTo(x_1 - pointSize, y_1);
             botRight.lineTo(x_1, y_1 - pointSize);

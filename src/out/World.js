@@ -41,6 +41,6 @@ anims.run_up.sprites[7].duration = lungeDuration;
 var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), new Sprites_1.Sprite(Sprites_1.Img.store.spritesheet_link, new Geo_1.Box(0, 0, ss.colSize, ss.rowSize)), new Geo_1.Box(0, 0, 10, 10), anims);
 Obj_1.Obj.addObj(player);
 var tree_sprite = (0, Sprites_1.sprt)('tree');
-var tree = new Obj_1.Obj('tree', (0, Geo_1.vec)(100, 100), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.getWidth() * .4, tree_sprite.drawBox.getHeight() * .75, tree_sprite.drawBox.getWidth() * .2, tree_sprite.drawBox.getHeight() * .2));
+var tree = new Obj_1.Obj('tree', (0, Geo_1.vec)(100, 100), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .2));
 Obj_1.Obj.addObj(tree);
 //# sourceMappingURL=World.js.map

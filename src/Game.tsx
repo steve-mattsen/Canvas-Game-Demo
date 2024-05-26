@@ -93,15 +93,15 @@ function tick() {
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
 	let hb = plyr.getAbsoluteHitbox();
-	if (hb.getX() < 0) {
+	if (hb.x < 0) {
 		plyr.pos.x = hb.origin.x;
-	} else if (hb.bottomRight.x > Vars.canvasWidth) {
-		plyr.pos.x = Vars.canvasWidth - hb.getWidth() + hb.origin.x;
+	} else if (hb.p2().x > Vars.canvasWidth) {
+		plyr.pos.x = Vars.canvasWidth - hb.width + hb.origin.x;
 	}
-	if (hb.getY() < 0) {
+	if (hb.y < 0) {
 		plyr.pos.y = hb.origin.y;
-	} else if (hb.bottomRight.y > Vars.canvasHeight) {
-		plyr.pos.y = Vars.canvasHeight - hb.getHeight() + hb.origin.y;
+	} else if (hb.p2().y > Vars.canvasHeight) {
+		plyr.pos.y = Vars.canvasHeight - hb.height + hb.origin.y;
 	}
 }
 

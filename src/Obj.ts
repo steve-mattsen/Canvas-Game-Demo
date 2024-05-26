@@ -46,8 +46,8 @@ export class Obj {
 		return new Box(
 			this.pos.x - this.hitBox.origin.x,
 			this.pos.y - this.hitBox.origin.y,
-			this.hitBox.getWidth(),
-			this.hitBox.getHeight(),
+			this.hitBox.width,
+			this.hitBox.height,
 		);
 	}
 	static store: { [id: string]: Obj } = {};

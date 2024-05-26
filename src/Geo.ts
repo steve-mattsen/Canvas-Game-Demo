@@ -67,58 +67,68 @@ export class Box {
 	y: number;
 	width: number;
 	height: number;
-	bottomRight: Vec2 = new Vec2(0, 0);
 	origin: Vec2;
 	constructor(x: number, y: number, width: number, height: number, origin?: Vec2 | boxLocation) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.bottomRight = vec(x + width, y + height);
 
-		if (origin === undefined) {
-			origin = boxLocation.bottom_center;
-		}
 		if (origin instanceof Vec2) {
 			this.origin = origin;
+		} else {
+			this.origin = this.getRelPoint(origin ?? boxLocation.bottom_center);
 		}
-
-		let originPoint = vec(0, 0);
-		switch (origin) {
+	}
+	getRelPoint(point: Vec2 | boxLocation) {
+		let x, y;
+		switch (point) {
 			case boxLocation.top_left:
 			case boxLocation.top_center:
 			case boxLocation.top_right:
-				originPoint.y = 0;
+				y = 0;
 				break;
 			case boxLocation.middle_left:
 			case boxLocation.middle_center:
 			case boxLocation.middle_right:
-				originPoint.y = Math.floor(this.getHeight() / 2);
+				y = Math.floor(this.height / 2);
 				break;
 			case boxLocation.bottom_left:
 			case boxLocation.bottom_center:
 			case boxLocation.bottom_right:
-				originPoint.y = this.getHeight();
+				y = this.height;
 				break;
 		}
-		switch (origin) {
+		switch (point) {
 			case boxLocation.top_left:
 			case boxLocation.middle_left:
 			case boxLocation.bottom_left:
-				originPoint.x = 0;
+				x = 0;
 				break;
 			case boxLocation.top_center:
 			case boxLocation.middle_center:
 			case boxLocation.bottom_center:
-				originPoint.x = Math.floor(this.getWidth() / 2);
+				x = Math.floor(this.width / 2);
 				break;
 			case boxLocation.top_right:
 			case boxLocation.middle_right:
 			case boxLocation.bottom_right:
-				originPoint.x = this.getWidth();
+				x = this.width;
 				break;
 		}
-		this.origin = originPoint;
+		return vec(x, y);
+	}
+	getPoint(point: Vec2 | boxLocation) {
+		let relative = this.getRelPoint(point);
+		relative.x += this.x - this.origin.x;
+		relative.y -= this.y - this.origin.y;
+		return relative;
+	}
+	p1() {
+		return this.getPoint(boxLocation.top_left);
+	}
+	p2() {
+		return this.getPoint(boxLocation.bottom_right);
 	}
 	getCenter() {
 		return new Vec2(
@@ -126,31 +136,19 @@ export class Box {
 			(this.y + this.height) / 2,
 		)
 	}
-	getX() {
-		return this.x;
-	}
-	getY() {
-		return this.y;
-	}
-	getWidth() {
-		return this.bottomRight.x - this.x;
-	}
-	getHeight() {
-		return this.bottomRight.y - this.y;
-	}
 	normalize(): Vec2 {
 		let length = this.length();
 		if (length === 0) {
 			return new Vec2(0, 0);
 		}
 		return new Vec2(
-			(this.bottomRight.x - this.x) / length,
-			(this.bottomRight.y - this.y) / length
+			(this.width - this.x) / length,
+			(this.height - this.y) / length
 		);
 	}
 	length() {
-		let sumProduct = ((this.bottomRight.x - this.x) ** 2)
-			+ ((this.bottomRight.y - this.y) ** 2);
+		let sumProduct = ((this.width - this.x) ** 2)
+			+ ((this.height - this.y) ** 2);
 		if (sumProduct === 0) {
 			return 0;
 		}
@@ -158,9 +156,9 @@ export class Box {
 	}
 	contains(point: Vec2) {
 		if (point.x < this.x
-			|| point.x > this.bottomRight.x
+			|| point.x > this.width
 			|| point.y < this.y
-			|| point.y > this.bottomRight.y
+			|| point.y > this.height
 		) {
 			return false;
 		}

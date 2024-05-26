@@ -67,24 +67,24 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			}
 
 			let shadow = sprt('shadow');
-			shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
+			shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
 			ctx.drawImage(shadow.image.element,
-				Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1),
-				Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1),
-				sprite.drawBox.getWidth(),
-				sprite.drawBox.getHeight() * 0.5,
+				Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
+				Math.floor(obj.pos.y - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
+				sprite.drawBox.width,
+				sprite.drawBox.height * 0.5,
 			);
 
 			ctx.drawImage(
 				sprite.image.element, //image
 				sprite.drawBox.x, //subx
 				sprite.drawBox.y, //suby
-				sprite.drawBox.getWidth(), //subw
-				sprite.drawBox.getHeight(), //subh
+				sprite.drawBox.width, //subw
+				sprite.drawBox.height, //subh
 				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
 				Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
-				sprite.drawBox.getWidth(), //width
-				sprite.drawBox.getHeight(), //height
+				sprite.drawBox.width, //width
+				sprite.drawBox.height, //height
 			);
 		}
 
@@ -104,8 +104,10 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let botRight = new Path2D();
 
-			x = Math.floor(hb.bottomRight.x);
-			y = Math.floor(hb.bottomRight.y);
+			let p2 = hb.p2();
+
+			x = Math.floor(p2.x);
+			y = Math.floor(p2.y);
 			botRight.moveTo(x, y);
 			botRight.lineTo(x - pointSize, y);
 			botRight.lineTo(x, y - pointSize);
@@ -122,8 +124,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.strokeRect(
 				Math.floor(hb.x) + offset,
 				Math.floor(hb.y) + offset,
-				hb.getWidth() - offset * 2,
-				hb.getHeight() - offset * 2,
+				hb.width - offset * 2,
+				hb.height - offset * 2,
 			);
 		}
 
@@ -153,7 +155,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.fillText(
 				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
 				obj.pos.x,
-				obj.pos.y + obj.hitBox.bottomRight.y + 18,
+				obj.pos.y + obj.hitBox.p2().y + 18,
 			)
 		}
 		ctx.fillText(`window ${Vars.canvasHeight}x${Vars.canvasWidth}`,
