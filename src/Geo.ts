@@ -41,17 +41,8 @@ export class Vec3 extends Vec2 {
 	}
 }
 
-export enum boxLocation {
-	top_left,
-	top_center,
-	top_right,
-	middle_left,
-	middle_center,
-	middle_right,
-	bottom_left,
-	bottom_center,
-	bottom_right,
-}
+type verticalLocation = 'top' | 'middle' | 'bottom';
+type horizontalLocation = 'left' | 'center' | 'right';
 
 
 export interface BoxSpec {
@@ -62,7 +53,7 @@ export interface BoxSpec {
 	origin?: TOrigin;
 }
 
-export type TOrigin = Vec2 | boxLocation;
+export type TOrigin = Vec2 | [verticalLocation, horizontalLocation];
 
 export class Box {
 	x: number;
@@ -84,59 +75,55 @@ export class Box {
 
 		if (origin instanceof Vec2) {
 			this.origin = origin;
-		} else {
-			this.origin = this.getRelPoint(origin ?? boxLocation.bottom_center);
+		} else if (origin === undefined || origin === null) {
+			this.origin = this.getRelPoint('left', 'top');
 		}
 	}
-	getRelPoint(point: Vec2 | boxLocation) {
+	getRelPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
 		let x, y;
-		switch (point) {
-			case boxLocation.top_left:
-			case boxLocation.top_center:
-			case boxLocation.top_right:
-				y = 0;
-				break;
-			case boxLocation.middle_left:
-			case boxLocation.middle_center:
-			case boxLocation.middle_right:
-				y = Math.floor(this.height / 2);
-				break;
-			case boxLocation.bottom_left:
-			case boxLocation.bottom_center:
-			case boxLocation.bottom_right:
-				y = this.height;
-				break;
+		if (typeof horiz == 'number') {
+			x = horiz;
+		} else {
+			switch (horiz) {
+				case 'left':
+					x = 0;
+					break;
+				case 'center':
+					x = Math.floor(this.width / 2);
+					break;
+				case 'right':
+					x = this.width;
+					break;
+			}
 		}
-		switch (point) {
-			case boxLocation.top_left:
-			case boxLocation.middle_left:
-			case boxLocation.bottom_left:
-				x = 0;
-				break;
-			case boxLocation.top_center:
-			case boxLocation.middle_center:
-			case boxLocation.bottom_center:
-				x = Math.floor(this.width / 2);
-				break;
-			case boxLocation.top_right:
-			case boxLocation.middle_right:
-			case boxLocation.bottom_right:
-				x = this.width;
-				break;
+		if (typeof vert === 'number') {
+			y = vert;
+		} else {
+			switch (vert) {
+				case 'top':
+					y = 0;
+					break;
+				case 'middle':
+					y = Math.floor(this.height / 2);
+					break;
+				case 'bottom':
+					y = this.height;
+					break;
+			}
 		}
 		return vec(x, y);
 	}
-	getPoint(point: TOrigin) {
-		let relative = this.getRelPoint(point);
+	getPoint(x: number | horizontalLocation, y: number | verticalLocation) {
+		let relative = this.getRelPoint(x, y);
 		relative.x += this.x - this.origin.x;
 		relative.y -= this.y - this.origin.y;
 		return relative;
 	}
 	p1() {
-		return this.getPoint(boxLocation.top_left);
+		return this.getPoint('left', 'top');
 	}
 	p2() {
-		return this.getPoint(boxLocation.bottom_right);
+		return this.getPoint('right', 'bottom');
 	}
 	fromOrigin() {
 		return new Box(

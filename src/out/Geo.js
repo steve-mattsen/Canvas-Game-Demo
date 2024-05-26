@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.vec = exports.Box = exports.boxLocation = exports.Vec3 = exports.Vec2 = void 0;
+exports.vec = exports.Box = exports.Vec3 = exports.Vec2 = void 0;
 var Vec2 = (function () {
     function Vec2(x, y) {
         this.x = 0;
@@ -59,18 +59,6 @@ var Vec3 = (function (_super) {
     return Vec3;
 }(Vec2));
 exports.Vec3 = Vec3;
-var boxLocation;
-(function (boxLocation) {
-    boxLocation[boxLocation["top_left"] = 0] = "top_left";
-    boxLocation[boxLocation["top_center"] = 1] = "top_center";
-    boxLocation[boxLocation["top_right"] = 2] = "top_right";
-    boxLocation[boxLocation["middle_left"] = 3] = "middle_left";
-    boxLocation[boxLocation["middle_center"] = 4] = "middle_center";
-    boxLocation[boxLocation["middle_right"] = 5] = "middle_right";
-    boxLocation[boxLocation["bottom_left"] = 6] = "bottom_left";
-    boxLocation[boxLocation["bottom_center"] = 7] = "bottom_center";
-    boxLocation[boxLocation["bottom_right"] = 8] = "bottom_right";
-})(boxLocation = exports.boxLocation || (exports.boxLocation = {}));
 var Box = (function () {
     function Box(x, y, width, height, origin) {
         this.x = x;
@@ -80,59 +68,57 @@ var Box = (function () {
         if (origin instanceof Vec2) {
             this.origin = origin;
         }
-        else {
-            this.origin = this.getRelPoint(origin !== null && origin !== void 0 ? origin : boxLocation.bottom_center);
+        else if (origin === undefined || origin === null) {
+            this.origin = this.getRelPoint('left', 'top');
         }
     }
-    Box.prototype.getRelPoint = function (point) {
+    Box.prototype.getRelPoint = function (horiz, vert) {
         var x, y;
-        switch (point) {
-            case boxLocation.top_left:
-            case boxLocation.top_center:
-            case boxLocation.top_right:
-                y = 0;
-                break;
-            case boxLocation.middle_left:
-            case boxLocation.middle_center:
-            case boxLocation.middle_right:
-                y = Math.floor(this.height / 2);
-                break;
-            case boxLocation.bottom_left:
-            case boxLocation.bottom_center:
-            case boxLocation.bottom_right:
-                y = this.height;
-                break;
+        if (typeof horiz == 'number') {
+            x = horiz;
         }
-        switch (point) {
-            case boxLocation.top_left:
-            case boxLocation.middle_left:
-            case boxLocation.bottom_left:
-                x = 0;
-                break;
-            case boxLocation.top_center:
-            case boxLocation.middle_center:
-            case boxLocation.bottom_center:
-                x = Math.floor(this.width / 2);
-                break;
-            case boxLocation.top_right:
-            case boxLocation.middle_right:
-            case boxLocation.bottom_right:
-                x = this.width;
-                break;
+        else {
+            switch (horiz) {
+                case 'left':
+                    x = 0;
+                    break;
+                case 'center':
+                    x = Math.floor(this.width / 2);
+                    break;
+                case 'right':
+                    x = this.width;
+                    break;
+            }
+        }
+        if (typeof vert === 'number') {
+            y = vert;
+        }
+        else {
+            switch (vert) {
+                case 'top':
+                    y = 0;
+                    break;
+                case 'middle':
+                    y = Math.floor(this.height / 2);
+                    break;
+                case 'bottom':
+                    y = this.height;
+                    break;
+            }
         }
         return vec(x, y);
     };
-    Box.prototype.getPoint = function (point) {
-        var relative = this.getRelPoint(point);
+    Box.prototype.getPoint = function (x, y) {
+        var relative = this.getRelPoint(x, y);
         relative.x += this.x - this.origin.x;
         relative.y -= this.y - this.origin.y;
         return relative;
     };
     Box.prototype.p1 = function () {
-        return this.getPoint(boxLocation.top_left);
+        return this.getPoint('left', 'top');
     };
     Box.prototype.p2 = function () {
-        return this.getPoint(boxLocation.bottom_right);
+        return this.getPoint('right', 'bottom');
     };
     Box.prototype.fromOrigin = function () {
         return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, vec(0, 0));

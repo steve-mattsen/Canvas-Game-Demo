@@ -1,4 +1,4 @@
-import { Box, boxLocation, vec, Vec2 } from "./Geo";
+import { Box, vec, Vec2 } from "./Geo";
 import { expect, jest, test, it } from '@jest/globals';
 
 let vec2DataSet = [
