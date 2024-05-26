@@ -51,9 +51,9 @@ function drawObjects(ctx) {
                 sprite = obj.getAnimFrame();
             }
             var shadow = (0, Sprites_1.sprt)('shadow');
-            shadow.scale = sprite.drawBox.getWidth() / shadow.drawBox.getWidth();
-            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.getWidth() * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.getHeight() * shadow.scale * 0.5) - 1), sprite.drawBox.getWidth(), sprite.drawBox.getHeight() * 0.5);
-            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.getWidth(), sprite.drawBox.getHeight(), Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.getWidth(), sprite.drawBox.getHeight());
+            shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
+            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.width * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
+            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.width, sprite.drawBox.height);
         }
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';
@@ -79,7 +79,7 @@ function drawObjects(ctx) {
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
             var offset_1 = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(hb.x) + offset_1, Math.floor(hb.y) + offset_1, hb.getWidth() - offset_1 * 2, hb.getHeight() - offset_1 * 2);
+            ctx.strokeRect(Math.floor(hb.x) + offset_1, Math.floor(hb.y) + offset_1, hb.width - offset_1 * 2, hb.height - offset_1 * 2);
         }
         if (!Vars_1["default"].debugMode) {
             return "continue";
@@ -99,7 +99,7 @@ function drawObjects(ctx) {
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.bottomRight.y + 18);
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + 18);
         }
         ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
         var count = 0;

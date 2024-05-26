@@ -59,8 +59,10 @@ export interface BoxSpec {
 	y: number;
 	width: number;
 	height: number;
-	origin?: Vec2 | boxLocation;
+	origin?: TOrigin;
 }
+
+export type TOrigin = Vec2 | boxLocation;
 
 export class Box {
 	x: number;
@@ -68,7 +70,13 @@ export class Box {
 	width: number;
 	height: number;
 	origin: Vec2;
-	constructor(x: number, y: number, width: number, height: number, origin?: Vec2 | boxLocation) {
+	constructor(
+		x: number,
+		y: number,
+		width: number,
+		height: number,
+		origin?: TOrigin,
+	) {
 		this.x = x;
 		this.y = y;
 		this.width = width;

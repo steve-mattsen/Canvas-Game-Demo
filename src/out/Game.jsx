@@ -84,17 +84,17 @@ function tick() {
     plyr.pos.x += move.x * speed;
     plyr.pos.y += move.y * speed;
     var hb = plyr.getAbsoluteHitbox();
-    if (hb.getX() < 0) {
+    if (hb.x < 0) {
         plyr.pos.x = hb.origin.x;
     }
-    else if (hb.bottomRight.x > Vars_1["default"].canvasWidth) {
-        plyr.pos.x = Vars_1["default"].canvasWidth - hb.getWidth() + hb.origin.x;
+    else if (hb.p2().x > Vars_1["default"].canvasWidth) {
+        plyr.pos.x = Vars_1["default"].canvasWidth - hb.width + hb.origin.x;
     }
-    if (hb.getY() < 0) {
+    if (hb.y < 0) {
         plyr.pos.y = hb.origin.y;
     }
-    else if (hb.bottomRight.y > Vars_1["default"].canvasHeight) {
-        plyr.pos.y = Vars_1["default"].canvasHeight - hb.getHeight() + hb.origin.y;
+    else if (hb.p2().y > Vars_1["default"].canvasHeight) {
+        plyr.pos.y = Vars_1["default"].canvasHeight - hb.height + hb.origin.y;
     }
 }
 var refresh = Vars_1["default"].slowMode ? 15 : 59.67;

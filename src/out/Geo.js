@@ -77,15 +77,14 @@ var Box = (function () {
         this.y = y;
         this.width = width;
         this.height = height;
-        if (origin === undefined) {
-            origin = boxLocation.bottom_center;
-        }
         if (origin instanceof Vec2) {
             this.origin = origin;
         }
-        var originPoint = this.getRelativePoint(origin);
+        else {
+            this.origin = this.getRelPoint(origin !== null && origin !== void 0 ? origin : boxLocation.bottom_center);
+        }
     }
-    Box.prototype.getRelativePoint = function (point) {
+    Box.prototype.getRelPoint = function (point) {
         var x, y;
         switch (point) {
             case boxLocation.top_left:
@@ -124,9 +123,9 @@ var Box = (function () {
         return vec(x, y);
     };
     Box.prototype.getPoint = function (point) {
-        var relative = this.getRelativePoint(point);
-        relative.x -= this.origin.x;
-        relative.y -= this.origin.y;
+        var relative = this.getRelPoint(point);
+        relative.x += this.x - this.origin.x;
+        relative.y -= this.y - this.origin.y;
         return relative;
     };
     Box.prototype.p1 = function () {
