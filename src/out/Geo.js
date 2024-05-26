@@ -108,23 +108,23 @@ var Box = (function () {
         }
         return vec(x, y);
     };
-    Box.prototype.getPoint = function (x, y) {
+    Box.prototype.getAbsPoint = function (x, y) {
         var relative = this.getRelPoint(x, y);
         relative.x += this.x - this.origin.x;
-        relative.y -= this.y - this.origin.y;
+        relative.y += this.y - this.origin.y;
         return relative;
     };
     Box.prototype.p1 = function () {
-        return this.getPoint('left', 'top');
+        return this.getAbsPoint('left', 'top');
     };
     Box.prototype.p2 = function () {
-        return this.getPoint('right', 'bottom');
+        return this.getAbsPoint('right', 'bottom');
     };
     Box.prototype.fromOrigin = function () {
         return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, vec(0, 0));
     };
-    Box.prototype.getCenter = function () {
-        return new Vec2((this.x + this.width) / 2, (this.y + this.height) / 2);
+    Box.prototype.getAbsCenter = function () {
+        return this.getAbsPoint('center', 'middle');
     };
     Box.prototype.normalize = function () {
         var length = this.length();

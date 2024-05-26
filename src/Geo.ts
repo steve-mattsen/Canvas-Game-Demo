@@ -113,17 +113,17 @@ export class Box {
 		}
 		return vec(x, y);
 	}
-	getPoint(x: number | horizontalLocation, y: number | verticalLocation) {
+	getAbsPoint(x: number | horizontalLocation, y: number | verticalLocation) {
 		let relative = this.getRelPoint(x, y);
 		relative.x += this.x - this.origin.x;
 		relative.y -= this.y - this.origin.y;
 		return relative;
 	}
 	p1() {
-		return this.getPoint('left', 'top');
+		return this.getAbsPoint('left', 'top');
 	}
 	p2() {
-		return this.getPoint('right', 'bottom');
+		return this.getAbsPoint('right', 'bottom');
 	}
 	fromOrigin() {
 		return new Box(
@@ -134,11 +134,8 @@ export class Box {
 			vec(0, 0),
 		)
 	}
-	getCenter() {
-		return new Vec2(
-			(this.x + this.width) / 2,
-			(this.y + this.height) / 2,
-		)
+	getAbsCenter() {
+		return this.getAbsPoint('center', 'middle');
 	}
 	normalize(): Vec2 {
 		let length = this.length();
