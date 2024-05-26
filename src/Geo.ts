@@ -116,7 +116,7 @@ export class Box {
 	getAbsPoint(x: number | horizontalLocation, y: number | verticalLocation) {
 		let relative = this.getRelPoint(x, y);
 		relative.x += this.x - this.origin.x;
-		relative.y -= this.y - this.origin.y;
+		relative.y += this.y - this.origin.y;
 		return relative;
 	}
 	p1() {
