@@ -82,8 +82,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite.drawBox.y, //suby
 				sprite.drawBox.width, //subw
 				sprite.drawBox.height, //subh
-				obj.pos.x - sprite.drawBox.origin.x, //posx
-				obj.pos.y - sprite.drawBox.origin.y - obj.z, //posy
+				Math.round(obj.pos.x - sprite.drawBox.origin.x), //posx
+				Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
 				drawBox.width, //width
 				drawBox.height, //height
 			);
