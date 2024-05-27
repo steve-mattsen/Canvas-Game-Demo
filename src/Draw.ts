@@ -235,8 +235,12 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	let fontSize = 4;
 	ctx.font = `${fontSize}px Courier`;
+
+	// Fill the top left box.
 	ctx.fillStyle = Vars.bgColors[0] + '88';
 	ctx.fillRect(0, 0, 50, fontSize * 4);
+
+	// Write top left text.
 	ctx.fillStyle = Vars.fgColors[0];
 	ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
 		0, fontSize
@@ -248,6 +252,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		0, fontSize * 3
 	);
 
+	// Fill the top right box.
 	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
 	ctx.fillStyle = Vars.bgColors[0] + '88';
 	ctx.fillRect(
@@ -257,6 +262,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		fontSize * inputs.length * 1 + fontSize * .25,
 	);
 
+	//Write the top right text
 	let count = 0;
 	for (const [k, v] of inputs) {
 		ctx.textAlign = "right";
@@ -271,9 +277,19 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 	ctx.textAlign = "left";
 
+	// Fill the bottom left box
+	ctx.fillStyle = Vars.bgColors[0] + '88';
+	let boxHeight = entries.length * fontSize;
+	ctx.fillRect(
+		0,
+		Vars.cameraHeight - boxHeight,
+		50,
+		boxHeight
+	);
+
+	count = 0;
 	for (const obj of entries) {
 		let hb = obj.calcHitBox();
-
 		ctx.fillStyle = Vars.bgColors[0];
 		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
 
@@ -294,13 +310,18 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 			hb.width,
 		);
 
-		if (obj.animations !== null) {
-			ctx.fillText(
-				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
-				obj.pos.x,
-				obj.pos.y + obj.hitBox.p2().y + fontSize,
-			)
+		//Write the bottom left text.
+		let text = `${obj.id}: `;
+		if (obj.animations === null) {
+			text += `${obj.sprite.image.id}`;
+		} else {
+			text += `${obj.animState} ${obj.animations[obj.animState].currentSprite}`;
 		}
+		ctx.fillText(
+			text,
+			0,
+			Vars.cameraHeight - ((1 + count++) * fontSize),
+		);
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		ctx.restore();

@@ -183,6 +183,10 @@ function drawDebugInfo(ctx) {
         ctx.fillText("".concat(k, " : ").concat(v), Vars_1["default"].cameraWidth, count++ * fontSize);
     }
     ctx.textAlign = "left";
+    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    var boxHeight = entries.length * fontSize;
+    ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
+    count = 0;
     for (var _b = 0, entries_2 = entries; _b < entries_2.length; _b++) {
         var obj = entries_2[_b];
         var hb = obj.calcHitBox();
@@ -193,9 +197,14 @@ function drawDebugInfo(ctx) {
         ctx.textBaseline = "top";
         ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
         ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
-        if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + fontSize);
+        var text = "".concat(obj.id, ": ");
+        if (obj.animations === null) {
+            text += "".concat(obj.sprite.image.id);
         }
+        else {
+            text += "".concat(obj.animState, " ").concat(obj.animations[obj.animState].currentSprite);
+        }
+        ctx.fillText(text, 0, Vars_1["default"].cameraHeight - ((1 + count++) * fontSize));
         drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.restore();
     }
