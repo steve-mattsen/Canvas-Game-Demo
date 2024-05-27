@@ -18,6 +18,8 @@ var Vars = (function () {
     Vars.cameraScale = 4;
     Vars.canvasWidth = window.innerWidth / _a.canvasScale;
     Vars.canvasHeight = window.innerHeight / _a.canvasScale;
+    Vars.cameraWidth = _a.canvasWidth / _a.cameraScale;
+    Vars.cameraHeight = _a.canvasHeight / _a.cameraScale;
     Vars.bgColors = [
         "#ffffff",
         "#666666",

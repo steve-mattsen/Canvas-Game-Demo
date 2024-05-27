@@ -8,6 +8,8 @@ export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
+	Vars.cameraWidth = Vars.canvasWidth / Vars.cameraScale;
+	Vars.cameraHeight = Vars.canvasHeight / Vars.cameraScale;
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
 	if (canvas.getContext === undefined) {
@@ -69,8 +71,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			let shadow = sprt('shadow');
 			shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
 			ctx.drawImage(shadow.image.element,
-				Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
-				Math.floor(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1),
+				Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
+				Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1),
 				sprite.drawBox.width,
 				sprite.drawBox.height * 0.5,
 			);
@@ -107,7 +109,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		ctx.save();
-		ctx.font = "bold 7px Courier";
+		let fontSize = 4;
+		ctx.font = `${fontSize}px Courier`;
 		ctx.fillStyle = "black";
 		ctx.fillText(
 			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
@@ -118,23 +121,29 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			ctx.fillText(
 				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
 				obj.pos.x,
-				obj.pos.y + obj.hitBox.p2().y + 18,
+				obj.pos.y + obj.hitBox.p2().y + fontSize,
 			)
 		}
-		ctx.fillText(`window ${Vars.canvasHeight}x${Vars.canvasWidth}`,
-			0, 18
+		ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
+			0, fontSize
 		);
-		let count = 0;
+		ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
+			0, fontSize * 2
+		);
+		ctx.fillText(`camera ${Vars.cameraWidth}x${Vars.cameraHeight}`,
+			0, fontSize * 3
+		);
+		let count = 1;
 		ctx.textAlign = "right";
-		ctx.textBaseline = "top";
+		ctx.textBaseline = "middle";
 		Object.keys(Vars.inputState).forEach(v => {
 			if (!Vars.inputState[v]) {
 				return;
 			}
 			ctx.fillText(
 				`${v} : ${Vars.inputState[v]}`,
-				Vars.canvasWidth,
-				count++ * 18,
+				Vars.cameraWidth,
+				count++ * fontSize,
 			)
 		});
 		ctx.restore();
@@ -149,7 +158,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		if (!Vars.showButtons && button.varKey !== 'showButtons') {
 			continue;
 		}
-		let aspectRatio = Vars.canvasWidth / Vars.canvasHeight;
+		let aspectRatio = Vars.cameraWidth;
 		let buttonWidth;
 		let buttonHeight;
 		let margin;

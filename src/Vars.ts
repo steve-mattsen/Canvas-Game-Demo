@@ -13,6 +13,8 @@ export default class Vars {
 	static cameraScale = 4;
 	static canvasWidth = window.innerWidth / this.canvasScale;
 	static canvasHeight = window.innerHeight / this.canvasScale;
+	static cameraWidth = this.canvasWidth / this.cameraScale;
+	static cameraHeight = this.canvasHeight / this.cameraScale;
 	static bgColors = [
 		"#ffffff",
 		"#666666",

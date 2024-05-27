@@ -9,6 +9,8 @@ function draw() {
     var canvas = document.getElementById("game_window");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
+    Vars_1["default"].cameraWidth = Vars_1["default"].canvasWidth / Vars_1["default"].cameraScale;
+    Vars_1["default"].cameraHeight = Vars_1["default"].canvasHeight / Vars_1["default"].cameraScale;
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
     if (canvas.getContext === undefined) {
@@ -52,7 +54,7 @@ function drawObjects(ctx) {
             }
             var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
+            ctx.drawImage(shadow.image.element, Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
             var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
             ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
         }
@@ -69,21 +71,24 @@ function drawObjects(ctx) {
         }
         drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.save();
-        ctx.font = "bold 7px Courier";
+        var fontSize = 4;
+        ctx.font = "".concat(fontSize, "px Courier");
         ctx.fillStyle = "black";
         ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
         if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + 18);
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + fontSize);
         }
-        ctx.fillText("window ".concat(Vars_1["default"].canvasHeight, "x").concat(Vars_1["default"].canvasWidth), 0, 18);
-        var count = 0;
+        ctx.fillText("window ".concat(window.innerWidth, "x").concat(window.innerHeight), 0, fontSize);
+        ctx.fillText("canvas ".concat(Vars_1["default"].canvasWidth, "x").concat(Vars_1["default"].canvasHeight), 0, fontSize * 2);
+        ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth, "x").concat(Vars_1["default"].cameraHeight), 0, fontSize * 3);
+        var count = 1;
         ctx.textAlign = "right";
-        ctx.textBaseline = "top";
+        ctx.textBaseline = "middle";
         Object.keys(Vars_1["default"].inputState).forEach(function (v) {
             if (!Vars_1["default"].inputState[v]) {
                 return;
             }
-            ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), Vars_1["default"].canvasWidth, count++ * 18);
+            ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), Vars_1["default"].cameraWidth, count++ * fontSize);
         });
         ctx.restore();
     };
@@ -101,7 +106,7 @@ function drawButtons(ctx) {
         if (!Vars_1["default"].showButtons && button.varKey !== 'showButtons') {
             continue;
         }
-        var aspectRatio = Vars_1["default"].canvasWidth / Vars_1["default"].canvasHeight;
+        var aspectRatio = Vars_1["default"].cameraWidth;
         var buttonWidth = void 0;
         var buttonHeight = void 0;
         var margin = void 0;
