@@ -84,32 +84,32 @@ export class Box {
 	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
 		let x, y;
 		if (typeof horiz == 'number') {
-			x = horiz;
+			x = this.x + horiz;
 		} else {
 			switch (horiz) {
 				case 'left':
-					x = 0;
+					x = this.x;
 					break;
 				case 'center':
-					x = Math.floor(this.width / 2);
+					x = this.x + (this.width / 2);
 					break;
 				case 'right':
-					x = this.width;
+					x = this.x + this.width;
 					break;
 			}
 		}
 		if (typeof vert === 'number') {
-			y = vert;
+			y = this.y + vert;
 		} else {
 			switch (vert) {
 				case 'top':
-					y = 0;
+					y = this.y;
 					break;
 				case 'middle':
-					y = Math.floor(this.height / 2);
+					y = this.y + (this.height / 2);
 					break;
 				case 'bottom':
-					y = this.height;
+					y = this.y + this.height;
 					break;
 			}
 		}
