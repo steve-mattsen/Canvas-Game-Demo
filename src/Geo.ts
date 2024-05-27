@@ -199,6 +199,19 @@ export class Box {
 		}
 		return true;
 	}
+	collidesWith(box: Box) {
+		let b1p2 = this.p2();
+		let b2p1 = box.p1();
+		let b2p2 = box.p2();
+		if (this.x > b2p2.x || b1p2.x < b2p1.x) {
+			//We know the x's don't overlap
+			return false;
+		}
+		if (this.y > b2p2.y || b1p2.y < b2p1.y) {
+			return false;
+		}
+		return true;
+	}
 }
 
 export class Line {

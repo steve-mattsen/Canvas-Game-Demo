@@ -288,9 +288,13 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	);
 
 	count = 0;
+	let plyr = Obj.store['player'];
 	for (const obj of entries) {
 		let hb = obj.calcHitBox();
 		ctx.fillStyle = Vars.bgColors[0];
+		if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
+			ctx.fillStyle = "red";
+		}
 		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
 
 		drawBoxOutline(ctx, hb);

@@ -187,10 +187,14 @@ function drawDebugInfo(ctx) {
     var boxHeight = entries.length * fontSize;
     ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
     count = 0;
+    var plyr = Obj_1.Obj.store['player'];
     for (var _b = 0, entries_2 = entries; _b < entries_2.length; _b++) {
         var obj = entries_2[_b];
         var hb = obj.calcHitBox();
         ctx.fillStyle = Vars_1["default"].bgColors[0];
+        if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
+            ctx.fillStyle = "red";
+        }
         ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
         drawBoxOutline(ctx, hb);
         ctx.fillStyle = Vars_1["default"].fgColors[0];
