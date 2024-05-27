@@ -98,7 +98,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			drawMarker(ctx, p2.x, p2.y);
 		}
 
-		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
+		if (Vars.debugMode || (Vars.displayMode !== 0 && Vars.displayMode < 4)) {
 			// Draw box
 			drawBoxOutline(ctx, hb);
 		}
@@ -144,19 +144,21 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			)
 		}
 
+		ctx.textAlign = "left";
+
 		ctx.fillStyle = Vars.bgColors[0] + '88';
 		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
 
 		ctx.fillStyle = Vars.fgColors[0];
 		ctx.textBaseline = "top";
 		ctx.fillText(
-			`x: ${Math.round(obj.pos.x)}`,
+			`x:${Math.round(obj.pos.x)}`,
 			hb.x,
 			hb.y,
 			hb.width,
 		);
 		ctx.fillText(
-			`y: ${Math.round(obj.pos.y)}`,
+			`y:${Math.round(obj.pos.y)}`,
 			hb.x,
 			hb.y + fontSize,
 			hb.width,

@@ -64,7 +64,7 @@ function drawObjects(ctx) {
             var p2 = hb.p2();
             drawMarker(ctx, p2.x, p2.y);
         }
-        if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
+        if (Vars_1["default"].debugMode || (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4)) {
             drawBoxOutline(ctx, hb);
         }
         if (!Vars_1["default"].debugMode) {
@@ -90,12 +90,13 @@ function drawObjects(ctx) {
             ctx.fillStyle = Vars_1["default"].fgColors[0];
             ctx.fillText("".concat(k, " : ").concat(v_1), Vars_1["default"].cameraWidth, count++ * fontSize);
         }
+        ctx.textAlign = "left";
         ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
         ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
         ctx.fillStyle = Vars_1["default"].fgColors[0];
         ctx.textBaseline = "top";
-        ctx.fillText("x: ".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
-        ctx.fillText("y: ".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
+        ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
+        ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
         if (obj.animations !== null) {
             ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + fontSize);
         }
