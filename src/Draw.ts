@@ -45,8 +45,11 @@ export default function draw() {
 
 	drawObjects(ctx);
 
+	Vars.debugMode && drawDebugInfo(ctx);
+
 	ctx.scale(1 / Vars.cameraScale, 1 / Vars.cameraScale);
 	ctx.imageSmoothingEnabled = true;
+
 
 	drawButtons(ctx);
 }
@@ -55,8 +58,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	// Order draws by closeness to camera.
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
 	for (const v of entries) {
+		ctx.save();
 		let obj = v;
 		let hb = obj.calcHitBox();
+
+		let fontSize = 4;
+		ctx.font = `${fontSize}px Courier`;
 
 		if (Vars.displayMode > 1) {
 
@@ -98,83 +105,10 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			drawMarker(ctx, p2.x, p2.y);
 		}
 
-		if (Vars.debugMode || (Vars.displayMode !== 0 && Vars.displayMode < 4)) {
+		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
 			// Draw box
 			drawBoxOutline(ctx, hb);
 		}
-
-		if (!Vars.debugMode) {
-			continue;
-		}
-
-		ctx.save();
-		let fontSize = 4;
-		ctx.font = `${fontSize}px Courier`;
-		ctx.fillStyle = Vars.bgColors[0] + '88';
-		ctx.fillRect(0, 0, 50, fontSize * 4);
-		ctx.fillStyle = Vars.fgColors[0];
-		ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
-			0, fontSize
-		);
-		ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
-			0, fontSize * 2
-		);
-		ctx.fillText(`camera ${Vars.cameraWidth}x${Vars.cameraHeight}`,
-			0, fontSize * 3
-		);
-
-		let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
-		ctx.fillStyle = Vars.bgColors[0] + '88';
-		ctx.fillRect(
-			Vars.cameraWidth - 50,
-			0,
-			50,
-			fontSize * inputs.length * 1 + fontSize * .25,
-		);
-
-		let count = 0;
-		for (const [k, v] of inputs) {
-			ctx.textAlign = "right";
-			ctx.textBaseline = "hanging";
-			ctx.fillStyle = Vars.fgColors[0];
-			ctx.fillText(
-				`${k} : ${v}`,
-				Vars.cameraWidth,
-				count++ * fontSize,
-			)
-		}
-
-		ctx.textAlign = "left";
-
-		ctx.fillStyle = Vars.bgColors[0] + '88';
-		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
-
-		ctx.fillStyle = Vars.fgColors[0];
-		ctx.textBaseline = "top";
-		ctx.fillText(
-			`x:${Math.round(obj.pos.x)}`,
-			hb.x,
-			hb.y,
-			hb.width,
-		);
-		ctx.fillText(
-			`y:${Math.round(obj.pos.y)}`,
-			hb.x,
-			hb.y + fontSize,
-			hb.width,
-		);
-
-		if (obj.animations !== null) {
-			ctx.fillText(
-				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
-				obj.pos.x,
-				obj.pos.y + obj.hitBox.p2().y + fontSize,
-			)
-		}
-
-		drawMarker(ctx, obj.pos.x, obj.pos.y);
-
-		ctx.restore();
 	};
 }
 
@@ -294,4 +228,81 @@ function drawBoxOutline(ctx: CanvasRenderingContext2D, box: Box) {
 		box.height,
 	);
 	ctx.restore();
+}
+
+function drawDebugInfo(ctx: CanvasRenderingContext2D) {
+	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
+	ctx.save();
+	let fontSize = 4;
+	ctx.font = `${fontSize}px Courier`;
+	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillRect(0, 0, 50, fontSize * 4);
+	ctx.fillStyle = Vars.fgColors[0];
+	ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
+		0, fontSize
+	);
+	ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
+		0, fontSize * 2
+	);
+	ctx.fillText(`camera ${Vars.cameraWidth}x${Vars.cameraHeight}`,
+		0, fontSize * 3
+	);
+
+	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
+	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillRect(
+		Vars.cameraWidth - 50,
+		0,
+		50,
+		fontSize * inputs.length * 1 + fontSize * .25,
+	);
+
+	let count = 0;
+	for (const [k, v] of inputs) {
+		ctx.textAlign = "right";
+		ctx.textBaseline = "hanging";
+		ctx.fillStyle = Vars.fgColors[0];
+		ctx.fillText(
+			`${k} : ${v}`,
+			Vars.cameraWidth,
+			count++ * fontSize,
+		)
+	}
+
+	ctx.textAlign = "left";
+
+	for (const obj of entries) {
+		let hb = obj.calcHitBox();
+
+		ctx.fillStyle = Vars.bgColors[0];
+		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+
+		drawBoxOutline(ctx, hb);
+
+		ctx.fillStyle = Vars.fgColors[0];
+		ctx.textBaseline = "top";
+		ctx.fillText(
+			`x:${Math.round(obj.pos.x)}`,
+			hb.x,
+			hb.y,
+			hb.width,
+		);
+		ctx.fillText(
+			`y:${Math.round(obj.pos.y)}`,
+			hb.x,
+			hb.y + fontSize,
+			hb.width,
+		);
+
+		if (obj.animations !== null) {
+			ctx.fillText(
+				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
+				obj.pos.x,
+				obj.pos.y + obj.hitBox.p2().y + fontSize,
+			)
+		}
+
+		drawMarker(ctx, obj.pos.x, obj.pos.y);
+		ctx.restore();
+	}
 }
