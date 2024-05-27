@@ -213,31 +213,32 @@ export class Box {
 		return true;
 	}
 	adjustForCollision(other: Box, move: Vec2, speed: number) {
-		let speedX = move.x * speed;
-		let speedY = move.y * speed;
+		let newMove = new Vec2(
+			move.x * speed,
+			move.y * speed,
+		);
 		let p1 = this.p1();
 		let p2 = this.p2();
 		let op1 = other.p1();
 		let op2 = other.p2();
-		if (speedX < 0 && p1.x + speedX < op2.x) {
+		if (newMove.x < 0 && p1.x + newMove.x < op2.x) {
 			// It's to the left of us
-			speedX = op2.x - p1.x;
-		} else if (speedX > 0 && p2.x + speedX > op1.x) {
+			newMove.x = Math.ceil(op2.x - p1.x + 0.5);
+			return newMove;
+		} else if (newMove.x > 0 && p2.x + newMove.x > op1.x) {
 			// It's to the right of us
-			speedX = op1.x - p2.x;
+			newMove.x = Math.floor(op1.x - p2.x - 0.5);
+			return newMove;
 		}
 
-		if (speedY < 0 && p1.y + speedY < op2.y) {
+		if (newMove.y < 0 && p1.y + newMove.y < op2.y) {
 			// It's above us
-			speedY = op2.y - p1.y;
-		} else if (speedY > 0 && p2.y + speedY > op1.y) {
+			newMove.y = Math.ceil(op2.y - p1.y + 0.5);
+		} else if (newMove.y > 0 && p2.y + newMove.y > op1.y) {
 			// It's below us
-			speedY = op1.y - p2.y;
+			newMove.y = Math.floor(op1.y - p2.y - 0.5);
 		}
-		return new Vec2(
-			speedX,
-			speedY,
-		);
+		return newMove;
 	}
 }
 
@@ -277,9 +278,6 @@ export class Line {
 	}
 	p2() {
 		return new Vec2(this.x2, this.y2);
-	}
-	deflect(line: Line) {
-
 	}
 }
 
