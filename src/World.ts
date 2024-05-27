@@ -41,7 +41,7 @@ const player = new Obj(
 		(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
 		(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
 	),
-	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize)),
+	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize, ['center', 'bottom'])),
 	new Box(0, 0, 10, 10, ['center', 'bottom']),
 	anims
 );

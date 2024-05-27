@@ -66,15 +66,16 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite = obj.getAnimFrame();
 			}
 
-			let shadow = sprt('shadow');
-			shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-			ctx.drawImage(shadow.image.element,
-				Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
-				Math.floor(obj.pos.y - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
-				sprite.drawBox.width,
-				sprite.drawBox.height * 0.5,
-			);
+			// let shadow = sprt('shadow');
+			// shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
+			// ctx.drawImage(shadow.image.element,
+			// 	Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
+			// 	Math.floor(obj.pos.y - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
+			// 	sprite.drawBox.width,
+			// 	sprite.drawBox.height * 0.5,
+			// );
 
+			let drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
 			ctx.drawImage(
 				sprite.image.element, //image
 				sprite.drawBox.x, //subx
@@ -83,8 +84,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite.drawBox.height, //subh
 				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
 				Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
-				sprite.drawBox.width, //width
-				sprite.drawBox.height, //height
+				drawBox.width, //width
+				drawBox.height, //height
 			);
 		}
 

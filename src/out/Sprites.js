@@ -81,7 +81,7 @@ var SpriteSheet = (function () {
         this.cols = cols;
         this.colSize = Math.floor(this.image.size.x / cols);
         this.rowSize = Math.floor(this.image.size.y / rows);
-        this.drawBox = new Geo_1.Box(0, 0, this.colSize, this.rowSize);
+        this.drawBox = new Geo_1.Box(0, 0, this.colSize, this.rowSize, ['center', 'bottom']);
         this.duration = duration;
     }
     SpriteSheet.prototype.getAnim = function (rows, cols) {
@@ -89,7 +89,7 @@ var SpriteSheet = (function () {
         var frames = [];
         rows.forEach(function (r) {
             cols.forEach(function (c) {
-                frames.push(new Sprite(_this.image, new Geo_1.Box(c * _this.colSize, r * _this.rowSize, _this.colSize, _this.rowSize), 1, _this.duration));
+                frames.push(new Sprite(_this.image, new Geo_1.Box(c * _this.colSize, r * _this.rowSize, _this.colSize, _this.rowSize, _this.drawBox.origin), 1, _this.duration));
             });
         });
         return new Animation(frames);
@@ -105,7 +105,7 @@ var Sprite = (function () {
         this.scale = scale;
         this.drawBox = drawBox;
         if (drawBox === undefined) {
-            this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y);
+            this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y, ['center', 'bottom']);
         }
         this.duration = duration;
     }

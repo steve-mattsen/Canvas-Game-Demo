@@ -111,6 +111,42 @@ var Box = (function () {
         }
         return new Vec2(x, y);
     };
+    Box.prototype.getPointLocal = function (horiz, vert) {
+        var x, y;
+        if (typeof horiz == 'number') {
+            x = this.x + horiz;
+        }
+        else {
+            switch (horiz) {
+                case 'left':
+                    x = 0;
+                    break;
+                case 'center':
+                    x = this.width / 2;
+                    break;
+                case 'right':
+                    x = this.width;
+                    break;
+            }
+        }
+        if (typeof vert === 'number') {
+            y = this.y + vert;
+        }
+        else {
+            switch (vert) {
+                case 'top':
+                    y = 0;
+                    break;
+                case 'middle':
+                    y = this.height / 2;
+                    break;
+                case 'bottom':
+                    y = this.height;
+                    break;
+            }
+        }
+        return new Vec2(x, y);
+    };
     Box.prototype.p1 = function () {
         return new Vec2(this.x, this.y);
     };
@@ -123,8 +159,17 @@ var Box = (function () {
     Box.prototype.fromPoint = function (point) {
         return new Box(point.x + this.x, point.y + this.y, this.width, this.height, this.origin);
     };
-    Box.prototype.fromOrigin = function () {
-        return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, new Vec2(0, 0));
+    Box.prototype.fromOrigin = function (origin) {
+        if (origin === null || origin === undefined) {
+            origin = this.origin;
+        }
+        else if (origin instanceof Vec2) {
+            origin = this.getPointLocal(origin.x, origin.y);
+        }
+        else {
+            origin = this.getPointLocal(origin[0], origin[1]);
+        }
+        return new Box(this.x - origin.x, this.y - origin.y, this.width, this.height, new Vec2(0, 0));
     };
     Box.prototype.contains = function (point) {
         if (point.x < this.x

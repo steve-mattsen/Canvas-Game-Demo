@@ -38,6 +38,6 @@ anims.run_down.sprites[2].duration = lungeDuration;
 anims.run_down.sprites[7].duration = lungeDuration;
 anims.run_up.sprites[2].duration = lungeDuration;
 anims.run_up.sprites[7].duration = lungeDuration;
-var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), new Sprites_1.Sprite(Sprites_1.Img.store.spritesheet_link, new Geo_1.Box(0, 0, ss.colSize, ss.rowSize)), new Geo_1.Box(0, 0, 10, 10, ['center', 'bottom']), anims);
+var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), new Sprites_1.Sprite(Sprites_1.Img.store.spritesheet_link, new Geo_1.Box(0, 0, ss.colSize, ss.rowSize, ['center', 'bottom'])), new Geo_1.Box(0, 0, 10, 10, ['center', 'bottom']), anims);
 Obj_1.Obj.addObj(player);
 //# sourceMappingURL=World.js.map

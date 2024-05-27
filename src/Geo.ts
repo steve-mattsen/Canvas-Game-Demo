@@ -115,6 +115,40 @@ export class Box {
 		}
 		return new Vec2(x, y);
 	}
+	getPointLocal(horiz: number | horizontalLocation, vert: number | verticalLocation) {
+		let x, y;
+		if (typeof horiz == 'number') {
+			x = this.x + horiz;
+		} else {
+			switch (horiz) {
+				case 'left':
+					x = 0;
+					break;
+				case 'center':
+					x = this.width / 2;
+					break;
+				case 'right':
+					x = this.width;
+					break;
+			}
+		}
+		if (typeof vert === 'number') {
+			y = this.y + vert;
+		} else {
+			switch (vert) {
+				case 'top':
+					y = 0;
+					break;
+				case 'middle':
+					y = this.height / 2;
+					break;
+				case 'bottom':
+					y = this.height;
+					break;
+			}
+		}
+		return new Vec2(x, y);
+	}
 	p1() {
 		return new Vec2(
 			this.x,
@@ -139,10 +173,17 @@ export class Box {
 			this.origin,
 		);
 	}
-	fromOrigin() {
+	fromOrigin(origin?: TOrigin) {
+		if (origin === null || origin === undefined) {
+			origin = this.origin;
+		} else if (origin instanceof Vec2) {
+			origin = this.getPointLocal(origin.x, origin.y);
+		} else {
+			origin = this.getPointLocal(origin[0], origin[1]);
+		}
 		return new Box(
-			this.x - this.origin.x,
-			this.y - this.origin.y,
+			this.x - origin.x,
+			this.y - origin.y,
 			this.width,
 			this.height,
 			new Vec2(0, 0),

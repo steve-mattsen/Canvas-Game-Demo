@@ -50,10 +50,8 @@ function drawObjects(ctx) {
             else {
                 sprite = obj.getAnimFrame();
             }
-            var shadow = (0, Sprites_1.sprt)('shadow');
-            shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-            ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.width * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
-            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), sprite.drawBox.width, sprite.drawBox.height);
+            var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
+            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
         }
         if (Vars_1["default"].displayMode < 4) {
             ctx.fillStyle = 'black';

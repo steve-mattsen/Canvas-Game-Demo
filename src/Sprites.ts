@@ -15,7 +15,6 @@ export class Img {
 		this.element.onload = () => {
 			this.size = vec(this.element.width, this.element.height);
 		};
-
 	}
 	public static store: { [id: string]: Img } = {};
 	public static addImg(image: Img) {
@@ -75,7 +74,7 @@ export class SpriteSheet {
 		this.cols = cols;
 		this.colSize = Math.floor(this.image.size.x / cols);
 		this.rowSize = Math.floor(this.image.size.y / rows);
-		this.drawBox = new Box(0, 0, this.colSize, this.rowSize);
+		this.drawBox = new Box(0, 0, this.colSize, this.rowSize, ['center', 'bottom']);
 		this.duration = duration;
 	}
 	getAnim(rows: number[], cols: number[]) {
@@ -89,6 +88,7 @@ export class SpriteSheet {
 						r * this.rowSize,
 						this.colSize,
 						this.rowSize,
+						this.drawBox.origin,
 					),
 					1,
 					this.duration
@@ -109,7 +109,7 @@ export class Sprite {
 		this.scale = scale;
 		this.drawBox = drawBox;
 		if (drawBox === undefined) {
-			this.drawBox = new Box(0, 0, image.size.x, image.size.y);
+			this.drawBox = new Box(0, 0, image.size.x, image.size.y, ['center', 'bottom']);
 		}
 		this.duration = duration
 	};
