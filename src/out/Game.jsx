@@ -81,6 +81,20 @@ function tick() {
         plyr.animations[plyr.animState].currentSprite = 0;
     }
     plyr.tickAnimFrame();
+    var preMoveHitBox = plyr.calcHitBox();
+    var postMoveHitBox = plyr.calcHitBox();
+    postMoveHitBox.x += move.x * speed;
+    postMoveHitBox.y += move.y * speed;
+    for (var _i = 0, _a = Object.entries(Obj_1.Obj.store); _i < _a.length; _i++) {
+        var _b = _a[_i], key = _b[0], obj = _b[1];
+        if (key === 'player') {
+            continue;
+        }
+        var ohb = obj.calcHitBox();
+        if (postMoveHitBox.collidesWith(ohb)) {
+            move = preMoveHitBox.adjustSpeedForCollision(ohb, move, speed);
+        }
+    }
     plyr.pos.x += move.x * speed;
     plyr.pos.y += move.y * speed;
     var hb = plyr.calcHitBox();

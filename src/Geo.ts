@@ -212,6 +212,26 @@ export class Box {
 		}
 		return true;
 	}
+	adjustSpeedForCollision(other: Box, move: Vec2, speed: number) {
+		let speedX = move.x * speed;
+		let speedY = move.y * speed;
+		if (this.x + this.width + speedX > other.x &&
+			this.x + speedX < other.x + other.width &&
+			this.y + this.height > other.y &&
+			this.y < other.y + other.height) {
+			speedX = 0;
+		}
+		if (this.x + this.width > other.x &&
+			this.x < other.x + other.width &&
+			this.y + this.height + speedY > other.y &&
+			this.y + speedY < other.y + other.height) {
+			speedY = 0;
+		}
+		return new Vec2(
+			speedX,
+			speedY,
+		);
+	}
 }
 
 export class Line {

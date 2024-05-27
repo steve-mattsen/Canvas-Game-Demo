@@ -90,14 +90,31 @@ function tick() {
 		plyr.animations[plyr.animState].currentSprite = 0;
 	}
 	plyr.tickAnimFrame();
+	let preMoveHitBox = plyr.calcHitBox();
+	let postMoveHitBox = plyr.calcHitBox();
+	postMoveHitBox.x += move.x * speed;
+	postMoveHitBox.y += move.y * speed;
+
+	for (const [key, obj] of Object.entries(Obj.store)) {
+		if (key === 'player') {
+			continue;
+		}
+		let ohb = obj.calcHitBox();
+		if (postMoveHitBox.collidesWith(ohb)) {
+			move = preMoveHitBox.adjustSpeedForCollision(ohb, move, speed);
+		}
+	}
+
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
+
 	let hb = plyr.calcHitBox();
 	let p2 = hb.p2();
 	let cameraLimit = new Vec2(
 		(Vars.canvasWidth / Vars.cameraScale),
 		(Vars.canvasHeight / Vars.cameraScale)
 	)
+
 	if (hb.x < 0) {
 		plyr.pos.x = plyr.hitBox.origin.x;
 	} else if (p2.x > cameraLimit.x) {
