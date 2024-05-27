@@ -41,22 +41,23 @@ const player = new Obj(
 		(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
 		(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
 	),
-	new Sprite(Img.store.spritesheet_link, new Box(0, 0, ss.colSize, ss.rowSize, ['center', 'bottom'])),
+	anims.idle_down.sprites[0],
 	new Box(0, 0, 10, 10, ['center', 'bottom']),
 	anims
 );
 Obj.addObj(player);
 
-// const tree_sprite = sprt('tree');
-// const tree = new Obj(
-// 	'tree',
-// 	vec(100, 100),
-// 	tree_sprite,
-// 	new Box(
-// 		tree_sprite.drawBox.width * .4,
-// 		tree_sprite.drawBox.height * .75,
-// 		tree_sprite.drawBox.width * .2,
-// 		tree_sprite.drawBox.height * .2
-// 	),
-// );
-// Obj.addObj(tree);
+const tree_sprite = sprt('tree');
+const tree = new Obj(
+	'tree',
+	vec(50, 100),
+	tree_sprite,
+	new Box(
+		tree_sprite.drawBox.width * .4,
+		tree_sprite.drawBox.height * .75,
+		tree_sprite.drawBox.width * .2,
+		tree_sprite.drawBox.height * .2,
+		['center', 'bottom'],
+	),
+);
+Obj.addObj(tree);
