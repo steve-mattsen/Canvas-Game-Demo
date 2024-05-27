@@ -82,8 +82,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite.drawBox.y, //suby
 				sprite.drawBox.width, //subw
 				sprite.drawBox.height, //subh
-				Math.floor(obj.pos.x - sprite.drawBox.origin.x), //posx
-				Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
+				obj.pos.x - sprite.drawBox.origin.x, //posx
+				obj.pos.y - sprite.drawBox.origin.y - obj.z, //posy
 				drawBox.width, //width
 				drawBox.height, //height
 			);
@@ -91,43 +91,14 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 		if (Vars.displayMode < 4) {
 			// Draw points
-			ctx.fillStyle = 'black';
-			let pointSize = 4;
-
-			let topLeft = new Path2D();
-
-			let x = Math.floor(hb.x);
-			let y = Math.floor(hb.y);
-			topLeft.moveTo(x, y);
-			topLeft.lineTo(x + pointSize, y);
-			topLeft.lineTo(x, y + pointSize);
-			topLeft.lineTo(x, y);
-
-			let botRight = new Path2D();
-
+			drawMarker(ctx, hb.x, hb.y);
 			let p2 = hb.p2();
-
-			x = Math.floor(p2.x);
-			y = Math.floor(p2.y);
-			botRight.moveTo(x, y);
-			botRight.lineTo(x - pointSize, y);
-			botRight.lineTo(x, y - pointSize);
-			botRight.lineTo(x, y);
-
-			ctx.fill(topLeft);
-			ctx.fill(botRight);
+			drawMarker(ctx, p2.x, p2.y);
 		}
 
 		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
 			// Draw box
-			ctx.strokeStyle = "black";
-			let offset = ctx.lineWidth * 0.5;
-			ctx.strokeRect(
-				Math.floor(hb.x) + offset,
-				Math.floor(hb.y) + offset,
-				hb.width - offset * 2,
-				hb.height - offset * 2,
-			);
+			drawBoxOutline(ctx, hb);
 		}
 
 		if (!Vars.debugMode) {
@@ -271,5 +242,18 @@ function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagona
 		path.lineTo(x, y + crosshairSize);
 	}
 	ctx.stroke(path);
+	ctx.restore();
+}
+
+function drawBoxOutline(ctx: CanvasRenderingContext2D, box: Box) {
+	ctx.save();
+	ctx.lineWidth = 0.5;
+	ctx.strokeStyle = "black";
+	ctx.strokeRect(
+		box.x,
+		box.y,
+		box.width,
+		box.height,
+	);
 	ctx.restore();
 }

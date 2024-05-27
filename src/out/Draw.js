@@ -54,33 +54,15 @@ function drawObjects(ctx) {
             shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
             ctx.drawImage(shadow.image.element, Math.floor(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.floor(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
             var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
-            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.floor(obj.pos.x - sprite.drawBox.origin.x), Math.floor(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
+            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, obj.pos.x - sprite.drawBox.origin.x, obj.pos.y - sprite.drawBox.origin.y - obj.z, drawBox.width, drawBox.height);
         }
         if (Vars_1["default"].displayMode < 4) {
-            ctx.fillStyle = 'black';
-            var pointSize = 4;
-            var topLeft = new Path2D();
-            var x = Math.floor(hb.x);
-            var y = Math.floor(hb.y);
-            topLeft.moveTo(x, y);
-            topLeft.lineTo(x + pointSize, y);
-            topLeft.lineTo(x, y + pointSize);
-            topLeft.lineTo(x, y);
-            var botRight = new Path2D();
+            drawMarker(ctx, hb.x, hb.y);
             var p2 = hb.p2();
-            x = Math.floor(p2.x);
-            y = Math.floor(p2.y);
-            botRight.moveTo(x, y);
-            botRight.lineTo(x - pointSize, y);
-            botRight.lineTo(x, y - pointSize);
-            botRight.lineTo(x, y);
-            ctx.fill(topLeft);
-            ctx.fill(botRight);
+            drawMarker(ctx, p2.x, p2.y);
         }
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
-            ctx.strokeStyle = "black";
-            var offset = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(hb.x) + offset, Math.floor(hb.y) + offset, hb.width - offset * 2, hb.height - offset * 2);
+            drawBoxOutline(ctx, hb);
         }
         if (!Vars_1["default"].debugMode) {
             return "continue";
@@ -187,6 +169,13 @@ function drawMarker(ctx, x, y, diagonal) {
         path.lineTo(x, y + crosshairSize);
     }
     ctx.stroke(path);
+    ctx.restore();
+}
+function drawBoxOutline(ctx, box) {
+    ctx.save();
+    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(box.x, box.y, box.width, box.height);
     ctx.restore();
 }
 //# sourceMappingURL=Draw.js.map
