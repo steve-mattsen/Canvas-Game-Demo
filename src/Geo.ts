@@ -217,28 +217,48 @@ export class Box {
 			move.x * speed,
 			move.y * speed,
 		);
+		let testBox = this.clone();
 		let p1 = this.p1();
 		let p2 = this.p2();
 		let op1 = other.p1();
 		let op2 = other.p2();
-		if (newMove.x < 0 && p1.x + newMove.x < op2.x) {
-			// It's to the left of us
-			newMove.x = Math.ceil(op2.x - p1.x + 0.5);
-			return newMove;
-		} else if (newMove.x > 0 && p2.x + newMove.x > op1.x) {
-			// It's to the right of us
-			newMove.x = Math.floor(op1.x - p2.x - 0.5);
-			return newMove;
+		// If we can move x but not y, move x.
+		// If we can move y but not x, move y.
+
+		testBox.x += newMove.x;
+		let canMoveX = !testBox.collidesWith(other);
+		testBox.x = this.x;
+		testBox.y += newMove.y;
+		let canMoveY = !testBox.collidesWith(other);
+
+		if (!canMoveX) {
+			if (newMove.x < 0 && p1.x + newMove.x < op2.x) {
+				// It's to the left of us
+				newMove.x = Math.ceil(op2.x - p1.x + 0.5);
+			} else if (newMove.x > 0 && p2.x + newMove.x > op1.x) {
+				// It's to the right of us
+				newMove.x = Math.floor(op1.x - p2.x - 0.5);
+			}
+		}
+		if (!canMoveY) {
+			if (newMove.y < 0 && p1.y + newMove.y < op2.y) {
+				// It's above us
+				newMove.y = Math.ceil(op2.y - p1.y);
+			} else if (newMove.y > 0 && p2.y + newMove.y > op1.y) {
+				// It's below us
+				newMove.y = Math.floor(op1.y - p2.y);
+			}
 		}
 
-		if (newMove.y < 0 && p1.y + newMove.y < op2.y) {
-			// It's above us
-			newMove.y = Math.ceil(op2.y - p1.y + 0.5);
-		} else if (newMove.y > 0 && p2.y + newMove.y > op1.y) {
-			// It's below us
-			newMove.y = Math.floor(op1.y - p2.y - 0.5);
-		}
 		return newMove;
+	}
+	clone() {
+		return new Box(
+			this.x,
+			this.y,
+			this.width,
+			this.height,
+		)
 	}
 }
 

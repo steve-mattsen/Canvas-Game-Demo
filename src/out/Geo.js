@@ -180,6 +180,51 @@ var Box = (function () {
         }
         return true;
     };
+    Box.prototype.collidesWith = function (box) {
+        var b1p2 = this.p2();
+        var b2p1 = box.p1();
+        var b2p2 = box.p2();
+        if (this.x > b2p2.x || b1p2.x < b2p1.x) {
+            return false;
+        }
+        if (this.y > b2p2.y || b1p2.y < b2p1.y) {
+            return false;
+        }
+        return true;
+    };
+    Box.prototype.adjustForCollision = function (other, move, speed) {
+        var newMove = new Vec2(move.x * speed, move.y * speed);
+        var testBox = this.clone();
+        var p1 = this.p1();
+        var p2 = this.p2();
+        var op1 = other.p1();
+        var op2 = other.p2();
+        testBox.x += newMove.x;
+        var canMoveX = !testBox.collidesWith(other);
+        testBox.x = this.x;
+        testBox.y += newMove.y;
+        var canMoveY = !testBox.collidesWith(other);
+        if (!canMoveX) {
+            if (newMove.x < 0 && p1.x + newMove.x < op2.x) {
+                newMove.x = Math.ceil(op2.x - p1.x + 0.5);
+            }
+            else if (newMove.x > 0 && p2.x + newMove.x > op1.x) {
+                newMove.x = Math.floor(op1.x - p2.x - 0.5);
+            }
+        }
+        if (!canMoveY) {
+            if (newMove.y < 0 && p1.y + newMove.y < op2.y) {
+                newMove.y = Math.ceil(op2.y - p1.y);
+            }
+            else if (newMove.y > 0 && p2.y + newMove.y > op1.y) {
+                newMove.y = Math.floor(op1.y - p2.y);
+            }
+        }
+        return newMove;
+    };
+    Box.prototype.clone = function () {
+        return new Box(this.x, this.y, this.width, this.height);
+    };
     return Box;
 }());
 exports.Box = Box;
