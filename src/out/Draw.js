@@ -41,7 +41,8 @@ function draw() {
 exports["default"] = draw;
 function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
-    var _loop_1 = function (v) {
+    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+        var v = entries_1[_i];
         var obj = v;
         var hb = obj.calcHitBox();
         if (Vars_1["default"].displayMode > 1) {
@@ -67,34 +68,39 @@ function drawObjects(ctx) {
             drawBoxOutline(ctx, hb);
         }
         if (!Vars_1["default"].debugMode) {
-            return "continue";
+            continue;
         }
-        drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.save();
         var fontSize = 4;
         ctx.font = "".concat(fontSize, "px Courier");
-        ctx.fillStyle = "black";
-        ctx.fillText(Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y), obj.pos.x, obj.pos.y - 2);
-        if (obj.animations !== null) {
-            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + fontSize);
-        }
+        ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+        ctx.fillRect(0, 0, 50, fontSize * 4);
+        ctx.fillStyle = Vars_1["default"].fgColors[0];
         ctx.fillText("window ".concat(window.innerWidth, "x").concat(window.innerHeight), 0, fontSize);
         ctx.fillText("canvas ".concat(Vars_1["default"].canvasWidth, "x").concat(Vars_1["default"].canvasHeight), 0, fontSize * 2);
         ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth, "x").concat(Vars_1["default"].cameraHeight), 0, fontSize * 3);
-        var count = 1;
-        ctx.textAlign = "right";
-        ctx.textBaseline = "middle";
-        Object.keys(Vars_1["default"].inputState).forEach(function (v) {
-            if (!Vars_1["default"].inputState[v]) {
-                return;
-            }
-            ctx.fillText("".concat(v, " : ").concat(Vars_1["default"].inputState[v]), Vars_1["default"].cameraWidth, count++ * fontSize);
-        });
+        var inputs = Object.entries(Vars_1["default"].inputState).filter(function (k, v) { return Vars_1["default"].inputState[k[0]]; });
+        ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+        ctx.fillRect(Vars_1["default"].cameraWidth - 50, 0, 50, fontSize * inputs.length * 1 + fontSize * .25);
+        var count = 0;
+        for (var _a = 0, inputs_1 = inputs; _a < inputs_1.length; _a++) {
+            var _b = inputs_1[_a], k = _b[0], v_1 = _b[1];
+            ctx.textAlign = "right";
+            ctx.textBaseline = "hanging";
+            ctx.fillStyle = Vars_1["default"].fgColors[0];
+            ctx.fillText("".concat(k, " : ").concat(v_1), Vars_1["default"].cameraWidth, count++ * fontSize);
+        }
+        ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+        ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+        ctx.fillStyle = Vars_1["default"].fgColors[0];
+        ctx.textBaseline = "top";
+        ctx.fillText("x: ".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
+        ctx.fillText("y: ".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
+        if (obj.animations !== null) {
+            ctx.fillText(obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(), obj.pos.x, obj.pos.y + obj.hitBox.p2().y + fontSize);
+        }
+        drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.restore();
-    };
-    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-        var v = entries_1[_i];
-        _loop_1(v);
     }
     ;
 }
@@ -155,6 +161,7 @@ function drawBackground(ctx) {
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }
     ctx.save();
+    ctx.fillStyle = Vars_1["default"].fgColors[0];
     ctx.lineWidth = 0.5;
     var path = new Path2D();
     var crosshairSize = 2;

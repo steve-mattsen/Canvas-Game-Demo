@@ -1,12 +1,12 @@
 import { Vec2, Box } from "./Geo";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
-	static debugMode = false;
+	static debugMode = true;
 	static displayMode = 0;
 	static spriteSheetMode = false;
 	static slowMode = false;
 	static showButtons = false;
-	static showBackground = false;
+	static showBackground = true;
 	static mouseMove: Vec2 | null = null;
 	static fullscreenMode = false;
 	static canvasScale = 1;

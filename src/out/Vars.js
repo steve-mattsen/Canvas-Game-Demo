@@ -6,12 +6,12 @@ var Vars = (function () {
     var _a;
     _a = Vars;
     Vars.inputState = {};
-    Vars.debugMode = false;
+    Vars.debugMode = true;
     Vars.displayMode = 0;
     Vars.spriteSheetMode = false;
     Vars.slowMode = false;
     Vars.showButtons = false;
-    Vars.showBackground = false;
+    Vars.showBackground = true;
     Vars.mouseMove = null;
     Vars.fullscreenMode = false;
     Vars.canvasScale = 1;

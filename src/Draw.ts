@@ -107,23 +107,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			continue;
 		}
 
-		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		ctx.save();
 		let fontSize = 4;
 		ctx.font = `${fontSize}px Courier`;
-		ctx.fillStyle = "black";
-		ctx.fillText(
-			Math.round(obj.pos.x) + ", " + Math.round(obj.pos.y),
-			obj.pos.x,
-			obj.pos.y - 2,
-		);
-		if (obj.animations !== null) {
-			ctx.fillText(
-				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
-				obj.pos.x,
-				obj.pos.y + obj.hitBox.p2().y + fontSize,
-			)
-		}
+		ctx.fillStyle = Vars.bgColors[0] + '88';
+		ctx.fillRect(0, 0, 50, fontSize * 4);
+		ctx.fillStyle = Vars.fgColors[0];
 		ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
 			0, fontSize
 		);
@@ -133,19 +122,56 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		ctx.fillText(`camera ${Vars.cameraWidth}x${Vars.cameraHeight}`,
 			0, fontSize * 3
 		);
-		let count = 1;
-		ctx.textAlign = "right";
-		ctx.textBaseline = "middle";
-		Object.keys(Vars.inputState).forEach(v => {
-			if (!Vars.inputState[v]) {
-				return;
-			}
+
+		let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
+		ctx.fillStyle = Vars.bgColors[0] + '88';
+		ctx.fillRect(
+			Vars.cameraWidth - 50,
+			0,
+			50,
+			fontSize * inputs.length * 1 + fontSize * .25,
+		);
+
+		let count = 0;
+		for (const [k, v] of inputs) {
+			ctx.textAlign = "right";
+			ctx.textBaseline = "hanging";
+			ctx.fillStyle = Vars.fgColors[0];
 			ctx.fillText(
-				`${v} : ${Vars.inputState[v]}`,
+				`${k} : ${v}`,
 				Vars.cameraWidth,
 				count++ * fontSize,
 			)
-		});
+		}
+
+		ctx.fillStyle = Vars.bgColors[0] + '88';
+		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+
+		ctx.fillStyle = Vars.fgColors[0];
+		ctx.textBaseline = "top";
+		ctx.fillText(
+			`x: ${Math.round(obj.pos.x)}`,
+			hb.x,
+			hb.y,
+			hb.width,
+		);
+		ctx.fillText(
+			`y: ${Math.round(obj.pos.y)}`,
+			hb.x,
+			hb.y + fontSize,
+			hb.width,
+		);
+
+		if (obj.animations !== null) {
+			ctx.fillText(
+				obj.animState + " " + obj.animations[obj.animState].currentSprite.toString(),
+				obj.pos.x,
+				obj.pos.y + obj.hitBox.p2().y + fontSize,
+			)
+		}
+
+		drawMarker(ctx, obj.pos.x, obj.pos.y);
+
 		ctx.restore();
 	};
 }
@@ -233,6 +259,7 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {
 	ctx.save();
+	ctx.fillStyle = Vars.fgColors[0];
 	ctx.lineWidth = 0.5;
 	let path = new Path2D();
 	let crosshairSize = 2;
