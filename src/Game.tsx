@@ -101,10 +101,10 @@ function tick() {
 		}
 		let ohb = obj.calcHitBox();
 		if (postMoveHitBox.collidesWith(ohb)) {
-			move = preMoveHitBox.adjustSpeedForCollision(ohb, move, speed);
+			move = preMoveHitBox.adjustForCollision(ohb, move, speed);
+			speed = 0;
 		}
 	}
-
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
 
