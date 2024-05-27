@@ -92,16 +92,21 @@ function tick() {
 	plyr.tickAnimFrame();
 	plyr.pos.x += move.x * speed;
 	plyr.pos.y += move.y * speed;
-	let hb = plyr.getAbsoluteHitbox();
+	let hb = plyr.calcHitBox();
+	let p2 = hb.p2();
+	let cameraLimit = new Vec2(
+		(Vars.canvasWidth / Vars.cameraScale),
+		(Vars.canvasHeight / Vars.cameraScale)
+	)
 	if (hb.x < 0) {
-		plyr.pos.x = hb.origin.x;
-	} else if (hb.p2().x > Vars.canvasWidth) {
-		plyr.pos.x = Vars.canvasWidth - hb.width + hb.origin.x;
+		plyr.pos.x = plyr.hitBox.origin.x;
+	} else if (p2.x > cameraLimit.x) {
+		plyr.pos.x = cameraLimit.x - plyr.hitBox.origin.x;
 	}
 	if (hb.y < 0) {
-		plyr.pos.y = hb.origin.y;
-	} else if (hb.p2().y > Vars.canvasHeight) {
-		plyr.pos.y = Vars.canvasHeight - hb.height + hb.origin.y;
+		plyr.pos.y = plyr.hitBox.origin.y;
+	} else if (p2.y > cameraLimit.y) {
+		plyr.pos.y = cameraLimit.y;
 	}
 }
 

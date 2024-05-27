@@ -112,16 +112,16 @@ var Box = (function () {
         return new Vec2(x, y);
     };
     Box.prototype.p1 = function () {
-        return this.getPoint('left', 'top');
+        return new Vec2(this.x, this.y);
     };
     Box.prototype.p2 = function () {
-        return this.getPoint('right', 'bottom');
+        return new Vec2(this.x + this.width, this.y + this.height);
     };
     Box.prototype.getCenterMiddle = function () {
         return this.getPoint('center', 'middle');
     };
     Box.prototype.fromPoint = function (point) {
-        return new Box(this.x, this.y, this.width, this.height, this.origin);
+        return new Box(point.x + this.x, point.y + this.y, this.width, this.height, this.origin);
     };
     Box.prototype.fromOrigin = function () {
         return new Box(this.x - this.origin.x, this.y - this.origin.y, this.width, this.height, new Vec2(0, 0));

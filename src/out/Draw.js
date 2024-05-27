@@ -41,7 +41,7 @@ function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
     var _loop_1 = function (v) {
         var obj = v;
-        var hb = obj.getAbsoluteHitbox();
+        var hb = obj.calcHitBox();
         if (Vars_1["default"].displayMode > 1) {
             var sprite = void 0;
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {

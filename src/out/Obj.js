@@ -37,8 +37,8 @@ var Obj = (function () {
     Obj.prototype.tickAnimFrame = function () {
         this.animations[this.animState].tickSprite();
     };
-    Obj.prototype.getAbsoluteHitbox = function () {
-        return this.hitBox.fromOrigin();
+    Obj.prototype.calcHitBox = function () {
+        return this.hitBox.fromPoint(this.pos).fromOrigin();
     };
     Obj.addObj = function (obj) {
         Obj.store[obj.id] = obj;

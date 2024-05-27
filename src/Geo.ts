@@ -116,18 +116,24 @@ export class Box {
 		return new Vec2(x, y);
 	}
 	p1() {
-		return this.getPoint('left', 'top');
+		return new Vec2(
+			this.x,
+			this.y,
+		);
 	}
 	p2() {
-		return this.getPoint('right', 'bottom');
+		return new Vec2(
+			this.x + this.width,
+			this.y + this.height,
+		);
 	}
 	getCenterMiddle() {
 		return this.getPoint('center', 'middle');
 	}
 	fromPoint(point: Vec2) {
 		return new Box(
-			this.x,
-			this.y,
+			point.x + this.x,
+			point.y + this.y,
 			this.width,
 			this.height,
 			this.origin,

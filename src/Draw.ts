@@ -54,7 +54,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
 	for (const v of entries) {
 		let obj = v;
-		let hb = obj.getAbsoluteHitbox();
+		let hb = obj.calcHitBox();
 
 		if (Vars.displayMode > 1) {
 
