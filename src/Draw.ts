@@ -133,17 +133,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 		if (!Vars.debugMode) {
 			continue;
 		}
-		let path = new Path2D();
-		let crosshairSize = 2;
-		let offset = 0;
-		let x = Math.floor(obj.pos.x) + offset;
-		let y = Math.floor(obj.pos.y) + offset;
-		path.moveTo(x - crosshairSize, y);
-		path.lineTo(x + crosshairSize, y);
-		path.moveTo(x, y - crosshairSize);
-		path.lineTo(x, y + crosshairSize);
-		ctx.stroke(path);
 
+		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		ctx.save();
 		ctx.font = "bold 7px Courier";
 		ctx.fillStyle = "black";
@@ -257,5 +248,28 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 			)
 		}
 	}
+	ctx.restore();
+}
+
+function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {
+	ctx.save();
+	ctx.lineWidth = 0.5;
+	let path = new Path2D();
+	let crosshairSize = 2;
+	let offset = 0;
+	x = x + offset;
+	y = y + offset;
+	if (diagonal) {
+		path.moveTo(x - crosshairSize, y - crosshairSize);
+		path.lineTo(x + crosshairSize, y + crosshairSize);
+		path.moveTo(x - crosshairSize, y + crosshairSize);
+		path.lineTo(x + crosshairSize, y - crosshairSize);
+	} else {
+		path.moveTo(x - crosshairSize, y);
+		path.lineTo(x + crosshairSize, y);
+		path.moveTo(x, y - crosshairSize);
+		path.lineTo(x, y + crosshairSize);
+	}
+	ctx.stroke(path);
 	ctx.restore();
 }

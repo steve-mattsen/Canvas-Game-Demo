@@ -60,41 +60,32 @@ function drawObjects(ctx) {
             ctx.fillStyle = 'black';
             var pointSize = 4;
             var topLeft = new Path2D();
-            var x_1 = Math.floor(hb.x);
-            var y_1 = Math.floor(hb.y);
-            topLeft.moveTo(x_1, y_1);
-            topLeft.lineTo(x_1 + pointSize, y_1);
-            topLeft.lineTo(x_1, y_1 + pointSize);
-            topLeft.lineTo(x_1, y_1);
+            var x = Math.floor(hb.x);
+            var y = Math.floor(hb.y);
+            topLeft.moveTo(x, y);
+            topLeft.lineTo(x + pointSize, y);
+            topLeft.lineTo(x, y + pointSize);
+            topLeft.lineTo(x, y);
             var botRight = new Path2D();
             var p2 = hb.p2();
-            x_1 = Math.floor(p2.x);
-            y_1 = Math.floor(p2.y);
-            botRight.moveTo(x_1, y_1);
-            botRight.lineTo(x_1 - pointSize, y_1);
-            botRight.lineTo(x_1, y_1 - pointSize);
-            botRight.lineTo(x_1, y_1);
+            x = Math.floor(p2.x);
+            y = Math.floor(p2.y);
+            botRight.moveTo(x, y);
+            botRight.lineTo(x - pointSize, y);
+            botRight.lineTo(x, y - pointSize);
+            botRight.lineTo(x, y);
             ctx.fill(topLeft);
             ctx.fill(botRight);
         }
         if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
             ctx.strokeStyle = "black";
-            var offset_1 = ctx.lineWidth * 0.5;
-            ctx.strokeRect(Math.floor(hb.x) + offset_1, Math.floor(hb.y) + offset_1, hb.width - offset_1 * 2, hb.height - offset_1 * 2);
+            var offset = ctx.lineWidth * 0.5;
+            ctx.strokeRect(Math.floor(hb.x) + offset, Math.floor(hb.y) + offset, hb.width - offset * 2, hb.height - offset * 2);
         }
         if (!Vars_1["default"].debugMode) {
             return "continue";
         }
-        var path = new Path2D();
-        var crosshairSize = 2;
-        var offset = 0;
-        var x = Math.floor(obj.pos.x) + offset;
-        var y = Math.floor(obj.pos.y) + offset;
-        path.moveTo(x - crosshairSize, y);
-        path.lineTo(x + crosshairSize, y);
-        path.moveTo(x, y - crosshairSize);
-        path.lineTo(x, y + crosshairSize);
-        ctx.stroke(path);
+        drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.save();
         ctx.font = "bold 7px Courier";
         ctx.fillStyle = "black";
@@ -172,6 +163,30 @@ function drawBackground(ctx) {
             ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
         }
     }
+    ctx.restore();
+}
+function drawMarker(ctx, x, y, diagonal) {
+    if (diagonal === void 0) { diagonal = true; }
+    ctx.save();
+    ctx.lineWidth = 0.5;
+    var path = new Path2D();
+    var crosshairSize = 2;
+    var offset = 0;
+    x = x + offset;
+    y = y + offset;
+    if (diagonal) {
+        path.moveTo(x - crosshairSize, y - crosshairSize);
+        path.lineTo(x + crosshairSize, y + crosshairSize);
+        path.moveTo(x - crosshairSize, y + crosshairSize);
+        path.lineTo(x + crosshairSize, y - crosshairSize);
+    }
+    else {
+        path.moveTo(x - crosshairSize, y);
+        path.lineTo(x + crosshairSize, y);
+        path.moveTo(x, y - crosshairSize);
+        path.lineTo(x, y + crosshairSize);
+    }
+    ctx.stroke(path);
     ctx.restore();
 }
 //# sourceMappingURL=Draw.js.map
