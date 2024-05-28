@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var Geo_1 = require("./Geo");
 var Vars = (function () {
     function Vars() {
     }
@@ -20,6 +21,7 @@ var Vars = (function () {
     Vars.canvasHeight = window.innerHeight / _a.canvasScale;
     Vars.cameraWidth = _a.canvasWidth / _a.cameraScale;
     Vars.cameraHeight = _a.canvasHeight / _a.cameraScale;
+    Vars.move = new Geo_1.Vec2(0, 0);
     Vars.bgColors = [
         "#ffffff",
         "#666666",

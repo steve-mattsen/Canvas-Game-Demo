@@ -15,6 +15,7 @@ export default class Vars {
 	static canvasHeight = window.innerHeight / this.canvasScale;
 	static cameraWidth = this.canvasWidth / this.cameraScale;
 	static cameraHeight = this.canvasHeight / this.cameraScale;
+	static move = new Vec2(0, 0);
 	static bgColors = [
 		"#ffffff",
 		"#666666",

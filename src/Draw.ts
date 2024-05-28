@@ -329,22 +329,44 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		0,
 		10,
 	);
-	ctx.fillStyle = Vars.bgColors[0] + '88';
-	ctx.fill();
-	ctx.strokeStyle = Vars.fgColors[0];
+	ctx.strokeStyle = Vars.fgColors[0] + '88';
 	ctx.stroke();
 
-	let innerStickSize = stick.size / 2;
-	ctx.beginPath();
-	ctx.ellipse(
+	let gradient = ctx.createRadialGradient(
 		middle.x,
 		middle.y,
+		0,
+		middle.x,
+		middle.y,
+		stick.size / 2,
+	)
+	gradient.addColorStop(0, 'transparent');
+	gradient.addColorStop(0.99, Vars.bgColors[0] + '88');
+	gradient.addColorStop(1.0, 'transparent');
+	ctx.fillStyle = gradient;
+	ctx.fillRect(
+		middle.x - stick.size / 2,
+		middle.y - stick.size / 2,
+		stick.size,
+		stick.size,
+	);
+
+	let innerStickSize = stick.size / 2;
+	let innerStickPos = new Vec2(
+		middle.x + Vars.move.x * innerStickSize / 2,
+		middle.y + Vars.move.y * innerStickSize / 2,
+	);
+	ctx.beginPath();
+	ctx.ellipse(
+		innerStickPos.x,
+		innerStickPos.y,
 		innerStickSize / 2,
 		innerStickSize / 2,
 		0,
 		0,
 		10,
 	);
+	ctx.fillStyle = Vars.bgColors[0];
 	ctx.fill();
 	ctx.stroke();
 

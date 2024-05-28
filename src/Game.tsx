@@ -63,6 +63,7 @@ function tick() {
 	}
 
 	move = move.normalize();
+	Vars.move = move;
 
 	if (Vars.inputState[" "] === 2 && plyr.z === 0) {
 		plyr.zVelocity = 3.5;
