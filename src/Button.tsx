@@ -90,8 +90,8 @@ window.onmousemove = (e) => {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.clientX / Vars.canvasScale,
-		e.clientY / Vars.canvasScale,
+		e.clientX / Vars.cameraScale,
+		e.clientY / Vars.cameraScale,
 	);
 }
 window.onmouseup = (e) => {
@@ -114,8 +114,8 @@ window.ontouchmove = (e) => {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.touches[0].clientX / Vars.canvasScale,
-		e.touches[0].clientY / Vars.canvasScale,
+		e.touches[0].clientX / Vars.cameraScale,
+		e.touches[0].clientY / Vars.cameraScale,
 	);
 }
 window.ontouchend = (e) => {
@@ -148,10 +148,7 @@ function clickOrTouchStart(point: Vec2) {
 	// 	}
 	// }
 	let button = Button.store.F6;
-	console.log(button.dimensions);
-	console.log(point);
 	if (button.dimensions.contains(point)) {
-		console.log('click');
 		button.click();
 		return;
 	}

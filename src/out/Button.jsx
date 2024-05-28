@@ -88,7 +88,7 @@ window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].canvasScale, e.clientY / Vars_1["default"].canvasScale);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -105,7 +105,7 @@ window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
 };
 window.ontouchend = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -127,10 +127,7 @@ function clickOrTouchStart(point) {
     }
     Vars_1["default"].inputState['mouseDown'] = 1;
     var button = Button.store.F6;
-    console.log(button.dimensions);
-    console.log(point);
     if (button.dimensions.contains(point)) {
-        console.log('click');
         button.click();
         return;
     }
