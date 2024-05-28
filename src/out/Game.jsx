@@ -7,6 +7,7 @@ var Draw_1 = require("./Draw");
 var Button_1 = require("./Button");
 require("./World");
 var VirtualJoystick_1 = require("./VirtualJoystick");
+var Input_1 = require("./Input");
 Button_1["default"].store['F3'].click = function () {
     Vars_1["default"].slowMode = !Vars_1["default"].slowMode;
     clearTimeout(drawThread);
@@ -28,6 +29,7 @@ function tick() {
     var runSpeed = 2;
     var move;
     var speed = 0;
+    var stick = Input_1["default"].getOnscreenControl('left_stick');
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {
         move = (0, Geo_1.vec)(Number(gp === null || gp === void 0 ? void 0 : gp.axes[0]), Number(gp === null || gp === void 0 ? void 0 : gp.axes[1]));
         speed = move.length() * runSpeed;
@@ -41,6 +43,10 @@ function tick() {
             speed = line.length();
         }
         move = line.normal();
+    }
+    else if (stick.value.x !== 0 || stick.value.y !== 0) {
+        move = stick.value;
+        speed = runSpeed;
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)

@@ -86,19 +86,18 @@ window.onmousedown = function (e) {
 };
 window.onmousemove = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    if (Vars_1["default"].mouseMove === null) {
-        return;
-    }
     if (Vars_1["default"].inputState['left_stick'] > 0) {
         var stick = Input_1["default"].getOnscreenControl('left_stick');
-        Vars_1["default"].mouseMove = stick.screenToMouseMove(new Geo_1.Vec2(e.clientX, e.clientY));
+        stick.screenToValue(new Geo_1.Vec2(e.clientX, e.clientY));
     }
-    else {
+    else if (Vars_1["default"].mouseMove != null) {
         Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
     }
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
+    var stick = Input_1["default"].getOnscreenControl('left_stick');
+    stick.value = new Geo_1.Vec2(0, 0);
     clickOrTouchEnd();
     e.preventDefault();
 };
@@ -114,7 +113,7 @@ window.ontouchmove = function (e) {
     }
     if (Vars_1["default"].inputState['left_stick'] > 0) {
         var stick = Input_1["default"].getOnscreenControl('left_stick');
-        Vars_1["default"].mouseMove = stick.screenToMouseMove(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
+        stick.screenToValue(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
     }
     else {
         Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
@@ -138,7 +137,6 @@ function clickOrTouchStart(point) {
     if (Vars_1["default"].inputState['mouseDown'] > 0) {
         return;
     }
-    Vars_1["default"].inputState['mouseDown'] = 1;
     var button = Button.store.F6;
     if (button.dimensions.contains(point)) {
         button.click();
@@ -147,9 +145,10 @@ function clickOrTouchStart(point) {
     var stick = Input_1["default"].getOnscreenControl('left_stick');
     if (stick.box.contains(point)) {
         Vars_1["default"].inputState['left_stick'] = 1;
-        Vars_1["default"].mouseMove = stick.screenToMouseMove(point);
+        stick.screenToValue(point);
     }
     else {
+        Vars_1["default"].inputState['mouseDown'] = 1;
         point.x /= Vars_1["default"].cameraScale;
         point.y /= Vars_1["default"].cameraScale;
         Vars_1["default"].mouseMove = point;

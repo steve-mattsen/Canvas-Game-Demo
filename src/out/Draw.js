@@ -198,6 +198,7 @@ function drawControls(ctx) {
     ctx.globalCompositeOperation = "luminosity";
     var stick = Input_1["default"].getOnscreenControl('left_stick');
     var box = stick.box;
+    console.log(stick.value);
     var middle = box.getCenterMiddle();
     ctx.beginPath();
     ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);
@@ -210,7 +211,7 @@ function drawControls(ctx) {
     ctx.fillStyle = gradient;
     ctx.fillRect(middle.x - stick.size / 2, middle.y - stick.size / 2, stick.size, stick.size);
     var innerStickSize = stick.size / 2;
-    var innerStickPos = new Geo_1.Vec2(middle.x + Vars_1["default"].move.x * innerStickSize / 2, middle.y + Vars_1["default"].move.y * innerStickSize / 2);
+    var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 2, middle.y + stick.value.y * innerStickSize / 2);
     ctx.beginPath();
     ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
     ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';

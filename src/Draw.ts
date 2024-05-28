@@ -319,6 +319,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 	// console.log(Input.onScreenControls);
 	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 	let box = stick.box;
+	console.log(stick.value);
 	let middle = box.getCenterMiddle();
 	ctx.beginPath();
 	ctx.ellipse(
@@ -354,8 +355,8 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 
 	let innerStickSize = stick.size / 2;
 	let innerStickPos = new Vec2(
-		middle.x + Vars.move.x * innerStickSize / 2,
-		middle.y + Vars.move.y * innerStickSize / 2,
+		middle.x + stick.value.x * innerStickSize / 2,
+		middle.y + stick.value.y * innerStickSize / 2,
 	);
 	ctx.beginPath();
 	ctx.ellipse(

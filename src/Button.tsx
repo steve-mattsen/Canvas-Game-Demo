@@ -88,16 +88,13 @@ window.onmousedown = (e) => {
 }
 window.onmousemove = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	if (Vars.mouseMove === null) {
-		return;
-	}
 	if (Vars.inputState['left_stick'] > 0) {
 		let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
-		Vars.mouseMove = stick.screenToMouseMove(new Vec2(
+		stick.screenToValue(new Vec2(
 			e.clientX,
 			e.clientY,
 		));
-	} else {
+	} else if (Vars.mouseMove != null) {
 		Vars.mouseMove = vec(
 			e.clientX / Vars.cameraScale,
 			e.clientY / Vars.cameraScale,
@@ -106,6 +103,8 @@ window.onmousemove = (e) => {
 }
 window.onmouseup = (e) => {
 	Vars.debugMode && console.log(e.type, e);
+	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
+	stick.value = new Vec2(0, 0);
 	clickOrTouchEnd();
 	e.preventDefault();
 }
@@ -125,7 +124,7 @@ window.ontouchmove = (e) => {
 	}
 	if (Vars.inputState['left_stick'] > 0) {
 		let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
-		Vars.mouseMove = stick.screenToMouseMove(new Vec2(
+		stick.screenToValue(new Vec2(
 			e.touches[0].clientX,
 			e.touches[0].clientY,
 		));
@@ -155,7 +154,6 @@ function clickOrTouchStart(point: Vec2) {
 	if (Vars.inputState['mouseDown'] > 0) {
 		return;
 	}
-	Vars.inputState['mouseDown'] = 1;
 	let button = Button.store.F6;
 	if (button.dimensions.contains(point)) {
 		button.click();
@@ -164,8 +162,9 @@ function clickOrTouchStart(point: Vec2) {
 	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 	if (stick.box.contains(point)) {
 		Vars.inputState['left_stick'] = 1;
-		Vars.mouseMove = stick.screenToMouseMove(point);
+		stick.screenToValue(point);
 	} else {
+		Vars.inputState['mouseDown'] = 1;
 		point.x /= Vars.cameraScale;
 		point.y /= Vars.cameraScale;
 		Vars.mouseMove = point;

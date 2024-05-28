@@ -17,7 +17,6 @@ var __extends = (this && this.__extends) || (function () {
 exports.__esModule = true;
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
-var Vars_1 = require("./Vars");
 var VirtualJoystick = (function (_super) {
     __extends(VirtualJoystick, _super);
     function VirtualJoystick(id) {
@@ -27,10 +26,9 @@ var VirtualJoystick = (function (_super) {
         _this.value = new Geo_1.Vec2(0, 0);
         return _this;
     }
-    VirtualJoystick.prototype.screenToMouseMove = function (point) {
+    VirtualJoystick.prototype.screenToValue = function (point) {
         var middle = this.box.getCenterMiddle();
-        var relativeMove = new Geo_1.Line(middle.x, middle.y, point.x, point.y).normal();
-        return new Geo_1.Vec2(Vars_1["default"].cameraWidth * relativeMove.x, Vars_1["default"].cameraHeight * relativeMove.y);
+        this.value = new Geo_1.Line(middle.x, middle.y, point.x, point.y).normal();
     };
     return VirtualJoystick;
 }(Input_1.OnScreenControl));

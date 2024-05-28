@@ -5,6 +5,7 @@ import draw from "./Draw";
 import Button from "./Button";
 import "./World";
 import VirtualJoystick from "./VirtualJoystick";
+import Input from "./Input";
 
 Button.store['F3'].click = () => {
 	Vars.slowMode = !Vars.slowMode;
@@ -31,6 +32,7 @@ function tick() {
 	let runSpeed = 2;
 	let move: Vec2;
 	let speed = 0;
+	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 	if (gp?.axes[0] || gp?.axes[1]) {
 		move = vec(
 			Number(gp?.axes[0]),
@@ -50,6 +52,9 @@ function tick() {
 			speed = line.length();
 		}
 		move = line.normal();
+	} else if (stick.value.x !== 0 || stick.value.y !== 0) {
+		move = stick.value;
+		speed = runSpeed;
 	} else {
 		let moveX = (Vars.inputState.arrowright || Vars.inputState.d ? 1 : 0)
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);
