@@ -38,8 +38,8 @@ function tick() {
 		let line = new Line(
 			plyr.pos.x,
 			plyr.pos.y,
-			Vars.mouseMove.x - plyr.pos.x,
-			Vars.mouseMove.y - plyr.pos.y
+			Vars.mouseMove.x,
+			Vars.mouseMove.y
 		);
 		if (line.length() > runSpeed) {
 			speed = runSpeed;
@@ -47,6 +47,8 @@ function tick() {
 			speed = line.length();
 		}
 		move = line.normal().p2();
+
+		console.log(move)
 	} else {
 		let moveX = (Vars.inputState.arrowright || Vars.inputState.d ? 1 : 0)
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);

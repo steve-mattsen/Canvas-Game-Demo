@@ -246,9 +246,11 @@ var Line = (function () {
     Line.prototype.normal = function () {
         var length = this.length();
         if (length === 0) {
-            return new Line(this.x1, this.y1, this.x2, this.y2);
+            return new Line(0, 0, 0, 0);
         }
-        return new Line(0, 0, (this.x2 / length) - this.x1, (this.y2 / length) - this.y1);
+        var a = this.y2 - this.y1;
+        var b = this.x2 - this.x1;
+        return new Line(0, 0, (b / length), (a / length));
     };
     Line.prototype.p1 = function () {
         return new Vec2(this.x1, this.y1);

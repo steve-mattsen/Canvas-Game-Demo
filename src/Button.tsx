@@ -79,8 +79,8 @@ window.onkeydown = e => {
 window.onmousedown = (e) => {
 	Vars.debugMode && console.log(e.type, e);
 	let point = vec(
-		e.clientX / Vars.canvasScale,
-		e.clientY / Vars.canvasScale
+		e.clientX / Vars.cameraScale,
+		e.clientY / Vars.cameraScale,
 	);
 	clickOrTouchStart(point);
 }
@@ -90,8 +90,8 @@ window.onmousemove = (e) => {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.clientX / Vars.canvasScale,
-		e.clientY / Vars.canvasScale,
+		e.clientX / Vars.cameraScale,
+		e.clientY / Vars.cameraScale,
 	);
 }
 window.onmouseup = (e) => {
@@ -103,8 +103,8 @@ window.onmouseup = (e) => {
 window.ontouchstart = (e) => {
 	Vars.debugMode && console.log(e.type, e);
 	let point = vec(
-		e.touches[0].clientX / Vars.canvasScale,
-		e.touches[0].clientY / Vars.canvasScale,
+		e.touches[0].clientX / Vars.cameraScale,
+		e.touches[0].clientY / Vars.cameraScale,
 	);
 	clickOrTouchStart(point);
 }
@@ -114,8 +114,8 @@ window.ontouchmove = (e) => {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.touches[0].clientX / Vars.canvasScale,
-		e.touches[0].clientY / Vars.canvasScale,
+		e.touches[0].clientX / Vars.cameraScale,
+		e.touches[0].clientY / Vars.cameraScale,
 	);
 }
 window.ontouchend = (e) => {

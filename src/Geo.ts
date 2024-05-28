@@ -284,13 +284,15 @@ export class Line {
 	normal() {
 		let length = this.length();
 		if (length === 0) {
-			return new Line(this.x1, this.y1, this.x2, this.y2);
+			return new Line(0, 0, 0, 0);
 		}
+		let a = this.y2 - this.y1;
+		let b = this.x2 - this.x1;
 		return new Line(
 			0,
 			0,
-			(this.x2 / length) - this.x1,
-			(this.y2 / length) - this.y1,
+			(b / length),
+			(a / length),
 		);
 	}
 	p1() {

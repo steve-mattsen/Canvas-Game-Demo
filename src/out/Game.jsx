@@ -31,7 +31,7 @@ function tick() {
         speed = move.length() * runSpeed;
     }
     else if (Vars_1["default"].mouseMove !== null) {
-        var line = new Geo_1.Line(plyr.pos.x, plyr.pos.y, Vars_1["default"].mouseMove.x - plyr.pos.x, Vars_1["default"].mouseMove.y - plyr.pos.y);
+        var line = new Geo_1.Line(plyr.pos.x, plyr.pos.y, Vars_1["default"].mouseMove.x, Vars_1["default"].mouseMove.y);
         if (line.length() > runSpeed) {
             speed = runSpeed;
         }
@@ -39,6 +39,7 @@ function tick() {
             speed = line.length();
         }
         move = line.normal().p2();
+        console.log(move);
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)
