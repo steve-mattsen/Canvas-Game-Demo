@@ -4,6 +4,7 @@ import Vars from "./Vars";
 import draw from "./Draw";
 import Button from "./Button";
 import "./World";
+import VirtualJoystick from "./VirtualJoystick";
 
 Button.store['F3'].click = () => {
 	Vars.slowMode = !Vars.slowMode;
@@ -13,6 +14,8 @@ Button.store['F3'].click = () => {
 	drawThread = setInterval(draw, 1000 / refresh);
 	gameThread = setInterval(tick, 1000 / refresh);
 }
+
+new VirtualJoystick('left_stick');
 
 function tick() {
 	let plyr = Obj.store['player'];

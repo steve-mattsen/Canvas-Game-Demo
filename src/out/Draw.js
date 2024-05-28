@@ -5,6 +5,7 @@ var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
 var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
+var Input_1 = require("./Input");
 function draw() {
     var canvas = document.getElementById("game_window");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
@@ -37,6 +38,7 @@ function draw() {
     Vars_1["default"].debugMode && drawDebugInfo(ctx);
     ctx.scale(1 / Vars_1["default"].cameraScale, 1 / Vars_1["default"].cameraScale);
     ctx.imageSmoothingEnabled = true;
+    drawControls(ctx);
     drawButtons(ctx);
 }
 exports["default"] = draw;
@@ -190,5 +192,23 @@ function drawDebugInfo(ctx) {
         drawMarker(ctx, obj.pos.x, obj.pos.y);
         ctx.restore();
     }
+}
+function drawControls(ctx) {
+    ctx.save();
+    var stick = Input_1["default"].getOnscreenControl('left_stick');
+    var box = stick.box;
+    var middle = box.getCenterMiddle();
+    ctx.beginPath();
+    ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);
+    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    ctx.fill();
+    ctx.strokeStyle = Vars_1["default"].fgColors[0];
+    ctx.stroke();
+    var innerStickSize = stick.size / 2;
+    ctx.beginPath();
+    ctx.ellipse(middle.x, middle.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
 }
 //# sourceMappingURL=Draw.js.map

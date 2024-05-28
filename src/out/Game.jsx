@@ -6,6 +6,7 @@ var Vars_1 = require("./Vars");
 var Draw_1 = require("./Draw");
 var Button_1 = require("./Button");
 require("./World");
+var VirtualJoystick_1 = require("./VirtualJoystick");
 Button_1["default"].store['F3'].click = function () {
     Vars_1["default"].slowMode = !Vars_1["default"].slowMode;
     clearTimeout(drawThread);
@@ -14,6 +15,7 @@ Button_1["default"].store['F3'].click = function () {
     drawThread = setInterval(Draw_1["default"], 1000 / refresh);
     gameThread = setInterval(tick, 1000 / refresh);
 };
+new VirtualJoystick_1["default"]('left_stick');
 function tick() {
     var plyr = Obj_1.Obj.store['player'];
     var gp = navigator.getGamepads()[0];

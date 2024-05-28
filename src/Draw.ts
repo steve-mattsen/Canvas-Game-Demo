@@ -3,6 +3,8 @@ import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
 import { Box, Vec2 } from "./Geo";
+import Input from "./Input";
+import VirtualJoystick from "./VirtualJoystick";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -50,6 +52,7 @@ export default function draw() {
 	ctx.scale(1 / Vars.cameraScale, 1 / Vars.cameraScale);
 	ctx.imageSmoothingEnabled = true;
 
+	drawControls(ctx);
 
 	drawButtons(ctx);
 }
@@ -308,4 +311,42 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		ctx.restore();
 	}
+}
+
+function drawControls(ctx: CanvasRenderingContext2D) {
+	ctx.save();
+	// console.log(Input.onScreenControls);
+	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
+	let box = stick.box;
+	let middle = box.getCenterMiddle();
+	ctx.beginPath();
+	ctx.ellipse(
+		middle.x,
+		middle.y,
+		stick.size / 2,
+		stick.size / 2,
+		0,
+		0,
+		10,
+	);
+	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fill();
+	ctx.strokeStyle = Vars.fgColors[0];
+	ctx.stroke();
+
+	let innerStickSize = stick.size / 2;
+	ctx.beginPath();
+	ctx.ellipse(
+		middle.x,
+		middle.y,
+		innerStickSize / 2,
+		innerStickSize / 2,
+		0,
+		0,
+		10,
+	);
+	ctx.fill();
+	ctx.stroke();
+
+	ctx.restore();
 }

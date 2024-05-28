@@ -15,7 +15,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-exports.VirtualJoystick = void 0;
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
 var VirtualJoystick = (function (_super) {
@@ -24,10 +23,10 @@ var VirtualJoystick = (function (_super) {
         var _this = _super.call(this, id) || this;
         _this.size = 100;
         _this.box = new Geo_1.Box(0, window.innerHeight - _this.size, _this.size, _this.size);
-        _this.currentValue = new Geo_1.Vec2(0, 0);
+        _this.value = new Geo_1.Vec2(0, 0);
         return _this;
     }
     return VirtualJoystick;
 }(Input_1.OnScreenControl));
-exports.VirtualJoystick = VirtualJoystick;
+exports["default"] = VirtualJoystick;
 //# sourceMappingURL=VirtualJoystick.js.map
