@@ -284,13 +284,11 @@ export class Line {
 	normal() {
 		let length = this.length();
 		if (length === 0) {
-			return new Line(0, 0, 0, 0);
+			return new Vec2(0, 0);
 		}
 		let a = this.y2 - this.y1;
 		let b = this.x2 - this.x1;
-		return new Line(
-			0,
-			0,
+		return new Vec2(
 			(b / length),
 			(a / length),
 		);

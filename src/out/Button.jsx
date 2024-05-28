@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var Geo_1 = require("./Geo");
+var Input_1 = require("./Input");
 var Vars_1 = require("./Vars");
 var Button = (function () {
     function Button(key, varKey, title, click, dimensions) {
@@ -88,7 +89,13 @@ window.onmousemove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
+    if (Vars_1["default"].inputState['left_stick'] > 0) {
+        var stick = Input_1["default"].getOnscreenControl('left_stick');
+        Vars_1["default"].mouseMove = stick.screenToMouseMove(new Geo_1.Vec2(e.clientX, e.clientY));
+    }
+    else {
+        Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
+    }
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -105,7 +112,13 @@ window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
+    if (Vars_1["default"].inputState['left_stick'] > 0) {
+        var stick = Input_1["default"].getOnscreenControl('left_stick');
+        Vars_1["default"].mouseMove = stick.screenToMouseMove(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
+    }
+    else {
+        Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
+    }
 };
 window.ontouchend = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -131,12 +144,20 @@ function clickOrTouchStart(point) {
         button.click();
         return;
     }
-    point.x /= Vars_1["default"].cameraScale;
-    point.y /= Vars_1["default"].cameraScale;
-    Vars_1["default"].mouseMove = point;
+    var stick = Input_1["default"].getOnscreenControl('left_stick');
+    if (stick.box.contains(point)) {
+        Vars_1["default"].inputState['left_stick'] = 1;
+        Vars_1["default"].mouseMove = stick.screenToMouseMove(point);
+    }
+    else {
+        point.x /= Vars_1["default"].cameraScale;
+        point.y /= Vars_1["default"].cameraScale;
+        Vars_1["default"].mouseMove = point;
+    }
 }
 function clickOrTouchEnd() {
     Vars_1["default"].inputState['mouseDown'] = 0;
+    Vars_1["default"].inputState['left_stick'] = 0;
     Vars_1["default"].mouseMove = null;
 }
 //# sourceMappingURL=Button.jsx.map

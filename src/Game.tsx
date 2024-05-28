@@ -49,7 +49,7 @@ function tick() {
 		} else {
 			speed = line.length();
 		}
-		move = line.normal().p2();
+		move = line.normal();
 	} else {
 		let moveX = (Vars.inputState.arrowright || Vars.inputState.d ? 1 : 0)
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);

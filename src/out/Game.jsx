@@ -40,7 +40,7 @@ function tick() {
         else {
             speed = line.length();
         }
-        move = line.normal().p2();
+        move = line.normal();
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)
