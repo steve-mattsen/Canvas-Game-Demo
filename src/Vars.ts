@@ -1,7 +1,7 @@
 import { Vec2, Box } from "./Geo";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
-	static debugMode = true;
+	static debugMode = false;
 	static displayMode = 4;
 	static spriteSheetMode = false;
 	static slowMode = false;

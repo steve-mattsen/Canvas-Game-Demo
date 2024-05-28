@@ -42,7 +42,7 @@ const player = new Obj(
 		(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
 	),
 	anims.idle_down.sprites[0],
-	new Box(0, 0, 10, 10, ['center', 'bottom']),
+	new Box(0, 0, 10, 8, ['center', 'bottom']),
 	anims
 );
 Obj.addObj(player);
@@ -56,7 +56,7 @@ const tree = new Obj(
 		tree_sprite.drawBox.width * .4,
 		tree_sprite.drawBox.height * .75,
 		tree_sprite.drawBox.width * .2,
-		tree_sprite.drawBox.height * .2,
+		tree_sprite.drawBox.height * .15,
 		['center', 'bottom'],
 	),
 );

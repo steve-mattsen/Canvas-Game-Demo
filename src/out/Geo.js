@@ -214,10 +214,10 @@ var Box = (function () {
         }
         if (!canMoveY) {
             if (newMove.y < 0 && p1.y + newMove.y < op2.y) {
-                newMove.y = Math.ceil(op2.y - p1.y);
+                newMove.y = Math.ceil(op2.y - p1.y + 0.5);
             }
             else if (newMove.y > 0 && p2.y + newMove.y > op1.y) {
-                newMove.y = Math.floor(op1.y - p2.y);
+                newMove.y = Math.floor(op1.y - p2.y - 0.5);
             }
         }
         return newMove;

@@ -23,7 +23,7 @@ function tick() {
         }
     });
     var walkSpeed = 1;
-    var runSpeed = 3;
+    var runSpeed = 2;
     var move;
     var speed = 0;
     if ((gp === null || gp === void 0 ? void 0 : gp.axes[0]) || (gp === null || gp === void 0 ? void 0 : gp.axes[1])) {

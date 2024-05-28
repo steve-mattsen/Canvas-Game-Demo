@@ -6,7 +6,7 @@ var Vars = (function () {
     var _a;
     _a = Vars;
     Vars.inputState = {};
-    Vars.debugMode = true;
+    Vars.debugMode = false;
     Vars.displayMode = 4;
     Vars.spriteSheetMode = false;
     Vars.slowMode = false;

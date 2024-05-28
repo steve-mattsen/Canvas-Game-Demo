@@ -25,7 +25,7 @@ function tick() {
 	});
 
 	let walkSpeed = 1;
-	let runSpeed = 3;
+	let runSpeed = 2;
 	let move: Vec2;
 	let speed = 0;
 	if (gp?.axes[0] || gp?.axes[1]) {
