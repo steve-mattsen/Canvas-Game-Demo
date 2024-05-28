@@ -191,9 +191,9 @@ export class Box {
 	}
 	contains(point: Vec2) {
 		if (point.x < this.x
-			|| point.x > this.width
+			|| point.x > this.x + this.width
 			|| point.y < this.y
-			|| point.y > this.height
+			|| point.y > this.y + this.height
 		) {
 			return false;
 		}

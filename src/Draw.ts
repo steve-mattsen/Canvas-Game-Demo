@@ -2,7 +2,7 @@ import { Img, sprt } from "./Sprites";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
-import { Box } from "./Geo";
+import { Box, Vec2 } from "./Geo";
 
 export default function draw() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -115,63 +115,41 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 function drawButtons(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	// Draw optional keys and states
-	let i = 0;
-	for (const [key, button] of Object.entries(Button.store).reverse()) {
-		if (!Vars.showButtons && button.varKey !== 'showButtons') {
-			continue;
-		}
-		let aspectRatio = Vars.cameraWidth;
-		let buttonWidth;
-		let buttonHeight;
-		let margin;
-		let buttonAspect = 1 / 8;
-		if (aspectRatio > 1) {
-			//It's wide. Use width as primary dimension.
-			buttonWidth = Math.max(
-				70,
-				Math.ceil(Vars.canvasWidth * 0.2),
-				Math.ceil(Vars.canvasHeight * 0.05 / buttonAspect),
-			);
-		} else if (aspectRatio > 0.5) {
-			buttonWidth = Math.max(
-				70,
-				Math.ceil(Vars.canvasWidth * .5)
-			);
-		} else {
-			buttonWidth = Math.ceil(Vars.canvasWidth);
-		}
-		buttonHeight = Math.ceil(buttonWidth * buttonAspect);
-		margin = Math.ceil(buttonHeight * .2);
-		let buttonX = Vars.canvasWidth - buttonWidth - margin;
-		let buttonY = Vars.canvasHeight - (buttonHeight + margin) * (i + 1);
-
-		Button.store[key].dimensions = new Box(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight);
-		let colorKey = Number(Reflect.get(Vars, button.varKey));
-		ctx.fillStyle = Vars.bgColors[colorKey] + "88";
-		ctx.fillRect(
-			buttonX,
-			buttonY,
-			buttonWidth,
-			buttonHeight,
-		)
-		ctx.strokeStyle = "black";
-		ctx.strokeRect(
-			buttonX,
-			buttonY,
-			buttonWidth,
-			buttonHeight,
-		)
-		ctx.fillStyle = Vars.fgColors[colorKey];
-		ctx.textAlign = "left";
-		ctx.font = `${Math.ceil(buttonHeight * .75)}px Courier`;
-		ctx.fillText(
-			`${key} ${button.title}`,
-			buttonX + margin,
-			buttonY + Math.ceil(buttonHeight / 2) + margin,
-			buttonWidth - margin * 2,
-		)
-		i++;
-	}
+	let button = Button.store.F6;
+	let width = 50;
+	let margin = 5;
+	button.dimensions = new Box(
+		Vars.canvasWidth - width - margin,
+		margin,
+		width,
+		width,
+		new Vec2(0, 0),
+	);
+	let colorKey = Number(Reflect.get(Vars, button.varKey));
+	ctx.fillStyle = Vars.bgColors[colorKey] + "88";
+	ctx.fillRect(
+		button.dimensions.x,
+		button.dimensions.y,
+		button.dimensions.width,
+		button.dimensions.height,
+	);
+	ctx.strokeStyle = "black";
+	ctx.strokeRect(
+		button.dimensions.x,
+		button.dimensions.y,
+		button.dimensions.width,
+		button.dimensions.height,
+	);
+	ctx.fillStyle = Vars.fgColors[colorKey];
+	ctx.textAlign = "left";
+	ctx.textBaseline = "hanging";
+	ctx.font = `bold ${Math.ceil(button.dimensions.height * 1)}px Courier`;
+	ctx.fillText(
+		`⤡`,
+		button.dimensions.x + margin / 2,
+		margin * 2.5,
+		width,
+	)
 	ctx.restore();
 }
 

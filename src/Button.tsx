@@ -79,19 +79,19 @@ window.onkeydown = e => {
 window.onmousedown = (e) => {
 	Vars.debugMode && console.log(e.type, e);
 	let point = vec(
-		e.clientX / Vars.cameraScale,
-		e.clientY / Vars.cameraScale,
+		e.clientX / Vars.canvasScale,
+		e.clientY / Vars.canvasScale,
 	);
 	clickOrTouchStart(point);
 }
 window.onmousemove = (e) => {
-	// Vars.debugMode && console.log(e.type, e);
+	Vars.debugMode && console.log(e.type, e);
 	if (Vars.mouseMove === null) {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.clientX / Vars.cameraScale,
-		e.clientY / Vars.cameraScale,
+		e.clientX / Vars.canvasScale,
+		e.clientY / Vars.canvasScale,
 	);
 }
 window.onmouseup = (e) => {
@@ -103,8 +103,8 @@ window.onmouseup = (e) => {
 window.ontouchstart = (e) => {
 	Vars.debugMode && console.log(e.type, e);
 	let point = vec(
-		e.touches[0].clientX / Vars.cameraScale,
-		e.touches[0].clientY / Vars.cameraScale,
+		e.touches[0].clientX / Vars.canvasScale,
+		e.touches[0].clientY / Vars.canvasScale,
 	);
 	clickOrTouchStart(point);
 }
@@ -114,8 +114,8 @@ window.ontouchmove = (e) => {
 		return;
 	}
 	Vars.mouseMove = vec(
-		e.touches[0].clientX / Vars.cameraScale,
-		e.touches[0].clientY / Vars.cameraScale,
+		e.touches[0].clientX / Vars.canvasScale,
+		e.touches[0].clientY / Vars.canvasScale,
 	);
 }
 window.ontouchend = (e) => {
@@ -138,15 +138,25 @@ function clickOrTouchStart(point: Vec2) {
 		return;
 	}
 	Vars.inputState['mouseDown'] = 1;
-	for (const [key, button] of Object.entries(Button.store)) {
-		if (!Vars.showButtons && button.varKey != "showButtons") {
-			continue;
-		}
-		if (button.dimensions.contains(point)) {
-			button.click();
-			return;
-		}
+	// for (const [key, button] of Object.entries(Button.store)) {
+	// 	// if (!Vars.showButtons && button.varKey != "showButtons") {
+	// 	// 	continue;
+	// 	// }
+	// 	if (button.dimensions.contains(point)) {
+	// 		button.click();
+	// 		return;
+	// 	}
+	// }
+	let button = Button.store.F6;
+	console.log(button.dimensions);
+	console.log(point);
+	if (button.dimensions.contains(point)) {
+		console.log('click');
+		button.click();
+		return;
 	}
+	point.x /= Vars.cameraScale;
+	point.y /= Vars.cameraScale;
 	Vars.mouseMove = point;
 }
 

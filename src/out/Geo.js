@@ -173,9 +173,9 @@ var Box = (function () {
     };
     Box.prototype.contains = function (point) {
         if (point.x < this.x
-            || point.x > this.width
+            || point.x > this.x + this.width
             || point.y < this.y
-            || point.y > this.height) {
+            || point.y > this.y + this.height) {
             return false;
         }
         return true;

@@ -80,14 +80,15 @@ window.onkeydown = function (e) {
 };
 window.onmousedown = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
+    var point = (0, Geo_1.vec)(e.clientX / Vars_1["default"].canvasScale, e.clientY / Vars_1["default"].canvasScale);
     clickOrTouchStart(point);
 };
 window.onmousemove = function (e) {
+    Vars_1["default"].debugMode && console.log(e.type, e);
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].cameraScale, e.clientY / Vars_1["default"].cameraScale);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.clientX / Vars_1["default"].canvasScale, e.clientY / Vars_1["default"].canvasScale);
 };
 window.onmouseup = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -96,7 +97,7 @@ window.onmouseup = function (e) {
 };
 window.ontouchstart = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
+    var point = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
     clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
@@ -104,7 +105,7 @@ window.ontouchmove = function (e) {
     if (Vars_1["default"].mouseMove === null) {
         return;
     }
-    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
+    Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
 };
 window.ontouchend = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
@@ -125,16 +126,16 @@ function clickOrTouchStart(point) {
         return;
     }
     Vars_1["default"].inputState['mouseDown'] = 1;
-    for (var _i = 0, _a = Object.entries(Button.store); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], button = _b[1];
-        if (!Vars_1["default"].showButtons && button.varKey != "showButtons") {
-            continue;
-        }
-        if (button.dimensions.contains(point)) {
-            button.click();
-            return;
-        }
+    var button = Button.store.F6;
+    console.log(button.dimensions);
+    console.log(point);
+    if (button.dimensions.contains(point)) {
+        console.log('click');
+        button.click();
+        return;
     }
+    point.x /= Vars_1["default"].cameraScale;
+    point.y /= Vars_1["default"].cameraScale;
     Vars_1["default"].mouseMove = point;
 }
 function clickOrTouchEnd() {

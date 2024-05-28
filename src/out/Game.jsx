@@ -39,7 +39,6 @@ function tick() {
             speed = line.length();
         }
         move = line.normal().p2();
-        console.log(move);
     }
     else {
         var moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)

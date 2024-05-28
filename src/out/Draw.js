@@ -76,42 +76,20 @@ function drawObjects(ctx) {
 }
 function drawButtons(ctx) {
     ctx.save();
-    var i = 0;
-    for (var _i = 0, _a = Object.entries(Button_1["default"].store).reverse(); _i < _a.length; _i++) {
-        var _b = _a[_i], key = _b[0], button = _b[1];
-        if (!Vars_1["default"].showButtons && button.varKey !== 'showButtons') {
-            continue;
-        }
-        var aspectRatio = Vars_1["default"].cameraWidth;
-        var buttonWidth = void 0;
-        var buttonHeight = void 0;
-        var margin = void 0;
-        var buttonAspect = 1 / 8;
-        if (aspectRatio > 1) {
-            buttonWidth = Math.max(70, Math.ceil(Vars_1["default"].canvasWidth * 0.2), Math.ceil(Vars_1["default"].canvasHeight * 0.05 / buttonAspect));
-        }
-        else if (aspectRatio > 0.5) {
-            buttonWidth = Math.max(70, Math.ceil(Vars_1["default"].canvasWidth * .5));
-        }
-        else {
-            buttonWidth = Math.ceil(Vars_1["default"].canvasWidth);
-        }
-        buttonHeight = Math.ceil(buttonWidth * buttonAspect);
-        margin = Math.ceil(buttonHeight * .2);
-        var buttonX = Vars_1["default"].canvasWidth - buttonWidth - margin;
-        var buttonY = Vars_1["default"].canvasHeight - (buttonHeight + margin) * (i + 1);
-        Button_1["default"].store[key].dimensions = new Geo_1.Box(buttonX, buttonY, buttonX + buttonWidth, buttonY + buttonHeight);
-        var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
-        ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
-        ctx.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-        ctx.strokeStyle = "black";
-        ctx.strokeRect(buttonX, buttonY, buttonWidth, buttonHeight);
-        ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
-        ctx.textAlign = "left";
-        ctx.font = "".concat(Math.ceil(buttonHeight * .75), "px Courier");
-        ctx.fillText("".concat(key, " ").concat(button.title), buttonX + margin, buttonY + Math.ceil(buttonHeight / 2) + margin, buttonWidth - margin * 2);
-        i++;
-    }
+    var button = Button_1["default"].store.F6;
+    var width = 50;
+    var margin = 5;
+    button.dimensions = new Geo_1.Box(Vars_1["default"].canvasWidth - width - margin, margin, width, width, new Geo_1.Vec2(0, 0));
+    var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
+    ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
+    ctx.fillRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
+    ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
+    ctx.textAlign = "left";
+    ctx.textBaseline = "hanging";
+    ctx.font = "bold ".concat(Math.ceil(button.dimensions.height * 1), "px Courier");
+    ctx.fillText("\u2921", button.dimensions.x + margin / 2, margin * 2.5, width);
     ctx.restore();
 }
 function drawBackground(ctx) {
