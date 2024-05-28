@@ -195,15 +195,16 @@ function drawDebugInfo(ctx) {
 }
 function drawControls(ctx) {
     ctx.save();
+    ctx.globalCompositeOperation = "luminosity";
     var stick = Input_1["default"].getOnscreenControl('left_stick');
     var box = stick.box;
     var middle = box.getCenterMiddle();
     ctx.beginPath();
     ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);
-    ctx.strokeStyle = Vars_1["default"].fgColors[0] + '88';
+    ctx.strokeStyle = Vars_1["default"].fgColors[0] + '55';
     ctx.stroke();
     var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size / 2);
-    gradient.addColorStop(0, 'transparent');
+    gradient.addColorStop(0, Vars_1["default"].bgColors[1] + '88');
     gradient.addColorStop(0.99, Vars_1["default"].bgColors[0] + '88');
     gradient.addColorStop(1.0, 'transparent');
     ctx.fillStyle = gradient;
@@ -212,7 +213,7 @@ function drawControls(ctx) {
     var innerStickPos = new Geo_1.Vec2(middle.x + Vars_1["default"].move.x * innerStickSize / 2, middle.y + Vars_1["default"].move.y * innerStickSize / 2);
     ctx.beginPath();
     ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-    ctx.fillStyle = Vars_1["default"].bgColors[0];
+    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
     ctx.fill();
     ctx.stroke();
     ctx.restore();

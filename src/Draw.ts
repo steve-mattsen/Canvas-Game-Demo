@@ -315,6 +315,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.save();
+	ctx.globalCompositeOperation = "luminosity";
 	// console.log(Input.onScreenControls);
 	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 	let box = stick.box;
@@ -329,7 +330,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		0,
 		10,
 	);
-	ctx.strokeStyle = Vars.fgColors[0] + '88';
+	ctx.strokeStyle = Vars.fgColors[0] + '55';
 	ctx.stroke();
 
 	let gradient = ctx.createRadialGradient(
@@ -340,7 +341,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		middle.y,
 		stick.size / 2,
 	)
-	gradient.addColorStop(0, 'transparent');
+	gradient.addColorStop(0, Vars.bgColors[1] + '88');
 	gradient.addColorStop(0.99, Vars.bgColors[0] + '88');
 	gradient.addColorStop(1.0, 'transparent');
 	ctx.fillStyle = gradient;
@@ -366,7 +367,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		0,
 		10,
 	);
-	ctx.fillStyle = Vars.bgColors[0];
+	ctx.fillStyle = Vars.bgColors[0] + '88';
 	ctx.fill();
 	ctx.stroke();
 
