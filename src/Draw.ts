@@ -141,13 +141,13 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		button.dimensions.height,
 	);
 	ctx.fillStyle = Vars.fgColors[colorKey];
-	ctx.textAlign = "left";
-	ctx.textBaseline = "hanging";
-	ctx.font = `bold ${Math.ceil(button.dimensions.height * 1)}px Courier`;
+	ctx.textAlign = "center";
+	ctx.textBaseline = "middle";
+	ctx.font = `bold ${Math.ceil(button.dimensions.height)}px Courier`;
 	ctx.fillText(
 		`⤡`,
-		button.dimensions.x + margin / 2,
-		margin * 2.5,
+		button.dimensions.x + width / 2 - margin / 2,
+		margin * 2 + button.dimensions.height / 2,
 		width,
 	)
 	ctx.restore();

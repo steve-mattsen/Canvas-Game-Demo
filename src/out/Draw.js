@@ -86,10 +86,10 @@ function drawButtons(ctx) {
     ctx.strokeStyle = "black";
     ctx.strokeRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
     ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
-    ctx.textAlign = "left";
-    ctx.textBaseline = "hanging";
-    ctx.font = "bold ".concat(Math.ceil(button.dimensions.height * 1), "px Courier");
-    ctx.fillText("\u2921", button.dimensions.x + margin / 2, margin * 2.5, width);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "bold ".concat(Math.ceil(button.dimensions.height), "px Courier");
+    ctx.fillText("\u2921", button.dimensions.x + width / 2 - margin / 2, margin * 2 + button.dimensions.height / 2, width);
     ctx.restore();
 }
 function drawBackground(ctx) {
