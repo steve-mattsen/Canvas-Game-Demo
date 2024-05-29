@@ -47,10 +47,15 @@ const player = new Obj(
 );
 Obj.addObj(player);
 
+
+for (let i = 0; i < 16; i++) {
 const tree_sprite = sprt('tree');
 const tree = new Obj(
-	'tree',
-	vec(50, 100),
+		'tree' + i,
+		vec(
+			(Math.random() * Vars.cameraWidth),
+			(Math.random() * Vars.cameraHeight),
+		),
 	tree_sprite,
 	new Box(
 		tree_sprite.drawBox.width * .4,
@@ -61,3 +66,17 @@ const tree = new Obj(
 	),
 );
 Obj.addObj(tree);
+}
+
+for (let i = 0; i < 20; i++) {
+	const bush_sprite = sprt('bush');
+	const bush = new Obj(
+		'bush' + i,
+		vec(
+			(Math.random() * Vars.cameraWidth),
+			(Math.random() * Vars.cameraHeight),
+		),
+		bush_sprite,
+	)
+	Obj.addObj(bush);
+}

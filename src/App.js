@@ -11,6 +11,7 @@ class App extends React.Component {
       '/spritesheet_link.png',
       '/shadow.png',
       '/tree.png',
+      '/bush.png',
     ];
 
     for (const uri of images) {
