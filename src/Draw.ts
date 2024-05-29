@@ -238,6 +238,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
 	ctx.save();
 	let fontSize = 4;
+	ctx.textAlign = "left";
 	ctx.font = `${fontSize}px Courier`;
 
 	// Fill the top left box.
@@ -252,7 +253,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
 		0, fontSize * 2
 	);
-	ctx.fillText(`camera ${Vars.cameraWidth}x${Vars.cameraHeight}`,
+	ctx.fillText(`camera ${Vars.cameraWidth.toFixed(1)}x${Vars.cameraHeight.toFixed(1)}`,
 		0, fontSize * 3
 	);
 

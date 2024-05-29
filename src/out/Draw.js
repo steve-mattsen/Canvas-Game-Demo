@@ -178,13 +178,14 @@ function drawDebugInfo(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
     ctx.save();
     var fontSize = 4;
+    ctx.textAlign = "left";
     ctx.font = "".concat(fontSize, "px Courier");
     ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
     ctx.fillRect(0, 0, 50, fontSize * 4);
     ctx.fillStyle = Vars_1["default"].fgColors[0];
     ctx.fillText("window ".concat(window.innerWidth, "x").concat(window.innerHeight), 0, fontSize);
     ctx.fillText("canvas ".concat(Vars_1["default"].canvasWidth, "x").concat(Vars_1["default"].canvasHeight), 0, fontSize * 2);
-    ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth, "x").concat(Vars_1["default"].cameraHeight), 0, fontSize * 3);
+    ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth.toFixed(1), "x").concat(Vars_1["default"].cameraHeight.toFixed(1)), 0, fontSize * 3);
     var inputs = Object.entries(Vars_1["default"].inputState).filter(function (k, v) { return Vars_1["default"].inputState[k[0]]; });
     ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
     ctx.fillRect(Vars_1["default"].cameraWidth - 50, 0, 50, fontSize * inputs.length * 1 + fontSize * .25);
