@@ -316,10 +316,8 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	ctx.globalCompositeOperation = "luminosity";
-	// console.log(Input.onScreenControls);
 	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 	let box = stick.box;
-	console.log(stick.value);
 	let middle = box.getCenterMiddle();
 	ctx.beginPath();
 	ctx.ellipse(

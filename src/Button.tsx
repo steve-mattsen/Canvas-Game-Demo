@@ -119,16 +119,13 @@ window.ontouchstart = (e) => {
 }
 window.ontouchmove = (e) => {
 	Vars.debugMode && console.log(e.type, e);
-	if (Vars.mouseMove === null) {
-		return;
-	}
-	if (Vars.inputState['left_stick'] > 0) {
+	if (Vars.inputState.left_stick > 0) {
 		let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 		stick.screenToValue(new Vec2(
 			e.touches[0].clientX,
 			e.touches[0].clientY,
 		));
-	} else {
+	} else if (Vars.mouseMove === null) {
 		Vars.mouseMove = vec(
 			e.touches[0].clientX / Vars.cameraScale,
 			e.touches[0].clientY / Vars.cameraScale,
@@ -173,6 +170,11 @@ function clickOrTouchStart(point: Vec2) {
 
 function clickOrTouchEnd() {
 	Vars.inputState['mouseDown'] = 0;
+	if (Vars.inputState.left_stick > 0) {
 	Vars.inputState['left_stick'] = 0;
+		let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
+		stick.value.x = 0;
+		stick.value.y = 0;
+	}
 	Vars.mouseMove = null;
 }
