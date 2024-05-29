@@ -9,7 +9,7 @@ import Input from "./Input";
 
 new VirtualJoystick('left_stick');
 
-export function tick() {
+export async function tick() {
 	let plyr = Obj.store['player'];
 
 	let gp = navigator.getGamepads()[0];

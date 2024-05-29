@@ -19,6 +19,7 @@ export function onWindowResize() {
 window.onresize = onWindowResize;
 
 export default function draw() {
+	tick();
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	if (canvas.getContext === undefined) {
 		return;
@@ -62,7 +63,6 @@ export default function draw() {
 	drawControls(ctx);
 
 	drawButtons(ctx);
-	tick();
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {

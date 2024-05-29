@@ -20,6 +20,7 @@ function onWindowResize() {
 exports.onWindowResize = onWindowResize;
 window.onresize = onWindowResize;
 function draw() {
+    (0, Game_1.tick)();
     var canvas = document.getElementById("game_window");
     if (canvas.getContext === undefined) {
         return;
@@ -48,7 +49,6 @@ function draw() {
     ctx.imageSmoothingEnabled = true;
     drawControls(ctx);
     drawButtons(ctx);
-    (0, Game_1.tick)();
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
