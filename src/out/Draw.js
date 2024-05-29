@@ -264,6 +264,8 @@ function drawShadows(entries) {
     if (ctx === null) {
         return;
     }
+    ctx.imageSmoothingEnabled = false;
+    ;
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for (var _i = 0, entries_5 = entries; _i < entries_5.length; _i++) {
         var obj = entries_5[_i];

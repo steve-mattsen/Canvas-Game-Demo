@@ -411,6 +411,8 @@ function drawShadows(entries: Obj[]) {
 		return;
 	}
 
+	ctx.imageSmoothingEnabled = false;;
+
 	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
 	for (const obj of entries) {
