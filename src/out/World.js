@@ -40,7 +40,14 @@ anims.run_up.sprites[2].duration = lungeDuration;
 anims.run_up.sprites[7].duration = lungeDuration;
 var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
 Obj_1.Obj.addObj(player);
-var tree_sprite = (0, Sprites_1.sprt)('tree');
-var tree = new Obj_1.Obj('tree', (0, Geo_1.vec)(50, 100), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
-Obj_1.Obj.addObj(tree);
+for (var i = 0; i < 16; i++) {
+    var tree_sprite = (0, Sprites_1.sprt)('tree');
+    var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight)), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
+    Obj_1.Obj.addObj(tree);
+}
+for (var i = 0; i < 20; i++) {
+    var bush_sprite = (0, Sprites_1.sprt)('bush');
+    var bush = new Obj_1.Obj('bush' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight)), bush_sprite);
+    Obj_1.Obj.addObj(bush);
+}
 //# sourceMappingURL=World.js.map

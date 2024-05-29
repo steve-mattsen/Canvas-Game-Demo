@@ -1,3 +1,4 @@
+import { onWindowResize } from "./Draw";
 import { vec, Vec2, Box, Line } from "./Geo";
 import Input from "./Input";
 import Vars from "./Vars";
@@ -39,10 +40,12 @@ new Button('F5', 'showButtons', "Buttons");
 new Button('F6', 'fullscreenMode', 'Fullscreen', () => {
 	if (!Vars.fullscreenMode) {
 		document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
+		onWindowResize();
 		Vars.fullscreenMode = true;
 	} else {
 		if (document.fullscreenElement !== null) {
 			document.exitFullscreen();
+			onWindowResize();
 		}
 		Vars.fullscreenMode = false;
 	}
@@ -171,7 +174,7 @@ function clickOrTouchStart(point: Vec2) {
 function clickOrTouchEnd() {
 	Vars.inputState['mouseDown'] = 0;
 	if (Vars.inputState.left_stick > 0) {
-	Vars.inputState['left_stick'] = 0;
+		Vars.inputState['left_stick'] = 0;
 		let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
 		stick.value.x = 0;
 		stick.value.y = 0;

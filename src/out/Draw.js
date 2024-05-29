@@ -1,12 +1,13 @@
 "use strict";
 exports.__esModule = true;
+exports.onWindowResize = void 0;
 var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
 var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
-function draw() {
+function onWindowResize() {
     var canvas = document.getElementById("game_window");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
@@ -14,6 +15,11 @@ function draw() {
     Vars_1["default"].cameraHeight = Vars_1["default"].canvasHeight / Vars_1["default"].cameraScale;
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
+}
+exports.onWindowResize = onWindowResize;
+window.onresize = onWindowResize;
+function draw() {
+    var canvas = document.getElementById("game_window");
     if (canvas.getContext === undefined) {
         return;
     }
@@ -21,6 +27,7 @@ function draw() {
     if (ctx === null) {
         return;
     }
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.lineWidth = 1;
     ctx.imageSmoothingEnabled = false;
     ctx.scale(Vars_1["default"].cameraScale, Vars_1["default"].cameraScale);
@@ -48,7 +55,6 @@ function drawObjects(ctx) {
         var v = entries_1[_i];
         ctx.save();
         var obj = v;
-        var hb = obj.calcHitBox();
         var fontSize = 4;
         ctx.font = "".concat(fontSize, "px Courier");
         if (Vars_1["default"].displayMode > 1) {
@@ -63,14 +69,16 @@ function drawObjects(ctx) {
             shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
             ctx.drawImage(shadow.image.element, Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
             var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
-            ctx.drawImage(sprite.image.element, sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
+            ctx.drawImage(sprite.image.element, Math.round(sprite.drawBox.x), Math.round(sprite.drawBox.y), sprite.drawBox.width, sprite.drawBox.height, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
         }
-        if (Vars_1["default"].displayMode < 4) {
+        if (Vars_1["default"].displayMode < 4 && obj.hitBox !== null) {
+            var hb = obj.calcHitBox();
             drawMarker(ctx, hb.x, hb.y);
             var p2 = hb.p2();
             drawMarker(ctx, p2.x, p2.y);
         }
-        if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
+        if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4 && obj.hitBox !== null) {
+            var hb = obj.calcHitBox();
             drawBoxOutline(ctx, hb);
         }
     }
@@ -101,8 +109,8 @@ function drawBackground(ctx) {
         return;
     }
     ctx.save();
-    for (var yi = 0; yi * img.size.y < Vars_1["default"].canvasHeight; yi++) {
-        for (var xi = 0; xi * img.size.x < Vars_1["default"].canvasWidth; xi++) {
+    for (var yi = 0; yi * img.size.y < Vars_1["default"].cameraHeight; yi++) {
+        for (var xi = 0; xi * img.size.x < Vars_1["default"].cameraWidth; xi++) {
             ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
         }
     }
@@ -170,17 +178,19 @@ function drawDebugInfo(ctx) {
     var plyr = Obj_1.Obj.store['player'];
     for (var _b = 0, entries_2 = entries; _b < entries_2.length; _b++) {
         var obj = entries_2[_b];
-        var hb = obj.calcHitBox();
-        ctx.fillStyle = Vars_1["default"].bgColors[0];
-        if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
-            ctx.fillStyle = "red";
+        if (obj.hitBox !== null) {
+            var hb = obj.calcHitBox();
+            ctx.fillStyle = Vars_1["default"].bgColors[0];
+            if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
+                ctx.fillStyle = "red";
+            }
+            ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+            drawBoxOutline(ctx, hb);
+            ctx.fillStyle = Vars_1["default"].fgColors[0];
+            ctx.textBaseline = "top";
+            ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
+            ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
         }
-        ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
-        drawBoxOutline(ctx, hb);
-        ctx.fillStyle = Vars_1["default"].fgColors[0];
-        ctx.textBaseline = "top";
-        ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
-        ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
         var text = "".concat(obj.id, ": ");
         if (obj.animations === null) {
             text += "".concat(obj.sprite.image.id);
@@ -198,7 +208,6 @@ function drawControls(ctx) {
     ctx.globalCompositeOperation = "luminosity";
     var stick = Input_1["default"].getOnscreenControl('left_stick');
     var box = stick.box;
-    console.log(stick.value);
     var middle = box.getCenterMiddle();
     ctx.beginPath();
     ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);

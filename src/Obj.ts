@@ -24,10 +24,7 @@ export class Obj {
 		} else {
 			this.sprite = spr;
 		}
-		this.hitBox = hitBox;
-		if (hitBox === null || hitBox === undefined) {
-			this.hitBox = this.sprite.drawBox;
-		}
+		this.hitBox = hitBox ?? null;
 		this.pos = pos ?? this.pos;
 		this.animations = animations;
 		if (animations === undefined) {

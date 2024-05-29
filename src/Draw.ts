@@ -6,7 +6,7 @@ import { Box, Vec2 } from "./Geo";
 import Input from "./Input";
 import VirtualJoystick from "./VirtualJoystick";
 
-export default function draw() {
+export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
@@ -14,6 +14,11 @@ export default function draw() {
 	Vars.cameraHeight = Vars.canvasHeight / Vars.cameraScale;
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
+}
+window.onresize = onWindowResize;
+
+export default function draw() {
+	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	if (canvas.getContext === undefined) {
 		return;
 	}
@@ -21,6 +26,7 @@ export default function draw() {
 	if (ctx === null) {
 		return;
 	}
+	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
 	ctx.lineWidth = 1;
 
@@ -63,7 +69,6 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	for (const v of entries) {
 		ctx.save();
 		let obj = v;
-		let hb = obj.calcHitBox();
 
 		let fontSize = 4;
 		ctx.font = `${fontSize}px Courier`;
@@ -90,8 +95,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			let drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
 			ctx.drawImage(
 				sprite.image.element, //image
-				sprite.drawBox.x, //subx
-				sprite.drawBox.y, //suby
+				Math.round(sprite.drawBox.x), //subx
+				Math.round(sprite.drawBox.y), //suby
 				sprite.drawBox.width, //subw
 				sprite.drawBox.height, //subh
 				Math.round(obj.pos.x - sprite.drawBox.origin.x), //posx
@@ -101,14 +106,18 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		if (Vars.displayMode < 4) {
+		if (Vars.displayMode < 4 && obj.hitBox !== null) {
+
+			let hb = obj.calcHitBox();
 			// Draw points
 			drawMarker(ctx, hb.x, hb.y);
 			let p2 = hb.p2();
 			drawMarker(ctx, p2.x, p2.y);
 		}
 
-		if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
+		if (Vars.displayMode !== 0 && Vars.displayMode < 4 && obj.hitBox !== null) {
+
+			let hb = obj.calcHitBox();
 			// Draw box
 			drawBoxOutline(ctx, hb);
 		}
@@ -162,8 +171,8 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 		return;
 	}
 	ctx.save();
-	for (let yi = 0; yi * img.size.y < Vars.canvasHeight; yi++) {
-		for (let xi = 0; xi * img.size.x < Vars.canvasWidth; xi++) {
+	for (let yi = 0; yi * img.size.y < Vars.cameraHeight; yi++) {
+		for (let xi = 0; xi * img.size.x < Vars.cameraWidth; xi++) {
 			ctx.drawImage(
 				img.element,
 				xi * img.size.x,
@@ -271,29 +280,31 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	count = 0;
 	let plyr = Obj.store['player'];
 	for (const obj of entries) {
-		let hb = obj.calcHitBox();
-		ctx.fillStyle = Vars.bgColors[0];
-		if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
-			ctx.fillStyle = "red";
+		if (obj.hitBox !== null) {
+			let hb = obj.calcHitBox();
+			ctx.fillStyle = Vars.bgColors[0];
+			if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
+				ctx.fillStyle = "red";
+			}
+			ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+
+			drawBoxOutline(ctx, hb);
+
+			ctx.fillStyle = Vars.fgColors[0];
+			ctx.textBaseline = "top";
+			ctx.fillText(
+				`x:${Math.round(obj.pos.x)}`,
+				hb.x,
+				hb.y,
+				hb.width,
+			);
+			ctx.fillText(
+				`y:${Math.round(obj.pos.y)}`,
+				hb.x,
+				hb.y + fontSize,
+				hb.width,
+			);
 		}
-		ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
-
-		drawBoxOutline(ctx, hb);
-
-		ctx.fillStyle = Vars.fgColors[0];
-		ctx.textBaseline = "top";
-		ctx.fillText(
-			`x:${Math.round(obj.pos.x)}`,
-			hb.x,
-			hb.y,
-			hb.width,
-		);
-		ctx.fillText(
-			`y:${Math.round(obj.pos.y)}`,
-			hb.x,
-			hb.y + fontSize,
-			hb.width,
-		);
 
 		//Write the bottom left text.
 		let text = `${obj.id}: `;

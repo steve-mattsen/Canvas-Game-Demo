@@ -49,23 +49,23 @@ Obj.addObj(player);
 
 
 for (let i = 0; i < 16; i++) {
-const tree_sprite = sprt('tree');
-const tree = new Obj(
+	const tree_sprite = sprt('tree');
+	const tree = new Obj(
 		'tree' + i,
 		vec(
 			(Math.random() * Vars.cameraWidth),
 			(Math.random() * Vars.cameraHeight),
 		),
-	tree_sprite,
-	new Box(
-		tree_sprite.drawBox.width * .4,
-		tree_sprite.drawBox.height * .75,
-		tree_sprite.drawBox.width * .2,
-		tree_sprite.drawBox.height * .15,
-		['center', 'bottom'],
-	),
-);
-Obj.addObj(tree);
+		tree_sprite,
+		new Box(
+			tree_sprite.drawBox.width * .4,
+			tree_sprite.drawBox.height * .75,
+			tree_sprite.drawBox.width * .2,
+			tree_sprite.drawBox.height * .15,
+			['center', 'bottom'],
+		),
+	);
+	Obj.addObj(tree);
 }
 
 for (let i = 0; i < 20; i++) {

@@ -1,7 +1,7 @@
 import { vec, Vec2, Box, Line } from "./Geo";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
-import draw from "./Draw";
+import draw, { onWindowResize } from "./Draw";
 import Button from "./Button";
 import "./World";
 import VirtualJoystick from "./VirtualJoystick";
@@ -108,6 +108,9 @@ function tick() {
 		if (key === 'player') {
 			continue;
 		}
+		if (obj.hitBox === null) {
+			continue;
+		}
 		let ohb = obj.calcHitBox();
 		if (postMoveHitBox.collidesWith(ohb)) {
 			move = preMoveHitBox.adjustForCollision(ohb, move, speed);
@@ -135,6 +138,8 @@ function tick() {
 		plyr.pos.y = cameraLimit.y;
 	}
 }
+
+onWindowResize();
 
 let refresh = Vars.slowMode ? 15 : 59.67;
 let drawThread = setInterval(draw, 1000 / refresh);

@@ -99,6 +99,9 @@ function tick() {
         if (key === 'player') {
             continue;
         }
+        if (obj.hitBox === null) {
+            continue;
+        }
         var ohb = obj.calcHitBox();
         if (postMoveHitBox.collidesWith(ohb)) {
             move = preMoveHitBox.adjustForCollision(ohb, move, speed);
@@ -123,6 +126,7 @@ function tick() {
         plyr.pos.y = cameraLimit.y;
     }
 }
+(0, Draw_1.onWindowResize)();
 var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
 var drawThread = setInterval(Draw_1["default"], 1000 / refresh);
 var gameThread = setInterval(tick, 1000 / refresh);

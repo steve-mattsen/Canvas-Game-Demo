@@ -18,10 +18,7 @@ var Obj = (function () {
         else {
             this.sprite = spr;
         }
-        this.hitBox = hitBox;
-        if (hitBox === null || hitBox === undefined) {
-            this.hitBox = this.sprite.drawBox;
-        }
+        this.hitBox = hitBox !== null && hitBox !== void 0 ? hitBox : null;
         this.pos = pos !== null && pos !== void 0 ? pos : this.pos;
         this.animations = animations;
         if (animations === undefined) {

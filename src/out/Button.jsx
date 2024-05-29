@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var Draw_1 = require("./Draw");
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
 var Vars_1 = require("./Vars");
@@ -32,11 +33,13 @@ new Button('F5', 'showButtons', "Buttons");
 new Button('F6', 'fullscreenMode', 'Fullscreen', function () {
     if (!Vars_1["default"].fullscreenMode) {
         document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
+        (0, Draw_1.onWindowResize)();
         Vars_1["default"].fullscreenMode = true;
     }
     else {
         if (document.fullscreenElement !== null) {
             document.exitFullscreen();
+            (0, Draw_1.onWindowResize)();
         }
         Vars_1["default"].fullscreenMode = false;
     }
@@ -108,14 +111,11 @@ window.ontouchstart = function (e) {
 };
 window.ontouchmove = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    if (Vars_1["default"].mouseMove === null) {
-        return;
-    }
-    if (Vars_1["default"].inputState['left_stick'] > 0) {
+    if (Vars_1["default"].inputState.left_stick > 0) {
         var stick = Input_1["default"].getOnscreenControl('left_stick');
         stick.screenToValue(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
     }
-    else {
+    else if (Vars_1["default"].mouseMove === null) {
         Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
     }
 };
@@ -156,7 +156,12 @@ function clickOrTouchStart(point) {
 }
 function clickOrTouchEnd() {
     Vars_1["default"].inputState['mouseDown'] = 0;
-    Vars_1["default"].inputState['left_stick'] = 0;
+    if (Vars_1["default"].inputState.left_stick > 0) {
+        Vars_1["default"].inputState['left_stick'] = 0;
+        var stick = Input_1["default"].getOnscreenControl('left_stick');
+        stick.value.x = 0;
+        stick.value.y = 0;
+    }
     Vars_1["default"].mouseMove = null;
 }
 //# sourceMappingURL=Button.jsx.map
