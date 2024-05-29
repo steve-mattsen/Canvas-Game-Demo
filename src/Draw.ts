@@ -96,15 +96,9 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 			let drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
 			ctx.drawImage(
-				sprite.image.element, //image
-				Math.round(sprite.drawBox.x), //subx
-				Math.round(sprite.drawBox.y), //suby
-				sprite.drawBox.width, //subw
-				sprite.drawBox.height, //subh
+				sprite.offScreenCanvas, //image
 				Math.round(obj.pos.x - sprite.drawBox.origin.x), //posx
 				Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
-				drawBox.width, //width
-				drawBox.height, //height
 			);
 		}
 

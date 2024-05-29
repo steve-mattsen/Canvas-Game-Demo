@@ -108,6 +108,10 @@ var Sprite = (function () {
             this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y, ['center', 'bottom']);
         }
         this.duration = duration;
+        this.offScreenCanvas = new OffscreenCanvas(this.drawBox.width, this.drawBox.height);
+        var ctx = this.offScreenCanvas.getContext('2d');
+        ctx.scale(this.drawBox.width / this.image.size.x, this.drawBox.height / this.image.size.y);
+        ctx.drawImage(this.image.element, this.drawBox.x, this.drawBox.y, this.drawBox.width, this.drawBox.height, 0, 0, this.image.size.x, this.image.size.y);
     }
     ;
     return Sprite;

@@ -104,6 +104,7 @@ export class Sprite {
 	drawBox: Box;
 	scale: number;
 	duration: number;
+	offScreenCanvas: OffscreenCanvas;
 	constructor(image: Img, drawBox?: Box, scale = 1, duration = 4) {
 		this.image = image;
 		this.scale = scale;
@@ -111,7 +112,25 @@ export class Sprite {
 		if (drawBox === undefined) {
 			this.drawBox = new Box(0, 0, image.size.x, image.size.y, ['center', 'bottom']);
 		}
-		this.duration = duration
+		this.duration = duration;
+		this.offScreenCanvas = new OffscreenCanvas(this.drawBox.width, this.drawBox.height);
+		let ctx = this.offScreenCanvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
+		ctx.scale(
+			this.drawBox.width / this.image.size.x,
+			this.drawBox.height / this.image.size.y,
+		);
+		ctx.drawImage(
+			this.image.element,
+			this.drawBox.x,
+			this.drawBox.y,
+			this.drawBox.width,
+			this.drawBox.height,
+			0,
+			0,
+			this.image.size.x,
+			this.image.size.y,
+			// 100, 100
+		);
 	};
 }
 

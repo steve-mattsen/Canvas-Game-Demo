@@ -71,7 +71,7 @@ function drawObjects(ctx) {
             shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
             ctx.drawImage(shadow.image.element, Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
             var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
-            ctx.drawImage(sprite.image.element, Math.round(sprite.drawBox.x), Math.round(sprite.drawBox.y), sprite.drawBox.width, sprite.drawBox.height, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), drawBox.width, drawBox.height);
+            ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z));
         }
         if (Vars_1["default"].displayMode < 4 && obj.hitBox !== null) {
             var hb = obj.calcHitBox();
