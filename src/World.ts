@@ -48,7 +48,7 @@ const player = new Obj(
 Obj.addObj(player);
 
 
-for (let i = 0; i < 16; i++) {
+for (let i = 0; i < 10; i++) {
 	const tree_sprite = sprt('tree');
 	const tree = new Obj(
 		'tree' + i,
@@ -68,7 +68,7 @@ for (let i = 0; i < 16; i++) {
 	Obj.addObj(tree);
 }
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 8; i++) {
 	const bush_sprite = sprt('bush');
 	const bush = new Obj(
 		'bush' + i,
