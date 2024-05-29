@@ -10,12 +10,16 @@ var Input_1 = require("./Input");
 var Game_1 = require("./Game");
 function onWindowResize() {
     var canvas = document.getElementById("game_window");
+    var background = document.getElementById("background_canvas");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
     Vars_1["default"].cameraWidth = Vars_1["default"].canvasWidth / Vars_1["default"].cameraScale;
     Vars_1["default"].cameraHeight = Vars_1["default"].canvasHeight / Vars_1["default"].cameraScale;
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    background.setAttribute('width', Vars_1["default"].canvasWidth + '');
+    background.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;
 window.onresize = onWindowResize;
@@ -34,7 +38,7 @@ function draw() {
     ctx.imageSmoothingEnabled = false;
     ctx.scale(Vars_1["default"].cameraScale, Vars_1["default"].cameraScale);
     if (Vars_1["default"].showBackground) {
-        drawBackground(ctx);
+        drawBackground();
     }
     var plyr = Obj_1.Obj.store['player'];
     if (Vars_1["default"].spriteSheetMode) {
@@ -127,17 +131,28 @@ function drawButtons(ctx) {
     ctx.font = "bold ".concat(Math.ceil(button.dimensions.height), "px Courier");
     ctx.fillText("\u2921", button.dimensions.x + width / 2 - margin / 2, margin * 2 + button.dimensions.height / 2, width);
 }
-function drawBackground(ctx) {
+function drawBackground() {
     var _a, _b;
+    var canvas = document.getElementById('background_canvas');
+    if (canvas.getContext === undefined) {
+        return;
+    }
+    var ctx = canvas.getContext('2d');
+    if (ctx === null) {
+        return;
+    }
+    console.log('draw back');
     var img = Sprites_1.Img.store['grass'];
     if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
         return;
     }
-    for (var yi = 0; yi * img.size.y < Vars_1["default"].cameraHeight; yi++) {
-        for (var xi = 0; xi * img.size.x < Vars_1["default"].cameraWidth; xi++) {
-            ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
+    ctx.imageSmoothingEnabled = false;
+    for (var yi = 0; (yi - 1) * img.size.y < Vars_1["default"].cameraHeight; yi++) {
+        for (var xi = 0; (xi - 1) * img.size.x < Vars_1["default"].cameraWidth; xi++) {
+            ctx.drawImage(img.element, xi * img.size.x * Vars_1["default"].cameraScale, yi * img.size.y * Vars_1["default"].cameraScale, img.size.x * Vars_1["default"].cameraScale, img.size.y * Vars_1["default"].cameraScale);
         }
     }
+    Vars_1["default"].showBackground = false;
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }

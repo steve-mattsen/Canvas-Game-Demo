@@ -9,12 +9,16 @@ import { tick } from "./Game";
 
 export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
+	let background = document.getElementById("background_canvas") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
 	Vars.cameraWidth = Vars.canvasWidth / Vars.cameraScale;
 	Vars.cameraHeight = Vars.canvasHeight / Vars.cameraScale;
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
+	background.setAttribute('width', Vars.canvasWidth + '');
+	background.setAttribute('height', Vars.canvasHeight + '');
+	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;
 
@@ -36,7 +40,7 @@ export default function draw() {
 	ctx.scale(Vars.cameraScale, Vars.cameraScale)
 
 	if (Vars.showBackground) {
-		drawBackground(ctx);
+		drawBackground();
 	}
 
 	let plyr = Obj.store['player'];
@@ -180,20 +184,34 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 	)
 }
 
-function drawBackground(ctx: CanvasRenderingContext2D) {
+function drawBackground() {
+	let canvas = document.getElementById('background_canvas') as HTMLCanvasElement;
+	if (canvas.getContext === undefined) {
+		return;
+	}
+	let ctx = canvas.getContext('2d');
+	if (ctx === null) {
+		return;
+	}
+	console.log('draw back');
 	let img = Img.store['grass'];
 	if (!img?.size?.x || !img?.size?.y) {
 		return;
 	}
-	for (let yi = 0; yi * img.size.y < Vars.cameraHeight; yi++) {
-		for (let xi = 0; xi * img.size.x < Vars.cameraWidth; xi++) {
+
+	ctx.imageSmoothingEnabled = false;
+	for (let yi = 0; (yi - 1) * img.size.y < Vars.cameraHeight; yi++) {
+		for (let xi = 0; (xi - 1) * img.size.x < Vars.cameraWidth; xi++) {
 			ctx.drawImage(
 				img.element,
-				xi * img.size.x,
-				yi * img.size.y,
+				xi * img.size.x * Vars.cameraScale,
+				yi * img.size.y * Vars.cameraScale,
+				img.size.x * Vars.cameraScale,
+				img.size.y * Vars.cameraScale,
 			)
 		}
 	}
+	Vars.showBackground = false;
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {

@@ -27,8 +27,10 @@ class App extends React.Component {
   }
 
   render() {
-    return (
+    return (<div>
+      <canvas id="background_canvas">Background</canvas>
       <canvas id="game_window">da game</canvas>
+    </div>
     );
   }
 }
