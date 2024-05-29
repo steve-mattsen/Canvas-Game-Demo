@@ -68,15 +68,13 @@ export default function draw() {
 function drawObjects(ctx: CanvasRenderingContext2D) {
 	// Order draws by closeness to camera.
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
-	for (const v of entries) {
-		ctx.save();
-		let obj = v;
 
-		let fontSize = 4;
-		ctx.font = `${fontSize}px Courier`;
+	let fontSize = 4;
+	ctx.font = `${fontSize}px Courier`;
 
-		if (Vars.displayMode > 1) {
-
+	let shadow = sprt('shadow');
+	if (Vars.displayMode > 1) {
+		for (const obj of entries) {
 			let sprite;
 			if (Vars.displayMode < 3 || obj.animations == null) {
 				// Just draw the sprite.
@@ -85,7 +83,6 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite = obj.getAnimFrame();
 			}
 
-			let shadow = sprt('shadow');
 			shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
 			ctx.drawImage(shadow.image.element,
 				Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
@@ -93,35 +90,58 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				sprite.drawBox.width,
 				sprite.drawBox.height * 0.5,
 			);
+		}
+		for (const obj of entries) {
 
-			let drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
+			let sprite;
+			if (Vars.displayMode < 3 || obj.animations == null) {
+				// Just draw the sprite.
+				sprite = obj.sprite;
+			} else {
+				if (Vars.displayMode < 3 || obj.animations == null) {
+					// Just draw the sprite.
+					sprite = obj.sprite;
+				} else {
+					sprite = obj.getAnimFrame();
+				}
+				sprite = obj.getAnimFrame();
+			}
 			ctx.drawImage(
 				sprite.offScreenCanvas, //image
 				Math.round(obj.pos.x - sprite.drawBox.origin.x), //posx
 				Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
 			);
 		}
+	}
 
-		if (Vars.displayMode < 4 && obj.hitBox !== null) {
+	if (Vars.displayMode < 4) {
 
+		for (const obj of entries) {
+			if (obj.hitBox === null) {
+				continue;
+			}
 			let hb = obj.calcHitBox();
 			// Draw points
 			drawMarker(ctx, hb.x, hb.y);
 			let p2 = hb.p2();
 			drawMarker(ctx, p2.x, p2.y);
 		}
+	}
 
-		if (Vars.displayMode !== 0 && Vars.displayMode < 4 && obj.hitBox !== null) {
-
+	if (Vars.displayMode !== 0 && Vars.displayMode < 4) {
+		for (const obj of entries) {
+			if (obj.hitBox === null) {
+				continue;
+			}
 			let hb = obj.calcHitBox();
 			// Draw box
 			drawBoxOutline(ctx, hb);
+
 		}
-	};
-}
+	}
+};
 
 function drawButtons(ctx: CanvasRenderingContext2D) {
-	ctx.save();
 	// Draw optional keys and states
 	let button = Button.store.F6;
 	let width = 50;
@@ -158,7 +178,6 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		margin * 2 + button.dimensions.height / 2,
 		width,
 	)
-	ctx.restore();
 }
 
 function drawBackground(ctx: CanvasRenderingContext2D) {
@@ -166,7 +185,6 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 	if (!img?.size?.x || !img?.size?.y) {
 		return;
 	}
-	ctx.save();
 	for (let yi = 0; yi * img.size.y < Vars.cameraHeight; yi++) {
 		for (let xi = 0; xi * img.size.x < Vars.cameraWidth; xi++) {
 			ctx.drawImage(
@@ -176,11 +194,9 @@ function drawBackground(ctx: CanvasRenderingContext2D) {
 			)
 		}
 	}
-	ctx.restore();
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {
-	ctx.save();
 	ctx.fillStyle = Vars.fgColors[0];
 	ctx.lineWidth = 0.5;
 	let path = new Path2D();
@@ -200,7 +216,6 @@ function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagona
 		path.lineTo(x, y + crosshairSize);
 	}
 	ctx.stroke(path);
-	ctx.restore();
 }
 
 function drawBoxOutline(ctx: CanvasRenderingContext2D, box: Box) {

@@ -53,13 +53,12 @@ function draw() {
 exports["default"] = draw;
 function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
-    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-        var v = entries_1[_i];
-        ctx.save();
-        var obj = v;
-        var fontSize = 4;
-        ctx.font = "".concat(fontSize, "px Courier");
-        if (Vars_1["default"].displayMode > 1) {
+    var fontSize = 4;
+    ctx.font = "".concat(fontSize, "px Courier");
+    var shadow = (0, Sprites_1.sprt)('shadow');
+    if (Vars_1["default"].displayMode > 1) {
+        for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+            var obj = entries_1[_i];
             var sprite = void 0;
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 sprite = obj.sprite;
@@ -67,27 +66,52 @@ function drawObjects(ctx) {
             else {
                 sprite = obj.getAnimFrame();
             }
-            var shadow = (0, Sprites_1.sprt)('shadow');
             shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
             ctx.drawImage(shadow.image.element, Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
-            var drawBox = sprite.drawBox.fromPoint(obj.pos).fromOrigin(['center', 'bottom']);
+        }
+        for (var _a = 0, entries_2 = entries; _a < entries_2.length; _a++) {
+            var obj = entries_2[_a];
+            var sprite = void 0;
+            if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
+                sprite = obj.sprite;
+            }
+            else {
+                if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
+                    sprite = obj.sprite;
+                }
+                else {
+                    sprite = obj.getAnimFrame();
+                }
+                sprite = obj.getAnimFrame();
+            }
             ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z));
         }
-        if (Vars_1["default"].displayMode < 4 && obj.hitBox !== null) {
+    }
+    if (Vars_1["default"].displayMode < 4) {
+        for (var _b = 0, entries_3 = entries; _b < entries_3.length; _b++) {
+            var obj = entries_3[_b];
+            if (obj.hitBox === null) {
+                continue;
+            }
             var hb = obj.calcHitBox();
             drawMarker(ctx, hb.x, hb.y);
             var p2 = hb.p2();
             drawMarker(ctx, p2.x, p2.y);
         }
-        if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4 && obj.hitBox !== null) {
+    }
+    if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
+        for (var _c = 0, entries_4 = entries; _c < entries_4.length; _c++) {
+            var obj = entries_4[_c];
+            if (obj.hitBox === null) {
+                continue;
+            }
             var hb = obj.calcHitBox();
             drawBoxOutline(ctx, hb);
         }
     }
-    ;
 }
+;
 function drawButtons(ctx) {
-    ctx.save();
     var button = Button_1["default"].store.F6;
     var width = 50;
     var margin = 5;
@@ -102,7 +126,6 @@ function drawButtons(ctx) {
     ctx.textBaseline = "middle";
     ctx.font = "bold ".concat(Math.ceil(button.dimensions.height), "px Courier");
     ctx.fillText("\u2921", button.dimensions.x + width / 2 - margin / 2, margin * 2 + button.dimensions.height / 2, width);
-    ctx.restore();
 }
 function drawBackground(ctx) {
     var _a, _b;
@@ -110,17 +133,14 @@ function drawBackground(ctx) {
     if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
         return;
     }
-    ctx.save();
     for (var yi = 0; yi * img.size.y < Vars_1["default"].cameraHeight; yi++) {
         for (var xi = 0; xi * img.size.x < Vars_1["default"].cameraWidth; xi++) {
             ctx.drawImage(img.element, xi * img.size.x, yi * img.size.y);
         }
     }
-    ctx.restore();
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }
-    ctx.save();
     ctx.fillStyle = Vars_1["default"].fgColors[0];
     ctx.lineWidth = 0.5;
     var path = new Path2D();
@@ -141,7 +161,6 @@ function drawMarker(ctx, x, y, diagonal) {
         path.lineTo(x, y + crosshairSize);
     }
     ctx.stroke(path);
-    ctx.restore();
 }
 function drawBoxOutline(ctx, box) {
     ctx.save();
@@ -178,8 +197,8 @@ function drawDebugInfo(ctx) {
     ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
     count = 0;
     var plyr = Obj_1.Obj.store['player'];
-    for (var _b = 0, entries_2 = entries; _b < entries_2.length; _b++) {
-        var obj = entries_2[_b];
+    for (var _b = 0, entries_5 = entries; _b < entries_5.length; _b++) {
+        var obj = entries_5[_b];
         if (obj.hitBox !== null) {
             var hb = obj.calcHitBox();
             ctx.fillStyle = Vars_1["default"].bgColors[0];
