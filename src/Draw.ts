@@ -5,6 +5,7 @@ import Button from "./Button";
 import { Box, Vec2 } from "./Geo";
 import Input from "./Input";
 import VirtualJoystick from "./VirtualJoystick";
+import { tick } from "./Game";
 
 export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -61,6 +62,7 @@ export default function draw() {
 	drawControls(ctx);
 
 	drawButtons(ctx);
+	tick();
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {

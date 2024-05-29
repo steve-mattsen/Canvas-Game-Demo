@@ -7,6 +7,7 @@ var Vars_1 = require("./Vars");
 var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
+var Game_1 = require("./Game");
 function onWindowResize() {
     var canvas = document.getElementById("game_window");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
@@ -47,6 +48,7 @@ function draw() {
     ctx.imageSmoothingEnabled = true;
     drawControls(ctx);
     drawButtons(ctx);
+    (0, Game_1.tick)();
 }
 exports["default"] = draw;
 function drawObjects(ctx) {

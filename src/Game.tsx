@@ -7,18 +7,9 @@ import "./World";
 import VirtualJoystick from "./VirtualJoystick";
 import Input from "./Input";
 
-Button.store['F3'].click = () => {
-	Vars.slowMode = !Vars.slowMode;
-	clearTimeout(drawThread)
-	clearTimeout(gameThread)
-	let refresh = Vars.slowMode ? 15 : 59.67;
-	drawThread = setInterval(draw, 1000 / refresh);
-	gameThread = setInterval(tick, 1000 / refresh);
-}
-
 new VirtualJoystick('left_stick');
 
-function tick() {
+export function tick() {
 	let plyr = Obj.store['player'];
 
 	let gp = navigator.getGamepads()[0];
@@ -137,10 +128,10 @@ function tick() {
 	} else if (p2.y > cameraLimit.y) {
 		plyr.pos.y = cameraLimit.y;
 	}
+
+	requestAnimationFrame(draw);
 }
 
 onWindowResize();
 
-let refresh = Vars.slowMode ? 15 : 59.67;
-let drawThread = setInterval(draw, 1000 / refresh);
-let gameThread = setInterval(tick, 1000 / refresh);
+tick();

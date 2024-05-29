@@ -1,21 +1,13 @@
 "use strict";
 exports.__esModule = true;
+exports.tick = void 0;
 var Geo_1 = require("./Geo");
 var Obj_1 = require("./Obj");
 var Vars_1 = require("./Vars");
 var Draw_1 = require("./Draw");
-var Button_1 = require("./Button");
 require("./World");
 var VirtualJoystick_1 = require("./VirtualJoystick");
 var Input_1 = require("./Input");
-Button_1["default"].store['F3'].click = function () {
-    Vars_1["default"].slowMode = !Vars_1["default"].slowMode;
-    clearTimeout(drawThread);
-    clearTimeout(gameThread);
-    var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
-    drawThread = setInterval(Draw_1["default"], 1000 / refresh);
-    gameThread = setInterval(tick, 1000 / refresh);
-};
 new VirtualJoystick_1["default"]('left_stick');
 function tick() {
     var plyr = Obj_1.Obj.store['player'];
@@ -125,9 +117,9 @@ function tick() {
     else if (p2.y > cameraLimit.y) {
         plyr.pos.y = cameraLimit.y;
     }
+    requestAnimationFrame(Draw_1["default"]);
 }
+exports.tick = tick;
 (0, Draw_1.onWindowResize)();
-var refresh = Vars_1["default"].slowMode ? 15 : 59.67;
-var drawThread = setInterval(Draw_1["default"], 1000 / refresh);
-var gameThread = setInterval(tick, 1000 / refresh);
+tick();
 //# sourceMappingURL=Game.jsx.map
