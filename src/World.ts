@@ -54,7 +54,7 @@ for (let i = 0; i < 16; i++) {
 		'tree' + i,
 		vec(
 			(Math.random() * Vars.cameraWidth),
-			(Math.random() * Vars.cameraHeight),
+			(Math.random() * Vars.cameraHeight) + tree_sprite.image.size.y / 2,
 		),
 		tree_sprite,
 		new Box(
@@ -74,7 +74,7 @@ for (let i = 0; i < 20; i++) {
 		'bush' + i,
 		vec(
 			(Math.random() * Vars.cameraWidth),
-			(Math.random() * Vars.cameraHeight),
+			(Math.random() * Vars.cameraHeight) + bush_sprite.image.size.y / 2,
 		),
 		bush_sprite,
 	)
