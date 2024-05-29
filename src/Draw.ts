@@ -10,6 +10,7 @@ import { tick } from "./Game";
 export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	let background = document.getElementById("background_canvas") as HTMLCanvasElement;
+	let shadows = document.getElementById("shadow_canvas") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
 	Vars.cameraWidth = Vars.canvasWidth / Vars.cameraScale;
@@ -18,6 +19,8 @@ export function onWindowResize() {
 	canvas.setAttribute('height', Vars.canvasHeight + '');
 	background.setAttribute('width', Vars.canvasWidth + '');
 	background.setAttribute('height', Vars.canvasHeight + '');
+	shadows.setAttribute('width', Vars.canvasWidth + '');
+	shadows.setAttribute('height', Vars.canvasHeight + '');
 	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;
@@ -76,25 +79,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	let fontSize = 4;
 	ctx.font = `${fontSize}px Courier`;
 
-	let shadow = sprt('shadow');
 	if (Vars.displayMode > 1) {
-		for (const obj of entries) {
-			let sprite;
-			if (Vars.displayMode < 3 || obj.animations == null) {
-				// Just draw the sprite.
-				sprite = obj.sprite;
-			} else {
-				sprite = obj.getAnimFrame();
-			}
-
-			shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-			ctx.drawImage(shadow.image.element,
-				Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1),
-				Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1),
-				sprite.drawBox.width,
-				sprite.drawBox.height * 0.5,
-			);
-		}
+		drawShadows(entries);
 		for (const obj of entries) {
 
 			let sprite;
@@ -193,7 +179,6 @@ function drawBackground() {
 	if (ctx === null) {
 		return;
 	}
-	console.log('draw back');
 	let img = Img.store['grass'];
 	if (!img?.size?.x || !img?.size?.y) {
 		return;
@@ -411,4 +396,40 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.stroke();
 
 	ctx.restore();
+}
+
+function drawShadows(entries: Obj[]) {
+
+	let shadow = sprt('shadow');
+
+	let canvas = document.getElementById("shadow_canvas") as HTMLCanvasElement;
+	if (canvas.getContext === undefined) {
+		return;
+	}
+	let ctx = canvas.getContext('2d');
+	if (ctx === null) {
+		return;
+	}
+
+	ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+	for (const obj of entries) {
+		let sprite;
+		if (Vars.displayMode < 3 || obj.animations == null) {
+			// Just draw the sprite.
+			sprite = obj.sprite;
+		} else {
+			sprite = obj.getAnimFrame();
+		}
+
+		shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
+		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
+		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1
+		ctx.drawImage(shadow.image.element,
+			Math.round(x * Vars.cameraScale),
+			Math.round(y * Vars.cameraScale),
+			sprite.drawBox.width * Vars.cameraScale,
+			sprite.drawBox.height * 0.5 * Vars.cameraScale,
+		);
+	}
 }

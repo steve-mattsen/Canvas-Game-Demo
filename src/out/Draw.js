@@ -11,6 +11,7 @@ var Game_1 = require("./Game");
 function onWindowResize() {
     var canvas = document.getElementById("game_window");
     var background = document.getElementById("background_canvas");
+    var shadows = document.getElementById("shadow_canvas");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
     Vars_1["default"].cameraWidth = Vars_1["default"].canvasWidth / Vars_1["default"].cameraScale;
@@ -19,6 +20,8 @@ function onWindowResize() {
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
     background.setAttribute('width', Vars_1["default"].canvasWidth + '');
     background.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    shadows.setAttribute('width', Vars_1["default"].canvasWidth + '');
+    shadows.setAttribute('height', Vars_1["default"].canvasHeight + '');
     Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;
@@ -59,22 +62,10 @@ function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
     var fontSize = 4;
     ctx.font = "".concat(fontSize, "px Courier");
-    var shadow = (0, Sprites_1.sprt)('shadow');
     if (Vars_1["default"].displayMode > 1) {
+        drawShadows(entries);
         for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
             var obj = entries_1[_i];
-            var sprite = void 0;
-            if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
-                sprite = obj.sprite;
-            }
-            else {
-                sprite = obj.getAnimFrame();
-            }
-            shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-            ctx.drawImage(shadow.image.element, Math.round(obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1), Math.round(obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1), sprite.drawBox.width, sprite.drawBox.height * 0.5);
-        }
-        for (var _a = 0, entries_2 = entries; _a < entries_2.length; _a++) {
-            var obj = entries_2[_a];
             var sprite = void 0;
             if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
                 sprite = obj.sprite;
@@ -92,8 +83,8 @@ function drawObjects(ctx) {
         }
     }
     if (Vars_1["default"].displayMode < 4) {
-        for (var _b = 0, entries_3 = entries; _b < entries_3.length; _b++) {
-            var obj = entries_3[_b];
+        for (var _a = 0, entries_2 = entries; _a < entries_2.length; _a++) {
+            var obj = entries_2[_a];
             if (obj.hitBox === null) {
                 continue;
             }
@@ -104,8 +95,8 @@ function drawObjects(ctx) {
         }
     }
     if (Vars_1["default"].displayMode !== 0 && Vars_1["default"].displayMode < 4) {
-        for (var _c = 0, entries_4 = entries; _c < entries_4.length; _c++) {
-            var obj = entries_4[_c];
+        for (var _b = 0, entries_3 = entries; _b < entries_3.length; _b++) {
+            var obj = entries_3[_b];
             if (obj.hitBox === null) {
                 continue;
             }
@@ -141,7 +132,6 @@ function drawBackground() {
     if (ctx === null) {
         return;
     }
-    console.log('draw back');
     var img = Sprites_1.Img.store['grass'];
     if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
         return;
@@ -212,8 +202,8 @@ function drawDebugInfo(ctx) {
     ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
     count = 0;
     var plyr = Obj_1.Obj.store['player'];
-    for (var _b = 0, entries_5 = entries; _b < entries_5.length; _b++) {
-        var obj = entries_5[_b];
+    for (var _b = 0, entries_4 = entries; _b < entries_4.length; _b++) {
+        var obj = entries_4[_b];
         if (obj.hitBox !== null) {
             var hb = obj.calcHitBox();
             ctx.fillStyle = Vars_1["default"].bgColors[0];
@@ -263,5 +253,31 @@ function drawControls(ctx) {
     ctx.fill();
     ctx.stroke();
     ctx.restore();
+}
+function drawShadows(entries) {
+    var shadow = (0, Sprites_1.sprt)('shadow');
+    var canvas = document.getElementById("shadow_canvas");
+    if (canvas.getContext === undefined) {
+        return;
+    }
+    var ctx = canvas.getContext('2d');
+    if (ctx === null) {
+        return;
+    }
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    for (var _i = 0, entries_5 = entries; _i < entries_5.length; _i++) {
+        var obj = entries_5[_i];
+        var sprite = void 0;
+        if (Vars_1["default"].displayMode < 3 || obj.animations == null) {
+            sprite = obj.sprite;
+        }
+        else {
+            sprite = obj.getAnimFrame();
+        }
+        shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
+        var x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
+        var y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1;
+        ctx.drawImage(shadow.image.element, Math.round(x * Vars_1["default"].cameraScale), Math.round(y * Vars_1["default"].cameraScale), sprite.drawBox.width * Vars_1["default"].cameraScale, sprite.drawBox.height * 0.5 * Vars_1["default"].cameraScale);
+    }
 }
 //# sourceMappingURL=Draw.js.map

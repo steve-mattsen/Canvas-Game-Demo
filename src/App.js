@@ -29,6 +29,7 @@ class App extends React.Component {
   render() {
     return (<div>
       <canvas id="background_canvas">Background</canvas>
+      <canvas id="shadow_canvas">Shadows</canvas>
       <canvas id="game_window">da game</canvas>
     </div>
     );
