@@ -184,8 +184,8 @@ function drawBackground() {
 	}
 
 	ctx.imageSmoothingEnabled = false;
-	for (let yi = 0; (yi - 1) * img.size.y < Game.camera.box.height; yi++) {
-		for (let xi = 0; (xi - 1) * img.size.x < Game.camera.box.width; xi++) {
+	for (let yi = 0; (yi - 1) * img.size.y < Game.camera.height; yi++) {
+		for (let xi = 0; (xi - 1) * img.size.x < Game.camera.width; xi++) {
 			ctx.drawImage(
 				img.element,
 				xi * img.size.x * Game.camera.zoom,
@@ -252,7 +252,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
 		0, fontSize * 2
 	);
-	ctx.fillText(`camera ${Game.camera.box.width.toFixed(1)}x${Game.camera.box.height.toFixed(1)}`,
+	ctx.fillText(`camera ${Game.camera.width.toFixed(1)}x${Game.camera.height.toFixed(1)}`,
 		0, fontSize * 3
 	);
 
@@ -260,7 +260,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
 	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fillRect(
-		Game.camera.box.width - 50,
+		Game.camera.width - 50,
 		0,
 		50,
 		fontSize * inputs.length * 1 + fontSize * .25,
@@ -274,7 +274,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = Colors.fg[0];
 		ctx.fillText(
 			`${k} : ${v}`,
-			Game.camera.box.width,
+			Game.camera.width,
 			count++ * fontSize,
 		)
 	}
@@ -286,7 +286,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let boxHeight = entries.length * fontSize;
 	ctx.fillRect(
 		0,
-		Game.camera.box.height - boxHeight,
+		Game.camera.height - boxHeight,
 		50,
 		boxHeight
 	);
@@ -330,11 +330,11 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillText(
 			text,
 			0,
-			Game.camera.box.height - ((1 + count++) * fontSize),
+			Game.camera.height - ((1 + count++) * fontSize),
 		);
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
-		drawMarker(ctx, Game.camera.pos.x, Game.camera.pos.y);
+		drawMarker(ctx, Game.camera.x, Game.camera.y);
 		ctx.restore();
 	}
 }

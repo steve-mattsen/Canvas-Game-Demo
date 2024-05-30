@@ -18,14 +18,14 @@ export default class Input {
 	}
 	static moveCamera() {
 		if (Vars.inputState['i'] > 0) {
-			Game.camera.pos.y -= 1;
+			Game.camera.y -= 1;
 		} else if (Vars.inputState['k'] > 0) {
-			Game.camera.pos.y += 1;
+			Game.camera.y += 1;
 		}
 		if (Vars.inputState['j'] > 0) {
-			Game.camera.pos.x -= 1;
+			Game.camera.x -= 1;
 		} else if (Vars.inputState['l'] > 0) {
-			Game.camera.pos.x += 1;
+			Game.camera.x += 1;
 		}
 	}
 }

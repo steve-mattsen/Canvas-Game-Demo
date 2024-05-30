@@ -132,7 +132,7 @@ var Game = (function () {
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();
-    Game.camera = new Camera_1.Camera(new Geo_1.Vec2(0, 0));
+    Game.camera = new Camera_1.Camera(0, 0, 0, 0, ['center', 'middle']);
     return Game;
 }());
 exports["default"] = Game;

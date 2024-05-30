@@ -12,7 +12,7 @@ export default class Game {
 	static tickCount = 0;
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
-	static camera = new Camera(new Vec2(0, 0));
+	static camera = new Camera(0, 0, 0, 0, ['center', 'middle']);
 	static init() {
 		new VirtualJoystick('left_stick');
 

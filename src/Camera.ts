@@ -1,17 +1,15 @@
 import { Box, BoxSpec, Vec2, TOrigin } from "./Geo";
 import Vars from "./Vars";
 
-export class Camera {
-	pos: Vec2;
+export class Camera extends Box {
 	zoom: number;
-	box: Box = new Box(0, 0, 0, 0, ['center', 'middle']);
-	constructor(pos: Vec2, zoom = 4) {
-		this.pos = pos;
+	constructor(x: number, y: number, w: number, h: number, origin?: TOrigin, zoom = 4) {
+		super(x, y, w, h, origin);
 		this.zoom = zoom;
 		this.updateDims();
 	}
 	updateDims() {
-		this.box.width = Vars.canvasWidth / this.zoom;
-		this.box.height = Vars.canvasHeight / this.zoom;
+		this.width = Vars.canvasWidth / this.zoom;
+		this.height = Vars.canvasHeight / this.zoom;
 	}
 }
