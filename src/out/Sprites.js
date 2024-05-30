@@ -33,7 +33,7 @@ var Img = (function () {
     Img.checkImagesArePreloaded = function () {
         for (var _i = 0, _a = Object.entries(Img.store); _i < _a.length; _i++) {
             var _b = _a[_i], key = _b[0], image = _b[1];
-            if (!image.element.complete) {
+            if (!image.element.complete || (image.element.width + image.element.height) == 0) {
                 return false;
             }
         }

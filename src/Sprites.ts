@@ -22,7 +22,7 @@ export class Img {
 	}
 	public static checkImagesArePreloaded() {
 		for (const [key, image] of Object.entries(Img.store)) {
-			if (!image.element.complete) {
+			if (!image.element.complete || (image.element.width + image.element.height) == 0) {
 				return false;
 			}
 		}
