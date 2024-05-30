@@ -1,8 +1,6 @@
 import { onWindowResize } from "./Draw";
 import { vec, Vec2, Box, Line } from "./Geo";
-import Input from "./Input";
 import Vars from "./Vars";
-import VirtualJoystick from "./VirtualJoystick";
 export default class Button {
 	key: string;
 	varKey: string;
