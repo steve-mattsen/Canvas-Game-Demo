@@ -6,6 +6,7 @@ import { Box, Vec2 } from "./Geo";
 import Input from "./Input";
 import VirtualJoystick from "./VirtualJoystick";
 import Colors from "./Colors";
+import Game from "./Game";
 
 export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -334,6 +335,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		);
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
+		drawMarker(ctx, Game.camera.pos.x, Game.camera.pos.y);
 		ctx.restore();
 	}
 }

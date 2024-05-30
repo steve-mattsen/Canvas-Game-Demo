@@ -8,6 +8,7 @@ require("./World");
 var VirtualJoystick_1 = require("./VirtualJoystick");
 var Input_1 = require("./Input");
 var World_1 = require("./World");
+var Camera_1 = require("./Camera");
 var Game = (function () {
     function Game() {
     }
@@ -130,6 +131,7 @@ var Game = (function () {
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();
+    Game.camera = new Camera_1.Camera(new Geo_1.Vec2(0, 0));
     return Game;
 }());
 exports["default"] = Game;

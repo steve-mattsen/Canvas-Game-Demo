@@ -6,11 +6,13 @@ import "./World";
 import VirtualJoystick from "./VirtualJoystick";
 import Input from "./Input";
 import buildWorld from "./World";
+import { Camera } from "./Camera";
 
 export default class Game {
 	static tickCount = 0;
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
+	static camera = new Camera(new Vec2(0, 0));
 	static init() {
 		new VirtualJoystick('left_stick');
 

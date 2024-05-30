@@ -1,10 +1,9 @@
 import { Box, BoxSpec, Vec2, TOrigin } from "./Geo";
 
-export class Camera extends Box {
+export class Camera {
 	pos: Vec2;
 	zoom: number;
-	constructor(pos: Vec2, viewBox: Box | BoxSpec, origin?: TOrigin, zoom = 1) {
-		super(viewBox.x, viewBox.y, viewBox.width, viewBox.height, origin);
+	constructor(pos: Vec2, zoom = 4) {
 		this.pos = pos;
 		this.zoom = zoom;
 	}

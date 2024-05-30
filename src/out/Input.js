@@ -2,6 +2,7 @@
 exports.__esModule = true;
 exports.OnScreenControl = void 0;
 var Button_1 = require("./Button");
+var Game_1 = require("./Game");
 var Geo_1 = require("./Geo");
 var Vars_1 = require("./Vars");
 var Input = (function () {
@@ -63,6 +64,18 @@ window.onkeydown = function (e) {
     }
     else if (Vars_1["default"].inputState['-'] > 0) {
         Vars_1["default"].canvasScale -= 0.1;
+    }
+    else if (Vars_1["default"].inputState['i'] > 0) {
+        Game_1["default"].camera.pos.y -= 1;
+    }
+    else if (Vars_1["default"].inputState['k'] > 0) {
+        Game_1["default"].camera.pos.y += 1;
+    }
+    else if (Vars_1["default"].inputState['j'] > 0) {
+        Game_1["default"].camera.pos.x -= 1;
+    }
+    else if (Vars_1["default"].inputState['l'] > 0) {
+        Game_1["default"].camera.pos.x += 1;
     }
 };
 window.onmousedown = function (e) {
