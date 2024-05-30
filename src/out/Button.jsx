@@ -115,7 +115,7 @@ window.ontouchmove = function (e) {
         var stick = Input_1["default"].getOnscreenControl('left_stick');
         stick.screenToValue(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
     }
-    else if (Vars_1["default"].mouseMove === null) {
+    else if (Vars_1["default"].mouseMove !== null) {
         Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].cameraScale, e.touches[0].clientY / Vars_1["default"].cameraScale);
     }
 };

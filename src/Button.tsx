@@ -128,7 +128,7 @@ window.ontouchmove = (e) => {
 			e.touches[0].clientX,
 			e.touches[0].clientY,
 		));
-	} else if (Vars.mouseMove === null) {
+	} else if (Vars.mouseMove !== null) {
 		Vars.mouseMove = vec(
 			e.touches[0].clientX / Vars.cameraScale,
 			e.touches[0].clientY / Vars.cameraScale,
