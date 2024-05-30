@@ -14,14 +14,7 @@ class App extends React.Component {
       '/bush.png',
     ];
 
-    for (const uri of images) {
-      let key = uri.replace(RegExp(/(.*)\/(.*)\.(.*)/gim), "$2");
-      Img.addImg(await new Img(key, uri));
-    }
-
-    while (Img.checkImagesArePreloaded() === false) {
-      await new Promise(r => setTimeout(r, 100));
-    }
+    await Img.preloadImages(images);
 
     require('./Game');
   }

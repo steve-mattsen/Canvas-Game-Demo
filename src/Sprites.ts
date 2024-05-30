@@ -12,9 +12,6 @@ export class Img {
 		this.uri = uri ?? this.uri;
 		this.element = new Image();
 		this.element.src = this.uri;
-		this.element.onload = () => {
-			this.size = vec(this.element.width, this.element.height);
-		};
 	}
 	public static store: { [id: string]: Img } = {};
 	public static addImg(image: Img) {
@@ -27,6 +24,20 @@ export class Img {
 			}
 		}
 		return true;
+	}
+	public static async preloadImages(images: string[]) {
+		for (const uri of images) {
+			let key = uri.replace(RegExp(/(.*)\/(.*)\.(.*)/gim), "$2");
+			Img.addImg(await new Img(key, uri));
+		}
+
+		while (Img.checkImagesArePreloaded() === false) {
+			await new Promise(r => setTimeout(r, 100));
+		}
+
+		for (const [key, obj] of Object.entries(Img.store)) {
+			obj.size = vec(obj.element.width, obj.element.height);
+		}
 	}
 }
 
