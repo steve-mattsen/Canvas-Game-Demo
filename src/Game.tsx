@@ -45,7 +45,7 @@ export async function tick() {
 		move = line.normal();
 	} else if (stick.value.x !== 0 || stick.value.y !== 0) {
 		move = stick.value;
-		speed = runSpeed;
+		speed = runSpeed * stick.value.length();
 	} else {
 		let moveX = (Vars.inputState.arrowright || Vars.inputState.d ? 1 : 0)
 			- (Vars.inputState.arrowleft || Vars.inputState.a ? 1 : 0);
@@ -74,7 +74,7 @@ export async function tick() {
 	let previousAnim = plyr.animState;
 	if (move.length() === 0) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
-	} else if (speed > walkSpeed) {
+	} else if (speed > 0) {
 		plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
 	}
 	if (move.x >= 0.5) {

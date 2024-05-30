@@ -76,7 +76,7 @@ function tick() {
             }
             else if (stick.value.x !== 0 || stick.value.y !== 0) {
                 move = stick.value;
-                speed = runSpeed;
+                speed = runSpeed * stick.value.length();
             }
             else {
                 moveX = (Vars_1["default"].inputState.arrowright || Vars_1["default"].inputState.d ? 1 : 0)
@@ -101,7 +101,7 @@ function tick() {
             if (move.length() === 0) {
                 plyr.animState = plyr.animState.replace(/(.*)_/, 'idle_');
             }
-            else if (speed > walkSpeed) {
+            else if (speed > 0) {
                 plyr.animState = plyr.animState.replace(/(.*)_/, 'run_');
             }
             if (move.x >= 0.5) {

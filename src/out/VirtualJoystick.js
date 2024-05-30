@@ -22,13 +22,26 @@ var VirtualJoystick = (function (_super) {
     function VirtualJoystick(id) {
         var _this = _super.call(this, id) || this;
         _this.size = 200;
+        _this.deadZone = 25;
         _this.box = new Geo_1.Box(0, window.innerHeight - _this.size, _this.size, _this.size);
         _this.value = new Geo_1.Vec2(0, 0);
         return _this;
     }
     VirtualJoystick.prototype.screenToValue = function (point) {
         var middle = this.box.getCenterMiddle();
-        this.value = new Geo_1.Line(middle.x, middle.y, point.x, point.y).normal();
+        var line = new Geo_1.Line(middle.x, middle.y, point.x, point.y);
+        var length = line.length();
+        if (length < this.deadZone) {
+            this.value.x = 0;
+            this.value.y = 0;
+            return;
+        }
+        this.value = line.normal();
+        if (line.length() < (this.size / 2)) {
+            var factor = line.length() / (this.size / 2);
+            this.value.x *= factor;
+            this.value.y *= factor;
+        }
     };
     return VirtualJoystick;
 }(Input_1.OnScreenControl));
