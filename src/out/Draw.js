@@ -7,7 +7,7 @@ var Vars_1 = require("./Vars");
 var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
-var Game_1 = require("./Game");
+var Colors_1 = require("./Colors");
 function onWindowResize() {
     var canvas = document.getElementById("game_window");
     var background = document.getElementById("background_canvas");
@@ -27,7 +27,6 @@ function onWindowResize() {
 exports.onWindowResize = onWindowResize;
 window.onresize = onWindowResize;
 function draw() {
-    (0, Game_1.tick)();
     var canvas = document.getElementById("game_window");
     if (canvas.getContext === undefined) {
         return;
@@ -112,11 +111,11 @@ function drawButtons(ctx) {
     var margin = 5;
     button.dimensions = new Geo_1.Box(Vars_1["default"].canvasWidth - width - margin, margin, width, width, new Geo_1.Vec2(0, 0));
     var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
-    ctx.fillStyle = Vars_1["default"].bgColors[colorKey] + "88";
+    ctx.fillStyle = Colors_1["default"].bg[colorKey] + "88";
     ctx.fillRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
     ctx.strokeStyle = "black";
     ctx.strokeRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
-    ctx.fillStyle = Vars_1["default"].fgColors[colorKey];
+    ctx.fillStyle = Colors_1["default"].fg[colorKey];
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = "bold ".concat(Math.ceil(button.dimensions.height), "px Courier");
@@ -146,7 +145,7 @@ function drawBackground() {
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }
-    ctx.fillStyle = Vars_1["default"].fgColors[0];
+    ctx.fillStyle = Colors_1["default"].fg[0];
     ctx.lineWidth = 0.5;
     var path = new Path2D();
     var crosshairSize = 2;
@@ -180,25 +179,25 @@ function drawDebugInfo(ctx) {
     var fontSize = 4;
     ctx.textAlign = "left";
     ctx.font = "".concat(fontSize, "px Courier");
-    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     ctx.fillRect(0, 0, 50, fontSize * 4);
-    ctx.fillStyle = Vars_1["default"].fgColors[0];
+    ctx.fillStyle = Colors_1["default"].fg[0];
     ctx.fillText("window ".concat(window.innerWidth, "x").concat(window.innerHeight), 0, fontSize);
     ctx.fillText("canvas ".concat(Vars_1["default"].canvasWidth, "x").concat(Vars_1["default"].canvasHeight), 0, fontSize * 2);
     ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth.toFixed(1), "x").concat(Vars_1["default"].cameraHeight.toFixed(1)), 0, fontSize * 3);
     var inputs = Object.entries(Vars_1["default"].inputState).filter(function (k, v) { return Vars_1["default"].inputState[k[0]]; });
-    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     ctx.fillRect(Vars_1["default"].cameraWidth - 50, 0, 50, fontSize * inputs.length * 1 + fontSize * .25);
     var count = 0;
     for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
         var _a = inputs_1[_i], k = _a[0], v = _a[1];
         ctx.textAlign = "right";
         ctx.textBaseline = "hanging";
-        ctx.fillStyle = Vars_1["default"].fgColors[0];
+        ctx.fillStyle = Colors_1["default"].fg[0];
         ctx.fillText("".concat(k, " : ").concat(v), Vars_1["default"].cameraWidth, count++ * fontSize);
     }
     ctx.textAlign = "left";
-    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     var boxHeight = entries.length * fontSize;
     ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
     count = 0;
@@ -207,13 +206,13 @@ function drawDebugInfo(ctx) {
         var obj = entries_4[_b];
         if (obj.hitBox !== null) {
             var hb = obj.calcHitBox();
-            ctx.fillStyle = Vars_1["default"].bgColors[0];
+            ctx.fillStyle = Colors_1["default"].bg[0];
             if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
                 ctx.fillStyle = "red";
             }
             ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
             drawBoxOutline(ctx, hb);
-            ctx.fillStyle = Vars_1["default"].fgColors[0];
+            ctx.fillStyle = Colors_1["default"].fg[0];
             ctx.textBaseline = "top";
             ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
             ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
@@ -238,11 +237,11 @@ function drawControls(ctx) {
     var middle = box.getCenterMiddle();
     ctx.beginPath();
     ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);
-    ctx.strokeStyle = Vars_1["default"].fgColors[0] + '55';
+    ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
     ctx.stroke();
     var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size / 2);
-    gradient.addColorStop(0, Vars_1["default"].bgColors[1] + '88');
-    gradient.addColorStop(0.99, Vars_1["default"].bgColors[0] + '88');
+    gradient.addColorStop(0, Colors_1["default"].bg[1] + '88');
+    gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '88');
     gradient.addColorStop(1.0, 'transparent');
     ctx.fillStyle = gradient;
     ctx.fillRect(middle.x - stick.size / 2, middle.y - stick.size / 2, stick.size, stick.size);
@@ -250,7 +249,7 @@ function drawControls(ctx) {
     var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 2, middle.y + stick.value.y * innerStickSize / 2);
     ctx.beginPath();
     ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-    ctx.fillStyle = Vars_1["default"].bgColors[0] + '88';
+    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     ctx.fill();
     ctx.stroke();
     ctx.restore();

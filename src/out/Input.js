@@ -17,6 +17,20 @@ var Input = (function () {
         }
         return result;
     };
+    Input.moveCamera = function () {
+        if (Vars_1["default"].inputState['i'] > 0) {
+            Game_1["default"].camera.pos.y -= 1;
+        }
+        else if (Vars_1["default"].inputState['k'] > 0) {
+            Game_1["default"].camera.pos.y += 1;
+        }
+        if (Vars_1["default"].inputState['j'] > 0) {
+            Game_1["default"].camera.pos.x -= 1;
+        }
+        else if (Vars_1["default"].inputState['l'] > 0) {
+            Game_1["default"].camera.pos.x += 1;
+        }
+    };
     Input.onscreenControls = {};
     return Input;
 }());
@@ -64,18 +78,6 @@ window.onkeydown = function (e) {
     }
     else if (Vars_1["default"].inputState['-'] > 0) {
         Vars_1["default"].canvasScale -= 0.1;
-    }
-    else if (Vars_1["default"].inputState['i'] > 0) {
-        Game_1["default"].camera.pos.y -= 1;
-    }
-    else if (Vars_1["default"].inputState['k'] > 0) {
-        Game_1["default"].camera.pos.y += 1;
-    }
-    else if (Vars_1["default"].inputState['j'] > 0) {
-        Game_1["default"].camera.pos.x -= 1;
-    }
-    else if (Vars_1["default"].inputState['l'] > 0) {
-        Game_1["default"].camera.pos.x += 1;
     }
 };
 window.onmousedown = function (e) {

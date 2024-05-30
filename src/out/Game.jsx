@@ -27,6 +27,7 @@ var Game = (function () {
                 Vars_1["default"].inputState[v] = Vars_1["default"].inputState[v] + 1;
             }
         });
+        Input_1["default"].moveCamera();
         var walkSpeed = 1;
         var runSpeed = 2;
         var move;

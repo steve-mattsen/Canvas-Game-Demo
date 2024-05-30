@@ -33,6 +33,8 @@ export default class Game {
 			}
 		});
 
+		Input.moveCamera();
+
 		let walkSpeed = 1;
 		let runSpeed = 2;
 		let move: Vec2;
