@@ -14,8 +14,8 @@ export function onWindowResize() {
 	let shadows = document.getElementById("shadow_canvas") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
-	Vars.cameraWidth = Vars.canvasWidth / Vars.cameraScale;
-	Vars.cameraHeight = Vars.canvasHeight / Vars.cameraScale;
+	Game.cameraWidth = Vars.canvasWidth / Game.camera.zoom;
+	Game.cameraHeight = Vars.canvasHeight / Game.camera.zoom;
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
 	background.setAttribute('width', Vars.canvasWidth + '');
@@ -40,7 +40,7 @@ export default function draw() {
 	ctx.lineWidth = 1;
 
 	ctx.imageSmoothingEnabled = false;
-	ctx.scale(Vars.cameraScale, Vars.cameraScale)
+	ctx.scale(Game.camera.zoom, Game.camera.zoom)
 
 	if (Vars.showBackground) {
 		drawBackground();
@@ -64,7 +64,7 @@ export default function draw() {
 
 	Vars.debugMode && drawDebugInfo(ctx);
 
-	ctx.scale(1 / Vars.cameraScale, 1 / Vars.cameraScale);
+	ctx.scale(1 / Game.camera.zoom, 1 / Game.camera.zoom);
 	ctx.imageSmoothingEnabled = true;
 
 	drawControls(ctx);
@@ -185,14 +185,14 @@ function drawBackground() {
 	}
 
 	ctx.imageSmoothingEnabled = false;
-	for (let yi = 0; (yi - 1) * img.size.y < Vars.cameraHeight; yi++) {
-		for (let xi = 0; (xi - 1) * img.size.x < Vars.cameraWidth; xi++) {
+	for (let yi = 0; (yi - 1) * img.size.y < Game.cameraHeight; yi++) {
+		for (let xi = 0; (xi - 1) * img.size.x < Game.cameraWidth; xi++) {
 			ctx.drawImage(
 				img.element,
-				xi * img.size.x * Vars.cameraScale,
-				yi * img.size.y * Vars.cameraScale,
-				img.size.x * Vars.cameraScale,
-				img.size.y * Vars.cameraScale,
+				xi * img.size.x * Game.camera.zoom,
+				yi * img.size.y * Game.camera.zoom,
+				img.size.x * Game.camera.zoom,
+				img.size.y * Game.camera.zoom,
 			)
 		}
 	}
@@ -253,7 +253,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
 		0, fontSize * 2
 	);
-	ctx.fillText(`camera ${Vars.cameraWidth.toFixed(1)}x${Vars.cameraHeight.toFixed(1)}`,
+	ctx.fillText(`camera ${Game.cameraWidth.toFixed(1)}x${Game.cameraHeight.toFixed(1)}`,
 		0, fontSize * 3
 	);
 
@@ -261,7 +261,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
 	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fillRect(
-		Vars.cameraWidth - 50,
+		Game.cameraWidth - 50,
 		0,
 		50,
 		fontSize * inputs.length * 1 + fontSize * .25,
@@ -275,7 +275,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = Colors.fg[0];
 		ctx.fillText(
 			`${k} : ${v}`,
-			Vars.cameraWidth,
+			Game.cameraWidth,
 			count++ * fontSize,
 		)
 	}
@@ -287,7 +287,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let boxHeight = entries.length * fontSize;
 	ctx.fillRect(
 		0,
-		Vars.cameraHeight - boxHeight,
+		Game.cameraHeight - boxHeight,
 		50,
 		boxHeight
 	);
@@ -331,7 +331,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillText(
 			text,
 			0,
-			Vars.cameraHeight - ((1 + count++) * fontSize),
+			Game.cameraHeight - ((1 + count++) * fontSize),
 		);
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
@@ -430,10 +430,10 @@ function drawShadows(entries: Obj[]) {
 		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
 		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1
 		ctx.drawImage(shadow.image.element,
-			Math.round(x * Vars.cameraScale),
-			Math.round(y * Vars.cameraScale),
-			sprite.drawBox.width * Vars.cameraScale,
-			sprite.drawBox.height * 0.5 * Vars.cameraScale,
+			Math.round(x * Game.camera.zoom),
+			Math.round(y * Game.camera.zoom),
+			sprite.drawBox.width * Game.camera.zoom,
+			sprite.drawBox.height * 0.5 * Game.camera.zoom,
 		);
 	}
 }

@@ -85,8 +85,8 @@ window.onmousemove = (e) => {
 			e.clientY,
 		));
 	} else if (Vars.mouseMove != null) {
-		Vars.mouseMove.x = e.clientX / Vars.cameraScale;
-		Vars.mouseMove.y = e.clientY / Vars.cameraScale;
+		Vars.mouseMove.x = e.clientX / Game.camera.zoom;
+		Vars.mouseMove.y = e.clientY / Game.camera.zoom;
 	}
 }
 window.onmouseup = (e) => {
@@ -115,8 +115,8 @@ window.ontouchmove = (e) => {
 		));
 	} else if (Vars.mouseMove !== null) {
 		Vars.mouseMove = vec(
-			e.touches[0].clientX / Vars.cameraScale,
-			e.touches[0].clientY / Vars.cameraScale,
+			e.touches[0].clientX / Game.camera.zoom,
+			e.touches[0].clientY / Game.camera.zoom,
 		);
 	}
 }
@@ -150,8 +150,8 @@ function clickOrTouchStart(point: Vec2) {
 		stick.screenToValue(point);
 	} else {
 		Vars.inputState['mouseDown'] = 1;
-		point.x /= Vars.cameraScale;
-		point.y /= Vars.cameraScale;
+		point.x /= Game.camera.zoom;
+		point.y /= Game.camera.zoom;
 		Vars.mouseMove = point;
 	}
 }

@@ -115,7 +115,7 @@ var Game = (function () {
         plyr.pos.y += move.y * speed;
         var hb = plyr.calcHitBox();
         var p2 = hb.p2();
-        var cameraLimit = new Geo_1.Vec2((Vars_1["default"].canvasWidth / Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight / Vars_1["default"].cameraScale));
+        var cameraLimit = new Geo_1.Vec2((Vars_1["default"].canvasWidth / Game.camera.zoom), (Vars_1["default"].canvasHeight / Game.camera.zoom));
         if (hb.x < 0) {
             plyr.pos.x = plyr.hitBox.origin.x;
         }
@@ -133,6 +133,8 @@ var Game = (function () {
     Game.tickCount = 0;
     Game.startTime = Date.now();
     Game.camera = new Camera_1.Camera(new Geo_1.Vec2(0, 0));
+    Game.cameraWidth = Vars_1["default"].canvasWidth / Game.camera.zoom;
+    Game.cameraHeight = Vars_1["default"].canvasHeight / Game.camera.zoom;
     return Game;
 }());
 exports["default"] = Game;

@@ -1,3 +1,4 @@
+import Game from "./Game";
 import { Vec2, Box } from "./Geo";
 export default class Vars {
 	static inputState: { [id: string]: number } = {};
@@ -10,10 +11,8 @@ export default class Vars {
 	static mouseMove: Vec2 | null = null;
 	static fullscreenMode = false;
 	static canvasScale = 1;
-	static cameraScale = 4;
+	// static Game.camera.zoom = 4;
 	static canvasWidth = window.innerWidth / this.canvasScale;
 	static canvasHeight = window.innerHeight / this.canvasScale;
-	static cameraWidth = this.canvasWidth / this.cameraScale;
-	static cameraHeight = this.canvasHeight / this.cameraScale;
 	static move = new Vec2(0, 0);
 }

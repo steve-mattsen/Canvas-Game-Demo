@@ -13,6 +13,8 @@ export default class Game {
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
 	static camera = new Camera(new Vec2(0, 0));
+	static cameraWidth = Vars.canvasWidth / Game.camera.zoom;
+	static cameraHeight = Vars.canvasHeight / Game.camera.zoom;
 	static init() {
 		new VirtualJoystick('left_stick');
 
@@ -130,8 +132,8 @@ export default class Game {
 		let hb = plyr.calcHitBox();
 		let p2 = hb.p2();
 		let cameraLimit = new Vec2(
-			(Vars.canvasWidth / Vars.cameraScale),
-			(Vars.canvasHeight / Vars.cameraScale)
+			(Vars.canvasWidth / Game.camera.zoom),
+			(Vars.canvasHeight / Game.camera.zoom)
 		)
 
 		if (hb.x < 0) {

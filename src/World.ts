@@ -3,6 +3,7 @@ import { Img, Animation, SpriteSheet, Sprite, sprt } from "./Sprites"
 import { Obj } from "./Obj"
 import { vec, Box } from "./Geo"
 import Vars from "./Vars";
+import Game from "./Game";
 
 export default function buildWorld() {
 	let ss = new SpriteSheet('spritesheet_link', 8, 10);
@@ -40,8 +41,8 @@ export default function buildWorld() {
 		const tree = new Obj(
 			'tree' + i,
 			vec(
-				(Math.random() * Vars.cameraWidth),
-				(Math.random() * Vars.cameraHeight) + tree_sprite.image.size.y / 2,
+				(Math.random() * Game.cameraWidth),
+				(Math.random() * Game.cameraHeight) + tree_sprite.image.size.y / 2,
 			),
 			tree_sprite,
 			new Box(
@@ -60,8 +61,8 @@ export default function buildWorld() {
 		const bush = new Obj(
 			'bush' + i,
 			vec(
-				(Math.random() * Vars.cameraWidth),
-				(Math.random() * Vars.cameraHeight) + bush_sprite.image.size.y / 2,
+				(Math.random() * Game.cameraWidth),
+				(Math.random() * Game.cameraHeight) + bush_sprite.image.size.y / 2,
 			),
 			bush_sprite,
 		)
@@ -72,8 +73,8 @@ export default function buildWorld() {
 	const player = new Obj(
 		'player',
 		vec(
-			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
-			(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
+			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom),
+			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom),
 		),
 		anims.idle_down.sprites[0],
 		new Box(0, 0, 10, 8, ['center', 'bottom']),
@@ -86,16 +87,16 @@ function randomizeLayout() {
 	let entries = Object.entries(Obj.store);
 	entries.sort((a, b) => Math.random() - Math.random());
 	let cols = Math.floor(Math.sqrt(entries.length));
-	let colWidth = Math.floor(Vars.cameraWidth / cols);
+	let colWidth = Math.floor(Game.cameraWidth / cols);
 	let rows = Math.floor(entries.length / cols);
-	let rowHeight = Math.floor((Vars.cameraHeight * .9) / rows);
+	let rowHeight = Math.floor((Game.cameraHeight * .9) / rows);
 	let randomOffset = 25;
 	let i = 0;
 	for (const [key, obj] of entries) {
-		// obj.pos.x = Vars.cameraWidth * .12;
+		// obj.pos.x =Game.cameraWidth * .12;
 		obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
 		obj.pos.x += (Math.random() * randomOffset) - randomOffset;
-		obj.pos.y = Vars.cameraHeight * .25;
+		obj.pos.y = Game.cameraHeight * .25;
 		obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
 		obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
 		i++;
