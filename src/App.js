@@ -1,11 +1,18 @@
 import React from "react";
 import "./App.css";
 import { Img } from "./Sprites";
+import Game from "./Game";
 
 
 class App extends React.Component {
 
-  async componentDidMount() {
+  static alreadyMounted = false;
+
+  async componentDidMount(key) {
+    if (App.alreadyMounted === true) {
+      return;
+    }
+    App.alreadyMounted = true;
     let images = [
       '/grass.png',
       '/spritesheet_link.png',
@@ -16,7 +23,7 @@ class App extends React.Component {
 
     await Img.preloadImages(images);
 
-    require('./Game');
+    Game.init();
   }
 
   render() {
