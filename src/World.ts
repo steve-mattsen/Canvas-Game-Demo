@@ -35,20 +35,6 @@ export default function buildWorld() {
 	anims.run_up.sprites[2].duration = lungeDuration;
 	anims.run_up.sprites[7].duration = lungeDuration;
 
-
-	const player = new Obj(
-		'player',
-		vec(
-			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
-			(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
-		),
-		anims.idle_down.sprites[0],
-		new Box(0, 0, 10, 8, ['center', 'bottom']),
-		anims
-	);
-	Obj.addObj(player);
-
-
 	for (let i = 0; i < 10; i++) {
 		const tree_sprite = sprt('tree');
 		const tree = new Obj(
@@ -69,7 +55,7 @@ export default function buildWorld() {
 		Obj.addObj(tree);
 	}
 
-	for (let i = 0; i < 8; i++) {
+	for (let i = 0; i < 50; i++) {
 		const bush_sprite = sprt('bush');
 		const bush = new Obj(
 			'bush' + i,
@@ -80,5 +66,38 @@ export default function buildWorld() {
 			bush_sprite,
 		)
 		Obj.addObj(bush);
+	}
+	randomizeLayout();
+
+	const player = new Obj(
+		'player',
+		vec(
+			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Vars.cameraScale),
+			(Vars.canvasHeight - ss.colSize) / (2 * Vars.cameraScale),
+		),
+		anims.idle_down.sprites[0],
+		new Box(0, 0, 10, 8, ['center', 'bottom']),
+		anims
+	);
+	Obj.addObj(player);
+}
+
+function randomizeLayout() {
+	let entries = Object.entries(Obj.store);
+	entries.sort((a, b) => Math.random() - Math.random());
+	let cols = Math.floor(Math.sqrt(entries.length));
+	let colWidth = Math.floor(Vars.cameraWidth / cols);
+	let rows = Math.floor(entries.length / cols);
+	let rowHeight = Math.floor((Vars.cameraHeight * .9) / rows);
+	let randomOffset = 25;
+	let i = 0;
+	for (const [key, obj] of entries) {
+		// obj.pos.x = Vars.cameraWidth * .12;
+		obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
+		obj.pos.x += (Math.random() * randomOffset) - randomOffset;
+		obj.pos.y = Vars.cameraHeight * .25;
+		obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
+		obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
+		i++;
 	}
 }

@@ -39,18 +39,38 @@ function buildWorld() {
     anims.run_down.sprites[7].duration = lungeDuration;
     anims.run_up.sprites[2].duration = lungeDuration;
     anims.run_up.sprites[7].duration = lungeDuration;
-    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
-    Obj_1.Obj.addObj(player);
     for (var i = 0; i < 10; i++) {
         var tree_sprite = (0, Sprites_1.sprt)('tree');
         var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight) + tree_sprite.image.size.y / 2), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
         Obj_1.Obj.addObj(tree);
     }
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 50; i++) {
         var bush_sprite = (0, Sprites_1.sprt)('bush');
         var bush = new Obj_1.Obj('bush' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight) + bush_sprite.image.size.y / 2), bush_sprite);
         Obj_1.Obj.addObj(bush);
     }
+    randomizeLayout();
+    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
+    Obj_1.Obj.addObj(player);
 }
 exports["default"] = buildWorld;
+function randomizeLayout() {
+    var entries = Object.entries(Obj_1.Obj.store);
+    entries.sort(function (a, b) { return Math.random() - Math.random(); });
+    var cols = Math.floor(Math.sqrt(entries.length));
+    var colWidth = Math.floor(Vars_1["default"].cameraWidth / cols);
+    var rows = Math.floor(entries.length / cols);
+    var rowHeight = Math.floor((Vars_1["default"].cameraHeight * .9) / rows);
+    var randomOffset = 25;
+    var i = 0;
+    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+        var _a = entries_1[_i], key = _a[0], obj = _a[1];
+        obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
+        obj.pos.x += (Math.random() * randomOffset) - randomOffset;
+        obj.pos.y = Vars_1["default"].cameraHeight * .25;
+        obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
+        obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
+        i++;
+    }
+}
 //# sourceMappingURL=World.js.map
