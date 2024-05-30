@@ -5,7 +5,7 @@ import Button from "./Button";
 import { Box, Vec2 } from "./Geo";
 import Input from "./Input";
 import VirtualJoystick from "./VirtualJoystick";
-import Game from "./Game";
+import Colors from "./Colors";
 
 export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
@@ -26,7 +26,6 @@ export function onWindowResize() {
 window.onresize = onWindowResize;
 
 export default function draw() {
-	// Game.tick();
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	if (canvas.getContext === undefined) {
 		return;
@@ -144,7 +143,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		new Vec2(0, 0),
 	);
 	let colorKey = Number(Reflect.get(Vars, button.varKey));
-	ctx.fillStyle = Vars.bgColors[colorKey] + "88";
+	ctx.fillStyle = Colors.bg[colorKey] + "88";
 	ctx.fillRect(
 		button.dimensions.x,
 		button.dimensions.y,
@@ -158,7 +157,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		button.dimensions.width,
 		button.dimensions.height,
 	);
-	ctx.fillStyle = Vars.fgColors[colorKey];
+	ctx.fillStyle = Colors.fg[colorKey];
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
 	ctx.font = `bold ${Math.ceil(button.dimensions.height)}px Courier`;
@@ -200,7 +199,7 @@ function drawBackground() {
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {
-	ctx.fillStyle = Vars.fgColors[0];
+	ctx.fillStyle = Colors.fg[0];
 	ctx.lineWidth = 0.5;
 	let path = new Path2D();
 	let crosshairSize = 2;
@@ -242,11 +241,11 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.font = `${fontSize}px Courier`;
 
 	// Fill the top left box.
-	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fillRect(0, 0, 50, fontSize * 4);
 
 	// Write top left text.
-	ctx.fillStyle = Vars.fgColors[0];
+	ctx.fillStyle = Colors.fg[0];
 	ctx.fillText(`window ${window.innerWidth}x${window.innerHeight}`,
 		0, fontSize
 	);
@@ -259,7 +258,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 	// Fill the top right box.
 	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
-	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fillRect(
 		Vars.cameraWidth - 50,
 		0,
@@ -272,7 +271,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	for (const [k, v] of inputs) {
 		ctx.textAlign = "right";
 		ctx.textBaseline = "hanging";
-		ctx.fillStyle = Vars.fgColors[0];
+		ctx.fillStyle = Colors.fg[0];
 		ctx.fillText(
 			`${k} : ${v}`,
 			Vars.cameraWidth,
@@ -283,7 +282,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.textAlign = "left";
 
 	// Fill the bottom left box
-	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillStyle = Colors.bg[0] + '88';
 	let boxHeight = entries.length * fontSize;
 	ctx.fillRect(
 		0,
@@ -297,7 +296,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	for (const obj of entries) {
 		if (obj.hitBox !== null) {
 			let hb = obj.calcHitBox();
-			ctx.fillStyle = Vars.bgColors[0];
+			ctx.fillStyle = Colors.bg[0];
 			if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
 				ctx.fillStyle = "red";
 			}
@@ -305,7 +304,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 			drawBoxOutline(ctx, hb);
 
-			ctx.fillStyle = Vars.fgColors[0];
+			ctx.fillStyle = Colors.fg[0];
 			ctx.textBaseline = "top";
 			ctx.fillText(
 				`x:${Math.round(obj.pos.x)}`,
@@ -355,7 +354,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		0,
 		10,
 	);
-	ctx.strokeStyle = Vars.fgColors[0] + '55';
+	ctx.strokeStyle = Colors.fg[0] + '55';
 	ctx.stroke();
 
 	let gradient = ctx.createRadialGradient(
@@ -366,8 +365,8 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		middle.y,
 		stick.size / 2,
 	)
-	gradient.addColorStop(0, Vars.bgColors[1] + '88');
-	gradient.addColorStop(0.99, Vars.bgColors[0] + '88');
+	gradient.addColorStop(0, Colors.bg[1] + '88');
+	gradient.addColorStop(0.99, Colors.bg[0] + '88');
 	gradient.addColorStop(1.0, 'transparent');
 	ctx.fillStyle = gradient;
 	ctx.fillRect(
@@ -392,7 +391,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		0,
 		10,
 	);
-	ctx.fillStyle = Vars.bgColors[0] + '88';
+	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fill();
 	ctx.stroke();
 
