@@ -27,7 +27,8 @@ export default class VirtualJoystick extends OnScreenControl {
 		}
 		this.value = line.normal();
 		if (line.length() < (this.size / 2)) {
-			let factor = (line.length() - this.deadZone) / (this.size / 2)
+			let factor = (line.length() - this.deadZone) / ((this.size / 2) - this.deadZone);
+			console.log(factor);
 			this.value.x *= factor;
 			this.value.y *= factor;
 		}
