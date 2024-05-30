@@ -14,8 +14,7 @@ export function onWindowResize() {
 	let shadows = document.getElementById("shadow_canvas") as HTMLCanvasElement;
 	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
 	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
-	Game.cameraWidth = Vars.canvasWidth / Game.camera.zoom;
-	Game.cameraHeight = Vars.canvasHeight / Game.camera.zoom;
+	Game.camera.updateDims();
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
 	background.setAttribute('width', Vars.canvasWidth + '');
@@ -185,8 +184,8 @@ function drawBackground() {
 	}
 
 	ctx.imageSmoothingEnabled = false;
-	for (let yi = 0; (yi - 1) * img.size.y < Game.cameraHeight; yi++) {
-		for (let xi = 0; (xi - 1) * img.size.x < Game.cameraWidth; xi++) {
+	for (let yi = 0; (yi - 1) * img.size.y < Game.camera.box.height; yi++) {
+		for (let xi = 0; (xi - 1) * img.size.x < Game.camera.box.width; xi++) {
 			ctx.drawImage(
 				img.element,
 				xi * img.size.x * Game.camera.zoom,
@@ -253,7 +252,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.fillText(`canvas ${Vars.canvasWidth}x${Vars.canvasHeight}`,
 		0, fontSize * 2
 	);
-	ctx.fillText(`camera ${Game.cameraWidth.toFixed(1)}x${Game.cameraHeight.toFixed(1)}`,
+	ctx.fillText(`camera ${Game.camera.box.width.toFixed(1)}x${Game.camera.box.height.toFixed(1)}`,
 		0, fontSize * 3
 	);
 
@@ -261,7 +260,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let inputs = Object.entries(Vars.inputState).filter((k, v) => Vars.inputState[k[0]]);
 	ctx.fillStyle = Colors.bg[0] + '88';
 	ctx.fillRect(
-		Game.cameraWidth - 50,
+		Game.camera.box.width - 50,
 		0,
 		50,
 		fontSize * inputs.length * 1 + fontSize * .25,
@@ -275,7 +274,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillStyle = Colors.fg[0];
 		ctx.fillText(
 			`${k} : ${v}`,
-			Game.cameraWidth,
+			Game.camera.box.width,
 			count++ * fontSize,
 		)
 	}
@@ -287,7 +286,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let boxHeight = entries.length * fontSize;
 	ctx.fillRect(
 		0,
-		Game.cameraHeight - boxHeight,
+		Game.camera.box.height - boxHeight,
 		50,
 		boxHeight
 	);
@@ -331,7 +330,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		ctx.fillText(
 			text,
 			0,
-			Game.cameraHeight - ((1 + count++) * fontSize),
+			Game.camera.box.height - ((1 + count++) * fontSize),
 		);
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);

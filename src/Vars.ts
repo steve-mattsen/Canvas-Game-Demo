@@ -11,7 +11,6 @@ export default class Vars {
 	static mouseMove: Vec2 | null = null;
 	static fullscreenMode = false;
 	static canvasScale = 1;
-	// static Game.camera.zoom = 4;
 	static canvasWidth = window.innerWidth / this.canvasScale;
 	static canvasHeight = window.innerHeight / this.canvasScale;
 	static move = new Vec2(0, 0);

@@ -13,8 +13,6 @@ export default class Game {
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
 	static camera = new Camera(new Vec2(0, 0));
-	static cameraWidth = Vars.canvasWidth / Game.camera.zoom;
-	static cameraHeight = Vars.canvasHeight / Game.camera.zoom;
 	static init() {
 		new VirtualJoystick('left_stick');
 
