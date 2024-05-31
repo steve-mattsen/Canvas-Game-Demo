@@ -187,19 +187,31 @@ function drawBackground() {
 		return;
 	}
 
+	let cambox = Game.camera.fromOrigin();
+
+	let imgSize = new Vec2(
+		img.size.x * Game.camera.zoom,
+		img.size.y * Game.camera.zoom,
+	)
+
+	let xoffset = (cambox.x * Game.camera.zoom) % imgSize.x;
+	let yoffset = (cambox.y * Game.camera.zoom) % imgSize.y;
+
+	let backgroundRows = Math.ceil(cambox.width / img.size.x);
+	let backgroundCols = Math.ceil(cambox.height / img.size.y);
+
 	ctx.imageSmoothingEnabled = false;
-	for (let yi = 0; (yi - 1) * img.size.y < Game.camera.height; yi++) {
-		for (let xi = 0; (xi - 1) * img.size.x < Game.camera.width; xi++) {
+	for (let i = -1; i <= backgroundRows; i++) {
+		for (let j = -1; j <= backgroundCols; j++) {
 			ctx.drawImage(
 				img.element,
-				xi * img.size.x * Game.camera.zoom,
-				yi * img.size.y * Game.camera.zoom,
-				img.size.x * Game.camera.zoom,
-				img.size.y * Game.camera.zoom,
+				i * imgSize.x - xoffset,
+				j * imgSize.y - yoffset,
+				imgSize.x,
+				imgSize.y
 			)
 		}
 	}
-	Vars.showBackground = false;
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {

@@ -138,13 +138,18 @@ function drawBackground() {
     if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
         return;
     }
+    var cambox = Game_1["default"].camera.fromOrigin();
+    var imgSize = new Geo_1.Vec2(img.size.x * Game_1["default"].camera.zoom, img.size.y * Game_1["default"].camera.zoom);
+    var xoffset = (cambox.x * Game_1["default"].camera.zoom) % imgSize.x;
+    var yoffset = (cambox.y * Game_1["default"].camera.zoom) % imgSize.y;
+    var backgroundRows = Math.ceil(cambox.width / img.size.x);
+    var backgroundCols = Math.ceil(cambox.height / img.size.y);
     ctx.imageSmoothingEnabled = false;
-    for (var yi = 0; (yi - 1) * img.size.y < Game_1["default"].camera.height; yi++) {
-        for (var xi = 0; (xi - 1) * img.size.x < Game_1["default"].camera.width; xi++) {
-            ctx.drawImage(img.element, xi * img.size.x * Game_1["default"].camera.zoom, yi * img.size.y * Game_1["default"].camera.zoom, img.size.x * Game_1["default"].camera.zoom, img.size.y * Game_1["default"].camera.zoom);
+    for (var i = -1; i <= backgroundRows; i++) {
+        for (var j = -1; j <= backgroundCols; j++) {
+            ctx.drawImage(img.element, i * imgSize.x - xoffset, j * imgSize.y - yoffset, imgSize.x, imgSize.y);
         }
     }
-    Vars_1["default"].showBackground = false;
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }

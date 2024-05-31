@@ -14,6 +14,8 @@ export default class Game {
 	static thread: NodeJS.Timeout;
 	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' });
 	static init() {
+		Game.camera.x = Game.camera.width / 2;
+		Game.camera.y = Game.camera.height / 2;
 		new VirtualJoystick('left_stick');
 
 		buildWorld();
