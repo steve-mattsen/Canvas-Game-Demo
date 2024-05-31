@@ -16,28 +16,9 @@ var Vars = (function () {
     Vars.mouseMove = null;
     Vars.fullscreenMode = false;
     Vars.canvasScale = 1;
-    Vars.cameraScale = 4;
     Vars.canvasWidth = window.innerWidth / _a.canvasScale;
     Vars.canvasHeight = window.innerHeight / _a.canvasScale;
-    Vars.cameraWidth = _a.canvasWidth / _a.cameraScale;
-    Vars.cameraHeight = _a.canvasHeight / _a.cameraScale;
     Vars.move = new Geo_1.Vec2(0, 0);
-    Vars.bgColors = [
-        "#ffffff",
-        "#666666",
-        "#444444",
-        "#222222",
-        "#000000",
-        "#000000",
-    ];
-    Vars.fgColors = [
-        "#000000",
-        "#ffffff",
-        "#ffffff",
-        "#ffffff",
-        "#ffffff",
-        "#ffffff",
-    ];
     return Vars;
 }());
 exports["default"] = Vars;

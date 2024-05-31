@@ -8,14 +8,14 @@ var Button_1 = require("./Button");
 var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
 var Colors_1 = require("./Colors");
+var Game_1 = require("./Game");
 function onWindowResize() {
     var canvas = document.getElementById("game_window");
     var background = document.getElementById("background_canvas");
     var shadows = document.getElementById("shadow_canvas");
     Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
-    Vars_1["default"].cameraWidth = Vars_1["default"].canvasWidth / Vars_1["default"].cameraScale;
-    Vars_1["default"].cameraHeight = Vars_1["default"].canvasHeight / Vars_1["default"].cameraScale;
+    Game_1["default"].camera.updateDims();
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
     background.setAttribute('width', Vars_1["default"].canvasWidth + '');
@@ -38,7 +38,7 @@ function draw() {
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.lineWidth = 1;
     ctx.imageSmoothingEnabled = false;
-    ctx.scale(Vars_1["default"].cameraScale, Vars_1["default"].cameraScale);
+    ctx.scale(Game_1["default"].camera.zoom, Game_1["default"].camera.zoom);
     if (Vars_1["default"].showBackground) {
         drawBackground();
     }
@@ -51,7 +51,7 @@ function draw() {
     }
     drawObjects(ctx);
     Vars_1["default"].debugMode && drawDebugInfo(ctx);
-    ctx.scale(1 / Vars_1["default"].cameraScale, 1 / Vars_1["default"].cameraScale);
+    ctx.scale(1 / Game_1["default"].camera.zoom, 1 / Game_1["default"].camera.zoom);
     ctx.imageSmoothingEnabled = true;
     drawControls(ctx);
     drawButtons(ctx);
@@ -136,9 +136,9 @@ function drawBackground() {
         return;
     }
     ctx.imageSmoothingEnabled = false;
-    for (var yi = 0; (yi - 1) * img.size.y < Vars_1["default"].cameraHeight; yi++) {
-        for (var xi = 0; (xi - 1) * img.size.x < Vars_1["default"].cameraWidth; xi++) {
-            ctx.drawImage(img.element, xi * img.size.x * Vars_1["default"].cameraScale, yi * img.size.y * Vars_1["default"].cameraScale, img.size.x * Vars_1["default"].cameraScale, img.size.y * Vars_1["default"].cameraScale);
+    for (var yi = 0; (yi - 1) * img.size.y < Game_1["default"].camera.height; yi++) {
+        for (var xi = 0; (xi - 1) * img.size.x < Game_1["default"].camera.width; xi++) {
+            ctx.drawImage(img.element, xi * img.size.x * Game_1["default"].camera.zoom, yi * img.size.y * Game_1["default"].camera.zoom, img.size.x * Game_1["default"].camera.zoom, img.size.y * Game_1["default"].camera.zoom);
         }
     }
     Vars_1["default"].showBackground = false;
@@ -184,22 +184,22 @@ function drawDebugInfo(ctx) {
     ctx.fillStyle = Colors_1["default"].fg[0];
     ctx.fillText("window ".concat(window.innerWidth, "x").concat(window.innerHeight), 0, fontSize);
     ctx.fillText("canvas ".concat(Vars_1["default"].canvasWidth, "x").concat(Vars_1["default"].canvasHeight), 0, fontSize * 2);
-    ctx.fillText("camera ".concat(Vars_1["default"].cameraWidth.toFixed(1), "x").concat(Vars_1["default"].cameraHeight.toFixed(1)), 0, fontSize * 3);
+    ctx.fillText("camera ".concat(Game_1["default"].camera.width.toFixed(1), "x").concat(Game_1["default"].camera.height.toFixed(1)), 0, fontSize * 3);
     var inputs = Object.entries(Vars_1["default"].inputState).filter(function (k, v) { return Vars_1["default"].inputState[k[0]]; });
     ctx.fillStyle = Colors_1["default"].bg[0] + '88';
-    ctx.fillRect(Vars_1["default"].cameraWidth - 50, 0, 50, fontSize * inputs.length * 1 + fontSize * .25);
+    ctx.fillRect(Game_1["default"].camera.width - 50, 0, 50, fontSize * inputs.length * 1 + fontSize * .25);
     var count = 0;
     for (var _i = 0, inputs_1 = inputs; _i < inputs_1.length; _i++) {
         var _a = inputs_1[_i], k = _a[0], v = _a[1];
         ctx.textAlign = "right";
         ctx.textBaseline = "hanging";
         ctx.fillStyle = Colors_1["default"].fg[0];
-        ctx.fillText("".concat(k, " : ").concat(v), Vars_1["default"].cameraWidth, count++ * fontSize);
+        ctx.fillText("".concat(k, " : ").concat(v), Game_1["default"].camera.width, count++ * fontSize);
     }
     ctx.textAlign = "left";
     ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     var boxHeight = entries.length * fontSize;
-    ctx.fillRect(0, Vars_1["default"].cameraHeight - boxHeight, 50, boxHeight);
+    ctx.fillRect(0, Game_1["default"].camera.height - boxHeight, 50, boxHeight);
     count = 0;
     var plyr = Obj_1.Obj.store['player'];
     for (var _b = 0, entries_4 = entries; _b < entries_4.length; _b++) {
@@ -224,8 +224,9 @@ function drawDebugInfo(ctx) {
         else {
             text += "".concat(obj.animState, " ").concat(obj.animations[obj.animState].currentSprite);
         }
-        ctx.fillText(text, 0, Vars_1["default"].cameraHeight - ((1 + count++) * fontSize));
+        ctx.fillText(text, 0, Game_1["default"].camera.height - ((1 + count++) * fontSize));
         drawMarker(ctx, obj.pos.x, obj.pos.y);
+        drawMarker(ctx, Game_1["default"].camera.x, Game_1["default"].camera.y);
         ctx.restore();
     }
 }
@@ -279,7 +280,7 @@ function drawShadows(entries) {
         shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
         var x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
         var y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1;
-        ctx.drawImage(shadow.image.element, Math.round(x * Vars_1["default"].cameraScale), Math.round(y * Vars_1["default"].cameraScale), sprite.drawBox.width * Vars_1["default"].cameraScale, sprite.drawBox.height * 0.5 * Vars_1["default"].cameraScale);
+        ctx.drawImage(shadow.image.element, Math.round(x * Game_1["default"].camera.zoom), Math.round(y * Game_1["default"].camera.zoom), sprite.drawBox.width * Game_1["default"].camera.zoom, sprite.drawBox.height * 0.5 * Game_1["default"].camera.zoom);
     }
 }
 //# sourceMappingURL=Draw.js.map

@@ -13,6 +13,7 @@ var Sprites_1 = require("./Sprites");
 var Obj_1 = require("./Obj");
 var Geo_1 = require("./Geo");
 var Vars_1 = require("./Vars");
+var Game_1 = require("./Game");
 function buildWorld() {
     var ss = new Sprites_1.SpriteSheet('spritesheet_link', 8, 10);
     var anims = {};
@@ -41,16 +42,16 @@ function buildWorld() {
     anims.run_up.sprites[7].duration = lungeDuration;
     for (var i = 0; i < 10; i++) {
         var tree_sprite = (0, Sprites_1.sprt)('tree');
-        var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight) + tree_sprite.image.size.y / 2), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
+        var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Game_1["default"].camera.width), (Math.random() * Game_1["default"].camera.height) + tree_sprite.image.size.y / 2), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
         Obj_1.Obj.addObj(tree);
     }
     for (var i = 0; i < 50; i++) {
         var bush_sprite = (0, Sprites_1.sprt)('bush');
-        var bush = new Obj_1.Obj('bush' + i, (0, Geo_1.vec)((Math.random() * Vars_1["default"].cameraWidth), (Math.random() * Vars_1["default"].cameraHeight) + bush_sprite.image.size.y / 2), bush_sprite);
+        var bush = new Obj_1.Obj('bush' + i, (0, Geo_1.vec)((Math.random() * Game_1["default"].camera.width), (Math.random() * Game_1["default"].camera.height) + bush_sprite.image.size.y / 2), bush_sprite);
         Obj_1.Obj.addObj(bush);
     }
     randomizeLayout();
-    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Vars_1["default"].cameraScale), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Vars_1["default"].cameraScale)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
+    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
     Obj_1.Obj.addObj(player);
 }
 exports["default"] = buildWorld;
@@ -58,16 +59,16 @@ function randomizeLayout() {
     var entries = Object.entries(Obj_1.Obj.store);
     entries.sort(function (a, b) { return Math.random() - Math.random(); });
     var cols = Math.floor(Math.sqrt(entries.length));
-    var colWidth = Math.floor(Vars_1["default"].cameraWidth / cols);
+    var colWidth = Math.floor(Game_1["default"].camera.width / cols);
     var rows = Math.floor(entries.length / cols);
-    var rowHeight = Math.floor((Vars_1["default"].cameraHeight * .9) / rows);
+    var rowHeight = Math.floor((Game_1["default"].camera.height * .9) / rows);
     var randomOffset = 25;
     var i = 0;
     for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
         var _a = entries_1[_i], key = _a[0], obj = _a[1];
         obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
         obj.pos.x += (Math.random() * randomOffset) - randomOffset;
-        obj.pos.y = Vars_1["default"].cameraHeight * .25;
+        obj.pos.y = Game_1["default"].camera.height * .25;
         obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
         obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
         i++;
