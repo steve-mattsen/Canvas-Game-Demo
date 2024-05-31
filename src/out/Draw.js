@@ -59,6 +59,7 @@ function draw() {
 exports["default"] = draw;
 function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
+    var cambox = Game_1["default"].camera.fromOrigin();
     var fontSize = 4;
     ctx.font = "".concat(fontSize, "px Courier");
     if (Vars_1["default"].displayMode > 1) {
@@ -76,10 +77,9 @@ function drawObjects(ctx) {
                 else {
                     sprite = obj.getAnimFrame();
                 }
-                sprite = obj.getAnimFrame();
             }
             var offset = sprite.drawBox.getOrigin();
-            ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - offset.x), Math.round(obj.pos.y - offset.y - obj.z));
+            ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - offset.x - cambox.x), Math.round(obj.pos.y - offset.y - cambox.y - obj.z));
         }
     }
     if (Vars_1["default"].displayMode < 4) {
@@ -89,6 +89,8 @@ function drawObjects(ctx) {
                 continue;
             }
             var hb = obj.calcHitBox();
+            hb.x -= cambox.x;
+            hb.y -= cambox.y;
             drawMarker(ctx, hb.x, hb.y);
             var p2 = hb.p2();
             drawMarker(ctx, p2.x, p2.y);
@@ -176,6 +178,7 @@ function drawBoxOutline(ctx, box) {
 }
 function drawDebugInfo(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
+    var cambox = Game_1["default"].camera.fromOrigin();
     ctx.save();
     var fontSize = 4;
     ctx.textAlign = "left";
@@ -207,6 +210,8 @@ function drawDebugInfo(ctx) {
         var obj = entries_4[_b];
         if (obj.hitBox !== null) {
             var hb = obj.calcHitBox();
+            hb.x -= cambox.x;
+            hb.y -= cambox.y;
             ctx.fillStyle = Colors_1["default"].bg[0];
             if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
                 ctx.fillStyle = "red";
@@ -226,7 +231,7 @@ function drawDebugInfo(ctx) {
             text += "".concat(obj.animState, " ").concat(obj.animations[obj.animState].currentSprite);
         }
         ctx.fillText(text, 0, Game_1["default"].camera.height - ((1 + count++) * fontSize));
-        drawMarker(ctx, obj.pos.x, obj.pos.y);
+        drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
         drawMarker(ctx, Game_1["default"].camera.x, Game_1["default"].camera.y);
         drawBoxOutline(ctx, Game_1["default"].camera.fromOrigin());
         ctx.restore();
@@ -258,6 +263,7 @@ function drawControls(ctx) {
     ctx.restore();
 }
 function drawShadows(entries) {
+    var cambox = Game_1["default"].camera.fromOrigin();
     var shadow = (0, Sprites_1.sprt)('shadow');
     var canvas = document.getElementById("shadow_canvas");
     if (canvas.getContext === undefined) {
@@ -280,8 +286,8 @@ function drawShadows(entries) {
             sprite = obj.getAnimFrame();
         }
         shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-        var x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
-        var y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1;
+        var x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1 - cambox.x;
+        var y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1 - cambox.y;
         ctx.drawImage(shadow.image.element, Math.round(x * Game_1["default"].camera.zoom), Math.round(y * Game_1["default"].camera.zoom), sprite.drawBox.width * Game_1["default"].camera.zoom, sprite.drawBox.height * 0.5 * Game_1["default"].camera.zoom);
     }
 }

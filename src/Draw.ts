@@ -75,6 +75,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	// Order draws by closeness to camera.
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
 
+	let cambox = Game.camera.fromOrigin();
+
 	let fontSize = 4;
 	ctx.font = `${fontSize}px Courier`;
 
@@ -93,13 +95,12 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				} else {
 					sprite = obj.getAnimFrame();
 				}
-				sprite = obj.getAnimFrame();
 			}
 			let offset = sprite.drawBox.getOrigin();
 			ctx.drawImage(
 				sprite.offScreenCanvas, //image
-				Math.round(obj.pos.x - offset.x), //posx
-				Math.round(obj.pos.y - offset.y - obj.z), //posy
+				Math.round(obj.pos.x - offset.x - cambox.x), //posx
+				Math.round(obj.pos.y - offset.y - cambox.y - obj.z), //posy
 			);
 		}
 	}
@@ -111,6 +112,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				continue;
 			}
 			let hb = obj.calcHitBox();
+			hb.x -= cambox.x;
+			hb.y -= cambox.y;
 			// Draw points
 			drawMarker(ctx, hb.x, hb.y);
 			let p2 = hb.p2();
@@ -236,6 +239,7 @@ function drawBoxOutline(ctx: CanvasRenderingContext2D, box: Box) {
 
 function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
+	let cambox = Game.camera.fromOrigin();
 	ctx.save();
 	let fontSize = 4;
 	ctx.textAlign = "left";
@@ -297,6 +301,8 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	for (const obj of entries) {
 		if (obj.hitBox !== null) {
 			let hb = obj.calcHitBox();
+			hb.x -= cambox.x;
+			hb.y -= cambox.y;
 			ctx.fillStyle = Colors.bg[0];
 			if (obj.id !== 'player' && obj.calcHitBox().collidesWith(plyr.calcHitBox())) {
 				ctx.fillStyle = "red";
@@ -334,7 +340,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 			Game.camera.height - ((1 + count++) * fontSize),
 		);
 
-		drawMarker(ctx, obj.pos.x, obj.pos.y);
+		drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
 		drawMarker(ctx, Game.camera.x, Game.camera.y);
 		drawBoxOutline(ctx, Game.camera.fromOrigin());
 		ctx.restore();
@@ -403,6 +409,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 
 function drawShadows(entries: Obj[]) {
 
+	let cambox = Game.camera.fromOrigin();
 	let shadow = sprt('shadow');
 
 	let canvas = document.getElementById("shadow_canvas") as HTMLCanvasElement;
@@ -428,8 +435,8 @@ function drawShadows(entries: Obj[]) {
 		}
 
 		shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
-		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1;
-		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1
+		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1 - cambox.x;
+		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1 - cambox.y;
 		ctx.drawImage(shadow.image.element,
 			Math.round(x * Game.camera.zoom),
 			Math.round(y * Game.camera.zoom),
