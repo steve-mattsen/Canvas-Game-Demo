@@ -228,6 +228,7 @@ function drawDebugInfo(ctx) {
         ctx.fillText(text, 0, Game_1["default"].camera.height - ((1 + count++) * fontSize));
         drawMarker(ctx, obj.pos.x, obj.pos.y);
         drawMarker(ctx, Game_1["default"].camera.x, Game_1["default"].camera.y);
+        drawBoxOutline(ctx, Game_1["default"].camera.fromOrigin());
         ctx.restore();
     }
 }

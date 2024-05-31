@@ -336,6 +336,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 		drawMarker(ctx, obj.pos.x, obj.pos.y);
 		drawMarker(ctx, Game.camera.x, Game.camera.y);
+		drawBoxOutline(ctx, Game.camera.fromOrigin());
 		ctx.restore();
 	}
 }
