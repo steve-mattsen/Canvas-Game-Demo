@@ -19,6 +19,7 @@ var Vars = (function () {
     Vars.canvasWidth = window.innerWidth / _a.canvasScale;
     Vars.canvasHeight = window.innerHeight / _a.canvasScale;
     Vars.move = new Geo_1.Vec2(0, 0);
+    Vars.oneScreenMode = false;
     return Vars;
 }());
 exports["default"] = Vars;

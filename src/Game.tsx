@@ -136,15 +136,17 @@ export default class Game {
 			(Vars.canvasHeight / Game.camera.zoom)
 		)
 
-		if (hb.x < 0) {
-			plyr.pos.x = plyr.hitBox.x;
-		} else if (p2.x > cameraLimit.x) {
-			plyr.pos.x = cameraLimit.x - plyr.hitBox.x;
-		}
-		if (hb.y < 0) {
-			plyr.pos.y = plyr.hitBox.y;
-		} else if (p2.y > cameraLimit.y) {
-			plyr.pos.y = cameraLimit.y;
+		if (Vars.oneScreenMode == true) {
+			if (hb.x < 0) {
+				plyr.pos.x = plyr.hitBox.x;
+			} else if (p2.x > cameraLimit.x) {
+				plyr.pos.x = cameraLimit.x - plyr.hitBox.x;
+			}
+			if (hb.y < 0) {
+				plyr.pos.y = plyr.hitBox.y;
+			} else if (p2.y > cameraLimit.y) {
+				plyr.pos.y = cameraLimit.y;
+			}
 		}
 
 		Game.camera.x = plyr.pos.x;

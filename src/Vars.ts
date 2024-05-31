@@ -14,4 +14,5 @@ export default class Vars {
 	static canvasWidth = window.innerWidth / this.canvasScale;
 	static canvasHeight = window.innerHeight / this.canvasScale;
 	static move = new Vec2(0, 0);
+	static oneScreenMode = false;
 }

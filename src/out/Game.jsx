@@ -13,6 +13,8 @@ var Game = (function () {
     function Game() {
     }
     Game.init = function () {
+        Game.camera.x = Game.camera.width / 2;
+        Game.camera.y = Game.camera.height / 2;
         new VirtualJoystick_1["default"]('left_stick');
         (0, World_1["default"])();
         (0, Draw_1.onWindowResize)();
@@ -116,23 +118,27 @@ var Game = (function () {
         var hb = plyr.calcHitBox();
         var p2 = hb.p2();
         var cameraLimit = new Geo_1.Vec2((Vars_1["default"].canvasWidth / Game.camera.zoom), (Vars_1["default"].canvasHeight / Game.camera.zoom));
-        if (hb.x < 0) {
-            plyr.pos.x = plyr.hitBox.origin.x;
+        if (Vars_1["default"].oneScreenMode == true) {
+            if (hb.x < 0) {
+                plyr.pos.x = plyr.hitBox.x;
+            }
+            else if (p2.x > cameraLimit.x) {
+                plyr.pos.x = cameraLimit.x - plyr.hitBox.x;
+            }
+            if (hb.y < 0) {
+                plyr.pos.y = plyr.hitBox.y;
+            }
+            else if (p2.y > cameraLimit.y) {
+                plyr.pos.y = cameraLimit.y;
+            }
         }
-        else if (p2.x > cameraLimit.x) {
-            plyr.pos.x = cameraLimit.x - plyr.hitBox.origin.x;
-        }
-        if (hb.y < 0) {
-            plyr.pos.y = plyr.hitBox.origin.y;
-        }
-        else if (p2.y > cameraLimit.y) {
-            plyr.pos.y = cameraLimit.y;
-        }
+        Game.camera.x = plyr.pos.x;
+        Game.camera.y = plyr.pos.y;
         requestAnimationFrame(Draw_1["default"]);
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();
-    Game.camera = new Camera_1.Camera(0, 0, 0, 0, ['center', 'middle']);
+    Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' });
     return Game;
 }());
 exports["default"] = Game;

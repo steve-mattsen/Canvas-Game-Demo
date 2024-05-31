@@ -42,7 +42,7 @@ function buildWorld() {
     anims.run_up.sprites[7].duration = lungeDuration;
     for (var i = 0; i < 10; i++) {
         var tree_sprite = (0, Sprites_1.sprt)('tree');
-        var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Game_1["default"].camera.width), (Math.random() * Game_1["default"].camera.height) + tree_sprite.image.size.y / 2), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, ['center', 'bottom']));
+        var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)((Math.random() * Game_1["default"].camera.width), (Math.random() * Game_1["default"].camera.height) + tree_sprite.image.size.y / 2), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, { x: 'center', y: 'bottom' }));
         Obj_1.Obj.addObj(tree);
     }
     for (var i = 0; i < 50; i++) {
@@ -51,7 +51,7 @@ function buildWorld() {
         Obj_1.Obj.addObj(bush);
     }
     randomizeLayout();
-    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, ['center', 'bottom']), anims);
+    var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(player);
 }
 exports["default"] = buildWorld;
