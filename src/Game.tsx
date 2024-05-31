@@ -147,6 +147,8 @@ export default class Game {
 			plyr.pos.y = cameraLimit.y;
 		}
 
+		Game.camera.x = plyr.pos.x;
+		Game.camera.y = plyr.pos.y
 		requestAnimationFrame(draw);
 	}
 }
