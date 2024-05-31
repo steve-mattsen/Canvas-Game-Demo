@@ -149,7 +149,7 @@ var SpriteSheet = (function () {
         this.cols = cols;
         this.colSize = Math.floor(this.image.size.x / cols);
         this.rowSize = Math.floor(this.image.size.y / rows);
-        this.drawBox = new Geo_1.Box(0, 0, this.colSize, this.rowSize, ['center', 'bottom']);
+        this.drawBox = new Geo_1.Box(0, 0, this.colSize, this.rowSize, { x: 'center', y: 'bottom' });
         this.duration = duration;
     }
     SpriteSheet.prototype.getAnim = function (rows, cols) {
@@ -173,7 +173,7 @@ var Sprite = (function () {
         this.scale = scale;
         this.drawBox = drawBox;
         if (drawBox === undefined) {
-            this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y, ['center', 'bottom']);
+            this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y, { x: 'center', y: 'bottom' });
         }
         this.duration = duration;
         this.offScreenCanvas = new OffscreenCanvas(this.drawBox.width, this.drawBox.height);

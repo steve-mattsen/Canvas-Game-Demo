@@ -53,14 +53,14 @@ export interface BoxSpec {
 	origin?: TOrigin;
 }
 
-export type TOrigin = Vec2 | [horizontalLocation, verticalLocation];
+export type TOrigin = Vec2 | { x: horizontalLocation, y: verticalLocation };
 
 export class Box {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
-	origin: Vec2;
+	origin: TOrigin;
 	constructor(
 		x: number,
 		y: number,
@@ -73,12 +73,10 @@ export class Box {
 		this.width = width;
 		this.height = height;
 
-		if (origin instanceof Vec2) {
-			this.origin = origin;
-		} else if (origin === undefined || origin === null) {
-			this.origin = this.getPoint('left', 'top');
+		if (origin === undefined || origin === null) {
+			this.origin = new Vec2(0, 0);
 		} else {
-			this.origin = this.getPoint(origin[0], origin[1]);
+			this.origin = origin;
 		}
 	}
 	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
@@ -118,7 +116,7 @@ export class Box {
 	getPointLocal(horiz: number | horizontalLocation, vert: number | verticalLocation) {
 		let x, y;
 		if (typeof horiz == 'number') {
-			x = this.x + horiz;
+			x = horiz;
 		} else {
 			switch (horiz) {
 				case 'left':
@@ -133,7 +131,7 @@ export class Box {
 			}
 		}
 		if (typeof vert === 'number') {
-			y = this.y + vert;
+			y = vert;
 		} else {
 			switch (vert) {
 				case 'top':
@@ -166,24 +164,23 @@ export class Box {
 	}
 	fromPoint(point: Vec2) {
 		return new Box(
-			point.x + this.x,
-			point.y + this.y,
+			point.x,
+			point.y,
 			this.width,
 			this.height,
 			this.origin,
 		);
 	}
 	fromOrigin(origin?: TOrigin) {
+		let translate;
 		if (origin === null || origin === undefined) {
-			origin = this.origin;
-		} else if (origin instanceof Vec2) {
-			origin = this.getPointLocal(origin.x, origin.y);
+			translate = this.getPointLocal(this.origin.x, this.origin.y);
 		} else {
-			origin = this.getPointLocal(origin[0], origin[1]);
+			translate = this.getPointLocal(origin.x, origin.y);
 		}
 		return new Box(
-			this.x - origin.x,
-			this.y - origin.y,
+			this.x - translate.x,
+			this.y - translate.y,
 			this.width,
 			this.height,
 			new Vec2(0, 0),
@@ -259,6 +256,9 @@ export class Box {
 			this.width,
 			this.height,
 		)
+	}
+	getOrigin() {
+		return this.getPointLocal(this.origin.x, this.origin.y);
 	}
 }
 

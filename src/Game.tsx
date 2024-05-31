@@ -12,7 +12,7 @@ export default class Game {
 	static tickCount = 0;
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
-	static camera = new Camera(0, 0, 0, 0, ['center', 'middle']);
+	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' });
 	static init() {
 		new VirtualJoystick('left_stick');
 
@@ -135,12 +135,12 @@ export default class Game {
 		)
 
 		if (hb.x < 0) {
-			plyr.pos.x = plyr.hitBox.origin.x;
+			plyr.pos.x = plyr.hitBox.x;
 		} else if (p2.x > cameraLimit.x) {
-			plyr.pos.x = cameraLimit.x - plyr.hitBox.origin.x;
+			plyr.pos.x = cameraLimit.x - plyr.hitBox.x;
 		}
 		if (hb.y < 0) {
-			plyr.pos.y = plyr.hitBox.origin.y;
+			plyr.pos.y = plyr.hitBox.y;
 		} else if (p2.y > cameraLimit.y) {
 			plyr.pos.y = cameraLimit.y;
 		}

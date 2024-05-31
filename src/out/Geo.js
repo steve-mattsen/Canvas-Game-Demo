@@ -65,14 +65,11 @@ var Box = (function () {
         this.y = y;
         this.width = width;
         this.height = height;
-        if (origin instanceof Vec2) {
-            this.origin = origin;
-        }
-        else if (origin === undefined || origin === null) {
-            this.origin = this.getPoint('left', 'top');
+        if (origin === undefined || origin === null) {
+            this.origin = new Vec2(0, 0);
         }
         else {
-            this.origin = this.getPoint(origin[0], origin[1]);
+            this.origin = origin;
         }
     }
     Box.prototype.getPoint = function (horiz, vert) {
@@ -114,7 +111,7 @@ var Box = (function () {
     Box.prototype.getPointLocal = function (horiz, vert) {
         var x, y;
         if (typeof horiz == 'number') {
-            x = this.x + horiz;
+            x = horiz;
         }
         else {
             switch (horiz) {
@@ -130,7 +127,7 @@ var Box = (function () {
             }
         }
         if (typeof vert === 'number') {
-            y = this.y + vert;
+            y = vert;
         }
         else {
             switch (vert) {
@@ -157,19 +154,17 @@ var Box = (function () {
         return this.getPoint('center', 'middle');
     };
     Box.prototype.fromPoint = function (point) {
-        return new Box(point.x + this.x, point.y + this.y, this.width, this.height, this.origin);
+        return new Box(point.x, point.y, this.width, this.height, this.origin);
     };
     Box.prototype.fromOrigin = function (origin) {
+        var translate;
         if (origin === null || origin === undefined) {
-            origin = this.origin;
-        }
-        else if (origin instanceof Vec2) {
-            origin = this.getPointLocal(origin.x, origin.y);
+            translate = this.getPointLocal(this.origin.x, this.origin.y);
         }
         else {
-            origin = this.getPointLocal(origin[0], origin[1]);
+            translate = this.getPointLocal(origin.x, origin.y);
         }
-        return new Box(this.x - origin.x, this.y - origin.y, this.width, this.height, new Vec2(0, 0));
+        return new Box(this.x - translate.x, this.y - translate.y, this.width, this.height, new Vec2(0, 0));
     };
     Box.prototype.contains = function (point) {
         if (point.x < this.x
@@ -224,6 +219,9 @@ var Box = (function () {
     };
     Box.prototype.clone = function () {
         return new Box(this.x, this.y, this.width, this.height);
+    };
+    Box.prototype.getOrigin = function () {
+        return this.getPointLocal(this.origin.x, this.origin.y);
     };
     return Box;
 }());

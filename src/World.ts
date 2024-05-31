@@ -50,7 +50,7 @@ export default function buildWorld() {
 				tree_sprite.drawBox.height * .75,
 				tree_sprite.drawBox.width * .2,
 				tree_sprite.drawBox.height * .15,
-				['center', 'bottom'],
+				{ x: 'center', y: 'bottom' },
 			),
 		);
 		Obj.addObj(tree);
@@ -77,7 +77,7 @@ export default function buildWorld() {
 			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom),
 		),
 		anims.idle_down.sprites[0],
-		new Box(0, 0, 10, 8, ['center', 'bottom']),
+		new Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }),
 		anims
 	);
 	Obj.addObj(player);

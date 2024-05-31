@@ -78,7 +78,8 @@ function drawObjects(ctx) {
                 }
                 sprite = obj.getAnimFrame();
             }
-            ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - sprite.drawBox.origin.x), Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z));
+            var offset = sprite.drawBox.getOrigin();
+            ctx.drawImage(sprite.offScreenCanvas, Math.round(obj.pos.x - offset.x), Math.round(obj.pos.y - offset.y - obj.z));
         }
     }
     if (Vars_1["default"].displayMode < 4) {

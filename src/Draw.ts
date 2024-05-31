@@ -95,10 +95,11 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				}
 				sprite = obj.getAnimFrame();
 			}
+			let offset = sprite.drawBox.getOrigin();
 			ctx.drawImage(
 				sprite.offScreenCanvas, //image
-				Math.round(obj.pos.x - sprite.drawBox.origin.x), //posx
-				Math.round(obj.pos.y - sprite.drawBox.origin.y - obj.z), //posy
+				Math.round(obj.pos.x - offset.x), //posx
+				Math.round(obj.pos.y - offset.y - obj.z), //posy
 			);
 		}
 	}
