@@ -12,8 +12,10 @@ export function onWindowResize() {
 	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
 	let background = document.getElementById("background_canvas") as HTMLCanvasElement;
 	let shadows = document.getElementById("shadow_canvas") as HTMLCanvasElement;
-	Vars.canvasWidth = window.innerWidth / Vars.canvasScale;
-	Vars.canvasHeight = window.innerHeight / Vars.canvasScale;
+	Game.screen.width = window.innerWidth;
+	Game.screen.height = window.innerHeight;
+	Vars.canvasWidth = Game.screen.width / Vars.canvasScale;
+	Vars.canvasHeight = Game.screen.height / Vars.canvasScale;
 	Game.camera.updateDims();
 	canvas.setAttribute('width', Vars.canvasWidth + '');
 	canvas.setAttribute('height', Vars.canvasHeight + '');
@@ -21,6 +23,9 @@ export function onWindowResize() {
 	background.setAttribute('height', Vars.canvasHeight + '');
 	shadows.setAttribute('width', Vars.canvasWidth + '');
 	shadows.setAttribute('height', Vars.canvasHeight + '');
+	for (const input of Object.values(Input.onscreenControls)) {
+		input.attach();
+	}
 	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;

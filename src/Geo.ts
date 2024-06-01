@@ -175,19 +175,16 @@ export class Box {
 			this.origin,
 		);
 	}
-	fromOrigin(origin?: TOrigin) {
+	fromOrigin(preserveOrigin = false) {
 		let translate;
-		if (origin === null || origin === undefined) {
-			translate = this.getPointLocal(this.origin.x, this.origin.y);
-		} else {
-			translate = this.getPointLocal(origin.x, origin.y);
-		}
+		translate = this.getPointLocal(this.origin.x, this.origin.y);
+
 		return new Box(
 			this.x - translate.x,
 			this.y - translate.y,
 			this.width,
 			this.height,
-			new Vec2(0, 0),
+			this.origin,
 		)
 	}
 	contains(point: Vec2) {

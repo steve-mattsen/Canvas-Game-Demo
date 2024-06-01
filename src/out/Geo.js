@@ -157,15 +157,11 @@ var Box = (function () {
     Box.prototype.fromPoint = function (point) {
         return new Box(point.x, point.y, this.width, this.height, this.origin);
     };
-    Box.prototype.fromOrigin = function (origin) {
+    Box.prototype.fromOrigin = function (preserveOrigin) {
+        if (preserveOrigin === void 0) { preserveOrigin = false; }
         var translate;
-        if (origin === null || origin === undefined) {
-            translate = this.getPointLocal(this.origin.x, this.origin.y);
-        }
-        else {
-            translate = this.getPointLocal(origin.x, origin.y);
-        }
-        return new Box(this.x - translate.x, this.y - translate.y, this.width, this.height, new Vec2(0, 0));
+        translate = this.getPointLocal(this.origin.x, this.origin.y);
+        return new Box(this.x - translate.x, this.y - translate.y, this.width, this.height, this.origin);
     };
     Box.prototype.contains = function (point) {
         if (point.x < this.x

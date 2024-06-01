@@ -13,8 +13,10 @@ function onWindowResize() {
     var canvas = document.getElementById("game_window");
     var background = document.getElementById("background_canvas");
     var shadows = document.getElementById("shadow_canvas");
-    Vars_1["default"].canvasWidth = window.innerWidth / Vars_1["default"].canvasScale;
-    Vars_1["default"].canvasHeight = window.innerHeight / Vars_1["default"].canvasScale;
+    Game_1["default"].screen.width = window.innerWidth;
+    Game_1["default"].screen.height = window.innerHeight;
+    Vars_1["default"].canvasWidth = Game_1["default"].screen.width / Vars_1["default"].canvasScale;
+    Vars_1["default"].canvasHeight = Game_1["default"].screen.height / Vars_1["default"].canvasScale;
     Game_1["default"].camera.updateDims();
     canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
     canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
@@ -22,6 +24,10 @@ function onWindowResize() {
     background.setAttribute('height', Vars_1["default"].canvasHeight + '');
     shadows.setAttribute('width', Vars_1["default"].canvasWidth + '');
     shadows.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    for (var _i = 0, _a = Object.values(Input_1["default"].onscreenControls); _i < _a.length; _i++) {
+        var input = _a[_i];
+        input.attach();
+    }
     Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;

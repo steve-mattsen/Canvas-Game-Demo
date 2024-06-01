@@ -46,7 +46,6 @@ export abstract class OnScreenControl {
 	attach() {
 		let attach = Game.screen.getPoint(this.attachment.x, this.attachment.y);
 		this.box = this.box.fromPoint(attach).fromOrigin();
-		// this.box = new Box(attach.x, attach.y - this.size.y, this.size.x, this.size.y);
 	}
 }
 
