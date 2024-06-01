@@ -109,6 +109,8 @@ function drawObjects(ctx) {
                 continue;
             }
             var hb = obj.calcHitBox();
+            hb.x -= cambox.x;
+            hb.y -= cambox.y;
             drawBoxOutline(ctx, hb);
         }
     }

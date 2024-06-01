@@ -132,6 +132,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				continue;
 			}
 			let hb = obj.calcHitBox();
+			hb.x -= cambox.x;
+			hb.y -= cambox.y;
 			// Draw box
 			drawBoxOutline(ctx, hb);
 
