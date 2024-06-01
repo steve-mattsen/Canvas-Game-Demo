@@ -30,7 +30,6 @@ var Game = (function () {
                 Vars_1["default"].inputState[v] = Vars_1["default"].inputState[v] + 1;
             }
         });
-        Input_1["default"].moveCamera();
         var walkSpeed = 1;
         var runSpeed = 2;
         var move;
@@ -135,8 +134,13 @@ var Game = (function () {
                 plyr.pos.y = cameraLimit.y;
             }
         }
-        Game.camera.x = plyr.pos.x;
-        Game.camera.y = plyr.pos.y;
+        if (move.length() == 0) {
+            Input_1["default"].moveCamera();
+        }
+        else {
+            Game.camera.x = plyr.pos.x;
+            Game.camera.y = plyr.pos.y;
+        }
         requestAnimationFrame(Draw_1["default"]);
     };
     Game.tickCount = 0;

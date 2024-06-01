@@ -305,15 +305,6 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 	ctx.textAlign = "left";
 
-	// Fill the bottom left box
-	ctx.fillStyle = Colors.bg[0] + '88';
-	let boxHeight = entries.length * fontSize;
-	ctx.fillRect(
-		0,
-		Game.camera.height - boxHeight,
-		50,
-		boxHeight
-	);
 
 	count = 0;
 	let plyr = Obj.store['player'];
@@ -346,24 +337,11 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 			);
 		}
 
-		//Write the bottom left text.
-		let text = `${obj.id}: `;
-		if (obj.animations === null) {
-			text += `${obj.sprite.image.id}`;
-		} else {
-			text += `${obj.animState} ${obj.animations[obj.animState].currentSprite}`;
-		}
-		ctx.fillText(
-			text,
-			0,
-			Game.camera.height - ((1 + count++) * fontSize),
-		);
-
 		drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
-		drawMarker(ctx, Game.camera.x, Game.camera.y);
-		drawBoxOutline(ctx, Game.camera.fromOrigin());
 		ctx.restore();
 	}
+	// drawMarker(ctx, Game.camera.x + Game.camera.getCenterMiddle().x, Game.camera.getCenterMiddle().y);
+	// drawBoxOutline(ctx, Game.camera.fromPoint(new Vec2(0, 0)));
 }
 
 function drawControls(ctx: CanvasRenderingContext2D) {

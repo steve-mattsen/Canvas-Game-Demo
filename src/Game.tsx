@@ -37,8 +37,6 @@ export default class Game {
 			}
 		});
 
-		Input.moveCamera();
-
 		let walkSpeed = 1;
 		let runSpeed = 2;
 		let move: Vec2;
@@ -153,8 +151,13 @@ export default class Game {
 			}
 		}
 
-		Game.camera.x = plyr.pos.x;
-		Game.camera.y = plyr.pos.y
+		if (move.length() == 0) {
+			Input.moveCamera();
+		} else {
+			Game.camera.x = plyr.pos.x;
+			Game.camera.y = plyr.pos.y;
+		}
+
 		requestAnimationFrame(draw);
 	}
 }

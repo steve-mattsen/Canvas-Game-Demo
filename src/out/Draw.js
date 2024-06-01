@@ -214,9 +214,6 @@ function drawDebugInfo(ctx) {
         ctx.fillText("".concat(k, " : ").concat(v), Game_1["default"].camera.width, count++ * fontSize);
     }
     ctx.textAlign = "left";
-    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
-    var boxHeight = entries.length * fontSize;
-    ctx.fillRect(0, Game_1["default"].camera.height - boxHeight, 50, boxHeight);
     count = 0;
     var plyr = Obj_1.Obj.store['player'];
     for (var _b = 0, entries_4 = entries; _b < entries_4.length; _b++) {
@@ -236,17 +233,7 @@ function drawDebugInfo(ctx) {
             ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
             ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
         }
-        var text = "".concat(obj.id, ": ");
-        if (obj.animations === null) {
-            text += "".concat(obj.sprite.image.id);
-        }
-        else {
-            text += "".concat(obj.animState, " ").concat(obj.animations[obj.animState].currentSprite);
-        }
-        ctx.fillText(text, 0, Game_1["default"].camera.height - ((1 + count++) * fontSize));
         drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
-        drawMarker(ctx, Game_1["default"].camera.x, Game_1["default"].camera.y);
-        drawBoxOutline(ctx, Game_1["default"].camera.fromOrigin());
         ctx.restore();
     }
 }
