@@ -1,6 +1,6 @@
 import Button from "./Button";
 import Game from "./Game";
-import { Vec2, vec } from "./Geo";
+import { Box, Vec2, attachmentLocation, vec } from "./Geo";
 import Vars from "./Vars";
 
 import VirtualJoystick from "./VirtualJoystick";
@@ -32,9 +32,21 @@ export default class Input {
 
 export abstract class OnScreenControl {
 	id: string;
-	constructor(id: string) {
+	attachment: attachmentLocation;
+	box: Box;
+	size: Vec2;
+	constructor(id: string, attachment: attachmentLocation, size: Vec2 = new Vec2(200, 200)) {
 		this.id = id;
+		this.attachment = attachment;
+		this.box = new Box(0, 0, size.x, size.y, attachment);
+		this.size = size;
+		this.attach();
 		Input.onscreenControls[id] = this;
+	}
+	attach() {
+		let attach = Game.screen.getPoint(this.attachment.x, this.attachment.y);
+		this.box = this.box.fromPoint(attach).fromOrigin();
+		// this.box = new Box(attach.x, attach.y - this.size.y, this.size.x, this.size.y);
 	}
 }
 

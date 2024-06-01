@@ -22,8 +22,6 @@ function onWindowResize() {
     background.setAttribute('height', Vars_1["default"].canvasHeight + '');
     shadows.setAttribute('width', Vars_1["default"].canvasWidth + '');
     shadows.setAttribute('height', Vars_1["default"].canvasHeight + '');
-    var lstick = Input_1["default"].getOnscreenControl('left_stick');
-    lstick.box.y = window.innerHeight - lstick.size;
     Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;
@@ -247,26 +245,30 @@ function drawDebugInfo(ctx) {
 function drawControls(ctx) {
     ctx.save();
     ctx.globalCompositeOperation = "luminosity";
-    var stick = Input_1["default"].getOnscreenControl('left_stick');
-    var box = stick.box;
-    var middle = box.getCenterMiddle();
-    ctx.beginPath();
-    ctx.ellipse(middle.x, middle.y, stick.size / 2, stick.size / 2, 0, 0, 10);
-    ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
-    ctx.stroke();
-    var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size / 2);
-    gradient.addColorStop(0, Colors_1["default"].bg[1] + '88');
-    gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '88');
-    gradient.addColorStop(1.0, 'transparent');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(middle.x - stick.size / 2, middle.y - stick.size / 2, stick.size, stick.size);
-    var innerStickSize = stick.size / 2;
-    var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 2, middle.y + stick.value.y * innerStickSize / 2);
-    ctx.beginPath();
-    ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
-    ctx.fill();
-    ctx.stroke();
+    var sticks = ['left_stick', 'right_stick'];
+    for (var _i = 0, sticks_1 = sticks; _i < sticks_1.length; _i++) {
+        var name_1 = sticks_1[_i];
+        var stick = Input_1["default"].getOnscreenControl(name_1);
+        var box = stick.box;
+        var middle = box.getCenterMiddle();
+        ctx.beginPath();
+        ctx.ellipse(middle.x, middle.y, stick.size.x / 2, stick.size.y / 2, 0, 0, 10);
+        ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
+        ctx.stroke();
+        var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size.x / 2);
+        gradient.addColorStop(0, Colors_1["default"].bg[1] + '88');
+        gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '88');
+        gradient.addColorStop(1.0, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(middle.x - stick.size.x / 2, middle.y - stick.size.y / 2, stick.size.x, stick.size.y);
+        var innerStickSize = stick.size.x / 2;
+        var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 2, middle.y + stick.value.y * innerStickSize / 2);
+        ctx.beginPath();
+        ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
+        ctx.fillStyle = Colors_1["default"].bg[0] + '88';
+        ctx.fill();
+        ctx.stroke();
+    }
     ctx.restore();
 }
 function drawShadows(entries) {

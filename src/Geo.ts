@@ -41,8 +41,9 @@ export class Vec3 extends Vec2 {
 	}
 }
 
-type verticalLocation = 'top' | 'middle' | 'bottom';
-type horizontalLocation = 'left' | 'center' | 'right';
+export type verticalLocation = 'top' | 'middle' | 'bottom';
+export type horizontalLocation = 'left' | 'center' | 'right';
+export type attachmentLocation = { x: horizontalLocation, y: verticalLocation }
 
 
 export interface BoxSpec {
@@ -53,7 +54,7 @@ export interface BoxSpec {
 	origin?: TOrigin;
 }
 
-export type TOrigin = Vec2 | { x: horizontalLocation, y: verticalLocation };
+export type TOrigin = Vec2 | attachmentLocation;
 
 export class Box {
 	x: number;
@@ -61,12 +62,14 @@ export class Box {
 	width: number;
 	height: number;
 	origin: TOrigin;
+	attachment: attachmentLocation;
 	constructor(
 		x: number,
 		y: number,
 		width: number,
 		height: number,
 		origin?: TOrigin,
+		attachment?: attachmentLocation,
 	) {
 		this.x = x;
 		this.y = y;
@@ -78,6 +81,7 @@ export class Box {
 		} else {
 			this.origin = origin;
 		}
+		this.attachment = attachment ?? null;
 	}
 	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
 		let x, y;
@@ -260,6 +264,16 @@ export class Box {
 	getOrigin() {
 		return this.getPointLocal(this.origin.x, this.origin.y);
 	}
+	// attachToBox(target: Box, attachment: attachmentLocation) {
+	// 	let targetCenterMiddle = target.getCenterMiddle();
+	// 	switch (attachment.x) {
+	// 		case 'left':
+	// 			this.x = target.x;
+	// 		case 'center':
+	// 			this.x = targetCenterMiddle.x;
+
+	// 	}
+	// }
 }
 
 export class Line {

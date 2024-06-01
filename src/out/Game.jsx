@@ -15,7 +15,8 @@ var Game = (function () {
     Game.init = function () {
         Game.camera.x = Game.camera.width / 2;
         Game.camera.y = Game.camera.height / 2;
-        new VirtualJoystick_1["default"]('left_stick');
+        new VirtualJoystick_1["default"]('left_stick', { x: 'left', y: 'bottom' });
+        new VirtualJoystick_1["default"]('right_stick', { x: 'right', y: 'bottom' });
         (0, World_1["default"])();
         (0, Draw_1.onWindowResize)();
         Game.thread = setInterval(Game.tick, 1000 / 60);
@@ -141,6 +142,7 @@ var Game = (function () {
     Game.tickCount = 0;
     Game.startTime = Date.now();
     Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
+    Game.screen = new Geo_1.Box(0, 0, window.innerWidth, window.innerHeight);
     return Game;
 }());
 exports["default"] = Game;

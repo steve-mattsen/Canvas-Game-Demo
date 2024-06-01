@@ -1,4 +1,4 @@
-import { vec, Vec2, Line } from "./Geo";
+import { vec, Vec2, Line, Box } from "./Geo";
 import { Obj } from "./Obj";
 import Vars from "./Vars";
 import draw, { onWindowResize } from "./Draw";
@@ -13,10 +13,12 @@ export default class Game {
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
 	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
+	static screen = new Box(0, 0, window.innerWidth, window.innerHeight);
 	static init() {
 		Game.camera.x = Game.camera.width / 2;
 		Game.camera.y = Game.camera.height / 2;
-		new VirtualJoystick('left_stick');
+		new VirtualJoystick('left_stick', { x: 'left', y: 'bottom' });
+		new VirtualJoystick('right_stick', { x: 'right', y: 'bottom' });
 
 		buildWorld();
 

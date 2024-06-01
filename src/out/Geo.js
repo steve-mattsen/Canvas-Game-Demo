@@ -60,7 +60,7 @@ var Vec3 = (function (_super) {
 }(Vec2));
 exports.Vec3 = Vec3;
 var Box = (function () {
-    function Box(x, y, width, height, origin) {
+    function Box(x, y, width, height, origin, attachment) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -71,6 +71,7 @@ var Box = (function () {
         else {
             this.origin = origin;
         }
+        this.attachment = attachment !== null && attachment !== void 0 ? attachment : null;
     }
     Box.prototype.getPoint = function (horiz, vert) {
         var x, y;

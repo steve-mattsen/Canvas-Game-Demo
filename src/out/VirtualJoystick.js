@@ -19,11 +19,10 @@ var Geo_1 = require("./Geo");
 var Input_1 = require("./Input");
 var VirtualJoystick = (function (_super) {
     __extends(VirtualJoystick, _super);
-    function VirtualJoystick(id) {
-        var _this = _super.call(this, id) || this;
-        _this.size = 200;
+    function VirtualJoystick(id, attachment, size) {
+        if (size === void 0) { size = new Geo_1.Vec2(200, 200); }
+        var _this = _super.call(this, id, attachment) || this;
         _this.deadZone = 25;
-        _this.box = new Geo_1.Box(0, window.innerHeight - _this.size, _this.size, _this.size);
         _this.value = new Geo_1.Vec2(0, 0);
         return _this;
     }
@@ -37,8 +36,8 @@ var VirtualJoystick = (function (_super) {
             return;
         }
         this.value = line.normal();
-        if (line.length() < (this.size / 2)) {
-            var factor = (line.length() - this.deadZone) / ((this.size / 2) - this.deadZone);
+        if (line.length() < (this.size.x / 2)) {
+            var factor = (line.length() - this.deadZone) / ((this.size.x / 2) - this.deadZone);
             this.value.x *= factor;
             this.value.y *= factor;
         }

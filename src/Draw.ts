@@ -21,8 +21,6 @@ export function onWindowResize() {
 	background.setAttribute('height', Vars.canvasHeight + '');
 	shadows.setAttribute('width', Vars.canvasWidth + '');
 	shadows.setAttribute('height', Vars.canvasHeight + '');
-	let lstick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
-	lstick.box.y = window.innerHeight - lstick.size;
 	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;
@@ -364,60 +362,62 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	ctx.globalCompositeOperation = "luminosity";
-	let stick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
-	let box = stick.box;
-	let middle = box.getCenterMiddle();
-	ctx.beginPath();
-	ctx.ellipse(
-		middle.x,
-		middle.y,
-		stick.size / 2,
-		stick.size / 2,
-		0,
-		0,
-		10,
-	);
-	ctx.strokeStyle = Colors.fg[0] + '55';
-	ctx.stroke();
+	let sticks = ['left_stick', 'right_stick'];
+	for (const name of sticks) {
+		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
+		let box = stick.box;
+		let middle = box.getCenterMiddle();
+		ctx.beginPath();
+		ctx.ellipse(
+			middle.x,
+			middle.y,
+			stick.size.x / 2,
+			stick.size.y / 2,
+			0,
+			0,
+			10,
+		);
+		ctx.strokeStyle = Colors.fg[0] + '55';
+		ctx.stroke();
 
-	let gradient = ctx.createRadialGradient(
-		middle.x,
-		middle.y,
-		0,
-		middle.x,
-		middle.y,
-		stick.size / 2,
-	)
-	gradient.addColorStop(0, Colors.bg[1] + '88');
-	gradient.addColorStop(0.99, Colors.bg[0] + '88');
-	gradient.addColorStop(1.0, 'transparent');
-	ctx.fillStyle = gradient;
-	ctx.fillRect(
-		middle.x - stick.size / 2,
-		middle.y - stick.size / 2,
-		stick.size,
-		stick.size,
-	);
+		let gradient = ctx.createRadialGradient(
+			middle.x,
+			middle.y,
+			0,
+			middle.x,
+			middle.y,
+			stick.size.x / 2,
+		)
+		gradient.addColorStop(0, Colors.bg[1] + '88');
+		gradient.addColorStop(0.99, Colors.bg[0] + '88');
+		gradient.addColorStop(1.0, 'transparent');
+		ctx.fillStyle = gradient;
+		ctx.fillRect(
+			middle.x - stick.size.x / 2,
+			middle.y - stick.size.y / 2,
+			stick.size.x,
+			stick.size.y,
+		);
 
-	let innerStickSize = stick.size / 2;
-	let innerStickPos = new Vec2(
-		middle.x + stick.value.x * innerStickSize / 2,
-		middle.y + stick.value.y * innerStickSize / 2,
-	);
-	ctx.beginPath();
-	ctx.ellipse(
-		innerStickPos.x,
-		innerStickPos.y,
-		innerStickSize / 2,
-		innerStickSize / 2,
-		0,
-		0,
-		10,
-	);
-	ctx.fillStyle = Colors.bg[0] + '88';
-	ctx.fill();
-	ctx.stroke();
-
+		let innerStickSize = stick.size.x / 2;
+		let innerStickPos = new Vec2(
+			middle.x + stick.value.x * innerStickSize / 2,
+			middle.y + stick.value.y * innerStickSize / 2,
+		);
+		ctx.beginPath();
+		ctx.ellipse(
+			innerStickPos.x,
+			innerStickPos.y,
+			innerStickSize / 2,
+			innerStickSize / 2,
+			0,
+			0,
+			10,
+		);
+		ctx.fillStyle = Colors.bg[0] + '88';
+		ctx.fill();
+		ctx.stroke();
+	}
 	ctx.restore();
 }
 

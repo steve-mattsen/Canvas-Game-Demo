@@ -1,15 +1,12 @@
-import { Box, Line, TOrigin, Vec2 } from "./Geo";
+import Game from "./Game";
+import { Box, Line, TOrigin, Vec2, attachmentLocation, horizontalLocation, verticalLocation } from "./Geo";
 import { OnScreenControl } from "./Input";
 
 export default class VirtualJoystick extends OnScreenControl {
-	box: Box;
 	value: Vec2;
-	size: number = 200;
-	id: string;
 	deadZone = 25;
-	constructor(id: string) {
-		super(id);
-		this.box = new Box(0, window.innerHeight - this.size, this.size, this.size);
+	constructor(id: string, attachment: attachmentLocation, size: Vec2 = new Vec2(200, 200)) {
+		super(id, attachment);
 		this.value = new Vec2(0, 0);
 	}
 	screenToValue(point: Vec2) {
@@ -22,8 +19,8 @@ export default class VirtualJoystick extends OnScreenControl {
 			return;
 		}
 		this.value = line.normal();
-		if (line.length() < (this.size / 2)) {
-			let factor = (line.length() - this.deadZone) / ((this.size / 2) - this.deadZone);
+		if (line.length() < (this.size.x / 2)) {
+			let factor = (line.length() - this.deadZone) / ((this.size.x / 2) - this.deadZone);
 			this.value.x *= factor;
 			this.value.y *= factor;
 		}

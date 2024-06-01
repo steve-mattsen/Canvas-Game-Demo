@@ -36,10 +36,19 @@ var Input = (function () {
 }());
 exports["default"] = Input;
 var OnScreenControl = (function () {
-    function OnScreenControl(id) {
+    function OnScreenControl(id, attachment, size) {
+        if (size === void 0) { size = new Geo_1.Vec2(200, 200); }
         this.id = id;
+        this.attachment = attachment;
+        this.box = new Geo_1.Box(0, 0, size.x, size.y, attachment);
+        this.size = size;
+        this.attach();
         Input.onscreenControls[id] = this;
     }
+    OnScreenControl.prototype.attach = function () {
+        var attach = Game_1["default"].screen.getPoint(this.attachment.x, this.attachment.y);
+        this.box = this.box.fromPoint(attach).fromOrigin();
+    };
     return OnScreenControl;
 }());
 exports.OnScreenControl = OnScreenControl;
