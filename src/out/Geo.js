@@ -73,7 +73,8 @@ var Box = (function () {
         }
         this.attachment = attachment !== null && attachment !== void 0 ? attachment : null;
     }
-    Box.prototype.getPoint = function (horiz, vert) {
+    Box.prototype.getPoint = function (horiz, vert, margin) {
+        if (margin === void 0) { margin = 0; }
         var x, y;
         if (typeof horiz == 'number') {
             x = this.x + horiz;
@@ -81,13 +82,13 @@ var Box = (function () {
         else {
             switch (horiz) {
                 case 'left':
-                    x = this.x;
+                    x = this.x + margin;
                     break;
                 case 'center':
                     x = this.x + (this.width / 2);
                     break;
                 case 'right':
-                    x = this.x + this.width;
+                    x = this.x + this.width - margin;
                     break;
             }
         }
@@ -97,19 +98,20 @@ var Box = (function () {
         else {
             switch (vert) {
                 case 'top':
-                    y = this.y;
+                    y = this.y + margin;
                     break;
                 case 'middle':
                     y = this.y + (this.height / 2);
                     break;
                 case 'bottom':
-                    y = this.y + this.height;
+                    y = this.y + this.height - margin;
                     break;
             }
         }
         return new Vec2(x, y);
     };
-    Box.prototype.getPointLocal = function (horiz, vert) {
+    Box.prototype.getPointLocal = function (horiz, vert, margin) {
+        if (margin === void 0) { margin = 0; }
         var x, y;
         if (typeof horiz == 'number') {
             x = horiz;
@@ -117,13 +119,13 @@ var Box = (function () {
         else {
             switch (horiz) {
                 case 'left':
-                    x = 0;
+                    x = 0 + margin;
                     break;
                 case 'center':
                     x = this.width / 2;
                     break;
                 case 'right':
-                    x = this.width;
+                    x = this.width - margin;
                     break;
             }
         }
@@ -133,13 +135,13 @@ var Box = (function () {
         else {
             switch (vert) {
                 case 'top':
-                    y = 0;
+                    y = 0 + margin;
                     break;
                 case 'middle':
                     y = this.height / 2;
                     break;
                 case 'bottom':
-                    y = this.height;
+                    y = this.height - margin;
                     break;
             }
         }
@@ -157,8 +159,7 @@ var Box = (function () {
     Box.prototype.fromPoint = function (point) {
         return new Box(point.x, point.y, this.width, this.height, this.origin);
     };
-    Box.prototype.fromOrigin = function (preserveOrigin) {
-        if (preserveOrigin === void 0) { preserveOrigin = false; }
+    Box.prototype.fromOrigin = function () {
         var translate;
         translate = this.getPointLocal(this.origin.x, this.origin.y);
         return new Box(this.x - translate.x, this.y - translate.y, this.width, this.height, this.origin);

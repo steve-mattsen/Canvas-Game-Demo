@@ -83,20 +83,20 @@ export class Box {
 		}
 		this.attachment = attachment ?? null;
 	}
-	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation) {
+	getPoint(horiz: number | horizontalLocation, vert: number | verticalLocation, margin = 0) {
 		let x, y;
 		if (typeof horiz == 'number') {
 			x = this.x + horiz;
 		} else {
 			switch (horiz) {
 				case 'left':
-					x = this.x;
+					x = this.x + margin;
 					break;
 				case 'center':
 					x = this.x + (this.width / 2);
 					break;
 				case 'right':
-					x = this.x + this.width;
+					x = this.x + this.width - margin;
 					break;
 			}
 		}
@@ -105,32 +105,32 @@ export class Box {
 		} else {
 			switch (vert) {
 				case 'top':
-					y = this.y;
+					y = this.y + margin;
 					break;
 				case 'middle':
 					y = this.y + (this.height / 2);
 					break;
 				case 'bottom':
-					y = this.y + this.height;
+					y = this.y + this.height - margin;
 					break;
 			}
 		}
 		return new Vec2(x, y);
 	}
-	getPointLocal(horiz: number | horizontalLocation, vert: number | verticalLocation) {
+	getPointLocal(horiz: number | horizontalLocation, vert: number | verticalLocation, margin = 0) {
 		let x, y;
 		if (typeof horiz == 'number') {
 			x = horiz;
 		} else {
 			switch (horiz) {
 				case 'left':
-					x = 0;
+					x = 0 + margin;
 					break;
 				case 'center':
 					x = this.width / 2;
 					break;
 				case 'right':
-					x = this.width;
+					x = this.width - margin;
 					break;
 			}
 		}
@@ -139,13 +139,13 @@ export class Box {
 		} else {
 			switch (vert) {
 				case 'top':
-					y = 0;
+					y = 0 + margin;
 					break;
 				case 'middle':
 					y = this.height / 2;
 					break;
 				case 'bottom':
-					y = this.height;
+					y = this.height - margin;
 					break;
 			}
 		}
@@ -175,7 +175,7 @@ export class Box {
 			this.origin,
 		);
 	}
-	fromOrigin(preserveOrigin = false) {
+	fromOrigin() {
 		let translate;
 		translate = this.getPointLocal(this.origin.x, this.origin.y);
 

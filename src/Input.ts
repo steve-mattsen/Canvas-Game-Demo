@@ -35,16 +35,18 @@ export abstract class OnScreenControl {
 	attachment: attachmentLocation;
 	box: Box;
 	size: Vec2;
-	constructor(id: string, attachment: attachmentLocation, size: Vec2 = new Vec2(200, 200)) {
+	margin: number;
+	constructor(id: string, attachment: attachmentLocation, size: Vec2 = new Vec2(200, 200), margin: number = 25) {
 		this.id = id;
 		this.attachment = attachment;
 		this.box = new Box(0, 0, size.x, size.y, attachment);
 		this.size = size;
+		this.margin = margin;
 		this.attach();
 		Input.onscreenControls[id] = this;
 	}
 	attach() {
-		let attach = Game.screen.getPoint(this.attachment.x, this.attachment.y);
+		let attach = Game.screen.getPoint(this.attachment.x, this.attachment.y, this.margin);
 		this.box = this.box.fromPoint(attach).fromOrigin();
 	}
 }
