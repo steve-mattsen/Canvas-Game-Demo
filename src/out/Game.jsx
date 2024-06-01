@@ -40,7 +40,9 @@ var Game = (function () {
             speed = move.length() * runSpeed;
         }
         else if (Vars_1["default"].mouseMove !== null) {
-            var line = new Geo_1.Line(plyr.pos.x, plyr.pos.y, Vars_1["default"].mouseMove.x, Vars_1["default"].mouseMove.y);
+            var x = window.innerWidth / 2;
+            var y = window.innerHeight / 2;
+            var line = new Geo_1.Line(x, y, Vars_1["default"].mouseMove.x, Vars_1["default"].mouseMove.y);
             if (line.length() > runSpeed) {
                 speed = runSpeed;
             }

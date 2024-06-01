@@ -49,9 +49,11 @@ export default class Game {
 			);
 			speed = move.length() * runSpeed;
 		} else if (Vars.mouseMove !== null) {
+			let x = window.innerWidth / 2;
+			let y = window.innerHeight / 2;
 			let line = new Line(
-				plyr.pos.x,
-				plyr.pos.y,
+				x,
+				y,
 				Vars.mouseMove.x,
 				Vars.mouseMove.y
 			);

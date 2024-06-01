@@ -92,8 +92,8 @@ window.onmousemove = function (e) {
         stick.screenToValue(new Geo_1.Vec2(e.clientX, e.clientY));
     }
     else if (Vars_1["default"].mouseMove != null) {
-        Vars_1["default"].mouseMove.x = e.clientX / Game_1["default"].camera.zoom;
-        Vars_1["default"].mouseMove.y = e.clientY / Game_1["default"].camera.zoom;
+        Vars_1["default"].mouseMove.x = e.clientX;
+        Vars_1["default"].mouseMove.y = e.clientY;
     }
 };
 window.onmouseup = function (e) {
@@ -105,7 +105,7 @@ window.onmouseup = function (e) {
 };
 window.ontouchstart = function (e) {
     Vars_1["default"].debugMode && console.log(e.type, e);
-    var point = (0, Geo_1.vec)(e.touches[0].clientX / Vars_1["default"].canvasScale, e.touches[0].clientY / Vars_1["default"].canvasScale);
+    var point = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
     clickOrTouchStart(point);
 };
 window.ontouchmove = function (e) {
@@ -115,7 +115,7 @@ window.ontouchmove = function (e) {
         stick.screenToValue(new Geo_1.Vec2(e.touches[0].clientX, e.touches[0].clientY));
     }
     else if (Vars_1["default"].mouseMove !== null) {
-        Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX / Game_1["default"].camera.zoom, e.touches[0].clientY / Game_1["default"].camera.zoom);
+        Vars_1["default"].mouseMove = (0, Geo_1.vec)(e.touches[0].clientX, e.touches[0].clientY);
     }
 };
 window.ontouchend = function (e) {
@@ -148,8 +148,6 @@ function clickOrTouchStart(point) {
     }
     else {
         Vars_1["default"].inputState['mouseDown'] = 1;
-        point.x /= Game_1["default"].camera.zoom;
-        point.y /= Game_1["default"].camera.zoom;
         Vars_1["default"].mouseMove = point;
     }
 }
