@@ -43,13 +43,13 @@ function draw() {
         drawBackground();
     }
     var plyr = Obj_1.Obj.store['player'];
+    drawObjects(ctx);
     if (Vars_1["default"].spriteSheetMode) {
         var sprite = plyr.getAnimFrame();
         ctx.fillStyle = "red";
         ctx.fillRect(sprite.drawBox.x, sprite.drawBox.y, sprite.drawBox.width, sprite.drawBox.height);
         ctx.drawImage(Sprites_1.Img.store['spritesheet_link'].element, 0, 0);
     }
-    drawObjects(ctx);
     Vars_1["default"].debugMode && drawDebugInfo(ctx);
     ctx.scale(1 / Game_1["default"].camera.zoom, 1 / Game_1["default"].camera.zoom);
     ctx.imageSmoothingEnabled = true;

@@ -47,6 +47,8 @@ export default function draw() {
 
 	let plyr = Obj.store['player'];
 
+	drawObjects(ctx);
+
 	if (Vars.spriteSheetMode) {
 		let sprite = plyr.getAnimFrame();
 		ctx.fillStyle = "red";
@@ -58,8 +60,6 @@ export default function draw() {
 		);
 		ctx.drawImage(Img.store['spritesheet_link'].element, 0, 0)
 	}
-
-	drawObjects(ctx);
 
 	Vars.debugMode && drawDebugInfo(ctx);
 
