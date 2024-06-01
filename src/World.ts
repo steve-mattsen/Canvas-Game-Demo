@@ -41,8 +41,8 @@ export default function buildWorld() {
 		const tree = new Obj(
 			'tree' + i,
 			vec(
-				(Math.random() * Game.camera.width),
-				(Math.random() * Game.camera.height) + tree_sprite.image.size.y / 2,
+				Math.floor((Math.random() * Game.camera.width)),
+				Math.floor((Math.random() * Game.camera.height) + tree_sprite.image.size.y / 2),
 			),
 			tree_sprite,
 			new Box(
@@ -61,8 +61,8 @@ export default function buildWorld() {
 		const bush = new Obj(
 			'bush' + i,
 			vec(
-				(Math.random() * Game.camera.width),
-				(Math.random() * Game.camera.height) + bush_sprite.image.size.y / 2,
+				Math.floor((Math.random() * Game.camera.width)),
+				Math.floor((Math.random() * Game.camera.height) + bush_sprite.image.size.y / 2),
 			),
 			bush_sprite,
 		)

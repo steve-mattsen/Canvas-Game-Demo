@@ -450,8 +450,8 @@ function drawShadows(entries: Obj[]) {
 		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1 - cambox.x;
 		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1 - cambox.y;
 		ctx.drawImage(shadow.image.element,
-			Math.round(x * Game.camera.zoom),
-			Math.round(y * Game.camera.zoom),
+			x * Game.camera.zoom,
+			y * Game.camera.zoom,
 			sprite.drawBox.width * Game.camera.zoom,
 			sprite.drawBox.height * 0.5 * Game.camera.zoom,
 		);

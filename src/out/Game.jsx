@@ -138,7 +138,7 @@ var Game = (function () {
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();
-    Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' });
+    Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
     return Game;
 }());
 exports["default"] = Game;

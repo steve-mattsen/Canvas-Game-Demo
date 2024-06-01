@@ -39,7 +39,6 @@ var VirtualJoystick = (function (_super) {
         this.value = line.normal();
         if (line.length() < (this.size / 2)) {
             var factor = (line.length() - this.deadZone) / ((this.size / 2) - this.deadZone);
-            console.log(factor);
             this.value.x *= factor;
             this.value.y *= factor;
         }

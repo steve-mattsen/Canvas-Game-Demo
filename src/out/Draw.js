@@ -293,7 +293,7 @@ function drawShadows(entries) {
         shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
         var x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1 - cambox.x;
         var y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1 - cambox.y;
-        ctx.drawImage(shadow.image.element, Math.round(x * Game_1["default"].camera.zoom), Math.round(y * Game_1["default"].camera.zoom), sprite.drawBox.width * Game_1["default"].camera.zoom, sprite.drawBox.height * 0.5 * Game_1["default"].camera.zoom);
+        ctx.drawImage(shadow.image.element, x * Game_1["default"].camera.zoom, y * Game_1["default"].camera.zoom, sprite.drawBox.width * Game_1["default"].camera.zoom, sprite.drawBox.height * 0.5 * Game_1["default"].camera.zoom);
     }
 }
 //# sourceMappingURL=Draw.js.map

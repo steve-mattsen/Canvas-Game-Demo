@@ -21,7 +21,7 @@ var Vars_1 = require("./Vars");
 var Camera = (function (_super) {
     __extends(Camera, _super);
     function Camera(x, y, w, h, origin, zoom) {
-        if (zoom === void 0) { zoom = 4; }
+        if (zoom === void 0) { zoom = 1; }
         var _this = _super.call(this, x, y, w, h, origin) || this;
         _this.zoom = zoom;
         _this.updateDims();

@@ -12,7 +12,7 @@ export default class Game {
 	static tickCount = 0;
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
-	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' });
+	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
 	static init() {
 		Game.camera.x = Game.camera.width / 2;
 		Game.camera.y = Game.camera.height / 2;
