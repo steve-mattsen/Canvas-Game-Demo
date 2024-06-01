@@ -1,5 +1,5 @@
 
-import { Img, Animation, SpriteSheet, Sprite, sprt } from "./Sprites"
+import { Animation, SpriteSheet, sprt } from "./Sprites"
 import { Obj } from "./Obj"
 import { vec, Box } from "./Geo"
 import Vars from "./Vars";
@@ -84,7 +84,7 @@ export default function buildWorld() {
 }
 
 function randomizeLayout() {
-	let entries = Object.entries(Obj.store);
+	let entries = Object.values(Obj.store);
 	entries.sort((a, b) => Math.random() - Math.random());
 	let cols = Math.floor(Math.sqrt(entries.length));
 	let colWidth = Math.floor(Game.camera.width / cols);
@@ -92,8 +92,7 @@ function randomizeLayout() {
 	let rowHeight = Math.floor((Game.camera.height * .9) / rows);
 	let randomOffset = 25;
 	let i = 0;
-	for (const [key, obj] of entries) {
-		// obj.pos.x =Game.cameraWidth * .12;
+	for (const obj of entries) {
 		obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
 		obj.pos.x += (Math.random() * randomOffset) - randomOffset;
 		obj.pos.y = Game.camera.height * .25;

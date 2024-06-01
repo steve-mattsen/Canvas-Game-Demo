@@ -56,7 +56,7 @@ function buildWorld() {
 }
 exports["default"] = buildWorld;
 function randomizeLayout() {
-    var entries = Object.entries(Obj_1.Obj.store);
+    var entries = Object.values(Obj_1.Obj.store);
     entries.sort(function (a, b) { return Math.random() - Math.random(); });
     var cols = Math.floor(Math.sqrt(entries.length));
     var colWidth = Math.floor(Game_1["default"].camera.width / cols);
@@ -65,7 +65,7 @@ function randomizeLayout() {
     var randomOffset = 25;
     var i = 0;
     for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-        var _a = entries_1[_i], key = _a[0], obj = _a[1];
+        var obj = entries_1[_i];
         obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
         obj.pos.x += (Math.random() * randomOffset) - randomOffset;
         obj.pos.y = Game_1["default"].camera.height * .25;

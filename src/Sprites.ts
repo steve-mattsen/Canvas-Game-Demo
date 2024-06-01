@@ -1,5 +1,4 @@
 import { vec, Vec2, Box } from "./Geo";
-import Vars from "./Vars";
 
 export class Img {
 	id: string = '';
@@ -18,8 +17,8 @@ export class Img {
 		Img.store[image.id] = image;
 	}
 	public static checkImagesArePreloaded() {
-		for (const [key, image] of Object.entries(Img.store)) {
-			if (!image.element.complete || (image.element.width + image.element.height) == 0) {
+		for (const image of Object.values(Img.store)) {
+			if (!image.element.complete || (image.element.width + image.element.height) === 0) {
 				return false;
 			}
 		}
@@ -35,7 +34,7 @@ export class Img {
 			await new Promise(r => setTimeout(r, 100));
 		}
 
-		for (const [key, obj] of Object.entries(Img.store)) {
+		for (const obj of Object.values(Img.store)) {
 			obj.size = vec(obj.element.width, obj.element.height);
 		}
 	}

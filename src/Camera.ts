@@ -1,4 +1,4 @@
-import { Box, BoxSpec, Vec2, TOrigin } from "./Geo";
+import { Box, TOrigin } from "./Geo";
 import Vars from "./Vars";
 
 export class Camera extends Box {

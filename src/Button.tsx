@@ -1,5 +1,5 @@
 import { onWindowResize } from "./Draw";
-import { vec, Vec2, Box, Line } from "./Geo";
+import { Box } from "./Geo";
 import Vars from "./Vars";
 export default class Button {
 	key: string;

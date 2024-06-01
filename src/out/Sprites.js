@@ -63,9 +63,9 @@ var Img = (function () {
         Img.store[image.id] = image;
     };
     Img.checkImagesArePreloaded = function () {
-        for (var _i = 0, _a = Object.entries(Img.store); _i < _a.length; _i++) {
-            var _b = _a[_i], key = _b[0], image = _b[1];
-            if (!image.element.complete || (image.element.width + image.element.height) == 0) {
+        for (var _i = 0, _a = Object.values(Img.store); _i < _a.length; _i++) {
+            var image = _a[_i];
+            if (!image.element.complete || (image.element.width + image.element.height) === 0) {
                 return false;
             }
         }
@@ -73,12 +73,12 @@ var Img = (function () {
     };
     Img.preloadImages = function (images) {
         return __awaiter(this, void 0, void 0, function () {
-            var _i, images_1, uri, key, _a, _b, _c, _d, _e, key, obj;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var _i, images_1, uri, key, _a, _b, _c, _d, obj;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         _i = 0, images_1 = images;
-                        _f.label = 1;
+                        _e.label = 1;
                     case 1:
                         if (!(_i < images_1.length)) return [3, 4];
                         uri = images_1[_i];
@@ -86,8 +86,8 @@ var Img = (function () {
                         _b = (_a = Img).addImg;
                         return [4, new Img(key, uri)];
                     case 2:
-                        _b.apply(_a, [_f.sent()]);
-                        _f.label = 3;
+                        _b.apply(_a, [_e.sent()]);
+                        _e.label = 3;
                     case 3:
                         _i++;
                         return [3, 1];
@@ -95,11 +95,11 @@ var Img = (function () {
                         if (!(Img.checkImagesArePreloaded() === false)) return [3, 6];
                         return [4, new Promise(function (r) { return setTimeout(r, 100); })];
                     case 5:
-                        _f.sent();
+                        _e.sent();
                         return [3, 4];
                     case 6:
-                        for (_c = 0, _d = Object.entries(Img.store); _c < _d.length; _c++) {
-                            _e = _d[_c], key = _e[0], obj = _e[1];
+                        for (_c = 0, _d = Object.values(Img.store); _c < _d.length; _c++) {
+                            obj = _d[_c];
                             obj.size = (0, Geo_1.vec)(obj.element.width, obj.element.height);
                         }
                         return [2];

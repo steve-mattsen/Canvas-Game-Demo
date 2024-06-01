@@ -1,4 +1,4 @@
-import { Box, TOrigin, Vec2, vec } from "../Geo";
+import { Box, TOrigin, vec } from "../Geo";
 
 let boxOriginDataSet: {
 	data: { x: number; y: number; w: number; h: number; o: TOrigin; };

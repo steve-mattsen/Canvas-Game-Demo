@@ -1,7 +1,5 @@
 import { Box, Line, TOrigin, Vec2 } from "./Geo";
 import { OnScreenControl } from "./Input";
-import { Obj } from "./Obj";
-import Vars from "./Vars";
 
 export default class VirtualJoystick extends OnScreenControl {
 	box: Box;
