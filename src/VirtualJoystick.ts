@@ -3,8 +3,6 @@ import { OnScreenControl } from "./Input";
 
 export default class VirtualJoystick extends OnScreenControl {
 	box: Box;
-	pos: TOrigin;
-	posOffset: Vec2;
 	value: Vec2;
 	size: number = 200;
 	id: string;

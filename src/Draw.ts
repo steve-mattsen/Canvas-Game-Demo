@@ -21,6 +21,8 @@ export function onWindowResize() {
 	background.setAttribute('height', Vars.canvasHeight + '');
 	shadows.setAttribute('width', Vars.canvasWidth + '');
 	shadows.setAttribute('height', Vars.canvasHeight + '');
+	let lstick = Input.getOnscreenControl('left_stick') as VirtualJoystick;
+	lstick.box.y = window.innerHeight - lstick.size;
 	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;

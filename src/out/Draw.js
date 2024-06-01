@@ -22,6 +22,8 @@ function onWindowResize() {
     background.setAttribute('height', Vars_1["default"].canvasHeight + '');
     shadows.setAttribute('width', Vars_1["default"].canvasWidth + '');
     shadows.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    var lstick = Input_1["default"].getOnscreenControl('left_stick');
+    lstick.box.y = window.innerHeight - lstick.size;
     Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;
