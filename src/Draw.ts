@@ -373,8 +373,8 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 			middle.y,
 			stick.size.x / 2,
 		)
-		gradient.addColorStop(0, Colors.bg[1] + '88');
-		gradient.addColorStop(0.99, Colors.bg[0] + '88');
+		gradient.addColorStop(0, Colors.bg[1] + '00');
+		gradient.addColorStop(0.99, Colors.bg[0] + '22');
 		gradient.addColorStop(1.0, 'transparent');
 		ctx.fillStyle = gradient;
 		ctx.fillRect(
@@ -399,7 +399,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 			0,
 			10,
 		);
-		ctx.fillStyle = Colors.bg[0] + '88';
+		ctx.fillStyle = Colors.bg[0] + '55';
 		ctx.fill();
 		ctx.stroke();
 	}

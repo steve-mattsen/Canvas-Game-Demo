@@ -251,8 +251,8 @@ function drawControls(ctx) {
         ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
         ctx.stroke();
         var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size.x / 2);
-        gradient.addColorStop(0, Colors_1["default"].bg[1] + '88');
-        gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '88');
+        gradient.addColorStop(0, Colors_1["default"].bg[1] + '00');
+        gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '22');
         gradient.addColorStop(1.0, 'transparent');
         ctx.fillStyle = gradient;
         ctx.fillRect(middle.x - stick.size.x / 2, middle.y - stick.size.y / 2, stick.size.x, stick.size.y);
@@ -260,7 +260,7 @@ function drawControls(ctx) {
         var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 2, middle.y + stick.value.y * innerStickSize / 2);
         ctx.beginPath();
         ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-        ctx.fillStyle = Colors_1["default"].bg[0] + '88';
+        ctx.fillStyle = Colors_1["default"].bg[0] + '55';
         ctx.fill();
         ctx.stroke();
     }
