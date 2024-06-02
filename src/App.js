@@ -31,7 +31,7 @@ class App extends React.Component {
       <canvas id="background_canvas">Background</canvas>
       <canvas id="shadow_canvas">Shadows</canvas>
       <canvas id="game_window">da game</canvas>
-      <canvas id="ui_canvas">UI / onscreen controls</canvas>
+      <canvas id="controls_canvas">UI / onscreen controls</canvas>
     </div>
     );
   }

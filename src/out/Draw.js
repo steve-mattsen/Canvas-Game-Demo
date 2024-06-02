@@ -15,7 +15,7 @@ function onWindowResize() {
     Vars_1["default"].canvasWidth = Game_1["default"].screen.width / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = Game_1["default"].screen.height / Vars_1["default"].canvasScale;
     Game_1["default"].camera.updateDims();
-    var canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'ui_canvas'];
+    var canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'controls_canvas'];
     for (var _i = 0, canvases_1 = canvases; _i < canvases_1.length; _i++) {
         var canvasID = canvases_1[_i];
         var canvas = document.getElementById(canvasID);
@@ -57,7 +57,7 @@ function draw() {
     Vars_1["default"].debugMode && drawDebugInfo(ctx);
     ctx.scale(1 / Game_1["default"].camera.zoom, 1 / Game_1["default"].camera.zoom);
     ctx.imageSmoothingEnabled = true;
-    var uiCanvas = document.getElementById('ui_canvas');
+    var uiCanvas = document.getElementById('controls_canvas');
     var uiCtx = uiCanvas.getContext("2d");
     uiCtx.clearRect(0, 0, Vars_1["default"].canvasWidth, Vars_1["default"].canvasHeight);
     drawControls(uiCtx);
@@ -240,7 +240,6 @@ function drawDebugInfo(ctx) {
 }
 function drawControls(ctx) {
     ctx.save();
-    ctx.globalCompositeOperation = "luminosity";
     var sticks = ['left_stick', 'right_stick'];
     ctx.fillStyle = Colors_1["default"].bg[4] + '22';
     ctx.beginPath();

@@ -16,3 +16,7 @@ canvas {
   position: absolute;
   top: 0;
 }
+
+#controls_canvas {
+  mix-blend-mode: luminosity;
+}

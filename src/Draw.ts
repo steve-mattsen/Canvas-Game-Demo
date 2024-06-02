@@ -14,7 +14,7 @@ export function onWindowResize() {
 	Vars.canvasWidth = Game.screen.width / Vars.canvasScale;
 	Vars.canvasHeight = Game.screen.height / Vars.canvasScale;
 	Game.camera.updateDims();
-	let canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'ui_canvas'];
+	let canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'controls_canvas'];
 	for (const canvasID of canvases) {
 		let canvas = document.getElementById(canvasID) as HTMLCanvasElement;
 		canvas.setAttribute('width', Vars.canvasWidth + '');
@@ -68,7 +68,7 @@ export default function draw() {
 	ctx.scale(1 / Game.camera.zoom, 1 / Game.camera.zoom);
 	ctx.imageSmoothingEnabled = true;
 
-	let uiCanvas = document.getElementById('ui_canvas') as HTMLCanvasElement;
+	let uiCanvas = document.getElementById('controls_canvas') as HTMLCanvasElement;
 	let uiCtx = uiCanvas.getContext("2d");
 
 	uiCtx.clearRect(0, 0, Vars.canvasWidth, Vars.canvasHeight);
@@ -346,7 +346,6 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 
 function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.save();
-	ctx.globalCompositeOperation = "luminosity";
 	let sticks = ['left_stick', 'right_stick'];
 
 	ctx.fillStyle = Colors.bg[4] + '22';
