@@ -239,7 +239,6 @@ function drawDebugInfo(ctx) {
     }
 }
 function drawControls(ctx) {
-    ctx.save();
     var sticks = ['left_stick', 'right_stick'];
     ctx.fillStyle = Colors_1["default"].bg[4] + '22';
     ctx.beginPath();
@@ -249,11 +248,13 @@ function drawControls(ctx) {
         var box = stick.box;
         var middle = box.getCenterMiddle();
         var radius = stick.size.x / 2;
-        ctx.ellipse(middle.x, middle.y, radius, radius, 0, 0, 100);
+        var grad = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, radius);
+        grad.addColorStop(0.6, Colors_1["default"].bg[4] + 'ff');
+        grad.addColorStop(1, Colors_1["default"].bg[4] + '00');
+        ctx.fillStyle = grad;
+        ctx.fillRect(box.x, box.y, box.width, box.height);
     }
-    ctx.fill();
-    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
-    ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
+    ctx.fillStyle = Colors_1["default"].bg[0] + 'ff';
     ctx.beginPath();
     for (var _a = 0, sticks_2 = sticks; _a < sticks_2.length; _a++) {
         var name_2 = sticks_2[_a];
@@ -267,7 +268,6 @@ function drawControls(ctx) {
         ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickRadius, innerStickRadius, 0, 0, 10);
     }
     ctx.fill();
-    ctx.stroke();
     ctx.restore();
 }
 function drawShadows(entries) {

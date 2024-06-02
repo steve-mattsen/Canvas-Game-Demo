@@ -3,7 +3,7 @@ import { Obj } from "./Obj";
 import Vars from "./Vars";
 import Button from "./Button";
 import { Box, Vec2 } from "./Geo";
-import Input from "./Input";
+import Input, { OnScreenControl } from "./Input";
 import VirtualJoystick from "./VirtualJoystick";
 import Colors from "./Colors";
 import Game from "./Game";
@@ -345,7 +345,6 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 }
 
 function drawControls(ctx: CanvasRenderingContext2D) {
-	ctx.save();
 	let sticks = ['left_stick', 'right_stick'];
 
 	ctx.fillStyle = Colors.bg[4] + '22';
@@ -357,19 +356,27 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		let middle = box.getCenterMiddle();
 		let radius = stick.size.x / 2;
 
-		ctx.ellipse(
+		let grad = ctx.createRadialGradient(
+			middle.x,
+			middle.y,
+			0,
 			middle.x,
 			middle.y,
 			radius,
-			radius,
-			0, 0, 100,
-		);
+		)
+		grad.addColorStop(0.6, Colors.bg[4] + 'ff');
+		grad.addColorStop(1, Colors.bg[4] + '00');
+		ctx.fillStyle = grad;
+		ctx.fillRect(
+			box.x,
+			box.y,
+			box.width,
+			box.height
+		)
 	}
-	ctx.fill();
 
 
-	ctx.fillStyle = Colors.bg[0] + '88';
-	ctx.strokeStyle = Colors.fg[0] + '55';
+	ctx.fillStyle = Colors.bg[0] + 'ff';
 	ctx.beginPath();
 	for (const name of sticks) {
 		// Draw inner circle
@@ -394,7 +401,6 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		);
 	}
 	ctx.fill();
-	ctx.stroke();
 	ctx.restore();
 }
 
