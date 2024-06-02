@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"options": {
+		"env": {
+			"HOST": "${env:hostname}",
+			"HTTPS": "false",
+		}
+	},
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"problemMatcher": [],
+			"label": "npm: start",
+			"detail": "react-scripts start",
+		},
+		{
+			"label": "start whole suite",
+			"dependsOn": [
+				"tsc: watch - tsconfig.json",
+				"npm: test",
+				"npm: start",
+			]
+		}
+	]
+}
