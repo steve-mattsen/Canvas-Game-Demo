@@ -350,26 +350,17 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
 		let box = stick.box;
 		let middle = box.getCenterMiddle();
-		ctx.strokeStyle = Colors.fg[0] + '55';
 
-		let gradient = ctx.createRadialGradient(
-			middle.x,
-			middle.y,
-			0,
+		ctx.beginPath();
+		ctx.ellipse(
 			middle.x,
 			middle.y,
 			stick.size.x / 2,
-		)
-		gradient.addColorStop(0, Colors.bg[1] + '00');
-		gradient.addColorStop(0.99, Colors.bg[0] + '22');
-		gradient.addColorStop(1.0, 'transparent');
-		ctx.fillStyle = gradient;
-		ctx.fillRect(
-			middle.x - stick.size.x / 2,
-			middle.y - stick.size.y / 2,
-			stick.size.x,
-			stick.size.y,
+			stick.size.y / 2,
+			0, 0, 100,
 		);
+		ctx.fillStyle = Colors.bg[4] + '22';
+		ctx.fill();
 
 		let innerStickSize = stick.size.x / 1.5;
 		let innerStickPos = new Vec2(
@@ -386,7 +377,8 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 			0,
 			10,
 		);
-		ctx.fillStyle = Colors.bg[0] + '55';
+		ctx.fillStyle = Colors.bg[0] + '88';
+		ctx.strokeStyle = Colors.fg[0] + '55';
 		ctx.fill();
 		ctx.stroke();
 	}

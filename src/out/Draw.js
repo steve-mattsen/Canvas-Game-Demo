@@ -246,18 +246,16 @@ function drawControls(ctx) {
         var stick = Input_1["default"].getOnscreenControl(name_1);
         var box = stick.box;
         var middle = box.getCenterMiddle();
-        ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
-        var gradient = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, stick.size.x / 2);
-        gradient.addColorStop(0, Colors_1["default"].bg[1] + '00');
-        gradient.addColorStop(0.99, Colors_1["default"].bg[0] + '22');
-        gradient.addColorStop(1.0, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(middle.x - stick.size.x / 2, middle.y - stick.size.y / 2, stick.size.x, stick.size.y);
+        ctx.beginPath();
+        ctx.ellipse(middle.x, middle.y, stick.size.x / 2, stick.size.y / 2, 0, 0, 100);
+        ctx.fillStyle = Colors_1["default"].bg[4] + '22';
+        ctx.fill();
         var innerStickSize = stick.size.x / 1.5;
         var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 4, middle.y + stick.value.y * innerStickSize / 4);
         ctx.beginPath();
         ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-        ctx.fillStyle = Colors_1["default"].bg[0] + '55';
+        ctx.fillStyle = Colors_1["default"].bg[0] + '88';
+        ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
         ctx.fill();
         ctx.stroke();
     }
