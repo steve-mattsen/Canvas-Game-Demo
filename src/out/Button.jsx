@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-var Draw_1 = require("./Draw");
 var Geo_1 = require("./Geo");
 var Vars_1 = require("./Vars");
+var fscreen_1 = require("fscreen");
 var Button = (function () {
     function Button(key, varKey, title, click, dimensions) {
         if (click === void 0) { click = function () {
@@ -30,17 +30,12 @@ new Button('F3', 'slowMode', 'Slow');
 new Button('F4', 'showBackground', "Background");
 new Button('F5', 'showButtons', "Buttons");
 new Button('F6', 'fullscreenMode', 'Fullscreen', function () {
-    if (!Vars_1["default"].fullscreenMode) {
-        document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
-        (0, Draw_1.onWindowResize)();
-        Vars_1["default"].fullscreenMode = true;
+    if (fscreen_1["default"].fullscreenEnabled && (fscreen_1["default"].fullscreenElement === null || fscreen_1["default"].fullscreenElement === undefined)) {
+        var target = document.getElementsByTagName('html')[0];
+        fscreen_1["default"].requestFullscreen(target);
     }
     else {
-        if (document.fullscreenElement !== null) {
-            document.exitFullscreen();
-            (0, Draw_1.onWindowResize)();
-        }
-        Vars_1["default"].fullscreenMode = false;
+        fscreen_1["default"].exitFullscreen();
     }
 });
 new Button('F9', 'debugMode', 'Debug');

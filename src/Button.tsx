@@ -1,6 +1,8 @@
 import { onWindowResize } from "./Draw";
 import { Box } from "./Geo";
 import Vars from "./Vars";
+import fscreen from 'fscreen';
+
 export default class Button {
 	key: string;
 	varKey: string;
@@ -36,16 +38,11 @@ new Button('F3', 'slowMode', 'Slow');
 new Button('F4', 'showBackground', "Background");
 new Button('F5', 'showButtons', "Buttons");
 new Button('F6', 'fullscreenMode', 'Fullscreen', () => {
-	if (!Vars.fullscreenMode) {
-		document.getElementsByTagName('html')[0].requestFullscreen({ 'navigationUI': 'hide' });
-		onWindowResize();
-		Vars.fullscreenMode = true;
+	if (fscreen.fullscreenEnabled && (fscreen.fullscreenElement === null || fscreen.fullscreenElement === undefined)) {
+		let target = document.getElementsByTagName('html')[0];
+		fscreen.requestFullscreen(target);
 	} else {
-		if (document.fullscreenElement !== null) {
-			document.exitFullscreen();
-			onWindowResize();
-		}
-		Vars.fullscreenMode = false;
+		fscreen.exitFullscreen();
 	}
 });
 new Button('F9', 'debugMode', 'Debug');
