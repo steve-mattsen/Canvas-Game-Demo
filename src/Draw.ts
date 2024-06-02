@@ -340,8 +340,6 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 		drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
 		ctx.restore();
 	}
-	// drawMarker(ctx, Game.camera.x + Game.camera.getCenterMiddle().x, Game.camera.getCenterMiddle().y);
-	// drawBoxOutline(ctx, Game.camera.fromPoint(new Vec2(0, 0)));
 }
 
 function drawControls(ctx: CanvasRenderingContext2D) {
@@ -352,18 +350,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
 		let box = stick.box;
 		let middle = box.getCenterMiddle();
-		ctx.beginPath();
-		ctx.ellipse(
-			middle.x,
-			middle.y,
-			stick.size.x / 2,
-			stick.size.y / 2,
-			0,
-			0,
-			10,
-		);
 		ctx.strokeStyle = Colors.fg[0] + '55';
-		ctx.stroke();
 
 		let gradient = ctx.createRadialGradient(
 			middle.x,
@@ -384,10 +371,10 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 			stick.size.y,
 		);
 
-		let innerStickSize = stick.size.x / 2;
+		let innerStickSize = stick.size.x / 1.5;
 		let innerStickPos = new Vec2(
-			middle.x + stick.value.x * innerStickSize / 2,
-			middle.y + stick.value.y * innerStickSize / 2,
+			middle.x + stick.value.x * innerStickSize / 4,
+			middle.y + stick.value.y * innerStickSize / 4,
 		);
 		ctx.beginPath();
 		ctx.ellipse(
