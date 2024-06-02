@@ -9,20 +9,17 @@ import Colors from "./Colors";
 import Game from "./Game";
 
 export function onWindowResize() {
-	let canvas = document.getElementById("game_window") as HTMLCanvasElement;
-	let background = document.getElementById("background_canvas") as HTMLCanvasElement;
-	let shadows = document.getElementById("shadow_canvas") as HTMLCanvasElement;
 	Game.screen.width = window.innerWidth;
 	Game.screen.height = window.innerHeight;
 	Vars.canvasWidth = Game.screen.width / Vars.canvasScale;
 	Vars.canvasHeight = Game.screen.height / Vars.canvasScale;
 	Game.camera.updateDims();
-	canvas.setAttribute('width', Vars.canvasWidth + '');
-	canvas.setAttribute('height', Vars.canvasHeight + '');
-	background.setAttribute('width', Vars.canvasWidth + '');
-	background.setAttribute('height', Vars.canvasHeight + '');
-	shadows.setAttribute('width', Vars.canvasWidth + '');
-	shadows.setAttribute('height', Vars.canvasHeight + '');
+	let canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'ui_canvas'];
+	for (const canvasID of canvases) {
+		let canvas = document.getElementById(canvasID) as HTMLCanvasElement;
+		canvas.setAttribute('width', Vars.canvasWidth + '');
+		canvas.setAttribute('height', Vars.canvasHeight + '');
+	}
 	for (const input of Object.values(Input.onscreenControls)) {
 		input.attach();
 	}
@@ -71,9 +68,14 @@ export default function draw() {
 	ctx.scale(1 / Game.camera.zoom, 1 / Game.camera.zoom);
 	ctx.imageSmoothingEnabled = true;
 
-	drawControls(ctx);
+	let uiCanvas = document.getElementById('ui_canvas') as HTMLCanvasElement;
+	let uiCtx = uiCanvas.getContext("2d");
 
-	drawButtons(ctx);
+	uiCtx.clearRect(0, 0, Vars.canvasWidth, Vars.canvasHeight);
+
+	drawControls(uiCtx);
+
+	drawButtons(uiCtx);
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {

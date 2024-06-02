@@ -10,22 +10,20 @@ var Input_1 = require("./Input");
 var Colors_1 = require("./Colors");
 var Game_1 = require("./Game");
 function onWindowResize() {
-    var canvas = document.getElementById("game_window");
-    var background = document.getElementById("background_canvas");
-    var shadows = document.getElementById("shadow_canvas");
     Game_1["default"].screen.width = window.innerWidth;
     Game_1["default"].screen.height = window.innerHeight;
     Vars_1["default"].canvasWidth = Game_1["default"].screen.width / Vars_1["default"].canvasScale;
     Vars_1["default"].canvasHeight = Game_1["default"].screen.height / Vars_1["default"].canvasScale;
     Game_1["default"].camera.updateDims();
-    canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
-    canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
-    background.setAttribute('width', Vars_1["default"].canvasWidth + '');
-    background.setAttribute('height', Vars_1["default"].canvasHeight + '');
-    shadows.setAttribute('width', Vars_1["default"].canvasWidth + '');
-    shadows.setAttribute('height', Vars_1["default"].canvasHeight + '');
-    for (var _i = 0, _a = Object.values(Input_1["default"].onscreenControls); _i < _a.length; _i++) {
-        var input = _a[_i];
+    var canvases = ['game_window', 'background_canvas', 'shadow_canvas', 'ui_canvas'];
+    for (var _i = 0, canvases_1 = canvases; _i < canvases_1.length; _i++) {
+        var canvasID = canvases_1[_i];
+        var canvas = document.getElementById(canvasID);
+        canvas.setAttribute('width', Vars_1["default"].canvasWidth + '');
+        canvas.setAttribute('height', Vars_1["default"].canvasHeight + '');
+    }
+    for (var _a = 0, _b = Object.values(Input_1["default"].onscreenControls); _a < _b.length; _a++) {
+        var input = _b[_a];
         input.attach();
     }
     Vars_1["default"].showBackground = true;
@@ -59,8 +57,11 @@ function draw() {
     Vars_1["default"].debugMode && drawDebugInfo(ctx);
     ctx.scale(1 / Game_1["default"].camera.zoom, 1 / Game_1["default"].camera.zoom);
     ctx.imageSmoothingEnabled = true;
-    drawControls(ctx);
-    drawButtons(ctx);
+    var uiCanvas = document.getElementById('ui_canvas');
+    var uiCtx = uiCanvas.getContext("2d");
+    uiCtx.clearRect(0, 0, Vars_1["default"].canvasWidth, Vars_1["default"].canvasHeight);
+    drawControls(uiCtx);
+    drawButtons(uiCtx);
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
