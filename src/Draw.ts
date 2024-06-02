@@ -348,42 +348,54 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	ctx.globalCompositeOperation = "luminosity";
 	let sticks = ['left_stick', 'right_stick'];
+
+	ctx.fillStyle = Colors.bg[4] + '22';
+	ctx.beginPath();
 	for (const name of sticks) {
+		// Draw outer circle
 		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
 		let box = stick.box;
 		let middle = box.getCenterMiddle();
+		let radius = stick.size.x / 2;
 
-		ctx.beginPath();
 		ctx.ellipse(
 			middle.x,
 			middle.y,
-			stick.size.x / 2,
-			stick.size.y / 2,
+			radius,
+			radius,
 			0, 0, 100,
 		);
-		ctx.fillStyle = Colors.bg[4] + '22';
-		ctx.fill();
+	}
+	ctx.fill();
 
+
+	ctx.fillStyle = Colors.bg[0] + '88';
+	ctx.strokeStyle = Colors.fg[0] + '55';
+	ctx.beginPath();
+	for (const name of sticks) {
+		// Draw inner circle
+		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
+		let box = stick.box;
+		let middle = box.getCenterMiddle();
 		let innerStickSize = stick.size.x / 1.5;
 		let innerStickPos = new Vec2(
 			middle.x + stick.value.x * innerStickSize / 4,
 			middle.y + stick.value.y * innerStickSize / 4,
 		);
-		ctx.beginPath();
+		let innerStickRadius = innerStickSize / 2;
+		ctx.moveTo(innerStickPos.x + innerStickRadius, innerStickPos.y);
 		ctx.ellipse(
 			innerStickPos.x,
 			innerStickPos.y,
-			innerStickSize / 2,
-			innerStickSize / 2,
+			innerStickRadius,
+			innerStickRadius,
 			0,
 			0,
 			10,
 		);
-		ctx.fillStyle = Colors.bg[0] + '88';
-		ctx.strokeStyle = Colors.fg[0] + '55';
-		ctx.fill();
-		ctx.stroke();
 	}
+	ctx.fill();
+	ctx.stroke();
 	ctx.restore();
 }
 

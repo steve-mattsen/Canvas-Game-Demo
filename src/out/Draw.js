@@ -242,24 +242,33 @@ function drawControls(ctx) {
     ctx.save();
     ctx.globalCompositeOperation = "luminosity";
     var sticks = ['left_stick', 'right_stick'];
+    ctx.fillStyle = Colors_1["default"].bg[4] + '22';
+    ctx.beginPath();
     for (var _i = 0, sticks_1 = sticks; _i < sticks_1.length; _i++) {
         var name_1 = sticks_1[_i];
         var stick = Input_1["default"].getOnscreenControl(name_1);
         var box = stick.box;
         var middle = box.getCenterMiddle();
-        ctx.beginPath();
-        ctx.ellipse(middle.x, middle.y, stick.size.x / 2, stick.size.y / 2, 0, 0, 100);
-        ctx.fillStyle = Colors_1["default"].bg[4] + '22';
-        ctx.fill();
+        var radius = stick.size.x / 2;
+        ctx.ellipse(middle.x, middle.y, radius, radius, 0, 0, 100);
+    }
+    ctx.fill();
+    ctx.fillStyle = Colors_1["default"].bg[0] + '88';
+    ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
+    ctx.beginPath();
+    for (var _a = 0, sticks_2 = sticks; _a < sticks_2.length; _a++) {
+        var name_2 = sticks_2[_a];
+        var stick = Input_1["default"].getOnscreenControl(name_2);
+        var box = stick.box;
+        var middle = box.getCenterMiddle();
         var innerStickSize = stick.size.x / 1.5;
         var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 4, middle.y + stick.value.y * innerStickSize / 4);
-        ctx.beginPath();
-        ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickSize / 2, innerStickSize / 2, 0, 0, 10);
-        ctx.fillStyle = Colors_1["default"].bg[0] + '88';
-        ctx.strokeStyle = Colors_1["default"].fg[0] + '55';
-        ctx.fill();
-        ctx.stroke();
+        var innerStickRadius = innerStickSize / 2;
+        ctx.moveTo(innerStickPos.x + innerStickRadius, innerStickPos.y);
+        ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickRadius, innerStickRadius, 0, 0, 10);
     }
+    ctx.fill();
+    ctx.stroke();
     ctx.restore();
 }
 function drawShadows(entries) {
