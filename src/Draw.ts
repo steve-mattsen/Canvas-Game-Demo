@@ -364,7 +364,7 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 			middle.y,
 			radius,
 		)
-		grad.addColorStop(0.6, Colors.bg[4] + 'ff');
+		grad.addColorStop(0.66, Colors.bg[4] + 'ff');
 		grad.addColorStop(1, Colors.bg[4] + '00');
 		ctx.fillStyle = grad;
 		ctx.fillRect(
@@ -377,31 +377,57 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 
 
 	ctx.fillStyle = Colors.bg[0] + 'ff';
-	ctx.beginPath();
 	for (const name of sticks) {
 		// Draw inner circle
 		let stick = Input.getOnscreenControl(name) as VirtualJoystick;
-		let box = stick.box;
+		let size = stick.size.x / 1.5;
+		let radius = size / 2;
+		let halfRadius = radius / 2;
+
+		let box = stick.box.clone();
+		box.x += radius / 2;
+		box.y += radius / 2;
+		box.width = size;
+		box.height = size;
+
+		box.x += (stick.value.x * halfRadius);
+		box.y += (stick.value.y * halfRadius);
+
 		let middle = box.getCenterMiddle();
-		let innerStickSize = stick.size.x / 1.5;
-		let innerStickPos = new Vec2(
-			middle.x + stick.value.x * innerStickSize / 4,
-			middle.y + stick.value.y * innerStickSize / 4,
-		);
-		let innerStickRadius = innerStickSize / 2;
-		ctx.moveTo(innerStickPos.x + innerStickRadius, innerStickPos.y);
+
+		let grad = ctx.createRadialGradient(
+			middle.x,
+			middle.y,
+			0,
+			middle.x,
+			middle.y,
+			box.width,
+		)
+		grad.addColorStop(0.25, Colors.bg[0] + '00');
+		grad.addColorStop(0.5, Colors.bg[0] + 'ff');
+		grad.addColorStop(0.51, Colors.bg[0] + '00');
+
+		ctx.beginPath();
 		ctx.ellipse(
-			innerStickPos.x,
-			innerStickPos.y,
-			innerStickRadius,
-			innerStickRadius,
-			0,
-			0,
-			10,
-		);
+			middle.x,
+			middle.y,
+			radius,
+			radius,
+			0, 0, 100
+		)
+		ctx.globalCompositeOperation = "destination-out";
+		ctx.fillStyle = "black";
+		ctx.fill();
+
+		ctx.globalCompositeOperation = "source-over";
+		ctx.fillStyle = grad;
+		ctx.fillRect(
+			box.x,
+			box.y,
+			box.width,
+			box.height,
+		)
 	}
-	ctx.fill();
-	ctx.restore();
 }
 
 function drawShadows(entries: Obj[]) {

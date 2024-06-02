@@ -249,26 +249,39 @@ function drawControls(ctx) {
         var middle = box.getCenterMiddle();
         var radius = stick.size.x / 2;
         var grad = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, radius);
-        grad.addColorStop(0.6, Colors_1["default"].bg[4] + 'ff');
+        grad.addColorStop(0.66, Colors_1["default"].bg[4] + 'ff');
         grad.addColorStop(1, Colors_1["default"].bg[4] + '00');
         ctx.fillStyle = grad;
         ctx.fillRect(box.x, box.y, box.width, box.height);
     }
     ctx.fillStyle = Colors_1["default"].bg[0] + 'ff';
-    ctx.beginPath();
     for (var _a = 0, sticks_2 = sticks; _a < sticks_2.length; _a++) {
         var name_2 = sticks_2[_a];
         var stick = Input_1["default"].getOnscreenControl(name_2);
-        var box = stick.box;
+        var size = stick.size.x / 1.5;
+        var radius = size / 2;
+        var halfRadius = radius / 2;
+        var box = stick.box.clone();
+        box.x += radius / 2;
+        box.y += radius / 2;
+        box.width = size;
+        box.height = size;
+        box.x += (stick.value.x * halfRadius);
+        box.y += (stick.value.y * halfRadius);
         var middle = box.getCenterMiddle();
-        var innerStickSize = stick.size.x / 1.5;
-        var innerStickPos = new Geo_1.Vec2(middle.x + stick.value.x * innerStickSize / 4, middle.y + stick.value.y * innerStickSize / 4);
-        var innerStickRadius = innerStickSize / 2;
-        ctx.moveTo(innerStickPos.x + innerStickRadius, innerStickPos.y);
-        ctx.ellipse(innerStickPos.x, innerStickPos.y, innerStickRadius, innerStickRadius, 0, 0, 10);
+        var grad = ctx.createRadialGradient(middle.x, middle.y, 0, middle.x, middle.y, box.width);
+        grad.addColorStop(0.25, Colors_1["default"].bg[0] + '00');
+        grad.addColorStop(0.5, Colors_1["default"].bg[0] + 'ff');
+        grad.addColorStop(0.51, Colors_1["default"].bg[0] + '00');
+        ctx.beginPath();
+        ctx.ellipse(middle.x, middle.y, radius, radius, 0, 0, 100);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = grad;
+        ctx.fillRect(box.x, box.y, box.width, box.height);
     }
-    ctx.fill();
-    ctx.restore();
 }
 function drawShadows(entries) {
     var cambox = Game_1["default"].camera.fromOrigin();
