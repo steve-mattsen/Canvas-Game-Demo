@@ -157,7 +157,7 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 		new Vec2(0, 0),
 	);
 	let colorKey = Number(Reflect.get(Vars, button.varKey));
-	ctx.fillStyle = Colors.bg[colorKey] + "88";
+	ctx.fillStyle = Colors.bg[colorKey] + "ff";
 	ctx.fillRect(
 		button.dimensions.x,
 		button.dimensions.y,

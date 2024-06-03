@@ -124,7 +124,7 @@ function drawButtons(ctx) {
     var margin = 5;
     button.dimensions = new Geo_1.Box(Vars_1["default"].canvasWidth - width - margin, margin, width, width, new Geo_1.Vec2(0, 0));
     var colorKey = Number(Reflect.get(Vars_1["default"], button.varKey));
-    ctx.fillStyle = Colors_1["default"].bg[colorKey] + "88";
+    ctx.fillStyle = Colors_1["default"].bg[colorKey] + "ff";
     ctx.fillRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
     ctx.strokeStyle = "black";
     ctx.strokeRect(button.dimensions.x, button.dimensions.y, button.dimensions.width, button.dimensions.height);
@@ -222,7 +222,7 @@ function drawDebugInfo(ctx) {
     }
 }
 function drawControls(ctx) {
-    var sticks = ['left_stick', 'right_stick'];
+    var sticks = Game_1["default"].mobile ? ['left_stick', 'right_stick'] : [];
     ctx.fillStyle = Colors_1["default"].bg[4] + '22';
     ctx.beginPath();
     for (var _i = 0, sticks_1 = sticks; _i < sticks_1.length; _i++) {
