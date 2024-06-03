@@ -19,5 +19,5 @@ canvas {
 
 #controls_canvas {
   mix-blend-mode: luminosity;
-  opacity: 0.35;
+  opacity: 0.25;
 }
