@@ -321,7 +321,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 }
 
 function drawControls(ctx: CanvasRenderingContext2D) {
-	let sticks = ['left_stick', 'right_stick'];
+	let sticks = Game.mobile ? ['left_stick', 'right_stick'] : [];
 
 	ctx.fillStyle = Colors.bg[4] + '22';
 	ctx.beginPath();
