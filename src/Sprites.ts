@@ -1,3 +1,4 @@
+import Game from "./Game";
 import { vec, Vec2, Box } from "./Geo";
 
 export class Img {
@@ -142,6 +143,17 @@ export class Sprite {
 			// 100, 100
 		);
 	};
+	toBackdrop() {
+		let canvas = document.getElementById('background_canvas') as HTMLCanvasElement;
+
+		let imgSize = new Vec2(
+			this.image.size.x * Game.camera.zoom,
+			this.image.size.y * Game.camera.zoom,
+		)
+
+		canvas.setAttribute('style', `background-size: ${imgSize.x}px ${imgSize.y}px;`);
+		return this;
+	}
 }
 
 export function sprt(imgId: string): Sprite {

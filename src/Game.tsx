@@ -7,6 +7,7 @@ import VirtualJoystick from "./VirtualJoystick";
 import Input from "./Input";
 import buildWorld from "./World";
 import { Camera } from "./Camera";
+import { Sprite } from "./Sprites";
 
 export default class Game {
 	static tickCount = 0;
@@ -14,6 +15,7 @@ export default class Game {
 	static thread: NodeJS.Timeout;
 	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
 	static screen = new Box(0, 0, window.innerWidth, window.innerHeight);
+	static backdrop: Sprite;
 	static init() {
 		Game.camera.x = Game.camera.width / 2;
 		Game.camera.y = Game.camera.height / 2;

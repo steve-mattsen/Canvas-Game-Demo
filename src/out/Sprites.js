@@ -46,6 +46,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 exports.__esModule = true;
 exports.sprt = exports.Sprite = exports.SpriteSheet = exports.Animation = exports.Img = void 0;
+var Game_1 = require("./Game");
 var Geo_1 = require("./Geo");
 var Img = (function () {
     function Img(id, uri) {
@@ -182,6 +183,12 @@ var Sprite = (function () {
         ctx.drawImage(this.image.element, this.drawBox.x, this.drawBox.y, this.drawBox.width, this.drawBox.height, 0, 0, this.image.size.x, this.image.size.y);
     }
     ;
+    Sprite.prototype.toBackdrop = function () {
+        var canvas = document.getElementById('background_canvas');
+        var imgSize = new Geo_1.Vec2(this.image.size.x * Game_1["default"].camera.zoom, this.image.size.y * Game_1["default"].camera.zoom);
+        canvas.setAttribute('style', "background-size: ".concat(imgSize.x, "px ").concat(imgSize.y, "px;"));
+        return this;
+    };
     return Sprite;
 }());
 exports.Sprite = Sprite;

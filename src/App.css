@@ -21,3 +21,7 @@ canvas {
   mix-blend-mode: luminosity;
   opacity: 0.25;
 }
+
+#background_canvas {
+  background-image: url("/public/grass.png");
+}

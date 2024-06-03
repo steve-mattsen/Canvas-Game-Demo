@@ -23,6 +23,7 @@ export function onWindowResize() {
 	for (const input of Object.values(Input.onscreenControls)) {
 		input.attach();
 	}
+	Game.backdrop = sprt('grass').toBackdrop();
 	Vars.showBackground = true;
 }
 window.onresize = onWindowResize;
@@ -184,43 +185,18 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 
 function drawBackground() {
 	let canvas = document.getElementById('background_canvas') as HTMLCanvasElement;
-	if (canvas.getContext === undefined) {
-		return;
-	}
-	let ctx = canvas.getContext('2d');
-	if (ctx === null) {
-		return;
-	}
-	let img = Img.store['grass'];
-	if (!img?.size?.x || !img?.size?.y) {
-		return;
-	}
+	let backdrop = Game.backdrop;
 
-	let cambox = Game.camera.fromOrigin();
+	let imgSize = {
+		x: backdrop.image.size.x * Game.camera.zoom,
+		y: backdrop.image.size.y * Game.camera.zoom,
+	};
 
-	let imgSize = new Vec2(
-		img.size.x * Game.camera.zoom,
-		img.size.y * Game.camera.zoom,
-	)
-
-	let xoffset = (cambox.x * Game.camera.zoom) % imgSize.x;
-	let yoffset = (cambox.y * Game.camera.zoom) % imgSize.y;
-
-	let backgroundRows = Math.ceil(cambox.width / img.size.x);
-	let backgroundCols = Math.ceil(cambox.height / img.size.y);
-
-	ctx.imageSmoothingEnabled = false;
-	for (let i = -1; i <= backgroundRows; i++) {
-		for (let j = -1; j <= backgroundCols; j++) {
-			ctx.drawImage(
-				img.element,
-				i * imgSize.x - xoffset,
-				j * imgSize.y - yoffset,
-				imgSize.x,
-				imgSize.y
-			)
-		}
-	}
+	canvas.setAttribute('style', `
+		background-size: ${imgSize.x}px ${imgSize.y}px;
+		background-position-x: ${-Game.camera.x * Game.camera.zoom}px;
+		background-position-y: ${-Game.camera.y * Game.camera.zoom}px;
+	`);
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {

@@ -26,6 +26,7 @@ function onWindowResize() {
         var input = _b[_a];
         input.attach();
     }
+    Game_1["default"].backdrop = (0, Sprites_1.sprt)('grass').toBackdrop();
     Vars_1["default"].showBackground = true;
 }
 exports.onWindowResize = onWindowResize;
@@ -134,31 +135,13 @@ function drawButtons(ctx) {
     ctx.fillText("\u2921", button.dimensions.x + width / 2 - margin / 2, margin * 2 + button.dimensions.height / 2, width);
 }
 function drawBackground() {
-    var _a, _b;
     var canvas = document.getElementById('background_canvas');
-    if (canvas.getContext === undefined) {
-        return;
-    }
-    var ctx = canvas.getContext('2d');
-    if (ctx === null) {
-        return;
-    }
-    var img = Sprites_1.Img.store['grass'];
-    if (!((_a = img === null || img === void 0 ? void 0 : img.size) === null || _a === void 0 ? void 0 : _a.x) || !((_b = img === null || img === void 0 ? void 0 : img.size) === null || _b === void 0 ? void 0 : _b.y)) {
-        return;
-    }
-    var cambox = Game_1["default"].camera.fromOrigin();
-    var imgSize = new Geo_1.Vec2(img.size.x * Game_1["default"].camera.zoom, img.size.y * Game_1["default"].camera.zoom);
-    var xoffset = (cambox.x * Game_1["default"].camera.zoom) % imgSize.x;
-    var yoffset = (cambox.y * Game_1["default"].camera.zoom) % imgSize.y;
-    var backgroundRows = Math.ceil(cambox.width / img.size.x);
-    var backgroundCols = Math.ceil(cambox.height / img.size.y);
-    ctx.imageSmoothingEnabled = false;
-    for (var i = -1; i <= backgroundRows; i++) {
-        for (var j = -1; j <= backgroundCols; j++) {
-            ctx.drawImage(img.element, i * imgSize.x - xoffset, j * imgSize.y - yoffset, imgSize.x, imgSize.y);
-        }
-    }
+    var backdrop = Game_1["default"].backdrop;
+    var imgSize = {
+        x: backdrop.image.size.x * Game_1["default"].camera.zoom,
+        y: backdrop.image.size.y * Game_1["default"].camera.zoom
+    };
+    canvas.setAttribute('style', "\n\t\tbackground-size: ".concat(imgSize.x, "px ").concat(imgSize.y, "px;\n\t\tbackground-position-x: ").concat(-Game_1["default"].camera.x * Game_1["default"].camera.zoom, "px;\n\t\tbackground-position-y: ").concat(-Game_1["default"].camera.y * Game_1["default"].camera.zoom, "px;\n\t"));
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }
