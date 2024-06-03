@@ -145,7 +145,7 @@ var Game = (function () {
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();
-    Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
+    Game.camera = new Camera_1.Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 4);
     Game.screen = new Geo_1.Box(0, 0, window.innerWidth, window.innerHeight);
     return Game;
 }());

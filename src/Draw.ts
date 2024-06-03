@@ -85,8 +85,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 
 	let cambox = Game.camera.fromOrigin();
 
-	let fontSize = 4;
-	ctx.font = `${fontSize}px Courier`;
+	let fontSize = 5;
+	ctx.font = `bold ${fontSize}px Courier`;
 
 	if (Vars.displayMode > 1) {
 		drawShadows(entries);
@@ -240,7 +240,7 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	let fontSize = 4;
 	ctx.textAlign = "left";
-	ctx.font = `${fontSize}px Courier`;
+	ctx.font = `bold ${fontSize}px Courier`;
 
 	// Fill the top left box.
 	ctx.fillStyle = Colors.bg[0] + '88';
@@ -302,13 +302,13 @@ function drawDebugInfo(ctx: CanvasRenderingContext2D) {
 			ctx.fillStyle = Colors.fg[0];
 			ctx.textBaseline = "top";
 			ctx.fillText(
-				`x:${Math.round(obj.pos.x)}`,
+				`${Math.round(obj.pos.x)}`,
 				hb.x,
 				hb.y,
 				hb.width,
 			);
 			ctx.fillText(
-				`y:${Math.round(obj.pos.y)}`,
+				`${Math.round(obj.pos.y)}`,
 				hb.x,
 				hb.y + fontSize,
 				hb.width,

@@ -68,8 +68,8 @@ exports["default"] = draw;
 function drawObjects(ctx) {
     var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
     var cambox = Game_1["default"].camera.fromOrigin();
-    var fontSize = 4;
-    ctx.font = "".concat(fontSize, "px Courier");
+    var fontSize = 5;
+    ctx.font = "bold ".concat(fontSize, "px Courier");
     if (Vars_1["default"].displayMode > 1) {
         drawShadows(entries);
         for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
@@ -179,7 +179,7 @@ function drawDebugInfo(ctx) {
     ctx.save();
     var fontSize = 4;
     ctx.textAlign = "left";
-    ctx.font = "".concat(fontSize, "px Courier");
+    ctx.font = "bold ".concat(fontSize, "px Courier");
     ctx.fillStyle = Colors_1["default"].bg[0] + '88';
     ctx.fillRect(0, 0, 50, fontSize * 4);
     ctx.fillStyle = Colors_1["default"].fg[0];
@@ -214,8 +214,8 @@ function drawDebugInfo(ctx) {
             drawBoxOutline(ctx, hb);
             ctx.fillStyle = Colors_1["default"].fg[0];
             ctx.textBaseline = "top";
-            ctx.fillText("x:".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
-            ctx.fillText("y:".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
+            ctx.fillText("".concat(Math.round(obj.pos.x)), hb.x, hb.y, hb.width);
+            ctx.fillText("".concat(Math.round(obj.pos.y)), hb.x, hb.y + fontSize, hb.width);
         }
         drawMarker(ctx, obj.pos.x - cambox.x, obj.pos.y - cambox.y);
         ctx.restore();
