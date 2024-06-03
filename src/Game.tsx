@@ -13,7 +13,7 @@ export default class Game {
 	static tickCount = 0;
 	static startTime = Date.now();
 	static thread: NodeJS.Timeout;
-	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 3);
+	static camera = new Camera(0, 0, 0, 0, { x: 'center', y: 'middle' }, 4);
 	static screen = new Box(0, 0, window.innerWidth, window.innerHeight);
 	static backdrop: Sprite;
 	static init() {
