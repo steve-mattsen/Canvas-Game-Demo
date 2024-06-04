@@ -19,6 +19,7 @@ class App extends React.Component {
       '/shadow.png',
       '/tree.png',
       '/bush.png',
+      '/tiger.png',
     ];
 
     await Img.preloadImages(images);

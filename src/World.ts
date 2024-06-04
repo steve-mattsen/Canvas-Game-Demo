@@ -81,6 +81,8 @@ export default function buildWorld() {
 		anims
 	);
 	Obj.addObj(player);
+
+	genTiger();
 }
 
 function randomizeLayout() {
@@ -100,4 +102,34 @@ function randomizeLayout() {
 		obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
 		i++;
 	}
+}
+
+function genTiger() {
+	let ss = new SpriteSheet('tiger', 8, 12);
+	let anims: { [id: string]: Animation } = {};
+
+	let idleFrames = [1];
+	anims.idle_down = ss.getAnim([0], idleFrames);
+	anims.idle_left = ss.getAnim([1], idleFrames);
+	anims.idle_right = ss.getAnim([2], idleFrames);
+	anims.idle_up = ss.getAnim([3], [0]);
+
+	let walkFrames = [0, 1, 2, 1];
+	anims.run_down = ss.getAnim([0], idleFrames);
+	anims.run_left = ss.getAnim([1], idleFrames);
+	anims.run_right = ss.getAnim([2], idleFrames);
+	anims.run_up = ss.getAnim([3], [0]);
+
+
+	const tiger = new Obj(
+		'tiger',
+		vec(
+			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom) + 50,
+			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,
+		),
+		anims.idle_down.sprites[0],
+		new Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }),
+		anims
+	);
+	Obj.addObj(tiger);
 }
