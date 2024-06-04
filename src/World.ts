@@ -129,7 +129,7 @@ function genTiger() {
 			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,
 		),
 		anims.idle_down.sprites[0],
-		new Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }),
+		new Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }),
 		anims
 	);
 	Obj.addObj(tiger);
@@ -158,7 +158,7 @@ function genLion() {
 			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,
 		),
 		anims.idle_down.sprites[0],
-		new Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }),
+		new Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }),
 		anims
 	);
 	Obj.addObj(lion);

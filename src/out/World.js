@@ -89,7 +89,7 @@ function genTiger() {
     anims.run_left = ss.getAnim([1], idleFrames);
     anims.run_right = ss.getAnim([2], idleFrames);
     anims.run_up = ss.getAnim([3], [0]);
-    var tiger = new Obj_1.Obj('tiger', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) + 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
+    var tiger = new Obj_1.Obj('tiger', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) + 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(tiger);
 }
 function genLion() {
@@ -105,7 +105,7 @@ function genLion() {
     anims.run_left = ss.getAnim([1], idleFrames);
     anims.run_right = ss.getAnim([2], idleFrames);
     anims.run_up = ss.getAnim([3], [0]);
-    var lion = new Obj_1.Obj('lion', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
+    var lion = new Obj_1.Obj('lion', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(lion);
 }
 //# sourceMappingURL=World.js.map
