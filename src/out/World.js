@@ -40,7 +40,7 @@ function buildWorld() {
     anims.run_down.sprites[7].duration = lungeDuration;
     anims.run_up.sprites[2].duration = lungeDuration;
     anims.run_up.sprites[7].duration = lungeDuration;
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
         var tree_sprite = (0, Sprites_1.sprt)('tree');
         var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + tree_sprite.image.size.y / 2)), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, { x: 'center', y: 'bottom' }));
         Obj_1.Obj.addObj(tree);
@@ -64,15 +64,15 @@ function randomizeLayout() {
     var colWidth = Math.floor(Game_1["default"].camera.width / cols);
     var rows = Math.floor(entries.length / cols);
     var rowHeight = Math.floor((Game_1["default"].camera.height * .9) / rows);
-    var randomOffset = 25;
+    var randomOffset = .6;
     var i = 0;
     for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
         var obj = entries_1[_i];
         obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
-        obj.pos.x += (Math.random() * randomOffset) - randomOffset;
+        obj.pos.x += (Math.random() * colWidth * randomOffset) - randomOffset * colWidth;
         obj.pos.y = Game_1["default"].camera.height * .25;
         obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
-        obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
+        obj.pos.y += ((Math.random() * rowHeight * randomOffset) - randomOffset) * 2;
         i++;
     }
 }

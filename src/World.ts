@@ -36,7 +36,7 @@ export default function buildWorld() {
 	anims.run_up.sprites[2].duration = lungeDuration;
 	anims.run_up.sprites[7].duration = lungeDuration;
 
-	for (let i = 0; i < 10; i++) {
+	for (let i = 0; i < 5; i++) {
 		const tree_sprite = sprt('tree');
 		const tree = new Obj(
 			'tree' + i,
@@ -93,14 +93,14 @@ function randomizeLayout() {
 	let colWidth = Math.floor(Game.camera.width / cols);
 	let rows = Math.floor(entries.length / cols);
 	let rowHeight = Math.floor((Game.camera.height * .9) / rows);
-	let randomOffset = 25;
+	let randomOffset = .6;
 	let i = 0;
 	for (const obj of entries) {
 		obj.pos.x = (i % cols) * colWidth + (colWidth * .5);
-		obj.pos.x += (Math.random() * randomOffset) - randomOffset;
+		obj.pos.x += (Math.random() * colWidth * randomOffset) - randomOffset * colWidth;
 		obj.pos.y = Game.camera.height * .25;
 		obj.pos.y += Math.floor(i / cols) * rowHeight + (rowHeight * .5);
-		obj.pos.y += ((Math.random() * randomOffset) - randomOffset) * 2;
+		obj.pos.y += ((Math.random() * rowHeight * randomOffset) - randomOffset) * 2;
 		i++;
 	}
 }
