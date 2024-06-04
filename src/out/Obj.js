@@ -10,6 +10,8 @@ var Obj = (function () {
         this.animState = 'idle_down';
         this.z = 0;
         this.zVelocity = 0;
+        this.currentMoveLength = 0;
+        this.currentMove = new Geo_1.Vec2(0, 0);
         this.id = id !== null && id !== void 0 ? id : this.id;
         if (typeof spr === 'string') {
             var imgId = spr;
@@ -36,6 +38,38 @@ var Obj = (function () {
     };
     Obj.prototype.calcHitBox = function () {
         return this.hitBox.fromPoint(this.pos).fromOrigin();
+    };
+    Obj.prototype.act = function () {
+        if (this.id != 'tiger' && this.id != 'lion') {
+            return;
+        }
+        if (this.currentMoveLength > 0) {
+            this.pos.x += this.currentMove.x;
+            this.pos.y += this.currentMove.y;
+            this.currentMoveLength--;
+        }
+        if (Math.random() > 0.01) {
+            return;
+        }
+        this.currentMove = new Geo_1.Vec2((Math.random() * 2) - 1, (Math.random() * 2) - 1);
+        if (Math.abs(this.currentMove.x) >= Math.abs(this.currentMove.y)) {
+            if (this.currentMove.x > 0) {
+                this.animState = "run_right";
+            }
+            else {
+                this.animState = "run_left";
+            }
+        }
+        else {
+            if (this.currentMove.y > 0) {
+                this.animState = "run_down";
+            }
+            else {
+                this.animState = "run_up";
+            }
+        }
+        this.currentMoveLength = Math.random() * 120;
+        return;
     };
     Obj.addObj = function (obj) {
         Obj.store[obj.id] = obj;

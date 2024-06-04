@@ -148,7 +148,14 @@ var Game = (function () {
             Game.camera.x = plyr.pos.x;
             Game.camera.y = plyr.pos.y;
         }
+        Game.tickNPCs();
         requestAnimationFrame(Draw_1["default"]);
+    };
+    Game.tickNPCs = function () {
+        for (var _i = 0, _a = Object.values(Obj_1.Obj.store); _i < _a.length; _i++) {
+            var o = _a[_i];
+            o.act();
+        }
     };
     Game.tickCount = 0;
     Game.startTime = Date.now();

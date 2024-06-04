@@ -167,6 +167,14 @@ export default class Game {
 			Game.camera.y = plyr.pos.y;
 		}
 
+		Game.tickNPCs();
+
 		requestAnimationFrame(draw);
+	}
+
+	static tickNPCs() {
+		for (const o of Object.values(Obj.store)) {
+			o.act();
+		}
 	}
 }

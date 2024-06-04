@@ -1,3 +1,4 @@
+import Game from "./Game";
 import { vec, Vec2, Box } from "./Geo";
 import { Sprite, Animation, sprt } from "./Sprites";
 export class Obj {
@@ -10,6 +11,8 @@ export class Obj {
 	animState: string = 'idle_down';
 	z = 0;
 	zVelocity = 0;
+	currentMoveLength = 0;
+	currentMove = new Vec2(0, 0);
 	constructor(
 		id: string,
 		pos: Vec2,
@@ -41,6 +44,37 @@ export class Obj {
 	}
 	calcHitBox() {
 		return this.hitBox.fromPoint(this.pos).fromOrigin();
+	}
+	act() {
+		if (this.id != 'tiger' && this.id != 'lion') {
+			return;
+		}
+		if (this.currentMoveLength > 0) {
+			this.pos.x += this.currentMove.x;
+			this.pos.y += this.currentMove.y;
+			this.currentMoveLength--;
+		}
+		if (Math.random() > 0.01) {
+			return;
+		}
+		this.currentMove = new Vec2(
+			(Math.random() * 2) - 1,
+			(Math.random() * 2) - 1);
+		if (Math.abs(this.currentMove.x) >= Math.abs(this.currentMove.y)) {
+			if (this.currentMove.x > 0) {
+				this.animState = "run_right";
+			} else {
+				this.animState = "run_left";
+			}
+		} else {
+			if (this.currentMove.y > 0) {
+				this.animState = "run_down";
+			} else {
+				this.animState = "run_up";
+			}
+		}
+		this.currentMoveLength = Math.random() * 120;
+		return;
 	}
 	static store: { [id: string]: Obj } = {};
 	static addObj(obj: Obj) {

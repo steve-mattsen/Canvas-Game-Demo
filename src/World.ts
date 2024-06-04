@@ -132,6 +132,11 @@ function genTiger() {
 		new Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }),
 		anims
 	);
+	// tiger.setActFn(() => {
+	// 	// self.pos.x += 1;
+	// 	// this.pox.y += 1;
+	// 	console.log(this);
+	// });
 	Obj.addObj(tiger);
 }
 
