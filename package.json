@@ -42,5 +42,8 @@
       "**/__tests__/**/*.ts?(x)",
       "**/?(*.)+(spec|test).ts?(x)"
     ]
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.8"
   }
 }
