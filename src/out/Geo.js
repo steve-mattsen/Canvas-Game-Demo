@@ -221,6 +221,11 @@ var Box = (function () {
     Box.prototype.getOrigin = function () {
         return this.getPointLocal(this.origin.x, this.origin.y);
     };
+    Box.prototype.turn = function () {
+        var temp = this.width;
+        this.width = this.height;
+        this.height = temp;
+    };
     return Box;
 }());
 exports.Box = Box;

@@ -261,6 +261,11 @@ export class Box {
 	getOrigin() {
 		return this.getPointLocal(this.origin.x, this.origin.y);
 	}
+	turn() {
+		let temp = this.width;
+		this.width = this.height;
+		this.height = temp;
+	}
 	// attachToBox(target: Box, attachment: attachmentLocation) {
 	// 	let targetCenterMiddle = target.getCenterMiddle();
 	// 	switch (attachment.x) {
