@@ -4,6 +4,7 @@ import { Obj } from "./Obj"
 import { vec, Box } from "./Geo"
 import Vars from "./Vars";
 import Game from "./Game";
+import { v4 as uuid } from 'uuid';
 
 export default function buildWorld() {
 	let ss = new SpriteSheet('spritesheet_link', 8, 10);
@@ -82,8 +83,10 @@ export default function buildWorld() {
 	);
 	Obj.addObj(player);
 
-	genTiger();
-	genLion();
+	for (let i = 0; i < 1; i++) {
+		genTiger();
+		genLion();
+	}
 }
 
 function randomizeLayout() {
@@ -123,7 +126,7 @@ function genTiger() {
 
 
 	const tiger = new Obj(
-		'tiger',
+		'tiger' + uuid(),
 		vec(
 			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom) + 50,
 			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,
@@ -152,7 +155,7 @@ function genLion() {
 	anims.run_up = ss.getAnim([3], walkFrames);
 
 	const lion = new Obj(
-		'lion',
+		'lion' + uuid(),
 		vec(
 			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom) - 50,
 			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,

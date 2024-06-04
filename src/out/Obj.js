@@ -40,7 +40,7 @@ var Obj = (function () {
         return this.hitBox.fromPoint(this.pos).fromOrigin();
     };
     Obj.prototype.act = function () {
-        if (this.id != 'tiger' && this.id != 'lion') {
+        if (!this.id.match(/(lion|tiger)/)) {
             return;
         }
         this.tickAnimFrame();
