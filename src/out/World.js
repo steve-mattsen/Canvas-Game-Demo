@@ -54,6 +54,7 @@ function buildWorld() {
     var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(player);
     genTiger();
+    genLion();
 }
 exports["default"] = buildWorld;
 function randomizeLayout() {
@@ -90,5 +91,21 @@ function genTiger() {
     anims.run_up = ss.getAnim([3], [0]);
     var tiger = new Obj_1.Obj('tiger', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) + 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(tiger);
+}
+function genLion() {
+    var ss = new Sprites_1.SpriteSheet('lion', 8, 12);
+    var anims = {};
+    var idleFrames = [1];
+    anims.idle_down = ss.getAnim([0], idleFrames);
+    anims.idle_left = ss.getAnim([1], idleFrames);
+    anims.idle_right = ss.getAnim([2], idleFrames);
+    anims.idle_up = ss.getAnim([3], [0]);
+    var walkFrames = [0, 1, 2, 1];
+    anims.run_down = ss.getAnim([0], idleFrames);
+    anims.run_left = ss.getAnim([1], idleFrames);
+    anims.run_right = ss.getAnim([2], idleFrames);
+    anims.run_up = ss.getAnim([3], [0]);
+    var lion = new Obj_1.Obj('lion', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
+    Obj_1.Obj.addObj(lion);
 }
 //# sourceMappingURL=World.js.map
