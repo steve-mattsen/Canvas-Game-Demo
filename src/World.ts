@@ -106,20 +106,20 @@ function randomizeLayout() {
 }
 
 function genTiger() {
-	let ss = new SpriteSheet('tiger', 8, 12);
+	let ss = new SpriteSheet('tiger', 8, 12, 6);
 	let anims: { [id: string]: Animation } = {};
 
 	let idleFrames = [1];
 	anims.idle_down = ss.getAnim([0], idleFrames);
 	anims.idle_left = ss.getAnim([1], idleFrames);
 	anims.idle_right = ss.getAnim([2], idleFrames);
-	anims.idle_up = ss.getAnim([3], [0]);
+	anims.idle_up = ss.getAnim([3], idleFrames);
 
 	let walkFrames = [0, 1, 2, 1];
-	anims.run_down = ss.getAnim([0], idleFrames);
-	anims.run_left = ss.getAnim([1], idleFrames);
-	anims.run_right = ss.getAnim([2], idleFrames);
-	anims.run_up = ss.getAnim([3], [0]);
+	anims.run_down = ss.getAnim([0], walkFrames);
+	anims.run_left = ss.getAnim([1], walkFrames);
+	anims.run_right = ss.getAnim([2], walkFrames);
+	anims.run_up = ss.getAnim([3], walkFrames);
 
 
 	const tiger = new Obj(
@@ -132,29 +132,24 @@ function genTiger() {
 		new Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }),
 		anims
 	);
-	// tiger.setActFn(() => {
-	// 	// self.pos.x += 1;
-	// 	// this.pox.y += 1;
-	// 	console.log(this);
-	// });
 	Obj.addObj(tiger);
 }
 
 function genLion() {
-	let ss = new SpriteSheet('lion', 8, 12);
+	let ss = new SpriteSheet('lion', 8, 12, 6);
 	let anims: { [id: string]: Animation } = {};
 
 	let idleFrames = [1];
 	anims.idle_down = ss.getAnim([0], idleFrames);
 	anims.idle_left = ss.getAnim([1], idleFrames);
 	anims.idle_right = ss.getAnim([2], idleFrames);
-	anims.idle_up = ss.getAnim([3], [0]);
+	anims.idle_up = ss.getAnim([3], idleFrames);
 
 	let walkFrames = [0, 1, 2, 1];
-	anims.run_down = ss.getAnim([0], idleFrames);
-	anims.run_left = ss.getAnim([1], idleFrames);
-	anims.run_right = ss.getAnim([2], idleFrames);
-	anims.run_up = ss.getAnim([3], [0]);
+	anims.run_down = ss.getAnim([0], walkFrames);
+	anims.run_left = ss.getAnim([1], walkFrames);
+	anims.run_right = ss.getAnim([2], walkFrames);
+	anims.run_up = ss.getAnim([3], walkFrames);
 
 	const lion = new Obj(
 		'lion',

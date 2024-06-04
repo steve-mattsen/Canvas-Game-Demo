@@ -43,10 +43,15 @@ var Obj = (function () {
         if (this.id != 'tiger' && this.id != 'lion') {
             return;
         }
+        this.tickAnimFrame();
+        console.log(this.animations[this.animState].tick);
         if (this.currentMoveLength > 0) {
             this.pos.x += this.currentMove.x;
             this.pos.y += this.currentMove.y;
             this.currentMoveLength--;
+            if (this.currentMoveLength <= 0) {
+                this.animState = this.animState.replace('run', 'idle');
+            }
         }
         if (Math.random() > 0.01) {
             return;

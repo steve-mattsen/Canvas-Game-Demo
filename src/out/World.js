@@ -77,34 +77,34 @@ function randomizeLayout() {
     }
 }
 function genTiger() {
-    var ss = new Sprites_1.SpriteSheet('tiger', 8, 12);
+    var ss = new Sprites_1.SpriteSheet('tiger', 8, 12, 6);
     var anims = {};
     var idleFrames = [1];
     anims.idle_down = ss.getAnim([0], idleFrames);
     anims.idle_left = ss.getAnim([1], idleFrames);
     anims.idle_right = ss.getAnim([2], idleFrames);
-    anims.idle_up = ss.getAnim([3], [0]);
+    anims.idle_up = ss.getAnim([3], idleFrames);
     var walkFrames = [0, 1, 2, 1];
-    anims.run_down = ss.getAnim([0], idleFrames);
-    anims.run_left = ss.getAnim([1], idleFrames);
-    anims.run_right = ss.getAnim([2], idleFrames);
-    anims.run_up = ss.getAnim([3], [0]);
+    anims.run_down = ss.getAnim([0], walkFrames);
+    anims.run_left = ss.getAnim([1], walkFrames);
+    anims.run_right = ss.getAnim([2], walkFrames);
+    anims.run_up = ss.getAnim([3], walkFrames);
     var tiger = new Obj_1.Obj('tiger', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) + 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(tiger);
 }
 function genLion() {
-    var ss = new Sprites_1.SpriteSheet('lion', 8, 12);
+    var ss = new Sprites_1.SpriteSheet('lion', 8, 12, 6);
     var anims = {};
     var idleFrames = [1];
     anims.idle_down = ss.getAnim([0], idleFrames);
     anims.idle_left = ss.getAnim([1], idleFrames);
     anims.idle_right = ss.getAnim([2], idleFrames);
-    anims.idle_up = ss.getAnim([3], [0]);
+    anims.idle_up = ss.getAnim([3], idleFrames);
     var walkFrames = [0, 1, 2, 1];
-    anims.run_down = ss.getAnim([0], idleFrames);
-    anims.run_left = ss.getAnim([1], idleFrames);
-    anims.run_right = ss.getAnim([2], idleFrames);
-    anims.run_up = ss.getAnim([3], [0]);
+    anims.run_down = ss.getAnim([0], walkFrames);
+    anims.run_left = ss.getAnim([1], walkFrames);
+    anims.run_right = ss.getAnim([2], walkFrames);
+    anims.run_up = ss.getAnim([3], walkFrames);
     var lion = new Obj_1.Obj('lion', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(lion);
 }
