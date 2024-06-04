@@ -51,7 +51,6 @@ export class Obj {
 		}
 
 		this.tickAnimFrame();
-		console.log(this.animations[this.animState].tick);
 		if (this.currentMoveLength > 0) {
 			this.pos.x += this.currentMove.x;
 			this.pos.y += this.currentMove.y;
@@ -59,8 +58,9 @@ export class Obj {
 			if (this.currentMoveLength <= 0) {
 				this.animState = this.animState.replace('run', 'idle');
 			}
+			return;
 		}
-		if (Math.random() > 0.01) {
+		if (Math.random() > 0.005) {
 			return;
 		}
 		let move = new Vec2(
