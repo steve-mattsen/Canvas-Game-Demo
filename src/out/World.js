@@ -47,22 +47,45 @@ function buildWorld() {
         Obj_1.Obj.addObj(tree);
     }
     for (var i = 0; i < 50; i++) {
-        var bush_sprite = (0, Sprites_1.sprt)('bush');
-        var bush = new Obj_1.Obj('bush' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + bush_sprite.image.size.y / 2)), bush_sprite);
-        Obj_1.Obj.addObj(bush);
+        var corn_sprite = (0, Sprites_1.sprt)('corn');
+        var corn = new Obj_1.Obj('corn' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + corn_sprite.image.size.y / 2)), corn_sprite);
+        Obj_1.Obj.addObj(corn);
     }
+    genBushes(10);
     randomizeLayout();
     var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(player);
     for (var i = 0; i < 1; i++) {
         genTiger();
+        genTiger();
         genLion();
     }
 }
 exports["default"] = buildWorld;
+function genBushes(count) {
+    var ss = new Sprites_1.SpriteSheet('bushes', 3, 5);
+    var anim = ss.getAnim([0], [1]);
+    for (var i = 0; i < count; i++) {
+        var bush = new Obj_1.Obj('bush' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anim.sprites[0]);
+        Obj_1.Obj.addObj(bush);
+    }
+    anim = ss.getAnim([0], [3]);
+    for (var i = 0; i < count; i++) {
+        var bush = new Obj_1.Obj('bush' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anim.sprites[0]);
+        Obj_1.Obj.addObj(bush);
+    }
+}
 function randomizeLayout() {
+    var _a;
     var entries = Object.values(Obj_1.Obj.store);
-    entries.sort(function (a, b) { return Math.random() - Math.random(); });
+    var currentIndex = entries.length;
+    while (currentIndex != 0) {
+        var randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        _a = [
+            entries[randomIndex], entries[currentIndex]
+        ], entries[currentIndex] = _a[0], entries[randomIndex] = _a[1];
+    }
     var cols = Math.floor(Math.sqrt(entries.length));
     var colWidth = Math.floor(Game_1["default"].camera.width / cols);
     var rows = Math.floor(entries.length / cols);
@@ -82,12 +105,12 @@ function randomizeLayout() {
 function genTiger() {
     var ss = new Sprites_1.SpriteSheet('tiger', 8, 12, 6);
     var anims = {};
-    var idleFrames = [1];
+    var idleFrames = [10];
     anims.idle_down = ss.getAnim([0], idleFrames);
     anims.idle_left = ss.getAnim([1], idleFrames);
     anims.idle_right = ss.getAnim([2], idleFrames);
     anims.idle_up = ss.getAnim([3], idleFrames);
-    var walkFrames = [0, 1, 2, 1];
+    var walkFrames = [9, 10, 11, 10];
     anims.run_down = ss.getAnim([0], walkFrames);
     anims.run_left = ss.getAnim([1], walkFrames);
     anims.run_right = ss.getAnim([2], walkFrames);

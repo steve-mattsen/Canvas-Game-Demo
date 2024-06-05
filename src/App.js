@@ -3,7 +3,6 @@ import "./App.css";
 import { Img } from "./Sprites";
 import Game from "./Game";
 
-
 class App extends React.Component {
 
   static alreadyMounted = false;
@@ -18,9 +17,10 @@ class App extends React.Component {
       '/spritesheet_link.png',
       '/shadow.png',
       '/tree.png',
-      '/bush.png',
+      '/corn.png',
       '/tiger.png',
       '/lion.png',
+      '/bushes.png',
     ];
 
     await Img.preloadImages(images);

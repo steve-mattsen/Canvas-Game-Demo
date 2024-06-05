@@ -58,18 +58,22 @@ export default function buildWorld() {
 	}
 
 	for (let i = 0; i < 50; i++) {
-		const bush_sprite = sprt('bush');
-		const bush = new Obj(
-			'bush' + i,
+		const corn_sprite = sprt('corn');
+		const corn = new Obj(
+			'corn' + i,
 			vec(
 				Math.floor((Math.random() * Game.camera.width)),
-				Math.floor((Math.random() * Game.camera.height) + bush_sprite.image.size.y / 2),
+				Math.floor((Math.random() * Game.camera.height) + corn_sprite.image.size.y / 2),
 			),
-			bush_sprite,
+			corn_sprite,
 		)
-		Obj.addObj(bush);
+		Obj.addObj(corn);
 	}
+
+	genBushes(10);
+
 	randomizeLayout();
+
 
 	const player = new Obj(
 		'player',
@@ -85,13 +89,55 @@ export default function buildWorld() {
 
 	for (let i = 0; i < 1; i++) {
 		genTiger();
+		genTiger();
 		genLion();
 	}
 }
 
+function genBushes(count: number) {
+	let ss = new SpriteSheet('bushes', 3, 5);
+	let anim = ss.getAnim([0], [1]);
+
+	for (let i = 0; i < count; i++) {
+		const bush = new Obj(
+			'bush' + uuid(),
+			vec(
+				(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom),
+				(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom),
+			),
+			anim.sprites[0],
+		);
+		Obj.addObj(bush);
+	}
+
+	anim = ss.getAnim([0], [3]);
+	for (let i = 0; i < count; i++) {
+		const bush = new Obj(
+			'bush' + uuid(),
+			vec(
+				(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom),
+				(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom),
+			),
+			anim.sprites[0],
+		);
+		Obj.addObj(bush);
+	}
+
+}
+
 function randomizeLayout() {
 	let entries = Object.values(Obj.store);
-	entries.sort((a, b) => Math.random() - Math.random());
+	let currentIndex = entries.length;
+
+	while (currentIndex != 0) {
+
+		let randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+
+		[entries[currentIndex], entries[randomIndex]] = [
+			entries[randomIndex], entries[currentIndex]];
+	}
+
 	let cols = Math.floor(Math.sqrt(entries.length));
 	let colWidth = Math.floor(Game.camera.width / cols);
 	let rows = Math.floor(entries.length / cols);
@@ -112,13 +158,13 @@ function genTiger() {
 	let ss = new SpriteSheet('tiger', 8, 12, 6);
 	let anims: { [id: string]: Animation } = {};
 
-	let idleFrames = [1];
+	let idleFrames = [10];
 	anims.idle_down = ss.getAnim([0], idleFrames);
 	anims.idle_left = ss.getAnim([1], idleFrames);
 	anims.idle_right = ss.getAnim([2], idleFrames);
 	anims.idle_up = ss.getAnim([3], idleFrames);
 
-	let walkFrames = [0, 1, 2, 1];
+	let walkFrames = [9, 10, 11, 10];
 	anims.run_down = ss.getAnim([0], walkFrames);
 	anims.run_left = ss.getAnim([1], walkFrames);
 	anims.run_right = ss.getAnim([2], walkFrames);
