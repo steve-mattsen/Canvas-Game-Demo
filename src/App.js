@@ -25,6 +25,7 @@ class App extends React.Component {
       '/dove.png',
       '/robin.png',
       '/sparrow.png',
+      '/tilesets/randomtextures.png',
     ];
 
     await Img.preloadImages(images);

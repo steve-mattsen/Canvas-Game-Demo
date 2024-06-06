@@ -74,7 +74,8 @@ export class SpriteSheet {
 	rowSize: number;
 	colSize: number;
 	drawBox: Box;
-	duration: number
+	duration: number;
+	sprites: Sprite[][] = [];
 	constructor(image: Img | string, rows: number, cols: number, duration = 1) {
 		if (typeof image === 'string') {
 			this.image = Img.store[image];
@@ -87,6 +88,18 @@ export class SpriteSheet {
 		this.rowSize = Math.floor(this.image.size.y / rows);
 		this.drawBox = new Box(0, 0, this.colSize, this.rowSize, { x: 'center', y: 'bottom' });
 		this.duration = duration;
+		// Create sprites
+		for (let i = 0; i < rows; i++) {
+			this.sprites[i] = [];
+			for (let j = 0; j < cols; j++) {
+				this.sprites[i][j] = new Sprite(this.image, new Box(
+					i * this.rowSize,
+					j * this.colSize,
+					this.rowSize,
+					this.colSize
+				));
+			}
+		}
 	}
 	getAnim(rows: number[], cols: number[]) {
 		let frames: Sprite[] = [];

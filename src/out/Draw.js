@@ -136,12 +136,26 @@ function drawButtons(ctx) {
 }
 function drawBackground() {
     var canvas = document.getElementById('background_canvas');
+    var ctx = canvas.getContext("2d");
     var backdrop = Game_1["default"].backdrop;
+    ctx.clearRect(0, 0, Game_1["default"].camera.width * Game_1["default"].camera.zoom, Game_1["default"].camera.height * Game_1["default"].camera.zoom);
     var imgSize = {
         x: backdrop.image.size.x * Game_1["default"].camera.zoom,
         y: backdrop.image.size.y * Game_1["default"].camera.zoom
     };
     canvas.setAttribute('style', "\n\t\tbackground-size: ".concat(imgSize.x, "px ").concat(imgSize.y, "px;\n\t\tbackground-position-x: ").concat(-Game_1["default"].camera.x * Game_1["default"].camera.zoom, "px;\n\t\tbackground-position-y: ").concat(-Game_1["default"].camera.y * Game_1["default"].camera.zoom, "px;\n\t"));
+    var cambox = Game_1["default"].camera.fromOrigin();
+    var tile = Game_1["default"].tileSet.sprites[0][8];
+    var center = new Geo_1.Vec2(-50, -50);
+    ctx.imageSmoothingEnabled = false;
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            ctx.drawImage(tile.offScreenCanvas, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.offScreenCanvas, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.offScreenCanvas, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.offScreenCanvas, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+        }
+    }
 }
 function drawMarker(ctx, x, y, diagonal) {
     if (diagonal === void 0) { diagonal = true; }

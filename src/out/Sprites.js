@@ -140,6 +140,7 @@ exports.Animation = Animation;
 var SpriteSheet = (function () {
     function SpriteSheet(image, rows, cols, duration) {
         if (duration === void 0) { duration = 1; }
+        this.sprites = [];
         if (typeof image === 'string') {
             this.image = Img.store[image];
         }
@@ -152,6 +153,12 @@ var SpriteSheet = (function () {
         this.rowSize = Math.floor(this.image.size.y / rows);
         this.drawBox = new Geo_1.Box(0, 0, this.colSize, this.rowSize, { x: 'center', y: 'bottom' });
         this.duration = duration;
+        for (var i = 0; i < rows; i++) {
+            this.sprites[i] = [];
+            for (var j = 0; j < cols; j++) {
+                this.sprites[i][j] = new Sprite(this.image, new Geo_1.Box(i * this.rowSize, j * this.colSize, this.rowSize, this.colSize));
+            }
+        }
     }
     SpriteSheet.prototype.getAnim = function (rows, cols) {
         var _this = this;

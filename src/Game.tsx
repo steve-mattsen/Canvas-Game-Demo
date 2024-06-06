@@ -7,7 +7,7 @@ import VirtualJoystick from "./VirtualJoystick";
 import Input from "./Input";
 import buildWorld from "./World";
 import { Camera } from "./Camera";
-import { Sprite } from "./Sprites";
+import { Img, Sprite, SpriteSheet } from "./Sprites";
 
 function mobileAndTabletCheck() {
 	let check = false;
@@ -23,12 +23,14 @@ export default class Game {
 	static screen = new Box(0, 0, window.innerWidth, window.innerHeight);
 	static backdrop: Sprite;
 	static mobile = mobileAndTabletCheck();
+	static tileSet: SpriteSheet;
 	static init() {
 		Game.camera.x = Game.camera.width / 2;
 		Game.camera.y = Game.camera.height / 2;
 		new VirtualJoystick('left_stick', { x: 'left', y: 'bottom' });
 		new VirtualJoystick('right_stick', { x: 'right', y: 'bottom' });
 
+		this.tileSet = new SpriteSheet('randomtextures', 32, 32, 30);
 		buildWorld();
 
 		onWindowResize();

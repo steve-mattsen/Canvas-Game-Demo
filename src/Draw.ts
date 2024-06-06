@@ -185,7 +185,10 @@ function drawButtons(ctx: CanvasRenderingContext2D) {
 
 function drawBackground() {
 	let canvas = document.getElementById('background_canvas') as HTMLCanvasElement;
+	let ctx = canvas.getContext("2d");
 	let backdrop = Game.backdrop;
+
+	ctx.clearRect(0, 0, Game.camera.width * Game.camera.zoom, Game.camera.height * Game.camera.zoom);
 
 	let imgSize = {
 		x: backdrop.image.size.x * Game.camera.zoom,
@@ -197,6 +200,48 @@ function drawBackground() {
 		background-position-x: ${-Game.camera.x * Game.camera.zoom}px;
 		background-position-y: ${-Game.camera.y * Game.camera.zoom}px;
 	`);
+
+
+	let cambox = Game.camera.fromOrigin();
+
+	let tile = Game.tileSet.sprites[0][8];
+
+	let center = new Vec2(-50, -50);
+
+	ctx.imageSmoothingEnabled = false;
+
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 4; j++) {
+			ctx.drawImage(
+				tile.offScreenCanvas,
+				center.x - (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
+				center.y - (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
+				tile.drawBox.width * Game.camera.zoom,
+				tile.drawBox.height * Game.camera.zoom,
+			)
+			ctx.drawImage(
+				tile.offScreenCanvas,
+				center.x - (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
+				center.y + (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
+				tile.drawBox.width * Game.camera.zoom,
+				tile.drawBox.height * Game.camera.zoom,
+			)
+			ctx.drawImage(
+				tile.offScreenCanvas,
+				center.x + (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
+				center.y - (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
+				tile.drawBox.width * Game.camera.zoom,
+				tile.drawBox.height * Game.camera.zoom,
+			)
+			ctx.drawImage(
+				tile.offScreenCanvas,
+				center.x + (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
+				center.y + (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
+				tile.drawBox.width * Game.camera.zoom,
+				tile.drawBox.height * Game.camera.zoom,
+			)
+		}
+	}
 }
 
 function drawMarker(ctx: CanvasRenderingContext2D, x: number, y: number, diagonal = true) {
