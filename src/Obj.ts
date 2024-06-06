@@ -46,7 +46,7 @@ export class Obj {
 		return this.hitBox.fromPoint(this.pos).fromOrigin();
 	}
 	act() {
-		if (!this.id.match(/(lion|tiger|crow)/)) {
+		if (!this.id.match(/(lion|tiger|crow|lobster)/)) {
 			return;
 		}
 

@@ -38,7 +38,7 @@ export default function buildWorld() {
 	anims.run_up.sprites[2].duration = lungeDuration;
 	anims.run_up.sprites[7].duration = lungeDuration;
 
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 80; i++) {
 		const tree_sprite = sprt('tree');
 		const tree = new Obj(
 			'tree' + i,
@@ -71,14 +71,22 @@ export default function buildWorld() {
 		Obj.addObj(corn);
 	}
 
-	for (let i = 0; i < 1; i++) {
-		genBird();
-	}
 
-	genBushes(10);
+	genBushes(60);
 
 	randomizeLayout();
 
+
+	for (let i = 0; i < 10; i++) {
+		genBird();
+	}
+
+	genLobster();
+	genLobster(1);
+	genLobster(2);
+	genLobster(3);
+
+	//TODO: House, turtles, palm trees, more water, lobsters can't leave water
 
 	const player = new Obj(
 		'player',
@@ -135,7 +143,7 @@ function randomizeLayout() {
 	let currentIndex = entries.length;
 
 	while (currentIndex != 0) {
-
+		// Shuffle the objects.
 		let randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex--;
 
@@ -144,9 +152,9 @@ function randomizeLayout() {
 	}
 
 	let cols = Math.floor(Math.sqrt(entries.length));
-	let colWidth = Math.floor(Game.camera.width / cols);
+	let colWidth = Math.floor(Game.camera.width / cols) * 2;
 	let rows = Math.floor(entries.length / cols);
-	let rowHeight = Math.floor((Game.camera.height * .9) / rows);
+	let rowHeight = Math.floor((Game.camera.height * .9) / rows) * 2;
 	let randomOffset = .6;
 	let i = 0;
 	for (const obj of entries) {
@@ -255,4 +263,36 @@ function genBird(birdType?: birdType) {
 	);
 	bird.z = 50;
 	Obj.addObj(bird);
+}
+
+function genLobster(color = 0) {
+	let ss = new SpriteSheet('lobster', 8, 12, 6);
+	let anims: { [id: string]: Animation } = {};
+
+	let offset = color * 3;
+	let idleFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+	anims.idle_down = ss.getAnim([0], idleFrames);
+	anims.idle_left = ss.getAnim([1], idleFrames);
+	anims.idle_right = ss.getAnim([2], idleFrames);
+	anims.idle_up = ss.getAnim([3], idleFrames);
+
+	let walkFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+	anims.run_down = ss.getAnim([0], walkFrames);
+	anims.run_left = ss.getAnim([1], walkFrames);
+	anims.run_right = ss.getAnim([2], walkFrames);
+	anims.run_up = ss.getAnim([3], walkFrames);
+
+	let random = 50;
+	const lobster = new Obj(
+		'lobster' + uuid(),
+		vec(
+			(Math.random() * random) - random / 2,
+			(Math.random() * random) - random / 2,
+		),
+		anims.idle_down.sprites[0],
+		null,
+		anims
+	);
+	lobster.z = -17;
+	Obj.addObj(lobster);
 }

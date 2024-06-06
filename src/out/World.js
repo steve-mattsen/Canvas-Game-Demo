@@ -41,7 +41,7 @@ function buildWorld() {
     anims.run_down.sprites[7].duration = lungeDuration;
     anims.run_up.sprites[2].duration = lungeDuration;
     anims.run_up.sprites[7].duration = lungeDuration;
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 80; i++) {
         var tree_sprite = (0, Sprites_1.sprt)('tree');
         var tree = new Obj_1.Obj('tree' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + tree_sprite.image.size.y / 2)), tree_sprite, new Geo_1.Box(tree_sprite.drawBox.width * .4, tree_sprite.drawBox.height * .75, tree_sprite.drawBox.width * .2, tree_sprite.drawBox.height * .15, { x: 'center', y: 'bottom' }));
         Obj_1.Obj.addObj(tree);
@@ -51,11 +51,15 @@ function buildWorld() {
         var corn = new Obj_1.Obj('corn' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + corn_sprite.image.size.y / 2)), corn_sprite);
         Obj_1.Obj.addObj(corn);
     }
-    for (var i = 0; i < 1; i++) {
+    genBushes(60);
+    randomizeLayout();
+    for (var i = 0; i < 10; i++) {
         genBird();
     }
-    genBushes(10);
-    randomizeLayout();
+    genLobster();
+    genLobster(1);
+    genLobster(2);
+    genLobster(3);
     var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(player);
     for (var i = 0; i < 1; i++) {
@@ -90,9 +94,9 @@ function randomizeLayout() {
         ], entries[currentIndex] = _a[0], entries[randomIndex] = _a[1];
     }
     var cols = Math.floor(Math.sqrt(entries.length));
-    var colWidth = Math.floor(Game_1["default"].camera.width / cols);
+    var colWidth = Math.floor(Game_1["default"].camera.width / cols) * 2;
     var rows = Math.floor(entries.length / cols);
-    var rowHeight = Math.floor((Game_1["default"].camera.height * .9) / rows);
+    var rowHeight = Math.floor((Game_1["default"].camera.height * .9) / rows) * 2;
     var randomOffset = .6;
     var i = 0;
     for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
@@ -157,5 +161,25 @@ function genBird(birdType) {
     var bird = new Obj_1.Obj('crow' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], null, anims);
     bird.z = 50;
     Obj_1.Obj.addObj(bird);
+}
+function genLobster(color) {
+    if (color === void 0) { color = 0; }
+    var ss = new Sprites_1.SpriteSheet('lobster', 8, 12, 6);
+    var anims = {};
+    var offset = color * 3;
+    var idleFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+    anims.idle_down = ss.getAnim([0], idleFrames);
+    anims.idle_left = ss.getAnim([1], idleFrames);
+    anims.idle_right = ss.getAnim([2], idleFrames);
+    anims.idle_up = ss.getAnim([3], idleFrames);
+    var walkFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+    anims.run_down = ss.getAnim([0], walkFrames);
+    anims.run_left = ss.getAnim([1], walkFrames);
+    anims.run_right = ss.getAnim([2], walkFrames);
+    anims.run_up = ss.getAnim([3], walkFrames);
+    var random = 50;
+    var lobster = new Obj_1.Obj('lobster' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Math.random() * random) - random / 2, (Math.random() * random) - random / 2), anims.idle_down.sprites[0], null, anims);
+    lobster.z = -17;
+    Obj_1.Obj.addObj(lobster);
 }
 //# sourceMappingURL=World.js.map
