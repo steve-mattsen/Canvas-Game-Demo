@@ -80,10 +80,20 @@ export default function draw() {
 }
 
 function drawObjects(ctx: CanvasRenderingContext2D) {
-	// Order draws by closeness to camera.
-	let entries = Object.values(Obj.store).sort((a, b) => a.pos.y - b.pos.y);
-
 	let cambox = Game.camera.fromOrigin();
+	let clipbox = Game.camera.clone();
+	clipbox.x -= clipbox.width;
+	clipbox.y -= clipbox.height;
+	clipbox.width *= 2;
+	clipbox.height *= 2;
+
+	// Don't draw objects far from the camera.
+	let entries = Object.values(Obj.store).filter(v => {
+		return clipbox.contains(v.pos);
+	});
+	// Order draws by closeness to camera.
+	entries.sort((a, b) => a.pos.y - b.pos.y);
+
 
 	let fontSize = 5;
 	ctx.font = `bold ${fontSize}px Courier`;

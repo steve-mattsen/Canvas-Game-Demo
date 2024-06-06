@@ -66,8 +66,16 @@ function draw() {
 }
 exports["default"] = draw;
 function drawObjects(ctx) {
-    var entries = Object.values(Obj_1.Obj.store).sort(function (a, b) { return a.pos.y - b.pos.y; });
     var cambox = Game_1["default"].camera.fromOrigin();
+    var clipbox = Game_1["default"].camera.clone();
+    clipbox.x -= clipbox.width;
+    clipbox.y -= clipbox.height;
+    clipbox.width *= 2;
+    clipbox.height *= 2;
+    var entries = Object.values(Obj_1.Obj.store).filter(function (v) {
+        return clipbox.contains(v.pos);
+    });
+    entries.sort(function (a, b) { return a.pos.y - b.pos.y; });
     var fontSize = 5;
     ctx.font = "bold ".concat(fontSize, "px Courier");
     if (Vars_1["default"].displayMode > 1) {
