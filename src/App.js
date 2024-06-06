@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import { Img } from "./Sprites";
 import Game from "./Game";
-
 class App extends React.Component {
 
   static alreadyMounted = false;

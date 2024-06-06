@@ -51,7 +51,9 @@ function buildWorld() {
         var corn = new Obj_1.Obj('corn' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + corn_sprite.image.size.y / 2)), corn_sprite);
         Obj_1.Obj.addObj(corn);
     }
-    genBird();
+    for (var i = 0; i < 5; i++) {
+        genBird();
+    }
     genBushes(10);
     randomizeLayout();
     var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
@@ -135,8 +137,12 @@ function genLion() {
     var lion = new Obj_1.Obj('lion' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(lion);
 }
-function genBird() {
-    var ss = new Sprites_1.SpriteSheet('crow', 8, 3, 6);
+var birds = ['crow', 'bluejay', 'dove', 'sparrow', 'robin'];
+function genBird(birdType) {
+    if (birdType === undefined) {
+        birdType = birds[Math.floor(Math.random() * birds.length)];
+    }
+    var ss = new Sprites_1.SpriteSheet(birdType, 8, 3, 6);
     var anims = {};
     var idleFrames = [0, 1, 2, 0];
     anims.idle_down = ss.getAnim([2], idleFrames);

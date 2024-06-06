@@ -5,6 +5,7 @@ import { vec, Box } from "./Geo"
 import Vars from "./Vars";
 import Game from "./Game";
 import { v4 as uuid } from 'uuid';
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function buildWorld() {
 	let ss = new SpriteSheet('spritesheet_link', 8, 10);
@@ -70,7 +71,9 @@ export default function buildWorld() {
 		Obj.addObj(corn);
 	}
 
-	genBird();
+	for (let i = 0; i < 5; i++) {
+		genBird();
+	}
 
 	genBushes(10);
 
@@ -215,8 +218,17 @@ function genLion() {
 	Obj.addObj(lion);
 }
 
-function genBird() {
-	let ss = new SpriteSheet('crow', 8, 3, 6);
+let birds = ['crow', 'bluejay', 'dove', 'sparrow', 'robin'] as const;
+type birdType = typeof birds[number];
+
+type ValueOf<T> = T[keyof T];
+
+function genBird(birdType?: birdType) {
+	if (birdType === undefined) {
+
+		birdType = birds[Math.floor(Math.random() * birds.length)];
+	}
+	let ss = new SpriteSheet(birdType, 8, 3, 6);
 	let anims: { [id: string]: Animation } = {};
 
 	let idleFrames = [0, 1, 2, 0];
