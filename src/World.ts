@@ -71,7 +71,7 @@ export default function buildWorld() {
 		Obj.addObj(corn);
 	}
 
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 1; i++) {
 		genBird();
 	}
 

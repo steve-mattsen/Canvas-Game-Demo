@@ -51,7 +51,7 @@ function buildWorld() {
         var corn = new Obj_1.Obj('corn' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + corn_sprite.image.size.y / 2)), corn_sprite);
         Obj_1.Obj.addObj(corn);
     }
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 1; i++) {
         genBird();
     }
     genBushes(10);
