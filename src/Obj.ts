@@ -46,7 +46,7 @@ export class Obj {
 		return this.hitBox.fromPoint(this.pos).fromOrigin();
 	}
 	act() {
-		if (!this.id.match(/(lion|tiger)/)) {
+		if (!this.id.match(/(lion|tiger|crow)/)) {
 			return;
 		}
 
@@ -67,7 +67,7 @@ export class Obj {
 			(Math.random() * 2) - 1,
 			(Math.random() * 2) - 1);
 		if (Math.abs(move.x) >= Math.abs(move.y)) {
-			if (this.animState.match(/(up|down)/gi)) {
+			if (this.animState.match(/(up|down)/gi) && this.hitBox !== null) {
 				this.hitBox.turn();
 			}
 			if (move.x > 0) {
@@ -76,7 +76,7 @@ export class Obj {
 				this.animState = "run_left";
 			}
 		} else {
-			if (this.animState.match(/(right|left)/gi)) {
+			if (this.animState.match(/(right|left)/gi) && this.hitBox !== null) {
 				this.hitBox.turn();
 			}
 			if (move.y > 0) {

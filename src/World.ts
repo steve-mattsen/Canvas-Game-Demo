@@ -70,6 +70,8 @@ export default function buildWorld() {
 		Obj.addObj(corn);
 	}
 
+	genBird();
+
 	genBushes(10);
 
 	randomizeLayout();
@@ -211,4 +213,34 @@ function genLion() {
 		anims
 	);
 	Obj.addObj(lion);
+}
+
+function genBird() {
+	let ss = new SpriteSheet('crow', 8, 3, 6);
+	let anims: { [id: string]: Animation } = {};
+
+	let idleFrames = [0, 1, 2, 0];
+	anims.idle_down = ss.getAnim([2], idleFrames);
+	anims.idle_left = ss.getAnim([0], idleFrames);
+	anims.idle_right = ss.getAnim([3], idleFrames);
+	anims.idle_up = ss.getAnim([1], idleFrames);
+
+	let walkFrames = [0, 1, 2, 0];
+	anims.run_down = ss.getAnim([2], walkFrames);
+	anims.run_left = ss.getAnim([0], walkFrames);
+	anims.run_right = ss.getAnim([3], walkFrames);
+	anims.run_up = ss.getAnim([1], walkFrames);
+
+	const bird = new Obj(
+		'crow' + uuid(),
+		vec(
+			(Vars.canvasWidth - ss.rowSize - 1) / (2 * Game.camera.zoom) - 50,
+			(Vars.canvasHeight - ss.colSize) / (2 * Game.camera.zoom) + 50,
+		),
+		anims.idle_down.sprites[0],
+		null,
+		anims
+	);
+	bird.z = 50;
+	Obj.addObj(bird);
 }

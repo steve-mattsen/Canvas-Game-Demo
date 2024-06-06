@@ -51,6 +51,7 @@ function buildWorld() {
         var corn = new Obj_1.Obj('corn' + i, (0, Geo_1.vec)(Math.floor((Math.random() * Game_1["default"].camera.width)), Math.floor((Math.random() * Game_1["default"].camera.height) + corn_sprite.image.size.y / 2)), corn_sprite);
         Obj_1.Obj.addObj(corn);
     }
+    genBird();
     genBushes(10);
     randomizeLayout();
     var player = new Obj_1.Obj('player', (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 10, 8, { x: 'center', y: 'bottom' }), anims);
@@ -133,5 +134,22 @@ function genLion() {
     anims.run_up = ss.getAnim([3], walkFrames);
     var lion = new Obj_1.Obj('lion' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], new Geo_1.Box(0, 0, 20, 35, { x: 'center', y: 'bottom' }), anims);
     Obj_1.Obj.addObj(lion);
+}
+function genBird() {
+    var ss = new Sprites_1.SpriteSheet('crow', 8, 3, 6);
+    var anims = {};
+    var idleFrames = [0, 1, 2, 0];
+    anims.idle_down = ss.getAnim([2], idleFrames);
+    anims.idle_left = ss.getAnim([0], idleFrames);
+    anims.idle_right = ss.getAnim([3], idleFrames);
+    anims.idle_up = ss.getAnim([1], idleFrames);
+    var walkFrames = [0, 1, 2, 0];
+    anims.run_down = ss.getAnim([2], walkFrames);
+    anims.run_left = ss.getAnim([0], walkFrames);
+    anims.run_right = ss.getAnim([3], walkFrames);
+    anims.run_up = ss.getAnim([1], walkFrames);
+    var bird = new Obj_1.Obj('crow' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom) - 50, (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom) + 50), anims.idle_down.sprites[0], null, anims);
+    bird.z = 50;
+    Obj_1.Obj.addObj(bird);
 }
 //# sourceMappingURL=World.js.map
