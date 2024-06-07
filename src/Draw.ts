@@ -45,7 +45,10 @@ export default function draw() {
 	ctx.scale(Game.camera.zoom, Game.camera.zoom)
 
 	if (Vars.showBackground) {
+		document.getElementById('background_canvas').hidden = false;
 		drawBackground();
+	} else {
+		document.getElementById('background_canvas').hidden = true;
 	}
 
 	let plyr = Obj.store['player'];
