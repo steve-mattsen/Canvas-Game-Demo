@@ -184,12 +184,16 @@ var Sprite = (function () {
             this.drawBox = new Geo_1.Box(0, 0, image.size.x, image.size.y, { x: 'center', y: 'bottom' });
         }
         this.duration = duration;
+        this.storeBitmap();
+    }
+    ;
+    Sprite.prototype.storeBitmap = function () {
         this.offScreenCanvas = new OffscreenCanvas(this.drawBox.width, this.drawBox.height);
         var ctx = this.offScreenCanvas.getContext('2d');
         ctx.scale(this.drawBox.width / this.image.size.x, this.drawBox.height / this.image.size.y);
         ctx.drawImage(this.image.element, this.drawBox.x, this.drawBox.y, this.drawBox.width, this.drawBox.height, 0, 0, this.image.size.x, this.image.size.y);
-    }
-    ;
+        this.bitmap = this.offScreenCanvas.transferToImageBitmap();
+    };
     Sprite.prototype.toBackdrop = function () {
         var canvas = document.getElementById('background_canvas');
         var imgSize = new Geo_1.Vec2(this.image.size.x * Game_1["default"].camera.zoom, this.image.size.y * Game_1["default"].camera.zoom);

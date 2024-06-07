@@ -271,7 +271,7 @@ function genLobster(color = 0) {
 	let anims: { [id: string]: Animation } = {};
 
 	let offset = color * 3;
-	let idleFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+	let idleFrames = [offset + 0];
 	anims.idle_down = ss.getAnim([0], idleFrames);
 	anims.idle_left = ss.getAnim([1], idleFrames);
 	anims.idle_right = ss.getAnim([2], idleFrames);

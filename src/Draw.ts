@@ -116,7 +116,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 			}
 			let offset = sprite.drawBox.getOrigin();
 			ctx.drawImage(
-				sprite.offScreenCanvas, //image
+				sprite.bitmap, //image
 				obj.pos.x - offset.x - cambox.x, //posx
 				obj.pos.y - offset.y - cambox.y - obj.z, //posy
 			);
@@ -214,7 +214,9 @@ function drawBackground() {
 
 	let cambox = Game.camera.fromOrigin();
 
-	let tile = Game.tileSet.sprites[0][8];
+	let whichFrame = (Game.tickCount % 30 >= 15 ? 1 : 0);
+
+	let tile = Game.tileSet.sprites[1 + whichFrame][8];
 
 	let center = new Vec2(-50, -50);
 
@@ -223,28 +225,28 @@ function drawBackground() {
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 4; j++) {
 			ctx.drawImage(
-				tile.offScreenCanvas,
+				tile.bitmap,
 				center.x - (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
 				center.y - (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
 				tile.drawBox.width * Game.camera.zoom,
 				tile.drawBox.height * Game.camera.zoom,
 			)
 			ctx.drawImage(
-				tile.offScreenCanvas,
+				tile.bitmap,
 				center.x - (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
 				center.y + (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
 				tile.drawBox.width * Game.camera.zoom,
 				tile.drawBox.height * Game.camera.zoom,
 			)
 			ctx.drawImage(
-				tile.offScreenCanvas,
+				tile.bitmap,
 				center.x + (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
 				center.y - (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
 				tile.drawBox.width * Game.camera.zoom,
 				tile.drawBox.height * Game.camera.zoom,
 			)
 			ctx.drawImage(
-				tile.offScreenCanvas,
+				tile.bitmap,
 				center.x + (i * tile.drawBox.width * Game.camera.zoom) - (cambox.x * Game.camera.zoom),
 				center.y + (j * tile.drawBox.height * Game.camera.zoom) - (cambox.y * Game.camera.zoom),
 				tile.drawBox.width * Game.camera.zoom,

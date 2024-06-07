@@ -129,6 +129,7 @@ export class Sprite {
 	scale: number;
 	duration: number;
 	offScreenCanvas: OffscreenCanvas;
+	bitmap: ImageBitmap;
 	constructor(image: Img, drawBox?: Box, scale = 1, duration = 4) {
 		this.image = image;
 		this.scale = scale;
@@ -137,6 +138,9 @@ export class Sprite {
 			this.drawBox = new Box(0, 0, image.size.x, image.size.y, { x: 'center', y: 'bottom' });
 		}
 		this.duration = duration;
+		this.storeBitmap();
+	};
+	storeBitmap() {
 		this.offScreenCanvas = new OffscreenCanvas(this.drawBox.width, this.drawBox.height);
 		let ctx = this.offScreenCanvas.getContext('2d') as OffscreenCanvasRenderingContext2D;
 		ctx.scale(
@@ -155,7 +159,8 @@ export class Sprite {
 			this.image.size.y,
 			// 100, 100
 		);
-	};
+		this.bitmap = this.offScreenCanvas.transferToImageBitmap();
+	}
 	toBackdrop() {
 		let canvas = document.getElementById('background_canvas') as HTMLCanvasElement;
 

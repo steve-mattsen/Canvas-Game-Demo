@@ -168,7 +168,7 @@ function genLobster(color) {
     var ss = new Sprites_1.SpriteSheet('lobster', 8, 12, 6);
     var anims = {};
     var offset = color * 3;
-    var idleFrames = [offset + 0, offset + 1, offset + 2, offset + 0];
+    var idleFrames = [offset + 0];
     anims.idle_down = ss.getAnim([0], idleFrames);
     anims.idle_left = ss.getAnim([1], idleFrames);
     anims.idle_right = ss.getAnim([2], idleFrames);

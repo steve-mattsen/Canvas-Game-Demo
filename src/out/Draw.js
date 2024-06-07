@@ -95,7 +95,7 @@ function drawObjects(ctx) {
                 }
             }
             var offset = sprite.drawBox.getOrigin();
-            ctx.drawImage(sprite.offScreenCanvas, obj.pos.x - offset.x - cambox.x, obj.pos.y - offset.y - cambox.y - obj.z);
+            ctx.drawImage(sprite.bitmap, obj.pos.x - offset.x - cambox.x, obj.pos.y - offset.y - cambox.y - obj.z);
         }
     }
     if (Vars_1["default"].displayMode < 4) {
@@ -153,15 +153,16 @@ function drawBackground() {
     };
     canvas.setAttribute('style', "\n\t\tbackground-size: ".concat(imgSize.x, "px ").concat(imgSize.y, "px;\n\t\tbackground-position-x: ").concat(-Game_1["default"].camera.x * Game_1["default"].camera.zoom, "px;\n\t\tbackground-position-y: ").concat(-Game_1["default"].camera.y * Game_1["default"].camera.zoom, "px;\n\t"));
     var cambox = Game_1["default"].camera.fromOrigin();
-    var tile = Game_1["default"].tileSet.sprites[0][8];
+    var whichFrame = (Game_1["default"].tickCount % 30 >= 15 ? 1 : 0);
+    var tile = Game_1["default"].tileSet.sprites[1 + whichFrame][8];
     var center = new Geo_1.Vec2(-50, -50);
     ctx.imageSmoothingEnabled = false;
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
-            ctx.drawImage(tile.offScreenCanvas, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
-            ctx.drawImage(tile.offScreenCanvas, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
-            ctx.drawImage(tile.offScreenCanvas, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
-            ctx.drawImage(tile.offScreenCanvas, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.bitmap, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.bitmap, center.x - (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.bitmap, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y - (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
+            ctx.drawImage(tile.bitmap, center.x + (i * tile.drawBox.width * Game_1["default"].camera.zoom) - (cambox.x * Game_1["default"].camera.zoom), center.y + (j * tile.drawBox.height * Game_1["default"].camera.zoom) - (cambox.y * Game_1["default"].camera.zoom), tile.drawBox.width * Game_1["default"].camera.zoom, tile.drawBox.height * Game_1["default"].camera.zoom);
         }
     }
 }
