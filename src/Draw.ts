@@ -99,6 +99,7 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 	ctx.font = `bold ${fontSize}px Courier`;
 
 	if (Vars.displayMode > 1) {
+		document.getElementById('shadow_canvas').hidden = false;
 		drawShadows(entries);
 		for (const obj of entries) {
 
@@ -121,6 +122,8 @@ function drawObjects(ctx: CanvasRenderingContext2D) {
 				obj.pos.y - offset.y - cambox.y - obj.z, //posy
 			);
 		}
+	} else {
+		document.getElementById('shadow_canvas').hidden = true;
 	}
 
 	if (Vars.displayMode < 4) {
@@ -464,7 +467,6 @@ function drawControls(ctx: CanvasRenderingContext2D) {
 }
 
 function drawShadows(entries: Obj[]) {
-
 	let cambox = Game.camera.fromOrigin();
 	let shadow = sprt('shadow');
 
@@ -493,7 +495,7 @@ function drawShadows(entries: Obj[]) {
 		shadow.scale = sprite.drawBox.width / shadow.drawBox.width;
 		let x = obj.pos.x - (shadow.drawBox.width * shadow.scale * 0.5) - 1 - cambox.x;
 		let y = obj.pos.y - (shadow.drawBox.height * shadow.scale * 0.5) - 1 - cambox.y;
-		ctx.drawImage(shadow.image.element,
+		ctx.drawImage(shadow.bitmap,
 			x * Game.camera.zoom,
 			y * Game.camera.zoom,
 			sprite.drawBox.width * Game.camera.zoom,
