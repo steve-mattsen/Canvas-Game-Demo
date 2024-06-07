@@ -79,6 +79,7 @@ function genBushes(count) {
     anim = ss.getAnim([0], [3]);
     for (var i = 0; i < count; i++) {
         var bush = new Obj_1.Obj('bush' + (0, uuid_1.v4)(), (0, Geo_1.vec)((Vars_1["default"].canvasWidth - ss.rowSize - 1) / (2 * Game_1["default"].camera.zoom), (Vars_1["default"].canvasHeight - ss.colSize) / (2 * Game_1["default"].camera.zoom)), anim.sprites[0]);
+        bush.z = -5;
         Obj_1.Obj.addObj(bush);
     }
 }

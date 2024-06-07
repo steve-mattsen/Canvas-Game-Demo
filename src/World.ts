@@ -133,6 +133,7 @@ function genBushes(count: number) {
 			),
 			anim.sprites[0],
 		);
+		bush.z = -5;
 		Obj.addObj(bush);
 	}
 
